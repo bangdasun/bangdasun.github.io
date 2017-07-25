@@ -1,0 +1,176 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Common metrics in Supervised Learning (Classification) | Bangda Sun | Play with data</title>
+
+  
+  <meta name="author" content="Bangda">
+  
+
+  
+  <meta name="description" content="Play with data">
+  
+
+  
+  
+  <meta name="keywords" content="Machine Learning">
+  
+
+  <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <meta property="og:title" content="Common metrics in Supervised Learning (Classification)"/>
+
+  <meta property="og:site_name" content="Bangda Sun"/>
+
+  
+  <meta property="og:image" content="/favicon.ico"/>
+  
+
+  <link href="/favicon.ico" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Bangda Sun" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+</head>
+
+
+<body>
+<div class="blog">
+  <div class="content">
+
+    <header>
+  <div class="site-branding">
+    <h1 class="site-title">
+      <a href="/">Bangda Sun</a>
+    </h1>
+    <p class="site-description">Play with data</p>
+  </div>
+  <nav class="site-navigation">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+    </ul>
+  </nav>
+</header>
+
+    <main class="site-main posts-loop">
+    <article>
+
+  
+    
+    <h3 class="article-title"><span>Common metrics in Supervised Learning (Classification)</span></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2017/07/24/common-metric-supervised-learning-md/" rel="bookmark">
+        <time class="entry-date published" datetime="2017-07-25T02:48:17.000Z">
+          2017-07-24
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <p>Measure the performance of classification problems</p>
+<a id="more"></a>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+<p>In classification problem, we usually start analysis the performance of the model / algorithm from the <strong>confusion matrix</strong>:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&gt; confusion_matrix</div><div class="line">         pred 0 pred 1</div><div class="line">actual 0     55      4</div><div class="line">actual 1      3     43</div></pre></td></tr></table></figure>
+<p>here I denote “0” as <strong>negative</strong>, “1” as <strong>positive</strong>, they are the classes in our classification problem. The confusion matrix here says:</p>
+<blockquote>
+<p>55 observations are correctly classififed as “0”, they are <strong>true negative</strong> ;<br>43 observations are correctly classified as “1”, they are <strong>true positive</strong>;<br>4 observations are incorrectly classified as “1”, they are <strong>false positive</strong>;<br>3 observations are incorrectly classified as “0”, they are <strong>false negative</strong>. </p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&gt; confusion_matrix</div><div class="line">         pred 0      pred 1     </div><div class="line">actual 0 &quot;true neg&quot;  &quot;false pos&quot;</div><div class="line">actual 1 &quot;false neg&quot; &quot;true pos&quot;</div></pre></td></tr></table></figure>
+<p>The first measure we will always use is just the <strong>Accuracy</strong>, which is the proportion of correctly classified observations, here we have</p>
+<p>\[<br>\text{Accuracy} = \frac{55+43}{55+43+4+3} = 93.33\%,<br>\]</p>
+<p>very easy and straight-forward.</p>
+<p>Next we can use <strong>false positive rate</strong> and <strong>true positive rate</strong>, they are defined as:</p>
+<p>\[<br>\text{FPR} = \frac{\text{false positive}}{\text{negative}} = \frac{\text{false positive}}{\text{false positive} + \text{true negative}} = \frac{4}{4+43} = 8.51\%,<br>\]</p>
+<p>\[<br>\text{TPR} = \frac{\text{true positive}}{\text{positive}} = \frac{\text{true positive}}{\text{true positive} + \text{false negative}} = \frac{55}{55+3} = 94.83\%,<br>\]</p>
+<p>and <strong>TPR</strong> has another name called <strong>Recall</strong>.</p>
+<p>From the perspective of confusion matrix, we can see the denominator of <strong>FPR</strong> is the summation of <strong>first row</strong> of confusion matrix; the denominator of <strong>TPR</strong> is the summation of <strong>second row</strong> of confusion matrix.</p>
+<p>Based on <strong>TPR</strong> and <strong>FPR</strong>, we can draw a plot named <strong>ROC</strong> (receiver operating characteristic), where the x-axis is <strong>FPR</strong> and y-axis is <strong>TPR</strong>. The ideal point is at (0, 1), means for nice performance, <strong>FPR</strong> should be as small as possible and <strong>TPR</strong> should be as large as possible. Also we have <strong>AUC</strong> (area under curve) which is the area under ROC curve.</p>
+<p>Next, we can define <strong>Precision</strong>, which is the proportion of all true positive. </p>
+<p>\[<br>\text{Precision} = \frac{\text{true positive}}{\text{true positive} + \text{false positive}} = \frac{55}{55+4} = 93.22\%,<br>\]</p>
+<p>where the denominator is the second column of confusion matrix.</p>
+<p>Finally we have one more important metric called <strong>F1-score</strong>,</p>
+<p>\[<br>\text{F1-score} = \frac{2\times\text{Precision}\times\text{Recall}}{\text{Precision}+\text{Recall}}=\frac{2\times93.22\%\times94.83\%}{93.22\%+94.83\%} = 0.9402.<br>\]</p>
+<p>So you can see we have some many choices except the <strong>Accuracy</strong>. Try to use them next time!</p>
+<h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><p><a href="https://chrisalbon.com/machine-learning/precision_recall_and_F1_scores.html" target="_blank" rel="external">https://chrisalbon.com/machine-learning/precision_recall_and_F1_scores.html</a></p>
+<p><a href="http://shahramabyari.com/2016/02/22/measuring-performance-of-classifiers/#comments" target="_blank" rel="external">http://shahramabyari.com/2016/02/22/measuring-performance-of-classifiers/#comments</a></p>
+
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+      
+
+    <span class="post-categories">
+      <i class="icon-categories"></i>
+        <a href="/categories/Machine-Learning/">Machine Learning</a>
+    </span>
+    
+
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/Machine-Learning/">Machine Learning</a>
+    </span>
+    
+
+    </div>
+
+    
+  </div>
+</article>
+
+
+    </main>
+
+    <footer class="site-footer">
+  <p class="site-info">
+    Proudly powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and
+    Theme by <a href="https://github.com/CodeDaraW/Hacker" target="_blank">Hacker</a>
+    </br>
+    
+    &copy; 2017 Bangda
+    
+  </p>
+  
+  <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+  <span id="busuanzi_container_site_pv">
+    Total viewer <span id="busuanzi_value_site_pv"></span>; 
+  </span>
+  
+  <span id="busuanzi_container_site_uv">
+    Total visitor <span id="busuanzi_value_site_uv"></span>
+  </span>
+
+</footer>
+    
+  </div>
+</div>
+</body>
+</html>
