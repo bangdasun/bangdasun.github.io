@@ -98,16 +98,16 @@
 <p>\[<br>\text{Accuracy} = \frac{55+43}{55+43+4+3} = 93.33\%,<br>\]</p>
 <p>very easy and straight-forward.</p>
 <p>Next we can use <strong>false positive rate</strong> and <strong>true positive rate</strong>, they are defined as:</p>
-<p>\[<br>\text{FPR} = \frac{\text{false positive}}{\text{negative}} = \frac{\text{false positive}}{\text{false positive} + \text{true negative}} = \frac{4}{4+43} = 8.51\%,<br>\]</p>
-<p>\[<br>\text{TPR} = \frac{\text{true positive}}{\text{positive}} = \frac{\text{true positive}}{\text{true positive} + \text{false negative}} = \frac{55}{55+3} = 94.83\%,<br>\]</p>
+<p>\[<br>\text{FPR} = \frac{\text{false positive}}{\text{negative}} = \frac{\text{false positive}}{\text{false positive} + \text{true negative}} = \frac{4}{4+55} = 6.78\%,<br>\]</p>
+<p>\[<br>\text{TPR} = \frac{\text{true positive}}{\text{positive}} = \frac{\text{true positive}}{\text{true positive} + \text{false negative}} = \frac{43}{43+3} = 93.48\%,<br>\]</p>
 <p>and <strong>TPR</strong> has another name called <strong>Recall</strong>.</p>
 <p>From the perspective of confusion matrix, we can see the denominator of <strong>FPR</strong> is the summation of <strong>first row</strong> of confusion matrix; the denominator of <strong>TPR</strong> is the summation of <strong>second row</strong> of confusion matrix.</p>
-<p>Based on <strong>TPR</strong> and <strong>FPR</strong>, we can draw a plot named <strong>ROC</strong> (receiver operating characteristic), where the x-axis is <strong>FPR</strong> and y-axis is <strong>TPR</strong>. The ideal point is at (0, 1), means for nice performance, <strong>FPR</strong> should be as small as possible and <strong>TPR</strong> should be as large as possible. Also we have <strong>AUC</strong> (area under curve) which is the area under ROC curve.</p>
+<p>Based on <strong>TPR</strong> and <strong>FPR</strong>, we can draw a plot named <strong>ROC</strong> (receiver operating characteristic), where the x-axis is <strong>FPR</strong> and y-axis is <strong>TPR</strong>. ROC is plotted at various threshold settings, the ideal point is at (0, 1), means for nice performance, <strong>FPR</strong> should be as small as possible and <strong>TPR</strong> should be as large as possible. Also we have <strong>AUC</strong> (area under curve) which is the area under ROC curve.</p>
 <p>Next, we can define <strong>Precision</strong>, which is the proportion of all true positive. </p>
-<p>\[<br>\text{Precision} = \frac{\text{true positive}}{\text{true positive} + \text{false positive}} = \frac{55}{55+4} = 93.22\%,<br>\]</p>
+<p>\[<br>\text{Precision} = \frac{\text{true positive}}{\text{true positive} + \text{false positive}} = \frac{43}{43+4} = 91.49\%,<br>\]</p>
 <p>where the denominator is the second column of confusion matrix.</p>
 <p>Finally we have one more important metric called <strong>F1-score</strong>,</p>
-<p>\[<br>\text{F1-score} = \frac{2\times\text{Precision}\times\text{Recall}}{\text{Precision}+\text{Recall}}=\frac{2\times93.22\%\times94.83\%}{93.22\%+94.83\%} = 0.9402.<br>\]</p>
+<p>\[<br>\text{F1-score} = \frac{2\times\text{Precision}\times\text{Recall}}{\text{Precision}+\text{Recall}}=\frac{2\times43/47\times43/46}{43/47+43/46} = 0.9247.<br>\]</p>
 <p>So you can see we have some many choices except the <strong>Accuracy</strong>. Try to use them next time!</p>
 <h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><p><a href="https://chrisalbon.com/machine-learning/precision_recall_and_F1_scores.html" target="_blank" rel="external">https://chrisalbon.com/machine-learning/precision_recall_and_F1_scores.html</a></p>
 <p><a href="http://shahramabyari.com/2016/02/22/measuring-performance-of-classifiers/#comments" target="_blank" rel="external">http://shahramabyari.com/2016/02/22/measuring-performance-of-classifiers/#comments</a></p>
