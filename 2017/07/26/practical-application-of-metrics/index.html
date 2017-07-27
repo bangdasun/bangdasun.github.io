@@ -1,0 +1,173 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Practical Application of Metrics | Bangda Sun | Play with data</title>
+
+  
+  <meta name="author" content="Bangda">
+  
+
+  
+  <meta name="description" content="Play with data">
+  
+
+  
+  
+  <meta name="keywords" content="Machine Learning">
+  
+
+  <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <meta property="og:title" content="Practical Application of Metrics"/>
+
+  <meta property="og:site_name" content="Bangda Sun"/>
+
+  
+  <meta property="og:image" content="/favicon.ico"/>
+  
+
+  <link href="/favicon.ico" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Bangda Sun" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+</head>
+
+
+<body>
+<div class="blog">
+  <div class="content">
+
+    <header>
+  <div class="site-branding">
+    <h1 class="site-title">
+      <a href="/">Bangda Sun</a>
+    </h1>
+    <p class="site-description">Play with data</p>
+  </div>
+  <nav class="site-navigation">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+    </ul>
+  </nav>
+</header>
+
+    <main class="site-main posts-loop">
+    <article>
+
+  
+    
+    <h3 class="article-title"><span>Practical Application of Metrics</span></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2017/07/26/practical-application-of-metrics/" rel="bookmark">
+        <time class="entry-date published" datetime="2017-07-26T23:47:19.000Z">
+          2017-07-26
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <p>How to apply different metrics?</p>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+<a id="more"></a>
+<h3 id="Different-types-of-error"><a href="#Different-types-of-error" class="headerlink" title="Different types of error"></a>Different types of error</h3><p>This time we will discuss more details about the application of metrics: <strong>TPR</strong> (<strong>Recall</strong>), <strong>FPR</strong>, <strong>Precision</strong>, <strong>PRC</strong>, <strong>ROC</strong>/<strong>AUC</strong> and <strong>F1-score</strong>.</p>
+<p>We will have different requirements when we facing different problems. Actually it depends on our tolerance of different types of error. Therefore we have two scenarios:</p>
+<ul>
+<li>We hope less TPR </li>
+</ul>
+<blockquote>
+<p>From the definition of TPR, we see that this is the proportion of “correctly classified as positive” and total actual positive. Since total actual positive is a constant, this means we don’t care much about “correctly classified as positive”. </p>
+<p>For instance, in spam classification we want predict whether it’s a spam. Define “spam” as positive and “email” as negative. Although we want filter out the spam, we won’t want the email to be filtered out. We can tolerate more spam to be classified as email (<strong>false negative</strong>), but if emails are classified as spam (false positive), we might miss important events. This case we hope high precision. </p>
+</blockquote>
+<ul>
+<li>We hope high TPR</li>
+</ul>
+<blockquote>
+<p>We hope high Recall in this case and don’t care too much about the precision.</p>
+<p>For instance, in flood prediction we will make alarm if we expect there will be a flood. Define “flood” as positive. We hope that all of the flood can be detected therefore we have high tolerance of <strong>false positive</strong>. Since typically the losses made by flood is always higher than cost of extra precaution. </p>
+</blockquote>
+<p>As a result, we can see that <strong>Accuracy</strong> is not always the goal we want to achieve, sometimes we may focus on reducing certain types of error rather than total error. </p>
+<h3 id="ROC-and-PRC"><a href="#ROC-and-PRC" class="headerlink" title="ROC and PRC"></a>ROC and PRC</h3><p>Unfortunately I cannot summarize how to select algorithms from ROC and PRC (at least for now). We need discuss that with certain examples.</p>
+<p>In addition, there are numerous imbalanced classification problems, the situations are more complex. For instance, it is possible that the algorithm performs terrible on PRC but looks perfect on ROC. Therefore don’t forget to check PRC after plotting ROC, especially for imbalanced data set. More detailed research can be found <a href="http://mark.goadrich.com/articles/davisgoadrichcamera2.pdf" target="_blank" rel="external">here</a>.</p>
+<p>However AUC could provide direct support to us since it is a straightforward way to measure the performance of algorithm.</p>
+<h3 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h3><p>There are still more issues need to be considered in real world applications since we need to incorporate more factors. Thus it’s always a good habit that don’t always rely on one metrics.</p>
+<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><p><a href="http://mark.goadrich.com/articles/davisgoadrichcamera2.pdf" target="_blank" rel="external">http://mark.goadrich.com/articles/davisgoadrichcamera2.pdf</a></p>
+
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+      
+
+    <span class="post-categories">
+      <i class="icon-categories"></i>
+        <a href="/categories/Machine-Learning/">Machine Learning</a>
+    </span>
+    
+
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/Machine-Learning/">Machine Learning</a>
+    </span>
+    
+
+    </div>
+
+    
+  </div>
+</article>
+
+
+    </main>
+
+    <footer class="site-footer">
+  <p class="site-info">
+    Proudly powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and
+    Theme by <a href="https://github.com/CodeDaraW/Hacker" target="_blank">Hacker</a>
+    </br>
+    
+    &copy; 2017 Bangda
+    
+  </p>
+  
+  <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+  <span id="busuanzi_container_site_pv">
+    Total viewer <span id="busuanzi_value_site_pv"></span>; 
+  </span>
+  
+  <span id="busuanzi_container_site_uv">
+    Total visitor <span id="busuanzi_value_site_uv"></span>
+  </span>
+
+</footer>
+    
+  </div>
+</div>
+</body>
+</html>
