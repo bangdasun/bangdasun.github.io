@@ -50,9 +50,9 @@
   <nav class="site-navigation">
     <ul>
       
-        <li><a href="/">Home</a></li>
+        <li><a href="/">主页</a></li>
       
-        <li><a href="/archives">Archives</a></li>
+        <li><a href="/archives">归档</a></li>
       
     </ul>
   </nav>
@@ -123,12 +123,14 @@
 <p>BAD:<br>x = 5</p>
 </blockquote>
 <p>Hmm… I think I gonna abondon <code>=</code> from now…</p>
-<p>Ok, one more step, what if I want to convert my ‘bad’ R code scripts to ‘good’ scripts? Just replace <code>=</code> with <code>&lt;-</code>? Seems no good. Instead, we can use <code>formatR</code> package developed by <a href="https://github.com/yihui" target="_blank" rel="external">Yihui Xie</a>.</p>
+<p>Ok, one more step, what if I want to convert my ‘bad’ R code scripts to ‘good’ scripts? Just replace <code>=</code> with <code>&lt;-</code>? Seems no good. Instead, we can use <code>formatR</code> package developed by <a href="https://github.com/yihui" target="_blank" rel="external">Yihui Xie</a>. </p>
+<p><strong>Update at 08/04/2017</strong>: Today I found a very useful and highly related blogs from Yihui, he already discussed this five years ago! Here is the <a href="https://yihui.name/cn/2012/09/equal-and-arrow/" target="_blank" rel="external">link</a>, his blogs are really nice.</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&gt; library(formatR)</div><div class="line">Warning message:</div><div class="line">package ‘formatR’ was built under R version 3.3.3 </div><div class="line">&gt; tidy_source(text = &apos;x = rnorm(10)&apos;, arrow = TRUE)</div><div class="line">x &lt;- rnorm(10)</div></pre></td></tr></table></figure>
 <h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><p><a href="https://stackoverflow.com/questions/1741820/assignment-operators-in-r-and" target="_blank" rel="external">https://stackoverflow.com/questions/1741820/assignment-operators-in-r-and</a></p>
 <p><a href="https://google.github.io/styleguide/Rguide.xml" target="_blank" rel="external">https://google.github.io/styleguide/Rguide.xml</a></p>
 <p><a href="http://stat.ethz.ch/R-manual/R-patched/library/base/html/assignOps.html" target="_blank" rel="external">http://stat.ethz.ch/R-manual/R-patched/library/base/html/assignOps.html</a></p>
 <p><a href="https://renkun.me/blog/2014/01/28/difference-between-assignment-operators-in-r.html" target="_blank" rel="external">https://renkun.me/blog/2014/01/28/difference-between-assignment-operators-in-r.html</a></p>
+<p><a href="https://yihui.name/cn/2012/09/equal-and-arrow/" target="_blank" rel="external">https://yihui.name/cn/2012/09/equal-and-arrow/</a></p>
 
       
     </div>
