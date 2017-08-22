@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Practical Application of Metrics | Bangda Sun | Talk is cheap, show me your code</title>
+  <title>Practical Application of Metrics in Binary Classifications | Bangda Sun | Talk is cheap, show me your code</title>
 
   
   <meta name="author" content="Bangda">
@@ -22,7 +22,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
 
-  <meta property="og:title" content="Practical Application of Metrics"/>
+  <meta property="og:title" content="Practical Application of Metrics in Binary Classifications"/>
 
   <meta property="og:site_name" content="Bangda Sun"/>
 
@@ -63,7 +63,7 @@
 
   
     
-    <h3 class="article-title"><span>Practical Application of Metrics</span></h3>
+    <h3 class="article-title"><span>Practical Application of Metrics in Binary Classifications</span></h3>
     
   
 
@@ -104,7 +104,7 @@
 <p>For instance, in flood prediction we will make alarm if we expect there will be a flood. Define “flood” as positive. We hope that all of the flood can be detected therefore we have high tolerance of <strong>false positive</strong>. Since typically the losses made by flood is always higher than cost of extra precaution. </p>
 </blockquote>
 <p>As a result, we can see that <strong>Accuracy</strong> is not always the goal we want to achieve, sometimes we may focus on reducing certain types of error rather than total error. </p>
-<h3 id="ROC-and-PRC"><a href="#ROC-and-PRC" class="headerlink" title="ROC and PRC"></a>ROC and PRC</h3><p>Unfortunately I cannot summarize how to select algorithms from ROC and PRC (at least for now). We need discuss that with certain examples.</p>
+<h3 id="ROC-and-PRC"><a href="#ROC-and-PRC" class="headerlink" title="ROC and PRC"></a>ROC and PRC</h3><p>Unfortunately I cannot summarize how to select algorithms from ROC and PRC (at least for now). We need discuss that with certain examples. One thing is clear that ROC is draw from a set of pairs of FPR and TPR with different threshold (we can always get the probability of data to be one of the classes).</p>
 <p>In addition, there are numerous imbalanced classification problems, the situations are more complex. For instance, it is possible that the algorithm performs terrible on PRC but looks perfect on ROC. Therefore don’t forget to check PRC after plotting ROC, especially for imbalanced data set. More detailed research can be found <a href="http://mark.goadrich.com/articles/davisgoadrichcamera2.pdf" target="_blank" rel="external">here</a>.</p>
 <p>However AUC could provide direct support to us since it is a straightforward way to measure the performance of algorithm.</p>
 <h3 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h3><p>There are still more issues need to be considered in real world applications since we need to incorporate more factors. Thus it’s always a good habit that don’t always rely on one metrics.</p>

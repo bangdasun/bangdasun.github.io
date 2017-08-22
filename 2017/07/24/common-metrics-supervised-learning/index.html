@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Common Metrics in Supervised Learning (Classification) | Bangda Sun | Talk is cheap, show me your code</title>
+  <title>Common Metrics in Binary Classification Problems | Bangda Sun | Talk is cheap, show me your code</title>
 
   
   <meta name="author" content="Bangda">
@@ -22,7 +22,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
 
-  <meta property="og:title" content="Common Metrics in Supervised Learning (Classification)"/>
+  <meta property="og:title" content="Common Metrics in Binary Classification Problems"/>
 
   <meta property="og:site_name" content="Bangda Sun"/>
 
@@ -63,7 +63,7 @@
 
   
     
-    <h3 class="article-title"><span>Common Metrics in Supervised Learning (Classification)</span></h3>
+    <h3 class="article-title"><span>Common Metrics in Binary Classification Problems</span></h3>
     
   
 
@@ -83,7 +83,7 @@
   <div class="article-content">
     <div class="entry">
       
-        <p>How to measure the performance of (binary) classification algorithms?</p>
+        <p>How to measure the performance of binary classification algorithms?</p>
 <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
 <a id="more"></a>
@@ -94,22 +94,24 @@
 <p>55 observations are correctly classified as “0”, they are <strong>true negative</strong> ;<br>43 observations are correctly classified as “1”, they are <strong>true positive</strong>;<br>4 observations are incorrectly classified as “1”, they are <strong>false positive</strong>;<br>3 observations are incorrectly classified as “0”, they are <strong>false negative</strong>. </p>
 </blockquote>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&gt; confusion_matrix</div><div class="line">         pred 0  pred 1     </div><div class="line">actual 0 &quot;TN&quot;    &quot;FP&quot;</div><div class="line">actual 1 &quot;FN&quot;    &quot;TP&quot;</div></pre></td></tr></table></figure>
+<p>We always define the class that we are interested in as “Positive”. For instance, when we want to detect the spam, the spam would be “Positive”; when we want to predict whether the user will click the link, action of click would be “Positive”. </p>
 <p>The first measure we will always use is just the <strong>Accuracy</strong>, which is the proportion of correctly classified observations, here we have</p>
 <p>\[<br>\text{Accuracy} = \frac{55+43}{55+43+4+3} = 93.33\%,<br>\]</p>
 <p>very easy and straight-forward.</p>
 <p>Next we can use <strong>true positive rate (TPR)</strong> and <strong>false positive rate (FPR)</strong>, they are defined as:</p>
 <p>\[<br>\text{TPR} = \frac{\text{true positive}}{\text{positive}} = \frac{\text{true positive}}{\text{true positive} + \text{false negative}} = \frac{43}{43+3} = 93.48\%,<br>\]</p>
 <p>\[<br>\text{FPR} = \frac{\text{false positive}}{\text{negative}} = \frac{\text{false positive}}{\text{false positive} + \text{true negative}} = \frac{4}{4+55} = 6.78\%,<br>\]</p>
-<p>where TPR can be viewed as gauge of “Type I error” (reject true) and FPR corresponds to “Type II error” (failure to reject false). TPR has another name called <strong>Recall</strong>.</p>
+<p>where TPR can be viewed as gauge of “Type I error” (reject true) and FPR corresponds to “Type II error” (failure to reject false). TPR has another name called <strong>Recall</strong>, also known as <strong>Sensitivity</strong>, and 1 - FPR is known as <strong>Specificity</strong>,</p>
 <p>From the perspective of confusion matrix, we can see the denominator of FPR is the summation of <strong>first row</strong> of confusion matrix; the denominator of TPR is the summation of <strong>second row</strong> of confusion matrix.</p>
 <p>Based on TPR and FPR, we can draw a plot named <strong>ROC</strong> (receiver operating characteristic), where the x-axis is FPR and y-axis is TPR. ROC is plotted at various threshold settings, the ideal point is at (0, 1), means for nice performance, FPR should be as small as possible and TPR should be as large as possible. Also we have <strong>AUC</strong> (area under curve) which is the area under ROC curve. ROC and AUC are widely used in industries.</p>
 <p>Next, we can define <strong>Precision</strong>, which is the proportion of all true positive. Sometimes two classes are not “equally weighted” in our problem, which means we care more about one type of class. </p>
 <p>\[<br>\text{Precision} = \frac{\text{true positive}}{\text{true positive} + \text{false positive}} = \frac{43}{43+4} = 91.49\%,<br>\]</p>
 <p>where the denominator is the <strong>second column</strong> of confusion matrix. Typically we can also draw Precision versus Recall which is known as <strong>PRC</strong>.</p>
-<p>Finally we have one more important metric called <strong>F1-score</strong>, which combine Recall and Precision together,</p>
+<p>Finally we have one more important metric called <strong>F1-score</strong>, which combine Recall and Precision together, it’s the harmonic mean of Recall and Precision:</p>
 <p>\[<br>\text{F1-score} = \frac{2\times\text{Precision}\times\text{Recall}}{\text{Precision}+\text{Recall}}=\frac{2\times43/47\times43/46}{43/47+43/46} = 0.9247.<br>\]</p>
 <h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><p><a href="https://chrisalbon.com/machine-learning/precision_recall_and_F1_scores.html" target="_blank" rel="external">https://chrisalbon.com/machine-learning/precision_recall_and_F1_scores.html</a></p>
 <p><a href="http://shahramabyari.com/2016/02/22/measuring-performance-of-classifiers/#comments" target="_blank" rel="external">http://shahramabyari.com/2016/02/22/measuring-performance-of-classifiers/#comments</a></p>
+<p><a href="https://en.wikipedia.org/wiki/Sensitivity_and_specificity" target="_blank" rel="external">https://en.wikipedia.org/wiki/Sensitivity_and_specificity</a></p>
 
       
     </div>
