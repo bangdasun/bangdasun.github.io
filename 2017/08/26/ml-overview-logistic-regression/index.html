@@ -50,9 +50,9 @@
   <nav class="site-navigation">
     <ul>
       
-        <li><a href="/">Home</a></li>
+        <li><a href="/">主页</a></li>
       
-        <li><a href="/archives">Archives</a></li>
+        <li><a href="/archives">归档</a></li>
       
     </ul>
   </nav>
@@ -101,7 +101,7 @@
 <p>It’s a “S”-shaped curve where \(s(x)\) is close to 0 for \(x\) goes to \(-\infty\) and close to 1 for \(x\) goes to \(+\infty\).</p>
 <p>Therefore logistic regression is actually modeling the probability of outputs to be one of the classes,</p>
 <p>\[<br>\begin{aligned}<br>P(y = 1|x) &amp;= \frac{1}{1+\exp(-x\beta)}, \\<br>P(y = 0|x) &amp;= \frac{\exp(-x\beta)}{1+\exp(-x\beta)},<br>\end{aligned}<br>\]</p>
-<p>here \(x\) is a row vector of predictors, \(\beta\) is a column vector consists of coefficients of logistic regression. Now assume we have a \(n\times p\) input matrix \(\mathbf{X}\), represents for \(n\) observations and \(p\) features (predictors), where \(\mathbf{x}_{i}\) is the \(i\) th row; an output vector \(\mathbf{y}\) with length \(n\). For observation \(i\), we have<br>\[<br>P(y_{i} = 1|\mathbf{x}_{i}) = \frac{1}{1+\exp(-\mathbf{x}_{i}\beta)},<br>\]<br>then we can do some transformation,<br>\[<br>\begin{aligned}<br>\frac{P(y_{i} = 1|\mathbf{x}_{i})}{P(y_{i} = 0|\mathbf{x}_{i})} = \frac{1}{\exp(-\mathbf{x}_{i}\beta)} = \exp(x_{i}\beta) \longrightarrow \ln\left[\frac{P(y_{i} = 1|\mathbf{x}_{i})}{P(y_{i} = 0|\mathbf{x}_{i})}\right] = \ln\left[\frac{p(\mathbf{x}_{i})}{1-p(\mathbf{x}_{i})}\right]<br>\end{aligned} = \mathbf{x}_{i}\beta.<br>\]</p>
+<p>here \(x\) is a row vector of predictors, \(\beta\) is a column vector consists of coefficients of logistic regression. Now assume we have a \(n\times p\) input matrix \(\mathbf{X}\), represents for \(n\) observations and \(p\) features (predictors), where \(\mathbf{x}_{i}\) is the \(i\) th row; an output vector \(\mathbf{y}\) with length \(n\). For observation \(i\), we have<br>\[<br>P(y_{i} = 1|\mathbf{x}_{i}) = \frac{1}{1+\exp(-\mathbf{x}_{i}\beta)},<br>\]<br>then we can do some transformation,<br>\[<br>\begin{aligned}<br>\frac{P(y_{i} = 1|\mathbf{x}_{i})}{P(y_{i} = 0|\mathbf{x}_{i})} = \frac{1}{\exp(-\mathbf{x}_{i}\beta)} = \exp(\mathbf{x}_{i}\beta) \longrightarrow \ln\left[\frac{P(y_{i} = 1|\mathbf{x}_{i})}{P(y_{i} = 0|\mathbf{x}_{i})}\right] = \ln\left[\frac{p(\mathbf{x}_{i})}{1-p(\mathbf{x}_{i})}\right]<br>\end{aligned} = \mathbf{x}_{i}\beta.<br>\]</p>
 <p>Do you still remember that linear regression has this form?</p>
 <p>\[<br>\mathbf{y} = \mathbf{X}\beta + \epsilon.<br>\]</p>
 <p>Yes, this form is similar to linear regression now.</p>
