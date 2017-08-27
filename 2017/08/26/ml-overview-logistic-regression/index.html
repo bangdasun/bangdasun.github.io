@@ -1,0 +1,165 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Machine Learning Overview Series (I) - Logistic Regression | Bangda Sun | Talk is cheap, show me your code</title>
+
+  
+  <meta name="author" content="Bangda">
+  
+
+  
+  <meta name="description" content="Play with data">
+  
+
+  
+  
+  <meta name="keywords" content="Classification,Logistic Regression">
+  
+
+  <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <meta property="og:title" content="Machine Learning Overview Series (I) - Logistic Regression"/>
+
+  <meta property="og:site_name" content="Bangda Sun"/>
+
+  
+  <meta property="og:image" content="/favicon.ico"/>
+  
+
+  <link href="/favicon.ico" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Bangda Sun" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+</head>
+
+
+<body>
+<div class="blog">
+  <div class="content">
+
+    <header>
+  <div class="site-branding">
+    <h1 class="site-title">
+      <a href="/">Bangda Sun</a>
+    </h1>
+    <p class="site-description">Talk is cheap, show me your code</p>
+  </div>
+  <nav class="site-navigation">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+    </ul>
+  </nav>
+</header>
+
+    <main class="site-main posts-loop">
+    <article>
+
+  
+    
+    <h3 class="article-title"><span>Machine Learning Overview Series (I) - Logistic Regression</span></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2017/08/26/ml-overview-logistic-regression/" rel="bookmark">
+        <time class="entry-date published" datetime="2017-08-26T21:48:01.000Z">
+          2017-08-26
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <p>Overview of machine learning algorithms: logistic regression.</p>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+<a id="more"></a>
+<h3 id="Mathematical-Basis"><a href="#Mathematical-Basis" class="headerlink" title="Mathematical Basis"></a>Mathematical Basis</h3><p>We know that supervised learning could be regarded as the process of learning some kinds of mapping \(f()\) between input and output,</p>
+<p>\[<br>y = f(X).<br>\]</p>
+<p>Logistic regression is a simple (mathematically at least) linear model for classification problems in supervised learning, which means there are some linear relationship exist.</p>
+<p>We start from simplest case where there are only two classes, the output \(y\) is binary, if we regard it as a random variable, we will have \(Y\sim \text{Bernoulli(p)}\) with probability density function</p>
+<p>\[<br>f(y) = p^{y}(1-p)^{1-y},~\text{where }y\in\{0,1\},~p\in[0,1],<br>\]</p>
+<p>then from the probabilistic perspective, we would like to modeling the probability of the output to be positive (actually this is the parameter of the Bernoulli distribution above), i.e.</p>
+<p>\[<br>P(y=1|x)=p(x).<br>\]</p>
+<p>We could build a linear regression model between \(x\) and \(p(x)\). However it could happens that for some ranges of \(x\), \(p(x)\) is out of \([0,1]\), that’s hard to interpret. One of the ideas is use a function to map \(p(x)\) within \([0,1]\). And one of the choice of the function is called <strong>sigmoid</strong> function \(s(x)\),</p>
+<p>\[<br>s(x) = \frac{1}{1+e^{-x}},<br>\]<br>with derivative</p>
+<p>\[<br>s’(x) = \frac{e^{-x}}{(1+e^{-x})^{2}}.<br>\]</p>
+<p>It’s a “S”-shaped curve where \(s(x)\) is close to 0 for \(x\) goes to \(-\infty\) and close to 1 for \(x\) goes to \(+\infty\).</p>
+<p>Therefore logistic regression is actually modeling the probability of outputs to be one of the classes,</p>
+<p>\[<br>\begin{aligned}<br>P(y = 1|x) &amp;= \frac{1}{1+\exp(-x\beta)}, \\<br>P(y = 0|x) &amp;= \frac{\exp(-x\beta)}{1+\exp(-x\beta)},<br>\end{aligned}<br>\]</p>
+<p>here \(x\) is a row vector of predictors, \(\beta\) is a column vector consists of coefficients of logistic regression. Now assume we have a \(n\times p\) input matrix \(\mathbf{X}\), represents for \(n\) observations and \(p\) features (predictors), where \(x<em>{i}\) is the \(i\)th row; an output vector \(y\) with length \(n\). For observation \(i\), we have<br>\[<br>p(y</em>{i} = 1|x_{i})<br>\]</p>
+
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+      
+
+    <span class="post-categories">
+      <i class="icon-categories"></i>
+        <a href="/categories/Machine-Learning/">Machine Learning</a>
+    </span>
+    
+
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/Classification/">Classification</a><a href="/tags/Logistic-Regression/">Logistic Regression</a>
+    </span>
+    
+
+    </div>
+
+    
+  </div>
+</article>
+
+
+    </main>
+
+    <footer class="site-footer">
+  <p class="site-info">
+    Proudly powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and
+    Theme by <a href="https://github.com/CodeDaraW/Hacker" target="_blank">Hacker</a>
+    </br>
+    
+    &copy; 2017 Bangda
+    
+  </p>
+  
+  <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+  <span id="busuanzi_container_site_pv">
+    Total viewer <span id="busuanzi_value_site_pv"></span>; 
+  </span>
+  
+  <span id="busuanzi_container_site_uv">
+    Total visitor <span id="busuanzi_value_site_uv"></span>
+  </span>
+
+</footer>
+    
+  </div>
+</div>
+</body>
+</html>
