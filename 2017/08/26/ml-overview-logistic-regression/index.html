@@ -50,9 +50,9 @@
   <nav class="site-navigation">
     <ul>
       
-        <li><a href="/">主页</a></li>
+        <li><a href="/">Home</a></li>
       
-        <li><a href="/archives">归档</a></li>
+        <li><a href="/archives">Archives</a></li>
       
     </ul>
   </nav>
@@ -91,7 +91,7 @@
 <h3 id="Mathematical-Basis"><a href="#Mathematical-Basis" class="headerlink" title="Mathematical Basis"></a>Mathematical Basis</h3><p>We know that supervised learning could be regarded as the process of learning some kinds of mapping \(f()\) between input and output,</p>
 <p>\[<br>y = f(X).<br>\]</p>
 <p>Logistic regression is a simple (mathematically at least) linear model for classification problems in supervised learning, which means there are some linear relationship exist.</p>
-<p>We start from simplest case where there are only two classes, the output \(y\) is binary, if we regard it as a random variable, we will have \(Y\sim \text{Bernoulli(p)}\) with probability density function</p>
+<p>We start from simplest case where there are only two classes, the output \(y\) is binary, if we regard it as a random variable, we will have \(Y\sim \text{Bernoulli}(p)\) with probability density function</p>
 <p>\[<br>f(y) = p^{y}(1-p)^{1-y},~\text{where }y\in\{0,1\},~p\in[0,1],<br>\]</p>
 <p>then from the probabilistic perspective, we would like to modeling the probability of the output to be positive (actually this is the parameter of the Bernoulli distribution above), i.e.</p>
 <p>\[<br>P(y=1|x)=p(x).<br>\]</p>
