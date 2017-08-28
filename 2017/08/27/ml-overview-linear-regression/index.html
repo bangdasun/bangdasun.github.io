@@ -101,7 +101,7 @@
 <p>No differences with other supervised learning problem, to estimate the coefficients we need to minimize the loss function of model. Usually we use <strong>squared loss</strong> since it has good property (discuss later in this post), sometimes other loss functions like <strong>absolute loss</strong> is also used. If we choose squared loss, we are actually on the track of ordinary least square (<strong>OLS</strong>), i.e.,</p>
 <p>\[<br>\hat{\beta} = \arg\min_{\beta} \sum^{n}_{i=1}(y_{i} - \beta_{0}-\beta_{1}x_{i1}-\cdots-\beta_{p}x_{ip})^{2} = \arg\min_{\beta} (\mathbf{y}-\mathbf{X}\beta)^\top(\mathbf{y}-\mathbf{X}\beta),<br>\]</p>
 <p>and we can solve it explicitly,</p>
-<p>\[<br>\begin{aligned}<br>L(\beta) =~&amp; \left(\mathbf{y} - \mathbf{X}\beta\right)^\top\left(\mathbf{y} - \mathbf{X}\beta\right) \\<br>         =~&amp; \mathbf{y}^\top\mathbf{y} - 2\mathbf{X}^\top\mathbf{y}\beta^\top + \beta^\top\mathbf{X}^\top\mathbf{X}^\top\beta,<br>\end{aligned}<br>\]</p>
+<p>\[<br>\begin{aligned}<br>L(\beta) =~&amp; \left(\mathbf{y} - \mathbf{X}\beta\right)^\top\left(\mathbf{y} - \mathbf{X}\beta\right) \\<br>         =~&amp; \mathbf{y}^\top\mathbf{y} - 2\mathbf{X}^\top\mathbf{y}\beta^\top + \beta^\top\mathbf{X}^\top\mathbf{X}\beta,<br>\end{aligned}<br>\]</p>
 <p>take the gradient and set it equal to 0,</p>
 <p>\[<br>\nabla_{\beta} L(\beta) = -2\mathbf{X}^\top\mathbf{y} + 2\mathbf{X}^\top\mathbf{X}\beta = 0<br>\longrightarrow \mathbf{X}^\top\mathbf{X}\beta = \mathbf{X}^\top\mathbf{y}\longrightarrow \beta = \left(\mathbf{X}^\top\mathbf{X}\right)^{-1}\mathbf{X}^\top\mathbf{y}.<br>\]</p>
 <p>Really simple calculation.</p>
