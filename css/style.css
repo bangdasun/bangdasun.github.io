@@ -515,6 +515,7 @@ header .site-navigation ul li a {
 article {
   position: relative;
   padding: 8rem 0;
+  text-align: justify;
 }
 article a {
   color: #f03838;
@@ -698,7 +699,7 @@ article.archive {
   margin: 2em auto;
 }
 .archive-post {
-  text-align: left;
+  text-align: justify;
   margin: 2em auto;
 }
 .archive-post .archive-title {
