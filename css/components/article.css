@@ -1,6 +1,7 @@
 article {
   position: relative;
   padding: 8rem 0;
+  text-align: justify;
 }
 article a {
   color: #f03838;
