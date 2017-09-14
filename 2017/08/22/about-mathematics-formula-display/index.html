@@ -33,8 +33,13 @@
   <link href="/favicon.ico" rel="icon">
   <link rel="alternate" href="/atom.xml" title="Bangda Sun" type="application/atom+xml">
   <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
-  <script src="scripts/mathjax-config.js"></script>
-  <script type="text/javascript" async="async"
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    jax: ["input/TeX","output/HTML-CSS"],
+    extensions: ["tex2jax.js","Safe.js"]
+  });
+  </script>
+<script type="text/javascript" async="async"
   src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_CHTML,Safe">
 </script>
 </script>
@@ -98,6 +103,7 @@
 <p>Then we will get what we want exactly.</p>
 <p>lol.</p>
 <p>By the way I found that it doesn’t looks very nice to read posts from mobile device…I will make it better in the future +_+.</p>
+<h3 id="Update-on-9-13-2017"><a href="#Update-on-9-13-2017" class="headerlink" title="Update on 9/13/2017"></a>Update on 9/13/2017</h3><p>Now I’ve fixed this issue, no need to click the “load unsafe scripts”.</p>
 
       
     </div>
