@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Data Visualization with ggplot2 (1) | Bangda Sun | Talk is cheap, show me your code</title>
+  <title>Data Visualization with ggplot2 (1) | R,Data Visualization | Bangda Sun | Talk is cheap, show me your code</title>
 
   
   <meta name="author" content="Bangda">
@@ -15,7 +15,7 @@
 
   
   
-  <meta name="keywords" content="R,Data Visualization">
+  <meta name="keywords" content=",">
   
 
   <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
@@ -69,7 +69,7 @@
 
   <div class="article-top-meta">
     <span class="posted-on">
-      <a href="/2017/07/04/data-visualization-ggplot2-i/" rel="bookmark">
+      <a href="/posts/data-visualization-ggplot2-i.html" rel="bookmark">
         <time class="entry-date published" datetime="2017-07-04T16:18:24.000Z">
           2017-07-04
         </time>
@@ -133,17 +133,17 @@
 <p>The basic function is <strong>ggplot()</strong>, where will we specify the data as the parameter of <strong>ggplot()</strong>. Next always comes the geometric objects, in <code>ggplot2</code> we using <strong>geom_obj</strong>, for example, we use <strong>geom_point()</strong> for scatter plots; <strong>geom_histogram()</strong> for histograms. Also we need to specify the aesthetic mapping, the basic statement is <strong>mapping = aes(x = .., y = ..)</strong> and it could be specified in both <strong>ggplot()</strong> and <strong>geom_obj</strong>.</p>
 <p>Scatter plot: we want to show the relationship between sqft_living (Square footage of the apartments interior living space) and price, we specify the aesthetic to be: sqft_living maps to x-axis, price maps to y-axis, and set size = 2, later we will get to the discussion of alpha. Therefore here is our first plot</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&gt; ggplot(training) + </div><div class="line">+   geom_point(mapping = aes(x = sqft_living, y = price), alpha = I(1/10), size = 2) + </div><div class="line">+   labs(x = &apos;sqft living&apos;, y = &apos;price&apos;, title = &apos;price ~ sqft living&apos;)</div></pre></td></tr></table></figure>
-<p><img src="/images/scatterplot-01.png" style="width: 500px; height: 450px"> </p>
+<p><img src="scatterplot-01.png" style="width: 500px; height: 450px"> </p>
 <p>Box plot: then we want to show the distribution of the price in different groups of views. We specify aesthetic to be: view maps to x-axis, price maps to y-axis. Notice that in the original data set, view are described as numerical data types, actually we should treat it as categorical variable, therefore we apply <strong>factor()</strong> on it. And get our second plot!</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&gt; ggplot(training) + </div><div class="line">+   geom_boxplot(mapping =  aes(x = factor(view), y = price)) +</div><div class="line">+   labs(x = &quot;view&quot;, y = &quot;price&quot;, title = &quot;price ~ views&quot;)</div></pre></td></tr></table></figure>
-<p><img src="/images/boxplot-01.png" style="width: 500px; height: 450px"> </p>
+<p><img src="boxplot-01.png" style="width: 500px; height: 450px"> </p>
 <p>Histogram: Then we play with the 3rd most basic plot. Supposed we just want to know the distribution of house price. price should be mapped to x-axis, and for y-axis there is no variable (here we specify it as ..density.. to make sure the y-axis is probability rather than frequency), because some statistical transformation has been done to produce the histogram.</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&gt; ggplot(training) +</div><div class="line">+   geom_histogram(aes(x = price, y = ..density..)) + </div><div class="line">+   labs(x = &quot;price&quot;)</div><div class="line">`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</div></pre></td></tr></table></figure>
-<p><img src="/images/hist-01.png" style="width: 500px; height: 450px"> </p>
+<p><img src="hist-01.png" style="width: 500px; height: 450px"> </p>
 <p>Every time you get your first histogram using <code>ggplot2</code>, it will remind you to try difference <strong>bins</strong> to get better view of the histogram, that actually what we should do when dealing with histograms, we will discuss more about that later.</p>
 <p>Bar plot: Similar to histogram, bar plot in some sense can be viewed as ‘discrete’ version of histogram. For example, we want to show the distribution of grade. We map grade to x-axis, and set stat = ‘count’,</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&gt; ggplot(training) +</div><div class="line">+   geom_bar(aes(x = factor(grade)), stat = &apos;count&apos;) + </div><div class="line">+   labs(x = &apos;grade&apos;)</div></pre></td></tr></table></figure>
-<p><img src="/images/barplot-01.png" style="width: 500px; height: 450px"> </p>
+<p><img src="barplot-01.png" style="width: 500px; height: 450px"> </p>
 <h3 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h3><p>We introduced five most basic plots in data visualization and apply four of them on a real world data set. Since line plot is similar to scatter plot on syntax, we didn’t give an example.</p>
 <p>We see that the basic elements for creating a plot using <code>ggplot2</code> are the <strong>data</strong> (data.frame in R), <strong>aesthetics</strong> and <strong>geometric objects</strong>. This is a brand new concept for people who used to plotting using R basic graphic package and other languages like Matlab or Python.</p>
 <p>The plots for now are plain and naive, to polish them, we need to specify more aesthetics and parameters, like size and color of geometric object, scale and tick of axis, etc. Also, to extract more information, some times we also need some techniques like facet. We will discuss more details about that in later posts.</p>
@@ -157,20 +157,13 @@
     <div class="article-meta pull-left">
 
     
-      
-
-    <span class="post-categories">
-      <i class="icon-categories"></i>
-        <a href="/categories/R/">R</a>, <a href="/categories/R/Data-Visualization/">Data Visualization</a>
-    </span>
-    
 
     
     
 
     <span class="post-tags">
       <i class="icon-tags"></i>
-        <a href="/tags/R/">R</a><a href="/tags/Data-Visualization/">Data Visualization</a>
+        <a href="/undefined">undefined</a><a href="/undefined">undefined</a>
     </span>
     
 
