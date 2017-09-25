@@ -1,0 +1,193 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Machine Learning Overview Series (5) - Bagging Decision Trees and Random Forests | Bangda Sun | Practice makes perfect</title>
+
+  
+  <meta name="author" content="Bangda">
+  
+
+  
+  <meta name="description" content="Play with data">
+  
+
+  
+  
+  <meta name="keywords" content="Classification,Ensemble Algorithms">
+  
+
+  <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <meta property="og:title" content="Machine Learning Overview Series (5) - Bagging Decision Trees and Random Forests"/>
+
+  <meta property="og:site_name" content="Bangda Sun"/>
+
+  
+  <meta property="og:image" content="/favicon.ico"/>
+  
+
+  <link href="/favicon.ico" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Bangda Sun" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    jax: ["input/TeX","output/HTML-CSS"],
+    extensions: ["tex2jax.js","Safe.js"]
+  });
+  </script>
+<script type="text/javascript" async="async"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_CHTML,Safe">
+</script>
+</script>
+</head>
+
+
+<body>
+<div class="blog">
+  <div class="content">
+
+    <header>
+  <div class="site-branding">
+    <h1 class="site-title">
+      <a href="/">Bangda Sun</a>
+    </h1>
+    <p class="site-description">Practice makes perfect</p>
+  </div>
+  <nav class="site-navigation">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+    </ul>
+  </nav>
+</header>
+
+    <main class="site-main posts-loop">
+    <article>
+
+  
+    
+    <h3 class="article-title"><span>Machine Learning Overview Series (5) - Bagging Decision Trees and Random Forests</span></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2017/09/24/ml-overview-bagging-randomforests/" rel="bookmark">
+        <time class="entry-date published" datetime="2017-09-25T00:19:01.000Z">
+          2017-09-24
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <p>Let’s start working with ensemble algorithms!</p>
+<a id="more"></a>
+<h3 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h3><p>After decision tree section we can go deeper. Bagging and Random Forests can be also regarded as an implementation of <strong>Collective Intelligence</strong>. Which means rather than single model, now we get many models in our hand. The names of these two algorithms are intuitive: for “Bagging”, image that we have a “bag” of decision trees and let them work together; for “random forests” we have similar description, we are now facing “forests” rather than single tree. </p>
+<h3 id="Mathematical-Basis"><a href="#Mathematical-Basis" class="headerlink" title="Mathematical Basis"></a>Mathematical Basis</h3><p>First let’s introduce bootstrap, it is the base of this two algorithms. Bootstrap is a widely used method in statistics and other fields and it related to “Resampling”. One of the example is parameter estimation. Consider we have a random sample and we would like to estimate the population mean.  We usually use sample mean as the estimation of population mean since this is the “MLE”. But what if we want to know how confidence are we to this estimation? Well we might assume that the sample mean has Normal distribution (Do you remember Central Limit Theorem?) and do some inference; or we can refer Bayesian statisticians for help, set up a prior and we observe the data and then simulate the posterior. And we can also use bootstrap. Here is the idea:</p>
+<blockquote>
+<ol>
+<li>We sample our data with replacement and get a new sample with same sample size, therefore it’s possible that there are duplicates in new sample;</li>
+<li>Repeat this process multiple times, say \(B\). And finally we will have \(B\) samples;</li>
+<li>Get all sample means from these \(B\) samples, now we can form a distribution and do what we want to do (calculate standard deviation).</li>
+</ol>
+</blockquote>
+<p>Here is one simple example:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">In [1]: X = np.random.randn(100)</div><div class="line">        print(&quot;Mean:&#123;&#125;\nVariance:&#123;&#125;\n&quot;.format(np.mean(X), np.var(X)))</div><div class="line">Out[1]: Mean:-0.175673121371</div><div class="line">        Variance:0.815885946342</div></pre></td></tr></table></figure>
+<p>where we just get one point… what about using bootstrap? </p>
+<p><img src="/images/bootstrap.png" style="width: 600px; height: 300px"> </p>
+<p>Ok, now let’s see how bootstrap is incorporated in Bagging.</p>
+<blockquote>
+<p>We can generate \(B\) bootstrap samples and build a decision tree on each of them, then aggregation to get the final result. Yes we can formulate the idea of bagging into one sentence.</p>
+</blockquote>
+<p>The prediction of bagging is given by<br>\[<br>\hat{y}_{\text{bag}} = \frac{1}{B}\sum^{B}_{b=1}\hat{y}^{b}<br>\]</p>
+<p>for regression problem, and<br>\[<br>\hat{y}_{\text{bag}} = \arg\max_{k}\hat{p}_{k}<br>\]</p>
+<p>for classification problem, where \(\hat{p}_{k}\) is the proportion of \(k\) th category (<strong>Majority Vote</strong>).</p>
+<p>Then we check if there is any problems in this process. Since we use bootstrap, is that possible that some data is not sampled? Yes it is. Consider we have \(n\) data points, the probability that point \(i\) is not selected in one draw is<br>\[<br>Pr(i\text{ not selected in one draw}) = 1 - \frac{1}{n}.<br>\]</p>
+<p>then the probability that this point is not sampled in bootstrap sample is<br>\[<br>Pr(i\text{ not sampled in one bootstrap sample}) = \left(1 - \frac{1}{n}\right)^{n}.<br>\]</p>
+<p>do you see something familiar? </p>
+<p>\[<br>\lim_{n\rightarrow\infty}\left(1-\frac{1}{n}\right)^{n} = \frac{1}{e} \approx 0.367.<br>\]</p>
+<p>This implies that approximately 63% of data is used in Bagging (just approximation!). The rest of data that we are not used is called <strong>out-of-bag (OOB)</strong> data. It’s important to know how well does bagging perform on the out-of-bag, we need to estimate <strong>out-of-bag-error</strong>. It can be shown that with B sufficiently large, OOB error is virtually equivalent to leave-one-out cross-validation error\(^{[1]}\).</p>
+<p>Then let’s see Random Forests. </p>
+<blockquote>
+<p>The key word is “Random”, which means at each step of growing tree (make a split), we only use a subset of features rather than all of them, other steps is same as Bagging. Yes we can also formulate the idea of random forests in one sentence!</p>
+</blockquote>
+<p>In practice, the sample size is denoted as <code>max_features</code> (in <code>sklearn</code> or <code>randomForest (R)</code>), this is one of the hyper-parameters of random forests algorithms. Usually we may started with \(m=\sqrt{p}\).</p>
+<h3 id="Connection-between-Bagging-and-Random-Forests"><a href="#Connection-between-Bagging-and-Random-Forests" class="headerlink" title="Connection between Bagging and Random Forests"></a>Connection between Bagging and Random Forests</h3><p>If we set the sample size of features equal to the total number of features, random forests is same as bagging.</p>
+<p>We can see the difference between bagging and random forests is the number of features. Random forests can decorrelates the decision trees using sampling. Since it is possible that there is an important feature and it will dominant all decision trees if we just include all features, the prediction would be unreliable in this way,  and take a subset will prevent this happen.</p>
+<h3 id="Implementation"><a href="#Implementation" class="headerlink" title="Implementation"></a>Implementation</h3><p>The implementations of bagging and random forests are based on decision tree, I invoke <code>DecisionTreeClassifier</code> in <code>sklearn</code> and here is the <a href="https://github.com/bangdasun/Statistical-machine-learning/blob/master/algorithms/classification/ensemble-bagging-randomforests/self-defined.ipynb" target="_blank" rel="external">implementation</a>.</p>
+<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><p>[1] Gareth James, Daniela Witten, Trevor Hastie, Robert Tishirani; Introduction to Statistical Learning.</p>
+
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+      
+
+    <span class="post-categories">
+      <i class="icon-categories"></i>
+        <a href="/categories/Machine-Learning/">Machine Learning</a>
+    </span>
+    
+
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/Classification/">Classification</a><a href="/tags/Ensemble-Algorithms/">Ensemble Algorithms</a>
+    </span>
+    
+
+    </div>
+
+    
+  </div>
+</article>
+
+
+    </main>
+
+    <footer class="site-footer">
+  <p class="site-info">
+    Proudly powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and
+    Theme by <a href="https://github.com/CodeDaraW/Hacker" target="_blank">Hacker</a>
+    </br>
+    
+    &copy; 2017 Bangda
+    
+  </p>
+  
+  <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+  <span id="busuanzi_container_site_pv">
+    Total viewer <span id="busuanzi_value_site_pv"></span>; 
+  </span>
+  
+  <span id="busuanzi_container_site_uv">
+    Total visitor <span id="busuanzi_value_site_uv"></span>
+  </span>
+
+</footer>
+    
+  </div>
+</div>
+</body>
+</html>
