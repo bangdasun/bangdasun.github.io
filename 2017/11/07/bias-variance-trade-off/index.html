@@ -1,0 +1,173 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Bias and Variance Trade-Off | Bangda Sun | Practice makes perfect</title>
+
+  
+  <meta name="author" content="Bangda">
+  
+
+  
+  <meta name="description" content="Play with data">
+  
+
+  
+  
+  <meta name="keywords" content="Machine Learning">
+  
+
+  <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <meta property="og:title" content="Bias and Variance Trade-Off"/>
+
+  <meta property="og:site_name" content="Bangda Sun"/>
+
+  
+  <meta property="og:image" content="/favicon.ico"/>
+  
+
+  <link href="/favicon.ico" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Bangda Sun" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    jax: ["input/TeX","output/HTML-CSS"],
+    extensions: ["tex2jax.js","Safe.js"]
+  });
+  </script>
+<script type="text/javascript" async="async"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_CHTML,Safe">
+</script>
+</script>
+</head>
+
+
+<body>
+<div class="blog">
+  <div class="content">
+
+    <header>
+  <div class="site-branding">
+    <h1 class="site-title">
+      <a href="/">Bangda Sun</a>
+    </h1>
+    <p class="site-description">Practice makes perfect</p>
+  </div>
+  <nav class="site-navigation">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+    </ul>
+  </nav>
+</header>
+
+    <main class="site-main posts-loop">
+    <article>
+
+  
+    
+    <h3 class="article-title"><span>Bias and Variance Trade-Off</span></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2017/11/07/bias-variance-trade-off/" rel="bookmark">
+        <time class="entry-date published" datetime="2017-11-08T00:43:07.000Z">
+          2017-11-07
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <p>Basic but important idea.</p>
+<a id="more"></a>
+<p>Bias-variance trade-off is one of the most important machine learning ideas that every data scientist should keep in mind. We’ve already know several models / algorithms available for a specific problems, one question is how to compare those models.</p>
+<p>Sometimes machine learning is results-oriented, the algorithm that could achieve lower error would be the best choice. And the principal behind this is <strong>Bias-Variance trade-off</strong>.</p>
+<p>We know the accuracy of an algorithm is given by the loss function \(L(y, \hat{y})\), and in practice we usually learn the parameters via minimizing empirical loss</p>
+<p>\[<br>\mathbb{E}[L(y,\hat{y})]\approx\frac{1}{n}\sum^{n}_{i=1}L(y_{i}, \hat{y_{i}}).<br>\]</p>
+<p>Our next goal is try to decompose this quantity. To make our life easier, I assume we are facing regression problem and the loss function is <strong>squared loss</strong>. Therefore we want to minimize <strong>MSE</strong> (Mean Squared Error). Suppose we’ve fit a function \(\hat{y} = \hat{f}(x)\), for a new data \((\tilde{x}, \tilde{y})\), we want the expected MSE to be the minimum,<br>\[<br>\mathbb{E}\left[(\tilde{y} - \hat{f}(\tilde{x}))^2\right].<br>\]</p>
+<p>Then we can apply a commonly used trick to decompose this</p>
+<p>\[<br>\begin{aligned}<br> &amp;~\mathbb{E}\left[(\tilde{y} - \hat{f}(\tilde{x}))^2\right] \\<br>=&amp;~\mathbb{E}\left[(\tilde{y} - \mathbb{E}[\hat{f(\tilde{x})}] + \mathbb{E}[\hat{f(\tilde{x})}] - \hat{f}(\tilde{x}))^2\right] \\<br>=&amp;~\mathbb{E}\left[(\tilde{y} - \mathbb{E}[\hat{f}(\tilde{x})])^2\right] + \mathbb{E}\left[(\hat{f}(\tilde{x}) - \mathbb{E}[\hat{f}(\tilde{x})])^2\right] \\<br>=&amp;~\text{Bias}\left(\hat{f}(\tilde{x})\right) + \text{Var}\left(\hat{f}(\tilde{x})\right),<br>\end{aligned}<br>\]</p>
+<p>yeah, you can see we get the bias and variance term successfully. And you can also see that a good model doesn’t mean to achieve low bias or low variance, it should achieve low error that consist of bias and variance, which means achieve low bias and low variance simultaneously.</p>
+<p>Here is the informal definition of <strong>bias</strong> and <strong>variance</strong>:</p>
+<ul>
+<li>Bias: Error introduced by approximating complicate model using a simpler model.</li>
+<li>Variance: Amount by which \(\hat{f}(\tilde{x})\) would change if we estimate it use a different (training) data.</li>
+</ul>
+<p>In general more flexible models / algorithms will have higher variance but low bias since they focus more on reducing bias, e.g. Boosting. We will discuss more about this next time.</p>
+
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+      
+
+    <span class="post-categories">
+      <i class="icon-categories"></i>
+        <a href="/categories/Machine-Learning/">Machine Learning</a>
+    </span>
+    
+
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/Machine-Learning/">Machine Learning</a>
+    </span>
+    
+
+    </div>
+
+    
+  </div>
+</article>
+
+
+    </main>
+
+    <footer class="site-footer">
+  <p class="site-info">
+    Proudly powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and
+    Theme by <a href="https://github.com/CodeDaraW/Hacker" target="_blank">Hacker</a>
+    </br>
+    
+    &copy; 2017 Bangda
+    
+  </p>
+  
+  <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+  <span id="busuanzi_container_site_pv">
+    Total viewer <span id="busuanzi_value_site_pv"></span>; 
+  </span>
+  
+  <span id="busuanzi_container_site_uv">
+    Total visitor <span id="busuanzi_value_site_uv"></span>
+  </span>
+
+</footer>
+    
+  </div>
+</div>
+</body>
+</html>
