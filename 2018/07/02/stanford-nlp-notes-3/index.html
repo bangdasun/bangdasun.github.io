@@ -1,0 +1,195 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Stanford NLP (coursera) Notes (3) | Bangda Sun | Practice makes perfect</title>
+
+  
+  <meta name="author" content="Bangda">
+  
+
+  
+  <meta name="description" content="Play with data">
+  
+
+  
+  
+  <meta name="keywords" content="Linguistic,Algorithm">
+  
+
+  <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <meta property="og:title" content="Stanford NLP (coursera) Notes (3)"/>
+
+  <meta property="og:site_name" content="Bangda Sun"/>
+
+  
+  <meta property="og:image" content="/favicon.ico"/>
+  
+
+  <link href="/favicon.ico" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Bangda Sun" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    jax: ["input/TeX","output/HTML-CSS"],
+    extensions: ["tex2jax.js","Safe.js"]
+  });
+  </script>
+<script type="text/javascript" async="async"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_CHTML,Safe">
+</script>
+</script>
+</head>
+
+
+<body>
+<div class="blog">
+  <div class="content">
+
+    <header>
+  <div class="site-branding">
+    <h1 class="site-title">
+      <a href="/">Bangda Sun</a>
+    </h1>
+    <p class="site-description">Practice makes perfect</p>
+  </div>
+  <nav class="site-navigation">
+    <ul>
+      
+        <li><a href="/">主页</a></li>
+      
+        <li><a href="/archives">归档</a></li>
+      
+    </ul>
+  </nav>
+</header>
+
+    <main class="site-main posts-loop">
+    <article>
+
+  
+    
+    <h3 class="article-title"><span>Stanford NLP (coursera) Notes (3)</span></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2018/07/02/stanford-nlp-notes-3/" rel="bookmark">
+        <time class="entry-date published" datetime="2018-07-03T02:28:39.000Z">
+          2018-07-02
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <p>Minimum Edit Distance</p>
+<a id="more"></a>
+<h3 id="Minimum-Edit-Distance"><a href="#Minimum-Edit-Distance" class="headerlink" title="Minimum Edit Distance"></a>Minimum Edit Distance</h3><p>When you use some text editors like MS Word, you’ll find there is a function called “spell correction”, it will give a list of words that it think you might want to replace with. How comes this list? Here we’d like to introduce a basic concept in NLP called <strong>Minimum Edit Distance</strong>.</p>
+<p>Minimum Edit Distance is the minimum number of editing operations (insertion, deletion, substitution) that needed to transform one text to another. This is also known as <strong>Levenshtein distance</strong>.</p>
+<p>Now you may have a idea how spell correction function works, it should give the words that have the minimum edit distance to the word you just typed in! (we assume you have a typo) Besides spell correction, minimum edit distance also can be applied in following cases:</p>
+<ul>
+<li>inference alignment in computational biology: DNA sequences</li>
+<li>evaluate machine translation and speech recognition</li>
+<li>named entity extraction and entity coreference</li>
+</ul>
+<h3 id="Find-Minimum-Edit-Distance"><a href="#Find-Minimum-Edit-Distance" class="headerlink" title="Find Minimum Edit Distance"></a>Find Minimum Edit Distance</h3><p>To deal with this, you’d better think algorithmically: we are actually searching for a path from start string to final string. We have 4 elements:</p>
+<ul>
+<li>initial state</li>
+<li>operators (insert, delete, substitute)</li>
+<li>goal state</li>
+<li>path cost</li>
+</ul>
+<p>The space of all path is huge, if you have algorithm basis you must know that brute force searching is expensive that we will never use, and there are many paths will end up with the same results. We don’t need to keep track of all of them, we just need to find a <strong>shortest path</strong>.</p>
+<h3 id="Formulation"><a href="#Formulation" class="headerlink" title="Formulation"></a>Formulation</h3><p>Assume we have two texts: \(x\) with length \(n\) and \(y\) with length \(m\), define \(d(i, j)\) to be the edit distance between \(x[1:i]\) and \(y[1:j]\), therefore the edit distance between \(x\) and \(y\) is \(d(n, m)\).</p>
+<p>You can see there are two parameters for the edit distance, we can demonstrate it on tabular and this is same as <strong>Dynamic Programming</strong> Don’t worry if you don’t know that, dynamic programming is a way to solve problems by combining solutions to subporblems, it’s a “bottom-up” method.</p>
+<p>Apply to this case, we compute \(d(i, j)\) for small \(i, j\) and then compute larger \(d(i, j)\) based on previously results, step by step. For dynamic problem, we need to write  the recurrence form:</p>
+<p>\[<br>d(i, j) = \min\left\{<br>    \begin{aligned}<br>        &amp;d(i-1, j)+1,\\<br>        &amp;d(i, j-1)+1,\\<br>        &amp;d(i-1, j-1)+\left\{<br>                    \begin{aligned}<br>                        &amp;2, \text{ if } x[i] \neq y[j]\\<br>                        &amp;0, \text{ if } x[i]=y[j]<br>                    \end{aligned}<br>                    \right.,<br>    \end{aligned}<br>\right..<br>\]</p>
+<p>where \(d(i,0)=i\) and \(d(0,j)=j\), the algorithm will terminate when \(i=n\) and \(j=m\).</p>
+<p>Next is an example, we’d like to calculate the edit distance between “intention” and “execution”, the initial table is this</p>
+<center><br>    <img src="/images/edit-distance-tabular-1.png" style="width: 500px; height: 500px"> <br></center>
+
+<p>Now based our formula, we can calculate that</p>
+<p>\[<br>d(1, 1) = \min\left\{<br>    \begin{aligned}<br>        &amp;d(0, 1)+1\\<br>        &amp;d(1, 0)+1\\<br>        &amp;d(0, 0)+2<br>    \end{aligned}<br>\right. = \min\{1, 1, 2\} = 1,<br>\]</p>
+<p>\[<br>d(2, 1) = \min\left\{<br>    \begin{aligned}<br>        &amp;d(1, 1)+1\\<br>        &amp;d(2, 0)+1\\<br>        &amp;d(1, 0)+2<br>    \end{aligned}<br>\right. = \min\{2, 3, 3\} = 2.<br>\]</p>
+<p>And finally we can get the following plot, the red numbers consist the all of the edit distance for \(i=1\) to \(9\) and for \(j=1\) to \(9\).</p>
+<center><br>    <img src="/images/edit-distance-tabular-2.png" style="width: 500px; height: 500px"> <br></center>
+
+<h3 id="Backtrace-for-Computing-Alignment"><a href="#Backtrace-for-Computing-Alignment" class="headerlink" title="Backtrace for Computing Alignment"></a>Backtrace for Computing Alignment</h3><p>Sometimes edit distance isn’t sufficient, we often need to align each character of the two strings to each other (the example we use above are equal length). Which means we need to remember where we came from when we enter a new cell in above tabular.</p>
+<p>In summary, the time complexity for finding minimum edit distance is \(O(nm)\), space complexity is \(O(nm)\), and for backtrace it is \(O(n+m)\).</p>
+<h3 id="Weighted-Edit-Distance"><a href="#Weighted-Edit-Distance" class="headerlink" title="Weighted Edit Distance"></a>Weighted Edit Distance</h3><p>We can also add some weight (cost) to each kind of operation and use the sum of the cost as the minimum edit distance. For example, in spell correction, some letters have higher probability to be mistyped.</p>
+
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+      
+
+    <span class="post-categories">
+      <i class="icon-categories"></i>
+        <a href="/categories/NLP/">NLP</a>
+    </span>
+    
+
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/Linguistic/">Linguistic</a><a href="/tags/Algorithm/">Algorithm</a>
+    </span>
+    
+
+    </div>
+
+    
+  </div>
+</article>
+
+
+    </main>
+
+    <footer class="site-footer">
+  <p class="site-info">
+    Proudly powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and
+    Theme by <a href="https://github.com/CodeDaraW/Hacker" target="_blank">Hacker</a>
+    </br>
+    
+    &copy; 2018 Bangda
+    
+	
+	
+	
+  </p>
+  
+  <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+  <span id="busuanzi_container_site_pv">
+    Total viewer <span id="busuanzi_value_site_pv"></span>; 
+  </span>
+  
+  <span id="busuanzi_container_site_uv">
+    Total visitor <span id="busuanzi_value_site_uv"></span>
+  </span>
+
+</footer>
+    
+  </div>
+</div>
+</body>
+</html>
