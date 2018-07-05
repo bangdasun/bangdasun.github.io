@@ -1,0 +1,238 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Stanford NLP (coursera) Notes (4) | Bangda Sun | Practice makes perfect</title>
+
+  
+  <meta name="author" content="Bangda">
+  
+
+  
+  <meta name="description" content="Play with data">
+  
+
+  
+  
+  <meta name="keywords" content="Linguistic,Statistics">
+  
+
+  <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <meta property="og:title" content="Stanford NLP (coursera) Notes (4)"/>
+
+  <meta property="og:site_name" content="Bangda Sun"/>
+
+  
+  <meta property="og:image" content="/favicon.ico"/>
+  
+
+  <link href="/favicon.ico" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Bangda Sun" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    jax: ["input/TeX","output/HTML-CSS"],
+    extensions: ["tex2jax.js","Safe.js"]
+  });
+  </script>
+<script type="text/javascript" async="async"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_CHTML,Safe">
+</script>
+</script>
+</head>
+
+
+<body>
+<div class="blog">
+  <div class="content">
+
+    <header>
+  <div class="site-branding">
+    <h1 class="site-title">
+      <a href="/">Bangda Sun</a>
+    </h1>
+    <p class="site-description">Practice makes perfect</p>
+  </div>
+  <nav class="site-navigation">
+    <ul>
+      
+        <li><a href="/">主页</a></li>
+      
+        <li><a href="/archives">归档</a></li>
+      
+    </ul>
+  </nav>
+</header>
+
+    <main class="site-main posts-loop">
+    <article>
+
+  
+    
+    <h3 class="article-title"><span>Stanford NLP (coursera) Notes (4)</span></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2018/07/04/stanford-nlp-notes-4/" rel="bookmark">
+        <time class="entry-date published" datetime="2018-07-04T18:40:05.000Z">
+          2018-07-04
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <p>Language Modeling</p>
+<a id="more"></a>
+<h3 id="Probabilistic-Language-Model"><a href="#Probabilistic-Language-Model" class="headerlink" title="Probabilistic Language Model"></a>Probabilistic Language Model</h3><p>The language model we discuss here refer to probabilistic language model, i.e. assign a probability to a sentence. This is a widely used concept. We often need to compare the probabilities of different texts:</p>
+<ul>
+<li>machine translation: the translated sentences with higher probability will be more reasonable results</li>
+<li>spell correction: we can suggest a sentence with higher probability - it contains the correct words</li>
+<li>…</li>
+</ul>
+<p>We denote the probability of a sentence to be </p>
+<p>\[<br>P(W) = P(w_1w_2w_3\dots w_n),<br>\]</p>
+<p>there is another related probabilities: probability of an upcoming word</p>
+<p>\[<br>P(w_5|w_1w_2w_3w_4).<br>\]</p>
+<p>In probability, these two probabilities corresponding to <strong>joint probability</strong> and <strong>conditional probability</strong>. And models that compute either of them are called <strong>language model</strong>.</p>
+<p>To compute the (joint) probability we can apply chain rule:</p>
+<p>\[<br>P(W) = P(w_{n}|w_{1}w_{2}w_{3}\dots w_{n-1})\dots P(w_{1})P(w_{2}|w_{1})P(w_{3}|w_{1}w_{2}).<br>\]</p>
+<p>For example, the probability of “I want to learn NLP” is</p>
+<p>\[<br>P(\text{I want to learn NLP}) = P(\text{I})P(\text{want}|\text{I})P(\text{to}|\text{I want})P(\text{learn}|\text{I want to})P(\text{NLP}|\text{I want to learn}).<br>\]</p>
+<p>You can see we need to know a series of conditional probabilities. A straightforward way to estimate them is count the number of occurrence:</p>
+<p>\[<br>P(\text{NLP}|\text{I want to learn}) = \frac{count(\text{I want to learn NLP})}{count(\text{I want to learn})},<br>\] </p>
+<p>but there will be some problems: 1) there are too many possible sentences 2) there are not enough data to estimate - or say we need huge corpus to estimate. Thus we need to use <strong>Markov Assumption</strong>: the current word only depend on several previous words rather than all previous words:</p>
+<p>\[<br>P(\text{NLP}|\text{I want to learn})\approx P(\text{NLP}|\text{learn}).<br>\]</p>
+<p>Then it comes <strong>N-gram</strong> models: \(N-1\) denotes how many previous words we want to include,</p>
+<ul>
+<li>Uni-gram (1-gram)</li>
+</ul>
+<p>\[<br>P(W) = P(w_1)P(w_2)\dots P(w_n)<br>\]</p>
+<ul>
+<li>Bi-gram (2-gram)</li>
+</ul>
+<p>\[<br>P(W) = P(w_{1})P(w_{2}|w_{1})P(w_{3}|w_{2})\dots P(w_{n}|w_{n-1})<br>\]</p>
+<ul>
+<li>…</li>
+</ul>
+<p>In general this is an insufficient model for language because language has long distance dependencies. But we can often get away with N-gram models.</p>
+<p>Now we can use same method to estimate the probabilities, take bigram as example,</p>
+<p>\[<br>P(w_2|w_1) = \frac{count(w_1, w_2)}{count(w_1)},<br>\]</p>
+<p>this is also the maximum likelihood estimate. </p>
+<p>In practice, we always do this in log space, this can avoid underflow issue, also adding is faster than multiplying:</p>
+<p>\[<br>\log P(w_1w_2w_3) = \log(P(w_1)P(w_2|w_1)P(w_3|w_2)) = \log P(w_1) + \log P(w_2|w_1) + \log P(w_3|w_2).<br>\]</p>
+<h3 id="Model-Evaluation"><a href="#Model-Evaluation" class="headerlink" title="Model Evaluation"></a>Model Evaluation</h3><p>After we have the model, we want to know how good is the model. The model should prefer good sentences to bad sentences. Here we also have training set and test set: where we train the language model on training set, and test it on test set. To compare two models, we can</p>
+<ul>
+<li>put each model in a task (spelling corrector, speech recognizer, machine translation system)</li>
+<li>run the task and get accuracy for both models, see how many misspelled words corrected properly; how many words translated correctly</li>
+</ul>
+<p>This is extrinsic evaluation of N-gram model. It could be time consuming - can take days or weeks. Therefore sometimes we use intrinsic evaluation: <strong>perplexity</strong>. </p>
+<p>One intuition of perplexity is Shannon game: how well can we predict the next word. A better model of a text is one which assigns a higher probability to the word that actually occurs. If you have basic machine learning knowledge, you know that a good model should have good predictions on an unseen test set. Same for language model here. Given the probability of a sentence, perplexity is the <strong>inverse</strong> probability of the test set, normalized by the number of words:</p>
+<p>\[<br>PP(w_1w_2w_3\dots w_n) = P(w_1w_2w_3\dots w_n)^{-\frac{1}{N}}.<br>\]</p>
+<p>Therefore maximizing probability is equivalent to minimize perplexity.</p>
+<h3 id="Generalization-and-Zeros"><a href="#Generalization-and-Zeros" class="headerlink" title="Generalization and Zeros"></a>Generalization and Zeros</h3><p>N-gram model only work well for word prediction if the test corpus looks like the training corpus. This is easy to understand - if there some ngrams that doesn’t exist in training set, the test performance will be bad, since we will assign zero-probabilities to those ngrams. Therefore to improve our model, we need to generalize, start from those zero-probabilities.</p>
+<p>One of the methods is smoothing. The intuition of smoothing is simple: steal probability mass to generalize better. The simplest smoothing is <strong>Add-one smoothing</strong>, also know as <strong>Laplace smoothing</strong>:</p>
+<ul>
+<li>pretend we saw each word one more time than we did</li>
+<li>add one to all counts</li>
+</ul>
+<p>therefore</p>
+<p>\[<br>P_{\text{add-one}}(w_2|w_1) = \frac{count(w_1, w_2) + 1}{count(w_1) + V}<br>\]</p>
+<p>where \(V\) is vocabulary size - make sure the total probability is still 1. In real world problems, we will usually use better smoothing method since add-one smoothing is a blunt instrument, it’s not the best one for N-gram. But in some cases it’s still useful: in text classification, we don’t care the exact estimation but just want to separate classes; in some domains there are not too much zeros it can also be a good approximation.</p>
+<h3 id="Backoff-and-Interpolation"><a href="#Backoff-and-Interpolation" class="headerlink" title="Backoff and Interpolation"></a>Backoff and Interpolation</h3><p>Now we introduce some advanced techniques. Sometimes it helps to use less context: condition on less context for contexts we haven’t learned much about. Here comes backoff and interpolation:</p>
+<p><strong>Backoff</strong>: use trigram if there are some good evidence, otherwise use bigram / unigram. </p>
+<p><strong>Interpolation</strong>: mix unigram / bigram / trigram.</p>
+<p>Usually interpolation works better:</p>
+<p>\[<br>P(w_3|w_1w_2) = \lambda_1 P(w_3|w_1w_2) + \lambda_2 P(w_3|w_2) + \lambda_3 P(w_3),<br>\]</p>
+<p>where \(\sum_{i} \lambda_i = 1\). To choose \(\lambda\), we can set a held-out corpus and see which setting gives largest probability to held-out corpus - this is similar with using cross-validation to choose hyperparameters.</p>
+<h3 id="Advanced-Smoothing-methods"><a href="#Advanced-Smoothing-methods" class="headerlink" title="Advanced Smoothing methods"></a>Advanced Smoothing methods</h3><h4 id="1-Add-k-smoothing"><a href="#1-Add-k-smoothing" class="headerlink" title="1. Add-k smoothing"></a>1. Add-k smoothing</h4><p>We can generalize to <strong>add-k smoothing</strong>:</p>
+<p>\[<br>P_{\text{add-k}}(w_2|w_1) = \frac{count(w_1, w_2) + k}{count(w_1) + kV},<br>\]</p>
+<p>or <strong>unigram prior smoothing</strong></p>
+<p>\[<br>P_{\text{add-k}}(w_2|w_1) = \frac{count(w_1, w_2) + k/V}{count(w_1) + k} = \frac{count(w_1, w_2) + k P(w_2)}{count(w_1) + k}.<br>\]</p>
+<h4 id="2-Estimating-unseen-count"><a href="#2-Estimating-unseen-count" class="headerlink" title="2. Estimating unseen count"></a>2. Estimating unseen count</h4><p>We can use the count of things we’ve seen once to help estimate the count of things we’ve never seen. We denote \(N_c\) to be the count of things we’ve seen \(c\) times.</p>
+<p><strong>Example</strong>: you are fishing (a scenario from Josh Goodman) and caught: 10 carp, 3 perch, 2 whitefish, 1 trout, 1 salmon, 1 eel (18 total),</p>
+<ul>
+<li>how likely is it that next species is trout? <strong>1/18</strong></li>
+<li>how likely is it that next species is new? <strong>3/18</strong> since \(N_1=3\) </li>
+<li>assuming so, how likely is it that next species is trout? must be <strong>less than 1/18</strong></li>
+</ul>
+<p>Here comes <strong>Good Turing Calculation (Smoothing)</strong>,</p>
+<p>\[<br>P(\text{things with zero-count}) = \frac{N_1}{N},<br>\]</p>
+<p>\[<br>c_{\text{update}} = \frac{(c+1)N_{c+1}}{N_c}.<br>\]</p>
+<h3 id="More-Discussions"><a href="#More-Discussions" class="headerlink" title="More Discussions"></a>More Discussions</h3><p>There are more discussions about language modeling, for example <strong>Kneser-Ney Smoothing</strong>; how to apply language modeling on <strong>huge web scale</strong>, etc. The course instructor mentioned this but didn’t give too much details. Therefore we just stop here and will post more detailed discussion in the future.</p>
+
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+      
+
+    <span class="post-categories">
+      <i class="icon-categories"></i>
+        <a href="/categories/NLP/">NLP</a>
+    </span>
+    
+
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/Linguistic/">Linguistic</a><a href="/tags/Statistics/">Statistics</a>
+    </span>
+    
+
+    </div>
+
+    
+  </div>
+</article>
+
+
+    </main>
+
+    <footer class="site-footer">
+  <p class="site-info">
+    Proudly powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and
+    Theme by <a href="https://github.com/CodeDaraW/Hacker" target="_blank">Hacker</a>
+    </br>
+    
+    &copy; 2018 Bangda
+    
+	
+	
+	
+  </p>
+  
+  <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+  <span id="busuanzi_container_site_pv">
+    Total viewer <span id="busuanzi_value_site_pv"></span>; 
+  </span>
+  
+  <span id="busuanzi_container_site_uv">
+    Total visitor <span id="busuanzi_value_site_uv"></span>
+  </span>
+
+</footer>
+    
+  </div>
+</div>
+</body>
+</html>
