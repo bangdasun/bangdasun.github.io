@@ -1,0 +1,180 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Stanford NLP (coursera) Notes (5) | Bangda Sun | Practice makes perfect</title>
+
+  
+  <meta name="author" content="Bangda">
+  
+
+  
+  <meta name="description" content="Play with data">
+  
+
+  
+  
+  <meta name="keywords" content="Linguistic,Statistics">
+  
+
+  <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <meta property="og:title" content="Stanford NLP (coursera) Notes (5)"/>
+
+  <meta property="og:site_name" content="Bangda Sun"/>
+
+  
+  <meta property="og:image" content="/favicon.ico"/>
+  
+
+  <link href="/favicon.ico" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Bangda Sun" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    jax: ["input/TeX","output/HTML-CSS"],
+    extensions: ["tex2jax.js","Safe.js"]
+  });
+  </script>
+<script type="text/javascript" async="async"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_CHTML,Safe">
+</script>
+</script>
+</head>
+
+
+<body>
+<div class="blog">
+  <div class="content">
+
+    <header>
+  <div class="site-branding">
+    <h1 class="site-title">
+      <a href="/">Bangda Sun</a>
+    </h1>
+    <p class="site-description">Practice makes perfect</p>
+  </div>
+  <nav class="site-navigation">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+    </ul>
+  </nav>
+</header>
+
+    <main class="site-main posts-loop">
+    <article>
+
+  
+    
+    <h3 class="article-title"><span>Stanford NLP (coursera) Notes (5)</span></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2018/07/05/stanford-nlp-notes-5/" rel="bookmark">
+        <time class="entry-date published" datetime="2018-07-06T00:34:42.000Z">
+          2018-07-05
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <p>Spell Correction Task</p>
+<a id="more"></a>
+<p>This post we will discuss something practical, one of the applications of NLP to real life. Spell correction is a widely deployed application, we can find it in many places: word processing app, search engine, etc. </p>
+<h3 id="Different-Tasks"><a href="#Different-Tasks" class="headerlink" title="Different Tasks"></a>Different Tasks</h3><p>There are two steps of spelling correction: 1) spell error <strong>detection</strong>; 2) spell error <strong>correction</strong>: including autocorrect and suggestions.</p>
+<p>For error, there are also several categories: 1) <strong>non-word</strong> error: words that not exist; 2) <strong>real-word</strong> error: <strong>typographical error</strong> - <code>there -&gt; three</code>, <strong>cognitive error</strong> - <code>too -&gt; two</code>.</p>
+<h3 id="Non-word-Error"><a href="#Non-word-Error" class="headerlink" title="Non-word Error"></a>Non-word Error</h3><p>For non-word spelling error detection, any word not appear in the dictionary / vocabulary is an error (out-of-vocabulary). Therefore larger dictionary will be better, make sure the OOV words are real non-words.</p>
+<h3 id="Real-word-Error"><a href="#Real-word-Error" class="headerlink" title="Real-word Error"></a>Real-word Error</h3><p>For real-word error, it is more complex. For every word \(w\) we need to generate a candidate set: we need to find candidate words with similar pronunciations or similar spelling, then we choose the best candidate (include \((w\) itself). We can use two methods: <strong>Noisy Channel</strong> and <strong>Classifier</strong>.</p>
+<h4 id="Noisy-channel"><a href="#Noisy-channel" class="headerlink" title="Noisy channel"></a>Noisy channel</h4><p>The intuition of noisy channel is we feed an original word into a channel, then it comes out a noisy word. We see an observation \(x\) of a misspelled word, and the correct word \(w\) should be</p>
+<p>\[<br>w = \arg\max_{w\in V} P(w|x) = \arg\max_{w\in V} \frac{P(x|w)P(w)}{P(x)} \propto \arg\max_{w\in V} P(x|w)P(w),<br>\]</p>
+<p>in Bayesian perspective, \(P(w)\) is the prior, \(P(x|w)\) is likelihood - it is also the probability of edit (use operations like deletion/insertion/substitution). We define</p>
+<ul>
+<li>\(del(x, y)\) to be \(count(xy \text{ typed as } x)\)</li>
+<li>\(ins(x, y)\) to be \(count(x \text{ typed as }xy)\)</li>
+<li>\(sub(x, y)\) to be \(count(x \text{ typed as y})\)</li>
+<li>\(trans(x, y)\) to be \(count(xy\text{ typed as }yx)\)</li>
+</ul>
+<p>then we can calculate the corresponding likelihoods,</p>
+<p>\[<br>P(x|w) = \left\{<br>    \begin{aligned}<br>    &amp;del(w_{i-1}, w_{i}) / count(w_{i-1} w_{i}) \\<br>    &amp;ins(w_{i-1}, x_{i}) / count(w_{i-1}) \\<br>    &amp;sub(x_{i}, w_{i}) / count(w_{i}) \\<br>    &amp;trans(w_{i}, w_{i+1}) / count(w_{i} w_{i+1})<br>    \end{aligned}<br>\right..<br>\]</p>
+<p>We can also incorporate language models with channel model in practice: we can use unigram / bigram model to calculate above probabilities.</p>
+<h4 id="Classifier"><a href="#Classifier" class="headerlink" title="Classifier"></a>Classifier</h4><p>This topic has intersection with machine learning, besides channel model and language model, we can also generate features from the text to help us builder a better classifier, we will discuss them in later posts!</p>
+
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+      
+
+    <span class="post-categories">
+      <i class="icon-categories"></i>
+        <a href="/categories/NLP/">NLP</a>
+    </span>
+    
+
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/Linguistic/">Linguistic</a><a href="/tags/Statistics/">Statistics</a>
+    </span>
+    
+
+    </div>
+
+    
+  </div>
+</article>
+
+
+    </main>
+
+    <footer class="site-footer">
+  <p class="site-info">
+    Proudly powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and
+    Theme by <a href="https://github.com/CodeDaraW/Hacker" target="_blank">Hacker</a>
+    </br>
+    
+    &copy; 2018 Bangda
+    
+	
+	
+	
+  </p>
+  
+  <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+  <span id="busuanzi_container_site_pv">
+    Total viewer <span id="busuanzi_value_site_pv"></span>; 
+  </span>
+  
+  <span id="busuanzi_container_site_uv">
+    Total visitor <span id="busuanzi_value_site_uv"></span>
+  </span>
+
+</footer>
+    
+  </div>
+</div>
+</body>
+</html>
