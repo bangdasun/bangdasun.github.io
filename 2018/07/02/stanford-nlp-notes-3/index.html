@@ -117,13 +117,13 @@
 <p>\[<br>d(i, j) = \min\left\{<br>    \begin{aligned}<br>        &amp;d(i-1, j)+1,\\<br>        &amp;d(i, j-1)+1,\\<br>        &amp;d(i-1, j-1)+\left\{<br>                    \begin{aligned}<br>                        &amp;2, \text{ if } x[i] \neq y[j]\\<br>                        &amp;0, \text{ if } x[i]=y[j]<br>                    \end{aligned}<br>                    \right.,<br>    \end{aligned}<br>\right..<br>\]</p>
 <p>where \(d(i,0)=i\) and \(d(0,j)=j\), the algorithm will terminate when \(i=n\) and \(j=m\).</p>
 <p>Next is an example, we’d like to calculate the edit distance between “intention” and “execution”, the initial table is this</p>
-<center><br>    <img src="/images/edit-distance-tabular-1.png" style="width: 500px; height: 500px"> <br></center>
+<center><br>    <img src="/images/edit-distance-tabular-1.png" style="width: 450px; height: 450px"> <br></center>
 
 <p>Now based our formula, we can calculate that</p>
 <p>\[<br>d(1, 1) = \min\left\{<br>    \begin{aligned}<br>        &amp;d(0, 1)+1\\<br>        &amp;d(1, 0)+1\\<br>        &amp;d(0, 0)+2<br>    \end{aligned}<br>\right. = \min\{2, 2, 2\} = 2,<br>\]</p>
 <p>\[<br>d(2, 1) = \min\left\{<br>    \begin{aligned}<br>        &amp;d(1, 1)+1\\<br>        &amp;d(2, 0)+1\\<br>        &amp;d(1, 0)+2<br>    \end{aligned}<br>\right. = \min\{3, 3, 3\} = 3.<br>\]</p>
 <p>And finally we can get the following plot, the red numbers consist the all of the edit distance for \(i=1\) to \(9\) and for \(j=1\) to \(9\).</p>
-<center><br>    <img src="/images/edit-distance-tabular-2.png" style="width: 500px; height: 500px"> <br></center>
+<center><br>    <img src="/images/edit-distance-tabular-2.png" style="width: 450px; height: 450px"> <br></center>
 
 <h3 id="Backtrace-for-Computing-Alignment"><a href="#Backtrace-for-Computing-Alignment" class="headerlink" title="Backtrace for Computing Alignment"></a>Backtrace for Computing Alignment</h3><p>Sometimes edit distance isn’t sufficient, we often need to align each character of the two strings to each other (the example we use above are equal length). Which means we need to remember where we came from when we enter a new cell in above tabular.</p>
 <p>In summary, the time complexity for finding minimum edit distance is \(O(nm)\), space complexity is \(O(nm)\), and for backtrace it is \(O(n+m)\).</p>

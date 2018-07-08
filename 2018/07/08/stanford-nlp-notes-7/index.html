@@ -1,0 +1,222 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Stanford NLP (coursera) Notes (7) | Bangda Sun | Practice makes perfect</title>
+
+  
+  <meta name="author" content="Bangda">
+  
+
+  
+  <meta name="description" content="Play with data">
+  
+
+  
+  
+  <meta name="keywords" content="Classification">
+  
+
+  <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <meta property="og:title" content="Stanford NLP (coursera) Notes (7)"/>
+
+  <meta property="og:site_name" content="Bangda Sun"/>
+
+  
+  <meta property="og:image" content="/favicon.ico"/>
+  
+
+  <link href="/favicon.ico" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Bangda Sun" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    jax: ["input/TeX","output/HTML-CSS"],
+    extensions: ["tex2jax.js","Safe.js"]
+  });
+  </script>
+<script type="text/javascript" async="async"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_CHTML,Safe">
+</script>
+</script>
+</head>
+
+
+<body>
+<div class="blog">
+  <div class="content">
+
+    <header>
+  <div class="site-branding">
+    <h1 class="site-title">
+      <a href="/">Bangda Sun</a>
+    </h1>
+    <p class="site-description">Practice makes perfect</p>
+  </div>
+  <nav class="site-navigation">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+    </ul>
+  </nav>
+</header>
+
+    <main class="site-main posts-loop">
+    <article>
+
+  
+    
+    <h3 class="article-title"><span>Stanford NLP (coursera) Notes (7)</span></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2018/07/08/stanford-nlp-notes-7/" rel="bookmark">
+        <time class="entry-date published" datetime="2018-07-08T15:37:41.000Z">
+          2018-07-08
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <p>Sentiment Analysis</p>
+<a id="more"></a>
+<p>Sentiment analysis could be viewed as one kind task in text classification. We can see many kind of applications in real life: movie review, google product search, bing shopping, twitter sentiment, market trends etc. </p>
+<p>There are several affective states:</p>
+<ul>
+<li>emotion</li>
+<li>mood</li>
+<li>interpersonal stances</li>
+<li>attitudes</li>
+<li>personality traits</li>
+</ul>
+<p>Sentiment analysis is the detection of <strong>attitudes</strong>. It could be simple weighted polarity - positive/negative/neutral, also it could be a set of types with rank - like/love/hate/value/desire etc.</p>
+<h3 id="A-Baseline-Algorithm"><a href="#A-Baseline-Algorithm" class="headerlink" title="A Baseline Algorithm"></a>A Baseline Algorithm</h3><p>A baseline algorithm could be a simple text classifier:</p>
+<h4 id="Tokenization"><a href="#Tokenization" class="headerlink" title="Tokenization"></a>Tokenization</h4><p>Since texts are unstructured data, we need to do many preprocessing, includes:</p>
+<ul>
+<li>deal with HTML/XML markup</li>
+<li>twitter markup (names, hashtags)</li>
+<li>capitalization (preserve for words in all caps)</li>
+<li>phone numbers and dates</li>
+<li>emoticons</li>
+</ul>
+<p>We can use regular expression or tokenizer in packages like <code>nltk</code>, <code>sklearn</code>, <code>keras</code>. There are many tools could automatically finish this, such as </p>
+<ul>
+<li><a href="http://sentiment.christopherpotts.net/tokenizing.html" target="_blank" rel="external">Christopher Potts sentiment tokenizer</a></li>
+<li><a href="https://github.com/brendano/tweetmotif" target="_blank" rel="external">Brendan O’Connor twitter tokenizer</a></li>
+</ul>
+<h4 id="Feature-Extraction"><a href="#Feature-Extraction" class="headerlink" title="Feature Extraction"></a>Feature Extraction</h4><p>In sentiment analysis, negation is important. we could add a <code>NOT_</code> to every word between negation and following punctuation:</p>
+<p><code>didn&#39;t like this movie, but I -&gt; didn&#39;t NOT_like NOT_this NOT_movie, but I</code></p>
+<p>We can also just use part of the text, e.g. only adjectives, use bag-of-words to convert each text into a vector.</p>
+<h4 id="Classification"><a href="#Classification" class="headerlink" title="Classification"></a>Classification</h4><p>This is the topic discussed in previous post: <a href="https://bangdasun.github.io/2018/07/07/stanford-nlp-notes-6/" target="_blank" rel="external">Stanford NLP (coursera) Notes (6)</a>. We can use Naive Bayes, SVM, Logistic Regression/Maximum Entropy Model, etc.</p>
+<p>In practice it’s very easy to make texts hard to classify. <strong>Subtlety</strong>, <strong>Thwarted Expectations</strong> and <strong>Ordering Effects</strong> can easily make our model collapse. This is natural for NLP problems so don’t worry too much about it for now ;)</p>
+<h3 id="Sentiment-Lexicons"><a href="#Sentiment-Lexicons" class="headerlink" title="Sentiment Lexicons"></a>Sentiment Lexicons</h3><p>Here are some collections of polarity lexicons:</p>
+<ul>
+<li><a href="http://www.wjh.harvard.edu/~inquirer/" target="_blank" rel="external">The General Inquirer</a></li>
+<li><a href="http://liwc.wpengine.com/" target="_blank" rel="external">LIWC - Linguistic Inquiry and Word Count</a></li>
+<li><a href="http://www.cs.pix.edu/mpqa/subj_lexicon.html" target="_blank" rel="external">MPQA Subjectivity Cues Lexicon</a></li>
+<li><a href="https://www.cs.uic.edu/~liub/FBS/sentiment-analysis.html" target="_blank" rel="external">Bing Liu Opinion Lexicon</a></li>
+<li><a href="http://sentiwordnet.isti.cnr.it/" target="_blank" rel="external">SentiWordNet</a></li>
+</ul>
+<h3 id="Learning-Sentiment-Lexicons"><a href="#Learning-Sentiment-Lexicons" class="headerlink" title="Learning Sentiment Lexicons"></a>Learning Sentiment Lexicons</h3><p>Semi-supervised learning of lexicons: we can just use a small amount of information, which contains a few labeled examples and a few hand-built patterns - adjectives conjoined by <strong>“and”</strong> have same polarity, adjectives conjoined by <strong>“but”</strong> have opposite polarity (Hatzivassiloglou and McKeown intuition for identifying word polarity), then bootstrap a lexicon. You can check the details of the learning process <a href="http://www.aclweb.org/anthology/P97-1023" target="_blank" rel="external">here</a>.</p>
+<p><a href="http://www.aclweb.org/anthology/P02-1053.pdf" target="_blank" rel="external">Turney Algorithm</a>:</p>
+<ul>
+<li>extract a phrasal lexicon from reviews</li>
+</ul>
+<p>Extract two-word phrases with adjectives:</p>
+<center><br>    <img src="/images/extract-two-word-phrases.png" style="width: 410px; height: 145px"> <br></center>
+
+<p>(If you’re not familiar with those tags you can check <a href="https://cs.nyu.edu/grishman/jet/guide/PennPOS.html" target="_blank" rel="external">Penn Part of Speech Tags</a>)</p>
+<ul>
+<li>learn polarity of each phrase</li>
+</ul>
+<p>Positive phrases co-occur more with word “excellent”; negative phrases co-occur more with word “poor”. To measure co-occurrence, we can use <strong>pointwise mutual information</strong>, for two words</p>
+<p>\[<br>PMI(w_1, w_2) = \log_2\frac{P(w_1, w_2)}{P(w_1)P(w_2)},<br>\]</p>
+<p>to estimate them, use</p>
+<p>\[<br>\hat{P}(w) = \frac{hits(word)}{N}, ~\hat{P}(w_1, w_2) = \frac{hits(w_1\text{ near }w_2)}{N^2}.<br>\]</p>
+<p>Then the phrase polarity is </p>
+<p>\[<br>\begin{aligned}<br>Polarity(phrase) &amp;= PMI(phrase, \text{“excellent”}) - PMI(phrase, \text{“poor”}) \\<br>&amp;= \log_2\frac{hits(phrase\text{ near “excellent”})hits(\text{“poor”})}{hits(phrase\text{ near “poor”})hits(\text{“excellent”})}.<br>\end{aligned}<br>\]</p>
+<ul>
+<li>rate a review by the average polarity of its phrases</li>
+</ul>
+<p>Summary on learning lexicons:</p>
+<p><strong>Advantages</strong>: can be domain-specific; can be more robust with more words. The intuition is: start with a seed set of words (“good”, “excellent”, “poor”), find other words that have similar polarity by using “and”/“but”, or words that occur nearby, or WordNet synonyms and antonyms.</p>
+
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+      
+
+    <span class="post-categories">
+      <i class="icon-categories"></i>
+        <a href="/categories/NLP/">NLP</a>, <a href="/categories/NLP/Machine-Learning/">Machine Learning</a>
+    </span>
+    
+
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/Classification/">Classification</a>
+    </span>
+    
+
+    </div>
+
+    
+  </div>
+</article>
+
+
+    </main>
+
+    <footer class="site-footer">
+  <p class="site-info">
+    Proudly powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and
+    Theme by <a href="https://github.com/CodeDaraW/Hacker" target="_blank">Hacker</a>
+    </br>
+    
+    &copy; 2018 Bangda
+    
+	
+	
+	
+  </p>
+  
+  <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+  <span id="busuanzi_container_site_pv">
+    Total viewer <span id="busuanzi_value_site_pv"></span>; 
+  </span>
+  
+  <span id="busuanzi_container_site_uv">
+    Total visitor <span id="busuanzi_value_site_uv"></span>
+  </span>
+
+</footer>
+    
+  </div>
+</div>
+</body>
+</html>
