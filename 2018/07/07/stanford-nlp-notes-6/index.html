@@ -1,0 +1,191 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Stanford NLP (coursera) Notes (6) | Bangda Sun | Practice makes perfect</title>
+
+  
+  <meta name="author" content="Bangda">
+  
+
+  
+  <meta name="description" content="Play with data">
+  
+
+  
+  
+  <meta name="keywords" content="Classification,Naive Bayes">
+  
+
+  <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <meta property="og:title" content="Stanford NLP (coursera) Notes (6)"/>
+
+  <meta property="og:site_name" content="Bangda Sun"/>
+
+  
+  <meta property="og:image" content="/favicon.ico"/>
+  
+
+  <link href="/favicon.ico" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Bangda Sun" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    jax: ["input/TeX","output/HTML-CSS"],
+    extensions: ["tex2jax.js","Safe.js"]
+  });
+  </script>
+<script type="text/javascript" async="async"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_CHTML,Safe">
+</script>
+</script>
+</head>
+
+
+<body>
+<div class="blog">
+  <div class="content">
+
+    <header>
+  <div class="site-branding">
+    <h1 class="site-title">
+      <a href="/">Bangda Sun</a>
+    </h1>
+    <p class="site-description">Practice makes perfect</p>
+  </div>
+  <nav class="site-navigation">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+    </ul>
+  </nav>
+</header>
+
+    <main class="site-main posts-loop">
+    <article>
+
+  
+    
+    <h3 class="article-title"><span>Stanford NLP (coursera) Notes (6)</span></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2018/07/07/stanford-nlp-notes-6/" rel="bookmark">
+        <time class="entry-date published" datetime="2018-07-07T21:18:09.000Z">
+          2018-07-07
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <p>Text Classification and Naive Bayes</p>
+<a id="more"></a>
+<p>This time I’m going to talk about <strong>text classification</strong>. It has many applications:</p>
+<ul>
+<li>detect spam</li>
+<li>authorship identification</li>
+<li>gender identification</li>
+<li>sentiment analysis</li>
+<li>detect subject of the article</li>
+</ul>
+<p>I’ll use machine learning jargon for this post since it has much overlap with machine learning.</p>
+<h3 id="Text-Classification"><a href="#Text-Classification" class="headerlink" title="Text Classification"></a>Text Classification</h3><p>Definition: we have input text \(x\) and set of classes \(C={c_1, c_2, \dots, c_n}\), and the output is predicted class \(y\in C\) given by a classifier.</p>
+<p>There are mainly two kinds of classifiers:</p>
+<h4 id="Hand-coded-rules"><a href="#Hand-coded-rules" class="headerlink" title="Hand-coded rules"></a>Hand-coded rules</h4><p>Use rules based on domain knowledge: combinations of words or other features. The accuracy could be high if rules are carefully designed, also not too much data needed, but build it could be expensive.</p>
+<h4 id="Supervised-machine-learning-algorithm"><a href="#Supervised-machine-learning-algorithm" class="headerlink" title="Supervised machine learning algorithm"></a>Supervised machine learning algorithm</h4><p>Include many classifier you know: Naive Bayes, SVM, Logistic Regression, KNN, LDA/QDA etc. It needs a training set which contains text and labels.</p>
+<h3 id="Naiver-Bayes"><a href="#Naiver-Bayes" class="headerlink" title="Naiver Bayes"></a>Naiver Bayes</h3><p>This is a very simple method and can be a good start. Before modeling, we need first convert raw texts to structured format. <strong>Bag-of-words</strong> could be a solution (but lose sequence information). Each text will represented as a vector with length to be the number of words in the corpus, it will be a sparse vector.</p>
+<p>Then we want to calculate the probability of text class given by the content \(P(y|x)\), we can apply Bayes rule: where the posterior is proportional to likelihood times prior:</p>
+<p>\[<br>P(y|x) = \frac{P(x|y)P(y)}{P(x)} \propto P(x|y)P(y).<br>\]</p>
+<p>And the predicted class should maximize posterior (<strong>MAP</strong>)</p>
+<p>\[<br>\hat{y} = \arg\max_{y\in C} P(y|x) = \arg\max_{y\in C} P(x|y)P(y),<br>\]</p>
+<p>where </p>
+<p>\[<br>P(x|y) = P(x_1, x_2, \dots, x_n|y).<br>\]</p>
+<p>For prior \(P(y)\), we can simply count the relative frequencies in the training data; for likelihood \(P(x_1, x_2, \dots, x_n|y)\) it will be complex. Therefore comes <strong>Naive Bayes Independence Assumption</strong>, we assume each feature given the class is independent:</p>
+<p>\[<br>P(x_1, x_2, \dots, x_n|y) = P(x_1|y)P(x_2|y)\dots P(x_n|y),<br>\]</p>
+<p>therefore the prediction of Naive Bayes classifier is</p>
+<p>\[<br>\hat{y} = \arg\max_{y\in C} P(y)\prod^{n}_{i=1} P(x_i|y),<br>\]</p>
+<p>then we can estimate</p>
+<p>\[<br>\hat{P}(y_j) = \frac{count(C=c_j)}{\text{number of texts}}, ~<br>\hat{P}(x_i|y_j) = \frac{count(x_i, y_j)}{\sum_i count(x_i, y_j)}.<br>\]</p>
+<p>In practice, we can also apply smoothing methods to deal with zero-probability issue and unknown words issue:</p>
+<p>\[<br>\hat{P}(x_i|y_j) = \frac{count(x_i, y_j) + 1}{\sum_i count(x_i, y_j) + V}.<br>\]</p>
+<h3 id="Relationship-to-Language-Model"><a href="#Relationship-to-Language-Model" class="headerlink" title="Relationship to Language Model"></a>Relationship to Language Model</h3><p>In previous section we only use bag-of-words features for Naive Bayes classifier, therefore we are actually regard it as a language model: each class is a unigram model.</p>
+
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+      
+
+    <span class="post-categories">
+      <i class="icon-categories"></i>
+        <a href="/categories/NLP/">NLP</a>, <a href="/categories/NLP/Machine-Learning/">Machine Learning</a>
+    </span>
+    
+
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/Classification/">Classification</a><a href="/tags/Naive-Bayes/">Naive Bayes</a>
+    </span>
+    
+
+    </div>
+
+    
+  </div>
+</article>
+
+
+    </main>
+
+    <footer class="site-footer">
+  <p class="site-info">
+    Proudly powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and
+    Theme by <a href="https://github.com/CodeDaraW/Hacker" target="_blank">Hacker</a>
+    </br>
+    
+    &copy; 2018 Bangda
+    
+	
+	
+	
+  </p>
+  
+  <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+  <span id="busuanzi_container_site_pv">
+    Total viewer <span id="busuanzi_value_site_pv"></span>; 
+  </span>
+  
+  <span id="busuanzi_container_site_uv">
+    Total visitor <span id="busuanzi_value_site_uv"></span>
+  </span>
+
+</footer>
+    
+  </div>
+</div>
+</body>
+</html>
