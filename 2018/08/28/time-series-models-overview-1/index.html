@@ -60,9 +60,9 @@
   <nav class="site-navigation">
     <ul>
       
-        <li><a href="/">主页</a></li>
+        <li><a href="/">Home</a></li>
       
-        <li><a href="/archives">归档</a></li>
+        <li><a href="/archives">Archives</a></li>
       
     </ul>
   </nav>
@@ -119,14 +119,16 @@
 <p>then 2nd order difference is therefore represented as </p>
 <p>\[<br>\begin{aligned}<br>\nabla^{2}Y_{t} &amp;= \nabla(\nabla Y_{t}) = \nabla(Y_{t} - Y_{t-1}) = \nabla Y_{t} - \nabla Y_{t-1} \\<br>                 &amp;= (1-B)\nabla Y_{t} = (1-B)^{2}Y_{t}.<br>\end{aligned}<br>\]</p>
 <p>and higher order difference is therefore </p>
-<p>\[<br>\nabla^{d}Y_{t} = (1-L)\nabla^{d-1}Y_{t} = (1-B)(1-B)^{d-1}Y_{t} = (1-B)^{d}Y_{t}.<br>\]</p>
+<p>\[<br>\nabla^{d}Y_{t} = (1-B)\nabla^{d-1}Y_{t} = (1-B)(1-B)^{d-1}Y_{t} = (1-B)^{d}Y_{t}.<br>\]</p>
 <h4 id="ARIMAX-Autoregressive-Integrated-Moving-average-Model-with-eXogenous-Features"><a href="#ARIMAX-Autoregressive-Integrated-Moving-average-Model-with-eXogenous-Features" class="headerlink" title="ARIMAX - Autoregressive Integrated Moving-average Model with eXogenous Features"></a>ARIMAX - Autoregressive Integrated Moving-average Model with eXogenous Features</h4><p>As the model become more complex, we denote it as \(ARIMAX(p, d, q, b)\), given by</p>
 <p>\[<br>\nabla^{d} Y_{t} = C + \sum^{b}_{i=1}\beta_{i}X_{i, t} + \sum^{p}_{i=1}\psi_{i}\nabla^{d} Y_{t-i} + \sum^{q}_{i=1}\theta_{i}\epsilon_{t-i} + \epsilon_{t},<br>\]</p>
 <p>here the \(X_{i,t}\) is external time series, the base version is just use the current value, we can definitely add previous values of exogenous features.</p>
-<h5 id="SARIMAX-Seasonal-Autoregressive-Integrated-Moving-average-Model-with-eXogenous-Features"><a href="#SARIMAX-Seasonal-Autoregressive-Integrated-Moving-average-Model-with-eXogenous-Features" class="headerlink" title="SARIMAX - Seasonal Autoregressive Integrated Moving-average Model with eXogenous Features"></a>SARIMAX - Seasonal Autoregressive Integrated Moving-average Model with eXogenous Features</h5><p>SARIMAX model is denoted as \(SARIMAX(p, d, q, b)\times(P, D, Q, s)\), where \(s\) is periodicity of the time series. Here seasonal correction is applied by adding previous value with lag equal to multiple of periodicity (autoregressive) or previous noise term with lag equal to multiple of periodicity (moving-average). The seasonal AR and MA components in SARIMAX are</p>
+<h4 id="SARIMAX-Seasonal-Autoregressive-Integrated-Moving-average-Model-with-eXogenous-Features"><a href="#SARIMAX-Seasonal-Autoregressive-Integrated-Moving-average-Model-with-eXogenous-Features" class="headerlink" title="SARIMAX - Seasonal Autoregressive Integrated Moving-average Model with eXogenous Features"></a>SARIMAX - Seasonal Autoregressive Integrated Moving-average Model with eXogenous Features</h4><p>SARIMAX model is denoted as \(SARIMAX(p, d, q, b)\times(P, D, Q, s)\), where \(s\) is periodicity of the time series. Here seasonal correction is applied by adding previous value with lag equal to multiple of periodicity (autoregressive) or previous noise term with lag equal to multiple of periodicity (moving-average). The seasonal AR and MA components in SARIMAX are</p>
 <p>\[<br>\begin{aligned}<br>\text{Seasonal }AR(P):&amp;~Y_{t} = \phi_{0} + \sum^{P}_{i=1}\phi_{i} Y_{t-is} + \epsilon_{t}, \\<br>\text{Seasonal }MA(Q):&amp;~Y_{t} = \lambda_{0} + \sum^{Q}_{i=1}\lambda_{i} \epsilon_{t-is} + \epsilon_{t}.<br>\end{aligned}<br>\]</p>
 <p>For example we have monthly data with monthly periodicity, we should set \(s=12\), \(SARIMAX(1, 0, 1, 0)\times (1, 0, 1, 12)\) is</p>
 <p>\[<br>Y_{t} = C + \psi_{1}Y_{t-1} + \psi_{12}Y_{t-12} + \phi_{1}\epsilon_{t-1} + \phi_{12}\epsilon_{t-12} + \epsilon_{t}.<br>\]</p>
+<p>The general form of \(SARIMAX(p, d, q, b)\times(P, D, Q, s)\) is </p>
+<p>\[<br>\begin{aligned}<br>\nabla^{D}\nabla^{d}Y_{t} =&amp;~ C + \sum^{p}_{i=1}\psi_{i}\nabla^{D}\nabla^{d}Y_{t-i} + \sum^{q}_{i=1}\theta_{i}\epsilon_{t-i} + \epsilon_{t} \\<br>                            +&amp;~    \sum^{P}_{i=1}\psi_{is}\nabla^{D}\nabla^{d}Y_{t-is} + \sum^{Q}_{i=1}\theta_{is}\epsilon_{t-is} \\<br>                            +&amp;~    \sum^{b}_{i=1}\beta_{i}X_{i,t}.<br>\end{aligned}<br>\]</p>
 <p>To be continued …</p>
 
       
