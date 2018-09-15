@@ -118,7 +118,7 @@
 <p>Solving this optimization problem is not easy since the constraints are functions. Using <strong>Lagrange multipliers</strong> we can rewrite optimization problem like this</p>
 <p>\[<br>\min_{\mathbf{v}, c} ~\ell = ||\mathbf{v}||_{2} - \sum^{n}_{i=1}\alpha_{i}[y_{i}(\mathbf{v}^{\top}\mathbf{x}_{i} -c) - 1]<br>\]</p>
 <p>take the derivatives respect to \(\mathbf{v}\) and \(c\) we can get</p>
-<p>\[<br>\begin{aligned}<br>\frac{d\ell}{d\mathbf{v}} = \mathbf{v} - \sum^{n}_{i=1}\alpha_{i}y_{i}\mathbf{x}_{i}=0&amp;~\rightarrow \mathbf{v}=\sum^{n}_{i=1}\alpha_{i}y_{i}\mathbf{x}_{i} \\<br>\frac{d\ell}{d c} = -\sum^{n}_{i=1}\alpha_{i}y_{i}=0&amp;~\rightarrow \sum^{n}_{i=1}\alpha_{i}y_{i}=0<br>\end{aligned}<br>\]</p>
+<p>\[<br>\begin{aligned}<br>\frac{\partial\ell}{d\mathbf{v}} = \mathbf{v} - \sum^{n}_{i=1}\alpha_{i}y_{i}\mathbf{x}_{i}=0&amp;~\rightarrow \mathbf{v}=\sum^{n}_{i=1}\alpha_{i}y_{i}\mathbf{x}_{i} \\<br>\frac{\partial\ell}{d c} = -\sum^{n}_{i=1}\alpha_{i}y_{i}=0&amp;~\rightarrow \sum^{n}_{i=1}\alpha_{i}y_{i}=0<br>\end{aligned}<br>\]</p>
 <p>Plugging into the previous optimization problem we can again rewrite our optimization problem like this </p>
 <p>\[<br>\begin{aligned}<br>&amp;\max_{\alpha_{i}}~L = \sum^{n}_{i=1}\alpha_{i} - \sum^{n}_{i=1}\sum^{n}_{j=1}\alpha_{i}\alpha_{j}y_{i}y_{j}\mathbf{x}_{i}^{\top}\mathbf{x}_{j},\\<br>\text{ s.t.  }&amp;~\sum^{n}_{i=1}\alpha_{i}y_{i}=0,~i=1,2,\cdots,n.<br>\end{aligned}<br>\]</p>
 <p>The solution of this optimization problem exists only the data is linearly separable. If the data is not perfectly linearly separable, we need to modify the constraints and objective functions of the optimization problem.</p>
@@ -137,6 +137,9 @@
 <h3 id="More-Discussions"><a href="#More-Discussions" class="headerlink" title="More Discussions"></a>More Discussions</h3><ul>
 <li>Kernel </li>
 <li>Convex Optimization</li>
+</ul>
+<h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul>
+<li><a href="http://cs231n.github.io/linear-classify/" target="_blank" rel="external">http://cs231n.github.io/linear-classify/</a></li>
 </ul>
 
       

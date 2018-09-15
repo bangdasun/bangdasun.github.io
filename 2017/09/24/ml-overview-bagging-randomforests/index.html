@@ -128,7 +128,9 @@
 <h3 id="Connection-between-Bagging-and-Random-Forests"><a href="#Connection-between-Bagging-and-Random-Forests" class="headerlink" title="Connection between Bagging and Random Forests"></a>Connection between Bagging and Random Forests</h3><p>If we set the sample size of features equal to the total number of features, random forests is same as bagging.</p>
 <p>We can see the difference between bagging and random forests is the number of features. Random forests can decorrelates the decision trees using sampling. Since it is possible that there is an important feature and it will dominant all decision trees if we just include all features, the prediction would be unreliable in this way,  and take a subset will prevent this happen.</p>
 <h3 id="Implementation"><a href="#Implementation" class="headerlink" title="Implementation"></a>Implementation</h3><p>The implementations of bagging and random forests are based on decision tree, I invoke <code>DecisionTreeClassifier</code> in <code>sklearn</code> and here is the <a href="https://github.com/bangdasun/Algorithms/blob/master/machine-learning/classification/ensemble-bagging-randomforests/bagging_random-forest.ipynb" target="_blank" rel="external">implementation</a>.</p>
-<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><p>[1] Gareth James, Daniela Witten, Trevor Hastie, Robert Tishirani; Introduction to Statistical Learning.</p>
+<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ul>
+<li>Gareth James, Daniela Witten, Trevor Hastie, Robert Tishirani; Introduction to Statistical Learning.</li>
+</ul>
 
       
     </div>
