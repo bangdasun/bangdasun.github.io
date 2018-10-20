@@ -1,0 +1,209 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Bash and Git Quick Reference | Bangda Sun | Practice makes perfect</title>
+
+  
+  <meta name="author" content="Bangda">
+  
+
+  
+  <meta name="description" content="Play with data">
+  
+
+  
+  
+  <meta name="keywords" content="Software Development">
+  
+
+  <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <meta property="og:title" content="Bash and Git Quick Reference"/>
+
+  <meta property="og:site_name" content="Bangda Sun"/>
+
+  
+  <meta property="og:image" content="/favicon.ico"/>
+  
+
+  <link href="/favicon.ico" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Bangda Sun" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    jax: ["input/TeX","output/HTML-CSS"],
+    extensions: ["tex2jax.js","Safe.js"]
+  });
+  </script>
+<script type="text/javascript" async="async"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_CHTML,Safe">
+</script>
+</script>
+</head>
+
+
+<body>
+<div class="blog">
+  <div class="content">
+
+    <header>
+  <div class="site-branding">
+    <h1 class="site-title">
+      <a href="/">Bangda Sun</a>
+    </h1>
+    <p class="site-description">Practice makes perfect</p>
+  </div>
+  <nav class="site-navigation">
+    <ul>
+      
+        <li><a href="/">主页</a></li>
+      
+        <li><a href="/archives">归档</a></li>
+      
+    </ul>
+  </nav>
+</header>
+
+    <main class="site-main posts-loop">
+    <article>
+
+  
+    
+    <h3 class="article-title"><span>Bash and Git Quick Reference</span></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2018/10/20/bash-and-git-quick-reference/" rel="bookmark">
+        <time class="entry-date published" datetime="2018-10-20T15:54:08.000Z">
+          2018-10-20
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <p>Bash and Git Cheatsheet</p>
+<a id="more"></a>
+<p>This is a summary of <code>bash</code> and <code>git</code> commands that I usually need during the work. I will update it once I have new commands.</p>
+<h3 id="Bash"><a href="#Bash" class="headerlink" title="Bash"></a>Bash</h3><p>Bash is a Unix shell and command language. It has been distributed widely as the default login shell for most Linux distributions and Apple’s macOS. There is also a version available for Windows 10 now.</p>
+<h4 id="System"><a href="#System" class="headerlink" title="System"></a>System</h4><ul>
+<li>check disk usage: <code>du -h</code></li>
+<li>get command history: <code>history</code></li>
+</ul>
+<h4 id="File-manipulation"><a href="#File-manipulation" class="headerlink" title="File manipulation"></a>File manipulation</h4><ul>
+<li>list files in current directory: <code>ls</code></li>
+<li>list files in folders (<code>sub-folder</code>) in current directory: <code>ls sub-folder</code></li>
+<li>go to directory <code>target-dir</code>: <code>cd target-dir</code></li>
+<li>back to last directory: <code>cd ..</code></li>
+<li>open all files in one folder: <code>open folder/*</code></li>
+<li>remove file: <code>rm file</code></li>
+<li>remove folder: <code>rm -r folder</code> </li>
+<li>create a new directory: <code>mkdir dir</code></li>
+<li>copy file to another directory <code>target-dir</code>: <code>cp file target-dir</code></li>
+<li>copy folder to another directory <code>target-dir</code>: <code>cp -r folder target-dir</code></li>
+<li>copy file from remote server: <code>scp username@remote:file-path local-file-path</code></li>
+<li>move file to another directory <code>target-dir</code>: <code>mv file targetdir/</code></li>
+<li>rename file: <code>mv file new-file</code></li>
+<li>compress file or folder (tar): <code>tar -zcvf folder.tar.gz folder</code></li>
+<li>edit text file or create text file use vim: <code>vi file.txt</code></li>
+<li>count number of files in current directory: <code>ls -l | wc -l</code></li>
+</ul>
+<h4 id="Other"><a href="#Other" class="headerlink" title="Other"></a>Other</h4><ul>
+<li>for loop: <code>for i in {n..m}; do [ ]; done</code></li>
+<li>output log file when running python script: <code>python script.py &gt; script_log.log</code></li>
+</ul>
+<h3 id="Git"><a href="#Git" class="headerlink" title="Git"></a>Git</h3><p>Git is a version control system for tracking changes in files and coordinating work on those files among multiple people.</p>
+<h4 id="System-1"><a href="#System-1" class="headerlink" title="System"></a>System</h4><ul>
+<li>set user name and email: <code>git config --global user.name name</code>, <code>git config --global user.email email</code></li>
+<li>check git history: <code>git log</code></li>
+</ul>
+<h4 id="File-changes"><a href="#File-changes" class="headerlink" title="File changes"></a>File changes</h4><ul>
+<li>check all file modifications: <code>git status</code></li>
+<li>add files: <code>git add [file]</code></li>
+<li>add all files: <code>git add --all</code></li>
+<li>commit the changes: <code>git commit -m &quot;description&quot;</code></li>
+</ul>
+<h4 id="Branch"><a href="#Branch" class="headerlink" title="Branch"></a>Branch</h4><ul>
+<li>check branch of the repo: <code>git branch</code></li>
+<li>create a new branch: <code>git branch branch-name</code></li>
+<li>switch to new branch: <code>git checkout branch-name</code></li>
+</ul>
+<h4 id="Synchronize-file-changes"><a href="#Synchronize-file-changes" class="headerlink" title="Synchronize file changes"></a>Synchronize file changes</h4><ul>
+<li>push to remote repo: <code>git push origin branch-name</code></li>
+</ul>
+
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+      
+
+    <span class="post-categories">
+      <i class="icon-categories"></i>
+        <a href="/categories/Software-Development/">Software Development</a>
+    </span>
+    
+
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/Software-Development/">Software Development</a>
+    </span>
+    
+
+    </div>
+
+    
+  </div>
+</article>
+
+
+    </main>
+
+    <footer class="site-footer">
+  <p class="site-info">
+    Proudly powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and
+    Theme by <a href="https://github.com/CodeDaraW/Hacker" target="_blank">Hacker</a>
+    </br>
+    
+    &copy; 2018 Bangda
+    
+	
+	
+	
+  </p>
+  
+  <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+  <span id="busuanzi_container_site_pv">
+    Total viewer <span id="busuanzi_value_site_pv"></span>; 
+  </span>
+  
+  <span id="busuanzi_container_site_uv">
+    Total visitor <span id="busuanzi_value_site_uv"></span>
+  </span>
+
+</footer>
+    
+  </div>
+</div>
+</body>
+</html>
