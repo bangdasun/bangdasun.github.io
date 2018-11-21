@@ -60,9 +60,9 @@
   <nav class="site-navigation">
     <ul>
       
-        <li><a href="/">主页</a></li>
+        <li><a href="/">Home</a></li>
       
-        <li><a href="/archives">归档</a></li>
+        <li><a href="/archives">Archives</a></li>
       
     </ul>
   </nav>
@@ -81,7 +81,7 @@
     <span class="posted-on">
       <a href="/2018/03/15/stanford-nlp-notes-2/" rel="bookmark">
         <time class="entry-date published" datetime="2018-03-15T19:29:43.000Z">
-          2018-03-15
+          2018.03.15
         </time>
       </a>
     </span>
@@ -95,8 +95,8 @@
       
         <p>Text Processing</p>
 <a id="more"></a>
-<h3 id="Regular-Expressions"><a href="#Regular-Expressions" class="headerlink" title="Regular Expressions"></a>Regular Expressions</h3><p>First concept in text processing is Regular expression. It’s a formal language for specifying text strings, we can use regular expression to search specific patterns in text and do more processing based on this.</p>
-<h4 id="Disjunctions"><a href="#Disjunctions" class="headerlink" title="Disjunctions"></a>Disjunctions</h4><p>If we want to find a pattern with a set of letters or symbols, the basic way to put them into brackets <code>[ ]</code> (one square brackets match one symbol). For examples pattern <code>[wW]ood</code> matches <code>Wood</code> and <code>wood</code>, and commonly used ranges include <code>[A-Z]</code> (an upper case letter); <code>[a-z]</code> (a lower case letter); <code>[0-9]</code> (a single digit).</p>
+<h3 id="1-Regular-Expressions"><a href="#1-Regular-Expressions" class="headerlink" title="1. Regular Expressions"></a>1. Regular Expressions</h3><p>First concept in text processing is Regular expression. It’s a formal language for specifying text strings, we can use regular expression to search specific patterns in text and do more processing based on this.</p>
+<h4 id="1-1-Disjunctions"><a href="#1-1-Disjunctions" class="headerlink" title="1.1 Disjunctions"></a>1.1 Disjunctions</h4><p>If we want to find a pattern with a set of letters or symbols, the basic way to put them into brackets <code>[ ]</code> (one square brackets match one symbol). For examples pattern <code>[wW]ood</code> matches <code>Wood</code> and <code>wood</code>, and commonly used ranges include <code>[A-Z]</code> (an upper case letter); <code>[a-z]</code> (a lower case letter); <code>[0-9]</code> (a single digit).</p>
 <p>The opposite way is negate disjunctions. We can add carat in the square bracket. For example <code>[^wW]ood</code> will match any words with last three letters to be <code>ood</code> but not contain <code>W</code> and <code>w</code> in the first place, or simply say: “don’t find Wood and wood”.</p>
 <p>Other disjunctions include:</p>
 <blockquote>
@@ -108,9 +108,9 @@
 <li><code>.</code> - any char, placeholder</li>
 </ol>
 </blockquote>
-<h4 id="Anchors"><a href="#Anchors" class="headerlink" title="Anchors"></a>Anchors</h4><p>Two main anchors is <code>^</code> and <code>$</code> which represent the beginning and the end of the text. For example, <code>^[A-Za-z]</code> will match <code>Regular</code> in “Regular expression” and <code>^[^A-Za-z]</code> will match <code>1</code> in “1. introduction”; <code>.$</code> will match <code>?</code> in “The end?”.</p>
+<h4 id="1-2-Anchors"><a href="#1-2-Anchors" class="headerlink" title="1.2 Anchors"></a>1.2 Anchors</h4><p>Two main anchors is <code>^</code> and <code>$</code> which represent the beginning and the end of the text. For example, <code>^[A-Za-z]</code> will match <code>Regular</code> in “Regular expression” and <code>^[^A-Za-z]</code> will match <code>1</code> in “1. introduction”; <code>.$</code> will match <code>?</code> in “The end?”.</p>
 <p>Generally speaking, regular expressions are widely used and could provide surprisingly large role in NLP. We can use it to do text cleansing or generate features for machine learning algorithms.</p>
-<h3 id="Word-Tokenization"><a href="#Word-Tokenization" class="headerlink" title="Word Tokenization"></a>Word Tokenization</h3><p>Text normalization is very important and every NLP task needs to do it. Since we are facing different format of text (symbols, characters, words, sentences and documents) in NLP, not standard tabular data format in machine learning text book. Text normalization includes: </p>
+<h3 id="2-Word-Tokenization"><a href="#2-Word-Tokenization" class="headerlink" title="2. Word Tokenization"></a>2. Word Tokenization</h3><p>Text normalization is very important and every NLP task needs to do it. Since we are facing different format of text (symbols, characters, words, sentences and documents) in NLP, not standard tabular data format in machine learning text book. Text normalization includes: </p>
 <blockquote>
 <ol>
 <li>Segmenting / tokenizing words in running text</li>
@@ -120,14 +120,14 @@
 </blockquote>
 <p>And we use <strong>Type</strong> to indicate an element of vocabulary, <strong>Token</strong> to indicate an instance of that type in running text.</p>
 <p>We will have many issues in word tokenization. For example, whether we should remove “-“ in “state-of-the-art”? what’s the number of tokens of “San Francisco” (one or two)? Also different languages will have different issues. Take Chinese as an example, Chinese words are composed of characters (characters are generally 1 syllable and 1 morpheme, average word is 2.4 characters long), therefore we always need an extra step called <strong>word segmentation</strong>. And to do this we have many algorithms available like <strong>Maximum matching algorithm</strong>.</p>
-<h3 id="Word-Normalization-and-Stemming"><a href="#Word-Normalization-and-Stemming" class="headerlink" title="Word Normalization and Stemming"></a>Word Normalization and Stemming</h3><h4 id="Normalization"><a href="#Normalization" class="headerlink" title="Normalization"></a>Normalization</h4><p>Words also have different format. <strong>Lemma</strong> means same stem, for instance “cat” and “cats” have same lemma; <strong>Wordform</strong> is the full inflected surface form, “cat” and “cats” have different wordforms.</p>
+<h3 id="3-Word-Normalization-and-Stemming"><a href="#3-Word-Normalization-and-Stemming" class="headerlink" title="3. Word Normalization and Stemming"></a>3. Word Normalization and Stemming</h3><h4 id="3-1-Normalization"><a href="#3-1-Normalization" class="headerlink" title="3.1 Normalization"></a>3.1 Normalization</h4><p>Words also have different format. <strong>Lemma</strong> means same stem, for instance “cat” and “cats” have same lemma; <strong>Wordform</strong> is the full inflected surface form, “cat” and “cats” have different wordforms.</p>
 <p>Also, in information retrieval, we need the indexed text and query terms must have same form: “U.S.A.” should match “USA”. In that way, we can implicitly define equivalence classes of terms</p>
-<h4 id="Case-folding"><a href="#Case-folding" class="headerlink" title="Case folding"></a>Case folding</h4><p>Reduce all letters to lower case is a common method in text normalization. But sometimes case is also helpful, like words “US”, “MT”.</p>
-<h4 id="Lemmatization"><a href="#Lemmatization" class="headerlink" title="Lemmatization"></a>Lemmatization</h4><p>Lemmatization means reduce inflections or variant forms to base form: “am”, “are”, “is” are reduced to “be”; “cat”, “cats”, “cat’s”, “cats’” are reduced to “cat”. In this way we have to find correct dictionary headword form to make sure we don’t make spell errors.</p>
-<h4 id="Stemming"><a href="#Stemming" class="headerlink" title="Stemming"></a>Stemming</h4><p>Morphemes consists of <strong>stems</strong> (core meaning-bearing units) and <strong>affixes</strong> (bits and pieces that adhere to stems). </p>
+<h4 id="3-2-Case-folding"><a href="#3-2-Case-folding" class="headerlink" title="3.2 Case folding"></a>3.2 Case folding</h4><p>Reduce all letters to lower case is a common method in text normalization. But sometimes case is also helpful, like words “US”, “MT”.</p>
+<h4 id="3-3-Lemmatization"><a href="#3-3-Lemmatization" class="headerlink" title="3.3 Lemmatization"></a>3.3 Lemmatization</h4><p>Lemmatization means reduce inflections or variant forms to base form: “am”, “are”, “is” are reduced to “be”; “cat”, “cats”, “cat’s”, “cats’” are reduced to “cat”. In this way we have to find correct dictionary headword form to make sure we don’t make spell errors.</p>
+<h4 id="3-4-Stemming"><a href="#3-4-Stemming" class="headerlink" title="3.4 Stemming"></a>3.4 Stemming</h4><p>Morphemes consists of <strong>stems</strong> (core meaning-bearing units) and <strong>affixes</strong> (bits and pieces that adhere to stems). </p>
 <p>Stemming means reduce terms to their stems in information retrieval, it is crude chopping of affixes. For example “automates”, “automatic” and “automation” are all reduced to “automat”. You can see the difference with lemmatization: “automat” is not a element in vocabulary.</p>
 <p>There are many stemming algorithms, the most common one is <strong>Porter’s algorithm</strong>. It’s consists of some rules for reducing: <code>sess -&gt; ss</code>, <code>ies -&gt; i</code>, <code>(v)ing -&gt; (v)</code>, <code>(v)ed -&gt; (v)</code>; <code>ational -&gt; ate</code>, <code>izer -&gt; ize</code>, <code>ator -&gt; ate</code> etc. We can observe that these rules are based on linguistics.</p>
-<h3 id="Sentence-Segmentation"><a href="#Sentence-Segmentation" class="headerlink" title="Sentence Segmentation"></a>Sentence Segmentation</h3><p>In most case we are not only facing with words, we facing documents such as comments, reviews and articles. Therefore how to segment sentence is also one important aspect.</p>
+<h3 id="4-Sentence-Segmentation"><a href="#4-Sentence-Segmentation" class="headerlink" title="4. Sentence Segmentation"></a>4. Sentence Segmentation</h3><p>In most case we are not only facing with words, we facing documents such as comments, reviews and articles. Therefore how to segment sentence is also one important aspect.</p>
 <p>Punctuation is one aspect we should consider in sentence segmentation. <code>!</code> and <code>?</code> are sometimes useful for indicating sentiments but <code>.</code> is quite ambiguous: it could be the end of the sentence, it could also be abbreviations like “Dr.”, “Inc.” and numbers like “0.5”, “4.3%”. Sometimes we need use some specific rules to determine this and use regular expressions for implementation.</p>
 
       
@@ -161,6 +161,16 @@
     
   </div>
 </article>
+
+  
+<section id="comment">
+  
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+  
+</section>
+
 
 
     </main>

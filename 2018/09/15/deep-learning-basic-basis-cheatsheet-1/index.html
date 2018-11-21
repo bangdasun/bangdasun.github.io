@@ -60,9 +60,9 @@
   <nav class="site-navigation">
     <ul>
       
-        <li><a href="/">主页</a></li>
+        <li><a href="/">Home</a></li>
       
-        <li><a href="/archives">归档</a></li>
+        <li><a href="/archives">Archives</a></li>
       
     </ul>
   </nav>
@@ -81,7 +81,7 @@
     <span class="posted-on">
       <a href="/2018/09/15/deep-learning-basic-basis-cheatsheet-1/" rel="bookmark">
         <time class="entry-date published" datetime="2018-09-15T15:14:16.000Z">
-          2018-09-15
+          2018.09.15
         </time>
       </a>
     </span>
@@ -96,7 +96,7 @@
         <p>Deep Learning Basic Cheatsheet</p>
 <a id="more"></a>
 <p>As we all know, deep learning - neural networks are regarded as black boxes because of the complexity. And it usually takes long time to tune the model. So here I’d like to briefly summarize some basic stuff that necessary for playing with neural networks. I think Andrew Ng’s course on coursera is a nice choice if you don’t have too much experience but want to start. Therefore some of the materials are from that course series. Here is the <a href="https://www.coursera.org/specializations/deep-learning" target="_blank" rel="external">link</a>.</p>
-<h3 id="Notations-and-Terminology"><a href="#Notations-and-Terminology" class="headerlink" title="Notations and Terminology"></a>Notations and Terminology</h3><ul>
+<h3 id="1-Notations-and-Terminology"><a href="#1-Notations-and-Terminology" class="headerlink" title="1. Notations and Terminology"></a>1. Notations and Terminology</h3><ul>
 <li>Components</li>
 </ul>
 <p>No matter what kind of neural networks, all of them have <strong>input layer</strong>, <strong>hidden layers</strong> and <strong>output layer</strong>. Each layer contains a few <strong>nodes</strong>, or called <strong>units</strong>. A general form to represent the relationship between the input and output of \(i\)th layer is like this</p>
@@ -122,7 +122,7 @@
 </ul>
 <p>The process that propagate from the output to input, \(W\) and \(b\) are updated by calculate the gradients during the propagation. For example we have a neural network with one hidden layer, the gradients of \(W\) and \(b\) are given by</p>
 <p>\[<br>\begin{aligned}<br>\frac{\partial L(\hat{y}, y)}{\partial W^{[1]}} = \frac{\partial L(\hat{y}, y)}{\partial A^{[1]}} \frac{\partial A^{[1]}}{\partial Z^{[1]}} \frac{\partial Z^{[1]}}{\partial W^{[1]}},\\<br>\frac{\partial L(\hat{y}, y)}{\partial b^{[1]}} = \frac{\partial L(\hat{y}, y)}{\partial A^{[1]}} \frac{\partial A^{[1]}}{\partial Z^{[1]}} \frac{\partial Z^{[1]}}{\partial b^{[1]}}.<br>\end{aligned}<br>\]</p>
-<h3 id="Optimization"><a href="#Optimization" class="headerlink" title="Optimization"></a>Optimization</h3><ul>
+<h3 id="2-Optimization"><a href="#2-Optimization" class="headerlink" title="2. Optimization"></a>2. Optimization</h3><ul>
 <li>Mini-batch gradient descent</li>
 </ul>
 <p>In regular gradient descent, the update of weights are given by</p>
@@ -146,7 +146,7 @@
 <p>Adaptive moment estimation is the combination of momentum and RMSprop, the update of equations are now</p>
 <p>\[<br>\begin{aligned}<br>W\leftarrow~&amp; W - \alpha\frac{V_{W}}{\sqrt{S_{W}} + \epsilon},\\<br>b\leftarrow~&amp; b - \alpha\frac{V_{b}}{\sqrt{S_{b}} + \epsilon},<br>\end{aligned}<br>\]</p>
 <p>the exponential weighted average weights are \(\beta_{1}\) and \(\beta_{2}\) respectively for momentum and RMSprop.</p>
-<h3 id="Regularization"><a href="#Regularization" class="headerlink" title="Regularization"></a>Regularization</h3><ul>
+<h3 id="3-Regularization"><a href="#3-Regularization" class="headerlink" title="3. Regularization"></a>3. Regularization</h3><ul>
 <li>L1-norm and L2-norm</li>
 </ul>
 <p>L1-norm and L2-norm corresponding to add squared term and absolute value term into the loss function:</p>
@@ -173,7 +173,7 @@
 <p>\[<br>Z^{[i]}_{\text{norm}} = \gamma\frac{Z^{[i]} - \mu}{\sqrt{\sigma^{2} + \epsilon}} + \beta,<br>\]</p>
 <p>where \(\epsilon\) is a very small number to avoid dividing 0 issue.</p>
 <p>Usually this normalization step is done before applying the activation function. This could make later layers’ weights be more robust to the changes of the weights in the earlier layers. If we use mini-batch training, this also add some noise to the data since it is normalized by “local mean” and “local standard deviation”, that’s why it has some regularization effect.</p>
-<h3 id="Other-Terminology"><a href="#Other-Terminology" class="headerlink" title="Other Terminology"></a>Other Terminology</h3><ul>
+<h3 id="4-Other-Terminology"><a href="#4-Other-Terminology" class="headerlink" title="4. Other Terminology"></a>4. Other Terminology</h3><ul>
 <li>Vanishing / Exploding gradients</li>
 </ul>
 <p>This is usually happened in deep neural networks, intuitively a number larger than 1 will be very large by taking a high power; a number smaller than 1 will be very small by taking a high power. This will make the training very difficult. A partial solution is to initialize the weights very carefully.</p>
@@ -187,7 +187,7 @@
 <li>regularization: penalty term of L1-norm and L2-norm, dropout rate, adding batch normalization</li>
 </ol>
 <p>This is general case, when we have different type of networks we will have more options. </p>
-<h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul>
+<h3 id="5-References"><a href="#5-References" class="headerlink" title="5. References"></a>5. References</h3><ul>
 <li><a href="https://www.coursera.org/specializations/deep-learning" target="_blank" rel="external">https://www.coursera.org/specializations/deep-learning</a></li>
 </ul>
 
@@ -222,6 +222,16 @@
     
   </div>
 </article>
+
+  
+<section id="comment">
+  
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+  
+</section>
+
 
 
     </main>

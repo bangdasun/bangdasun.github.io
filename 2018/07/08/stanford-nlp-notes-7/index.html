@@ -60,9 +60,9 @@
   <nav class="site-navigation">
     <ul>
       
-        <li><a href="/">主页</a></li>
+        <li><a href="/">Home</a></li>
       
-        <li><a href="/archives">归档</a></li>
+        <li><a href="/archives">Archives</a></li>
       
     </ul>
   </nav>
@@ -81,7 +81,7 @@
     <span class="posted-on">
       <a href="/2018/07/08/stanford-nlp-notes-7/" rel="bookmark">
         <time class="entry-date published" datetime="2018-07-08T16:37:41.000Z">
-          2018-07-08
+          2018.07.08
         </time>
       </a>
     </span>
@@ -105,8 +105,8 @@
 <li>personality traits.</li>
 </ul>
 <p>Sentiment analysis is the detection of <strong>attitudes</strong>. It could be simple weighted polarity - positive/negative/neutral, also it could be a set of types with rank - like/love/hate/value/desire etc.</p>
-<h3 id="A-Baseline-Algorithm"><a href="#A-Baseline-Algorithm" class="headerlink" title="A Baseline Algorithm"></a>A Baseline Algorithm</h3><p>A baseline algorithm could be a simple text classifier:</p>
-<h4 id="Tokenization"><a href="#Tokenization" class="headerlink" title="Tokenization"></a>Tokenization</h4><p>Since texts are unstructured data, we need to do many preprocessing, includes:</p>
+<h3 id="1-A-Baseline-Algorithm"><a href="#1-A-Baseline-Algorithm" class="headerlink" title="1. A Baseline Algorithm"></a>1. A Baseline Algorithm</h3><p>A baseline algorithm could be a simple text classifier:</p>
+<h4 id="1-1-Tokenization"><a href="#1-1-Tokenization" class="headerlink" title="1.1 Tokenization"></a>1.1 Tokenization</h4><p>Since texts are unstructured data, we need to do many preprocessing, includes:</p>
 <ul>
 <li>deal with HTML/XML markup;</li>
 <li>twitter markup (names, hashtags);</li>
@@ -119,12 +119,12 @@
 <li><a href="http://sentiment.christopherpotts.net/tokenizing.html" target="_blank" rel="external">Christopher Potts sentiment tokenizer</a></li>
 <li><a href="https://github.com/brendano/tweetmotif" target="_blank" rel="external">Brendan O’Connor twitter tokenizer</a></li>
 </ul>
-<h4 id="Feature-Extraction"><a href="#Feature-Extraction" class="headerlink" title="Feature Extraction"></a>Feature Extraction</h4><p>In sentiment analysis, negation is important. we could add a <code>NOT_</code> to every word between negation and following punctuation:</p>
+<h4 id="1-2-Feature-Extraction"><a href="#1-2-Feature-Extraction" class="headerlink" title="1.2 Feature Extraction"></a>1.2 Feature Extraction</h4><p>In sentiment analysis, negation is important. we could add a <code>NOT_</code> to every word between negation and following punctuation:</p>
 <p><code>didn&#39;t like this movie, but I -&gt; didn&#39;t NOT_like NOT_this NOT_movie, but I</code></p>
 <p>We can also just use part of the text, e.g. only adjectives, use bag-of-words to convert each text into a vector.</p>
-<h4 id="Classification"><a href="#Classification" class="headerlink" title="Classification"></a>Classification</h4><p>This is the topic discussed in previous post: <a href="https://bangdasun.github.io/2018/07/07/stanford-nlp-notes-6/" target="_blank" rel="external">Stanford NLP (coursera) Notes (6)</a>. We can use Naive Bayes, SVM, Logistic Regression/Maximum Entropy Model, etc.</p>
+<h4 id="1-3-Classification"><a href="#1-3-Classification" class="headerlink" title="1.3 Classification"></a>1.3 Classification</h4><p>This is the topic discussed in previous post: <a href="https://bangdasun.github.io/2018/07/07/stanford-nlp-notes-6/" target="_blank" rel="external">Stanford NLP (coursera) Notes (6)</a>. We can use Naive Bayes, SVM, Logistic Regression/Maximum Entropy Model, etc.</p>
 <p>In practice it’s very easy to make texts hard to classify. <strong>Subtlety</strong>, <strong>Thwarted Expectations</strong> and <strong>Ordering Effects</strong> can easily make our model collapse. This is natural for NLP problems so don’t worry too much about it for now ;)</p>
-<h3 id="Sentiment-Lexicons"><a href="#Sentiment-Lexicons" class="headerlink" title="Sentiment Lexicons"></a>Sentiment Lexicons</h3><p>Here are some collections of polarity lexicons:</p>
+<h3 id="2-Sentiment-Lexicons"><a href="#2-Sentiment-Lexicons" class="headerlink" title="2. Sentiment Lexicons"></a>2. Sentiment Lexicons</h3><p>Here are some collections of polarity lexicons:</p>
 <ul>
 <li><a href="http://www.wjh.harvard.edu/~inquirer/" target="_blank" rel="external">The General Inquirer</a></li>
 <li><a href="http://liwc.wpengine.com/" target="_blank" rel="external">LIWC - Linguistic Inquiry and Word Count</a></li>
@@ -132,7 +132,7 @@
 <li><a href="https://www.cs.uic.edu/~liub/FBS/sentiment-analysis.html" target="_blank" rel="external">Bing Liu Opinion Lexicon</a></li>
 <li><a href="http://sentiwordnet.isti.cnr.it/" target="_blank" rel="external">SentiWordNet</a></li>
 </ul>
-<h3 id="Learning-Sentiment-Lexicons"><a href="#Learning-Sentiment-Lexicons" class="headerlink" title="Learning Sentiment Lexicons"></a>Learning Sentiment Lexicons</h3><p>Semi-supervised learning of lexicons: we can just use a small amount of information, which contains a few labeled examples and a few hand-built patterns - adjectives conjoined by <strong>“and”</strong> have same polarity, adjectives conjoined by <strong>“but”</strong> have opposite polarity (Hatzivassiloglou and McKeown intuition for identifying word polarity), then bootstrap a lexicon. You can check the details of the learning process <a href="http://www.aclweb.org/anthology/P97-1023" target="_blank" rel="external">here</a>.</p>
+<h3 id="3-Learning-Sentiment-Lexicons"><a href="#3-Learning-Sentiment-Lexicons" class="headerlink" title="3. Learning Sentiment Lexicons"></a>3. Learning Sentiment Lexicons</h3><p>Semi-supervised learning of lexicons: we can just use a small amount of information, which contains a few labeled examples and a few hand-built patterns - adjectives conjoined by <strong>“and”</strong> have same polarity, adjectives conjoined by <strong>“but”</strong> have opposite polarity (Hatzivassiloglou and McKeown intuition for identifying word polarity), then bootstrap a lexicon. You can check the details of the learning process <a href="http://www.aclweb.org/anthology/P97-1023" target="_blank" rel="external">here</a>.</p>
 <p><a href="http://www.aclweb.org/anthology/P02-1053.pdf" target="_blank" rel="external">Turney Algorithm</a>:</p>
 <ul>
 <li>extract a phrasal lexicon from reviews</li>
@@ -187,6 +187,16 @@
     
   </div>
 </article>
+
+  
+<section id="comment">
+  
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+  
+</section>
+
 
 
     </main>

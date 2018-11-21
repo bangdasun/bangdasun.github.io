@@ -60,9 +60,9 @@
   <nav class="site-navigation">
     <ul>
       
-        <li><a href="/">主页</a></li>
+        <li><a href="/">Home</a></li>
       
-        <li><a href="/archives">归档</a></li>
+        <li><a href="/archives">Archives</a></li>
       
     </ul>
   </nav>
@@ -81,7 +81,7 @@
     <span class="posted-on">
       <a href="/2017/08/26/ml-overview-logistic-regression/" rel="bookmark">
         <time class="entry-date published" datetime="2017-08-26T22:48:01.000Z">
-          2017-08-26
+          2017.08.26
         </time>
       </a>
     </span>
@@ -95,7 +95,7 @@
       
         <p>Simple but important logistic regression!</p>
 <a id="more"></a>
-<h3 id="Mathematical-Basis"><a href="#Mathematical-Basis" class="headerlink" title="Mathematical Basis"></a>Mathematical Basis</h3><p>We know that supervised learning could be regarded as the process of learning some kinds of mapping \(f()\) between input and output,</p>
+<h3 id="1-Mathematical-Basis"><a href="#1-Mathematical-Basis" class="headerlink" title="1. Mathematical Basis"></a>1. Mathematical Basis</h3><p>We know that supervised learning could be regarded as the process of learning some kinds of mapping \(f()\) between input and output,</p>
 <p>\[<br>y = f(X).<br>\]</p>
 <p>Logistic regression is a simple (mathematically at least) linear model for classification problems in supervised learning, which means there are some linear relationship exist.</p>
 <p>We start from simplest case where there are only two classes, the output \(y\) is binary, if we regard it as a random variable, we will have \(Y\sim \text{Bernoulli}(p)\) with probability density function</p>
@@ -117,17 +117,17 @@
 <p>here we can take condition on \(\mathbf{X}\) since that’s the information we know, therefore we get,</p>
 <p>\[<br>\hat{\beta} = \arg\max_{\beta} f(\mathbf{X}, \mathbf{y}|\beta) = \arg\max_{\beta} f(\mathbf{y}|\mathbf{X}, \beta)f_{X}(\mathbf{X}) = \arg\max_{\beta} f(\mathbf{y}|\mathbf{X}, \beta).<br>\]</p>
 <p>Hence, for logistic regression, the coefficient should be<br>\[<br>\hat{\beta} = \arg\max_{\beta}f(\mathbf{y}) = \arg\max_{\beta}\prod^{n}_{i=1}f(y_{i})<br>\]<br>where we assume the observations are independent.</p>
-<p>The likelihood function we are look for is<br>\[<br>L(\beta) = \prod^{n}_{i=1}f(y_{i}) = \prod^{n}_{i=1}[1-p(\mathbf{x}_{i})]^{1-y_{i}}p(\mathbf{x}_{i})^{y_{i}},<br>\]<br>take a logarithm, we have<br>\[<br>\begin{aligned}<br>\ln L(\beta) =~&amp;\sum^{n}_{i=1}(1-y_{i})\ln[1-p(\mathbf{x}_{i})] + \sum^{n}_{i=1}y_{i}\ln p(\mathbf{x_{i}}) \\<br>             =~&amp;\sum^{n}_{i=1}\ln[1-p(\mathbf{x}_{i})] + \sum^{n}_{i=1}y_{i}\ln\left[\frac{p(\mathbf{x}_{i})}{1-p(\mathbf{x}_{i})}\right] \\<br>             =~&amp;\sum^{n}_{i=1}\ln\left[\frac{\exp(-\mathbf{x}_{i}\beta)}{1+\exp(-\mathbf{x}_{i}\beta)}\right] + \mathbf{y}^\top\mathbf{X}\beta<br>\end{aligned}<br>\]</p>
+<p>The likelihood function we are look for is<br>\[<br>L(\beta) = \prod^{n}_{i=1}f(y_{i}) = \prod^{n}_{i=1}[1-p(\mathbf{x}_{i})]^{1-y_{i}}p(\mathbf{x}_{i})^{y_{i}},<br>\]<br>take a logarithm, we have<br>\[<br>\begin{aligned}<br>\ln L(\beta) =~&amp;\sum^{n}_{i=1}(1-y_{i})\ln[1-p(\mathbf{x}_{i})] + \sum^{n}_{i=1}y_{i}\ln p(\mathbf{x_{i}}) \\<br>​             =~&amp;\sum^{n}_{i=1}\ln[1-p(\mathbf{x}_{i})] + \sum^{n}_{i=1}y_{i}\ln\left[\frac{p(\mathbf{x}_{i})}{1-p(\mathbf{x}_{i})}\right] \\<br>​             =~&amp;\sum^{n}_{i=1}\ln\left[\frac{\exp(-\mathbf{x}_{i}\beta)}{1+\exp(-\mathbf{x}_{i}\beta)}\right] + \mathbf{y}^\top\mathbf{X}\beta<br>\end{aligned}<br>\]</p>
 <p>and actually the optimization problem is equivalent to </p>
 <p>\[<br>\hat{\beta} = \arg\min_{\beta} \left(-\sum^{n}_{i=1}\ln\left[\frac{\exp(-\mathbf{x}_{i}\beta)}{1+\exp(-\mathbf{x}_{i}\beta)}\right] - \mathbf{y}^\top\mathbf{X}\beta\right)<br>\]</p>
 <p>we can regard this as minimize the <strong>loss function</strong>. </p>
 <p>Now the machine learning problem comes to the calculus problem, to find the minima of the function, we take the derivative/gradient and set it to 0…however unfortunately there is no explicit solution to this function, therefore numerical algorithms like gradient descent (<strong>GD</strong>) works.</p>
-<h3 id="Implementation"><a href="#Implementation" class="headerlink" title="Implementation"></a>Implementation</h3><p>Here are two scripts I wrote that can solve this problem, one is for <a href="https://github.com/bangdasun/Algorithms/blob/master/machine-learning/optimization/gradient-descent/gradient-descent.R" target="_blank" rel="external">gradient descent algorithm</a> and the other is <a href="https://github.com/bangdasun/Algorithms/blob/master/machine-learning/classification/logistics-regression/logistic-regression.R" target="_blank" rel="external">fit logistic regression</a>.</p>
+<h3 id="2-Implementation"><a href="#2-Implementation" class="headerlink" title="2. Implementation"></a>2. Implementation</h3><p>Here are two scripts I wrote that can solve this problem, one is for <a href="https://github.com/bangdasun/Algorithms/blob/master/machine-learning/optimization/gradient-descent/gradient-descent.R" target="_blank" rel="external">gradient descent algorithm</a> and the other is <a href="https://github.com/bangdasun/Algorithms/blob/master/machine-learning/classification/logistics-regression/logistic-regression.R" target="_blank" rel="external">fit logistic regression</a>.</p>
 <p>Also <code>R</code> and <code>sklearn.linear_model (Python)</code> provide the functions. In R we have <code>glm()</code> with <code>family = binomial</code> and in <code>sklearn</code> we just need to import <code>LogisticRegression</code>. </p>
 <p>Here is one example of applying logistic regression on a binary classification problem. The two classes (blue and red) are linear separable. I draw the decision boundary generated by both built-in function in <code>R</code> (<code>glm()</code>) and the function I implemented by myself: solid line is the the built-in function and dashed line is the function I implemented. </p>
 <p><img src="/images/logistic-regression-decision-boundary.png" style="width: 800px; height: 480px"> </p>
 <p>And you can see that logistic regression is a linear classification method: the points on decision boundary is when \(P(y_{i}=1|\mathbf{x}_{i})=1/2\), where leads to \(\mathbf{x}_{i}\beta=0\), therefore it’s produce linear decision boundary.</p>
-<h3 id="More-Discussions"><a href="#More-Discussions" class="headerlink" title="More Discussions"></a>More Discussions</h3><p>I will discuss the pros and cons of logistic regression as well as some practical issues, more theoretical backgrounds next time.</p>
+<h3 id="3-More-Discussions"><a href="#3-More-Discussions" class="headerlink" title="3. More Discussions"></a>3. More Discussions</h3><p>I will discuss the pros and cons of logistic regression as well as some practical issues, more theoretical backgrounds next time.</p>
 
       
     </div>
@@ -160,6 +160,16 @@
     
   </div>
 </article>
+
+  
+<section id="comment">
+  
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+  
+</section>
+
 
 
     </main>

@@ -60,9 +60,9 @@
   <nav class="site-navigation">
     <ul>
       
-        <li><a href="/">主页</a></li>
+        <li><a href="/">Home</a></li>
       
-        <li><a href="/archives">归档</a></li>
+        <li><a href="/archives">Archives</a></li>
       
     </ul>
   </nav>
@@ -81,7 +81,7 @@
     <span class="posted-on">
       <a href="/2018/07/13/stanford-nlp-notes-10/" rel="bookmark">
         <time class="entry-date published" datetime="2018-07-14T02:01:56.000Z">
-          2018-07-13
+          2018.07.13
         </time>
       </a>
     </span>
@@ -95,7 +95,7 @@
       
         <p>Relation Extraction</p>
 <a id="more"></a>
-<h3 id="Relation-Extraction"><a href="#Relation-Extraction" class="headerlink" title="Relation Extraction"></a>Relation Extraction</h3><p>Last post we briefly introduced Information Extraction and one of the tasks: Named Entity Recognized. This time we will continue - not only extract entities, but also extract the relationships among entities: IS - A relation, instance - of relation, etc (more from WordNet Thesaurus). For example, after we extract entities from company report, we get Company/Location/Date, to get more advanced knowledge structure, we focus on relation triples: Company - Founding, like Founding - year (IBM, 1911), Founding - location (IBM, New York).</p>
+<h3 id="1-Relation-Extraction"><a href="#1-Relation-Extraction" class="headerlink" title="1. Relation Extraction"></a>1. Relation Extraction</h3><p>Last post we briefly introduced Information Extraction and one of the tasks: Named Entity Recognized. This time we will continue - not only extract entities, but also extract the relationships among entities: IS - A relation, instance - of relation, etc (more from WordNet Thesaurus). For example, after we extract entities from company report, we get Company/Location/Date, to get more advanced knowledge structure, we focus on relation triples: Company - Founding, like Founding - year (IBM, 1911), Founding - location (IBM, New York).</p>
 <p>Why Relation Extraction?</p>
 <ul>
 <li>create new structured knowledge bases, useful for any app;</li>
@@ -108,7 +108,7 @@
 <li>Unified Medical Language System (UMLS) specifies 54 relations among 134 entity types.</li>
 </ul>
 <p>Besides those <strong>hand-written patterns</strong>, we can also use <strong>supervised learning</strong>, <strong>semi-supervised learning</strong> and <strong>unsupervised learning</strong>.</p>
-<h3 id="Hand-Written-Patterns"><a href="#Hand-Written-Patterns" class="headerlink" title="Hand-Written Patterns"></a>Hand-Written Patterns</h3><p>First let’s see the simplest one - <strong>IS-A</strong> relation. The early intuition from Hearst (1992):</p>
+<h3 id="2-Hand-Written-Patterns"><a href="#2-Hand-Written-Patterns" class="headerlink" title="2. Hand-Written Patterns"></a>2. Hand-Written Patterns</h3><p>First let’s see the simplest one - <strong>IS-A</strong> relation. The early intuition from Hearst (1992):</p>
 <ul>
 <li><code>Y</code> such as <code>X</code> ((, <code>X</code>) * (, and | or) <code>X</code>);</li>
 <li>such <code>Y</code> as <code>X</code>;</li>
@@ -128,7 +128,7 @@
 <li>human made rules are often low-recall;</li>
 <li>time consuming work.</li>
 </ul>
-<h3 id="Supervised-Relation-Extraction"><a href="#Supervised-Relation-Extraction" class="headerlink" title="Supervised Relation Extraction"></a>Supervised Relation Extraction</h3><p>The basic task for the classifier is decide any 2 entities are related. Specific steps are as follows:</p>
+<h3 id="3-Supervised-Relation-Extraction"><a href="#3-Supervised-Relation-Extraction" class="headerlink" title="3. Supervised Relation Extraction"></a>3. Supervised Relation Extraction</h3><p>The basic task for the classifier is decide any 2 entities are related. Specific steps are as follows:</p>
 <ul>
 <li>choose a set of relations we’d like to extract;</li>
 <li>choose a set of relevant named entities;</li>
@@ -145,7 +145,7 @@
 <li>labeling large training data is expensive;</li>
 <li>classifier may not generalize well to different genres.</li>
 </ul>
-<h3 id="Semi-Supervised-and-Unsupervised-Relation-Extraction"><a href="#Semi-Supervised-and-Unsupervised-Relation-Extraction" class="headerlink" title="Semi - Supervised and Unsupervised Relation Extraction"></a>Semi - Supervised and Unsupervised Relation Extraction</h3><p>When we don’t have label or even no training data, we could have a few seed tuples or high-precision patterns.</p>
+<h3 id="4-Semi-Supervised-and-Unsupervised-Relation-Extraction"><a href="#4-Semi-Supervised-and-Unsupervised-Relation-Extraction" class="headerlink" title="4. Semi - Supervised and Unsupervised Relation Extraction"></a>4. Semi - Supervised and Unsupervised Relation Extraction</h3><p>When we don’t have label or even no training data, we could have a few seed tuples or high-precision patterns.</p>
 <p>we can use <strong>bootstrapping</strong>: use the seeds to directly learn to populate a relation. First gather a set of seed pairs that have relation \(R\), then iterate:</p>
 <ol>
 <li>find sentences with these pairs;</li>
@@ -185,6 +185,16 @@
     
   </div>
 </article>
+
+  
+<section id="comment">
+  
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+  
+</section>
+
 
 
     </main>

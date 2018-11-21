@@ -60,9 +60,9 @@
   <nav class="site-navigation">
     <ul>
       
-        <li><a href="/">主页</a></li>
+        <li><a href="/">Home</a></li>
       
-        <li><a href="/archives">归档</a></li>
+        <li><a href="/archives">Archives</a></li>
       
     </ul>
   </nav>
@@ -81,7 +81,7 @@
     <span class="posted-on">
       <a href="/2017/08/27/ml-overview-linear-regression/" rel="bookmark">
         <time class="entry-date published" datetime="2017-08-28T03:27:28.000Z">
-          2017-08-27
+          2017.08.27
         </time>
       </a>
     </span>
@@ -95,9 +95,8 @@
       
         <p>Even simpler than logistic regression, and also more important.</p>
 <a id="more"></a>
-<p>I believe this would be the first model that you know when you start with machine learning, and I believe the space here will not be enough for me to illustrate its (also including its extensions) applications and to explain why it’s widely used.</p>
-<p>If the mathematical formula parts just show the TeX code, see this <a href="https://github.com/bangdasun/Algorithms/blob/master/machine-learning/regression/linear-regression/linear-regression-gd.R" target="_blank" rel="external">post</a>.</p>
-<h3 id="Mathematical-Basis"><a href="#Mathematical-Basis" class="headerlink" title="Mathematical Basis"></a>Mathematical Basis</h3><p>The form of linear regression model is<br>\[<br>y = \beta_{0} + \beta_{1}x_{1} + \beta_{2}x_{2}+\cdots+\beta_{p}x_{p}+\epsilon,<br>\]<br>where we assume the relationship between predictors and response are linear, the \(\beta\)’s are called coefficients, or parameters. If we have a dataset with \(n\) observations and \(p\) predictors, we can build our model in this form:<br>\[<br>\begin{bmatrix}<br>y_{1}\\<br>y_{2}\\<br>\vdots\\<br>y_{n}<br>\end{bmatrix} =<br>\begin{bmatrix}<br>1&amp;x_{11}&amp;x_{12}&amp;\cdots&amp;x_{1p}\\<br>1&amp;x_{21}&amp;x_{22}&amp;\cdots&amp;x_{2p}\\<br>\vdots&amp;\vdots&amp;\vdots&amp;\ddots&amp;\vdots\\<br>1&amp;x_{n1}&amp;x_{n2}&amp;\cdots&amp;x_{np}<br>\end{bmatrix}<br>\begin{bmatrix}<br>\beta_{0}\\<br>\beta_{1}\\<br>\beta_{2}\\<br>\vdots\\<br>\beta_{p}<br>\end{bmatrix} +<br>\begin{bmatrix}<br>\epsilon_{1}\\<br>\epsilon_{2}\\<br>\vdots\\<br>\epsilon_{n}<br>\end{bmatrix},<br>\]<br>use matrix form,<br>\[<br>\mathbf{y} = \mathbf{X}\beta + \mathbf{\epsilon}.<br>\]<br>where \(\epsilon\) is known as random error term, which cannot be observed, it includes all of factors that cannot be explained by the predictors.</p>
+<h3 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1. Introduction"></a>1. Introduction</h3><p>I believe this would be the first model that you know when you start with machine learning, and I believe the space here will not be enough for me to illustrate its (also including its extensions) applications and to explain why it’s widely used.</p>
+<h3 id="2-Mathematical-Basis"><a href="#2-Mathematical-Basis" class="headerlink" title="2. Mathematical Basis"></a>2. Mathematical Basis</h3><p>The form of linear regression model is<br>\[<br>y = \beta_{0} + \beta_{1}x_{1} + \beta_{2}x_{2}+\cdots+\beta_{p}x_{p}+\epsilon,<br>\]<br>where we assume the relationship between predictors and response are linear, the \(\beta\)’s are called coefficients, or parameters. If we have a dataset with \(n\) observations and \(p\) predictors, we can build our model in this form:<br>\[<br>\begin{bmatrix}<br>y_{1}\\<br>y_{2}\\<br>\vdots\\<br>y_{n}<br>\end{bmatrix} =<br>\begin{bmatrix}<br>1&amp;x_{11}&amp;x_{12}&amp;\cdots&amp;x_{1p}\\<br>1&amp;x_{21}&amp;x_{22}&amp;\cdots&amp;x_{2p}\\<br>\vdots&amp;\vdots&amp;\vdots&amp;\ddots&amp;\vdots\\<br>1&amp;x_{n1}&amp;x_{n2}&amp;\cdots&amp;x_{np}<br>\end{bmatrix}<br>\begin{bmatrix}<br>\beta_{0}\\<br>\beta_{1}\\<br>\beta_{2}\\<br>\vdots\\<br>\beta_{p}<br>\end{bmatrix} +<br>\begin{bmatrix}<br>\epsilon_{1}\\<br>\epsilon_{2}\\<br>\vdots\\<br>\epsilon_{n}<br>\end{bmatrix},<br>\]<br>use matrix form,<br>\[<br>\mathbf{y} = \mathbf{X}\beta + \mathbf{\epsilon}.<br>\]<br>where \(\epsilon\) is known as random error term, which cannot be observed, it includes all of factors that cannot be explained by the predictors.</p>
 <p>Here are the related assumptions of linear regression:</p>
 <blockquote>
 <ol>
@@ -109,13 +108,13 @@
 <p>No differences with other supervised learning problem, to estimate the coefficients we need to minimize the loss function of model. Usually we use <strong>squared loss</strong> since it has good property (discuss later in this post), sometimes other loss functions like <strong>absolute loss</strong> is also used. If we choose squared loss, we are actually on the track of ordinary least square (<strong>OLS</strong>), i.e.,</p>
 <p>\[<br>\hat{\beta} = \arg\min_{\beta} \sum^{n}_{i=1}(y_{i} - \beta_{0}-\beta_{1}x_{i1}-\cdots-\beta_{p}x_{ip})^{2} = \arg\min_{\beta} (\mathbf{y}-\mathbf{X}\beta)^\top(\mathbf{y}-\mathbf{X}\beta),<br>\]</p>
 <p>and we can solve it explicitly,</p>
-<p>\[<br>\begin{aligned}<br>L(\beta) =~&amp; \left(\mathbf{y} - \mathbf{X}\beta\right)^\top\left(\mathbf{y} - \mathbf{X}\beta\right) \\<br>         =~&amp; \mathbf{y}^\top\mathbf{y} - 2\mathbf{X}^\top\mathbf{y}\beta^\top + \beta^\top\mathbf{X}^\top\mathbf{X}\beta,<br>\end{aligned}<br>\]</p>
+<p>\[<br>\begin{aligned}<br>L(\beta) =~&amp; \left(\mathbf{y} - \mathbf{X}\beta\right)^\top\left(\mathbf{y} - \mathbf{X}\beta\right) \\<br>​         =~&amp; \mathbf{y}^\top\mathbf{y} - 2\mathbf{X}^\top\mathbf{y}\beta^\top + \beta^\top\mathbf{X}^\top\mathbf{X}\beta,<br>\end{aligned}<br>\]</p>
 <p>take the gradient and set it equal to 0,</p>
 <p>\[<br>\nabla_{\beta} L(\beta) = -2\mathbf{X}^\top\mathbf{y} + 2\mathbf{X}^\top\mathbf{X}\beta = 0<br>\longrightarrow \mathbf{X}^\top\mathbf{X}\beta = \mathbf{X}^\top\mathbf{y}\longrightarrow \beta = \left(\mathbf{X}^\top\mathbf{X}\right)^{-1}\mathbf{X}^\top\mathbf{y}.<br>\]</p>
 <p>Really simple calculation.</p>
 <p>Then consider why we use squared loss? why it is different with absolute loss? Well let’s first throw away OLS, as statistics students we believe MLE would work!</p>
-<p>We already assume that the error term has normal distribution, i.e. \(\epsilon\sim N(0,\sigma^2)\), and \(\mathbf{X}\) is fixed and independent with error term, hence \(y_{i}\) would also be Normal distribution, \(y_{i}\sim N(\mathbf{x}_{i}\beta, \sigma^{2})\). Also all observations are independent, therefore we get<br>\[<br>\begin{aligned}<br>\hat{\beta}_{mle} &amp;~= \arg\max_{\beta}f(\mathbf{y}, \mathbf{X}) = \arg\max_{\beta}\prod^{n}_{i=1}f(y_{i},\mathbf{x}_{i}) = \arg\max_{\beta}\prod^{n}_{i=1}f(y_{i}|\mathbf{x}_{i})f(\mathbf{x}_{i}) \\<br>                   &amp;~= \arg\max_{\beta}\prod^{n}_{i=1}\frac{1}{\sqrt{2\pi}\sigma}\exp\left\{-\frac{(y_{i}-\mathbf{x}_{i}\beta)^{2}}{2\sigma^{2}}\right\} \\<br>                   &amp;~= \arg\max_{\beta} -\sum^{n}_{i=1}(y_{i}-\mathbf{x}_{i}\beta)^{2} \\<br>                   &amp;~= \arg\min_{\beta} \sum^{n}_{i=1}(y_{i}-\mathbf{x}_{i}\beta)^{2}<br>\end{aligned}<br>\]<br>see that? under this assumption, \(\hat{\beta}_{ols} = \hat{\beta}_{mle}\). That’s one of the perspective to explain why we would like use squared loss in linear regression, and keep in mind that this is based on our assumptions on \(\epsilon\).</p>
-<h3 id="Implementation"><a href="#Implementation" class="headerlink" title="Implementation"></a>Implementation</h3><p>We can estimate the coefficients both explicitly and numerically. For numerical computing, we will use gradient descent again to find the minima of the loss function, <a href="https://github.com/bangdasun/Statistical-machine-learning/blob/master/algorithms/regression/linear-regression/self-defined-ols-gd.R" target="_blank" rel="external">here</a> is implementation I did.</p>
+<p>We already assume that the error term has normal distribution, i.e. \(\epsilon\sim N(0,\sigma^2)\), and \(\mathbf{X}\) is fixed and independent with error term, hence \(y_{i}\) would also be Normal distribution, \(y_{i}\sim N(\mathbf{x}_{i}\beta, \sigma^{2})\). Also all observations are independent, therefore we get<br>\[<br>\begin{aligned}<br>\hat{\beta}_{mle} &amp;~= \arg\max_{\beta}f(\mathbf{y}, \mathbf{X}) = \arg\max_{\beta}\prod^{n}_{i=1}f(y_{i},\mathbf{x}_{i}) = \arg\max_{\beta}\prod^{n}_{i=1}f(y_{i}|\mathbf{x}_{i})f(\mathbf{x}_{i}) \\<br>​                   &amp;~= \arg\max_{\beta}\prod^{n}_{i=1}\frac{1}{\sqrt{2\pi}\sigma}\exp\left\{-\frac{(y_{i}-\mathbf{x}_{i}\beta)^{2}}{2\sigma^{2}}\right\} \\<br>​                   &amp;~= \arg\max_{\beta} -\sum^{n}_{i=1}(y_{i}-\mathbf{x}_{i}\beta)^{2} \\<br>​                   &amp;~= \arg\min_{\beta} \sum^{n}_{i=1}(y_{i}-\mathbf{x}_{i}\beta)^{2}<br>\end{aligned}<br>\]<br>see that? under this assumption, \(\hat{\beta}_{ols} = \hat{\beta}_{mle}\). That’s one of the perspective to explain why we would like use squared loss in linear regression, and keep in mind that this is based on our assumptions on \(\epsilon\).</p>
+<h3 id="3-Implementation"><a href="#3-Implementation" class="headerlink" title="3. Implementation"></a>3. Implementation</h3><p>We can estimate the coefficients both explicitly and numerically. For numerical computing, we will use gradient descent again to find the minima of the loss function, <a href="https://github.com/bangdasun/Statistical-machine-learning/blob/master/algorithms/regression/linear-regression/self-defined-ols-gd.R" target="_blank" rel="external">here</a> is implementation I did.</p>
 <p>And in <code>R</code> we have <code>lm()</code> and in <code>sklearn.linear_model</code> we have <code>LinearRegression()</code>.</p>
 
       
@@ -149,6 +148,16 @@
     
   </div>
 </article>
+
+  
+<section id="comment">
+  
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+  
+</section>
+
 
 
     </main>

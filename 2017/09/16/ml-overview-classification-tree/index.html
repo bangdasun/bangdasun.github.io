@@ -60,9 +60,9 @@
   <nav class="site-navigation">
     <ul>
       
-        <li><a href="/">主页</a></li>
+        <li><a href="/">Home</a></li>
       
-        <li><a href="/archives">归档</a></li>
+        <li><a href="/archives">Archives</a></li>
       
     </ul>
   </nav>
@@ -81,7 +81,7 @@
     <span class="posted-on">
       <a href="/2017/09/16/ml-overview-classification-tree/" rel="bookmark">
         <time class="entry-date published" datetime="2017-09-16T17:35:00.000Z">
-          2017-09-16
+          2017.09.16
         </time>
       </a>
     </span>
@@ -95,8 +95,8 @@
       
         <p>Decision tree for classification problems</p>
 <a id="more"></a>
-<h3 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h3><p>Last time we go through regression tree: using decision tree to tackle regression problem. It’s pretty reasonable that we can also apply decision tree on classification problem. To make this blog easier to read, I use binary classification tree which means we use decision tree to solve binary classification problem.</p>
-<h3 id="Mathematical-Basis"><a href="#Mathematical-Basis" class="headerlink" title="Mathematical Basis"></a>Mathematical Basis</h3><p>Convert regression problem to classification problem, there are several points we need to clarify:</p>
+<h3 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1. Introduction"></a>1. Introduction</h3><p>Last time we go through regression tree: using decision tree to tackle regression problem. It’s pretty reasonable that we can also apply decision tree on classification problem. To make this blog easier to read, I use binary classification tree which means we use decision tree to solve binary classification problem.</p>
+<h3 id="2-Mathematical-Basis"><a href="#2-Mathematical-Basis" class="headerlink" title="2. Mathematical Basis"></a>2. Mathematical Basis</h3><p>Convert regression problem to classification problem, there are several points we need to clarify:</p>
 <ol>
 <li>How to predict the class label of a region? In regression, we use \(\bar{y}\);</li>
 <li>How to measure the performance of one split? In regression, we use squared loss function;</li>
@@ -118,7 +118,7 @@
 <p><img src="/images/loss-classification-tree.png" style="width: 650px; height: 400px"> </p>
 <p>When the region is mostly one category, gini index and cross entropy will take a smaller value (which means node impurity is higher, as shown in the plot), they are better measures of the node purity.</p>
 <p>The following step is almost same to the regression tree: we recursively split the sample space, we use the idea of <strong>Greedy algorithm</strong> until a stop criterion.</p>
-<h3 id="Implementation"><a href="#Implementation" class="headerlink" title="Implementation"></a>Implementation</h3><p>Since we already implement regression tree, we just need update the loss functions and prediction part. Here is the <a href="https://github.com/bangdasun/Algorithms/blob/master/machine-learning/classification/classification-decision-tree/CART-C.py" target="_blank" rel="external">source code</a> and <a href="https://github.com/bangdasun/Algorithms/blob/master/machine-learning/classification/classification-decision-tree/CART-C.ipynb" target="_blank" rel="external">demo</a></p>
+<h3 id="3-Implementation"><a href="#3-Implementation" class="headerlink" title="3. Implementation"></a>3. Implementation</h3><p>Since we already implement regression tree, we just need update the loss functions and prediction part. Here is the <a href="https://github.com/bangdasun/Algorithms/blob/master/machine-learning/classification/classification-decision-tree/CART-C.py" target="_blank" rel="external">source code</a> and <a href="https://github.com/bangdasun/Algorithms/blob/master/machine-learning/classification/classification-decision-tree/CART-C.ipynb" target="_blank" rel="external">demo</a></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">In [9]: tree = ClassificationTree()</div><div class="line">        tree.build_tree(X, y, 2, 3)</div><div class="line">        tree.print_tree(tree.root)</div><div class="line">Out[9]: [X0 &lt; 6.642287351]</div><div class="line">        -[X0 &lt; 2.771244718]</div><div class="line">        --[[ 0.]]</div><div class="line">        --[X0 &lt; 3.678319846]</div><div class="line">        ---[[ 0.]]</div><div class="line">        ---[[ 0.]]</div><div class="line">        -[X0 &lt; 7.497545867]</div><div class="line">        --[[ 1.]]</div><div class="line">        --[[ 1.]]</div></pre></td></tr></table></figure>
 
       
@@ -152,6 +152,16 @@
     
   </div>
 </article>
+
+  
+<section id="comment">
+  
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+  
+</section>
+
 
 
     </main>

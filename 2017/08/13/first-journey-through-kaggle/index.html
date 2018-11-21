@@ -60,9 +60,9 @@
   <nav class="site-navigation">
     <ul>
       
-        <li><a href="/">主页</a></li>
+        <li><a href="/">Home</a></li>
       
-        <li><a href="/archives">归档</a></li>
+        <li><a href="/archives">Archives</a></li>
       
     </ul>
   </nav>
@@ -81,7 +81,7 @@
     <span class="posted-on">
       <a href="/2017/08/13/first-journey-through-kaggle/" rel="bookmark">
         <time class="entry-date published" datetime="2017-08-13T17:43:17.000Z">
-          2017-08-13
+          2017.08.13
         </time>
       </a>
     </span>
@@ -100,14 +100,14 @@
 <a id="more"></a>
 <p>Just spent the last five weeks (nights and weekends to be precise) on two kaggle competitions. I think it’s a good point to stop by and summarize what I did and learned for now. Really nice experience, especially when I heard the sound of disk spin – felt data’s coming.</p>
 <p><img src="/images/watching.jpg" style="width: 300px; height: 200px"> </p>
-<h3 id="Motivation"><a href="#Motivation" class="headerlink" title="Motivation"></a>Motivation</h3><p>Kaggle is a nice place to interact machine learning experts in different countries and backgrounds. You can really learn a lot from the kernels and discussion panel. What I do is analyzing data and modeling by myself until I have no idea about improvement, then I will refer to the kernels. Since it is helpful to me to think independently and critically. </p>
+<h3 id="1-Motivation"><a href="#1-Motivation" class="headerlink" title="1. Motivation"></a>1. Motivation</h3><p>Kaggle is a nice place to interact machine learning experts in different countries and backgrounds. You can really learn a lot from the kernels and discussion panel. What I do is analyzing data and modeling by myself until I have no idea about improvement, then I will refer to the kernels. Since it is helpful to me to think independently and critically. </p>
 <p>I have some mathematical modeling contests experiences before, therefore I’m very comfortable with modeling, predicting, analyzing. Competitions in kaggle are more data oriented – you win if you family with the data better than others. On top of that, I’ve taken courses like statistical computing, machine learning and some programming courses as well as some projects, there is no need to start from the very beginning point. I can just fetch the data and start working on that.</p>
-<h3 id="Play-with-Data"><a href="#Play-with-Data" class="headerlink" title="Play with Data"></a>Play with Data</h3><p>The general procedure of a kaggle competition can be decomposed to these parts:</p>
+<h3 id="2-Play-with-Data"><a href="#2-Play-with-Data" class="headerlink" title="2. Play with Data"></a>2. Play with Data</h3><p>The general procedure of a kaggle competition can be decomposed to these parts:</p>
 <blockquote>
 <p><strong>Exploration Data Analysis (EDA)</strong>;<br> <strong>Feature Engineering</strong>;<br> <strong>Modeling</strong>;<br> <strong>Model Evaluations and Improvement</strong>.</p>
 </blockquote>
 <p>Then submit the result and check the Leaderboard; if you’re not satisfied with the score you can jump back to any step and do it again.</p>
-<h3 id="EDA"><a href="#EDA" class="headerlink" title="EDA"></a>EDA</h3><p>EDA usually consists of <strong>variables interpretations</strong> and <strong>descriptive statistics</strong> accompanied by <strong>data visualizations</strong>. Here are some general ways I can summarize:</p>
+<h3 id="3-EDA"><a href="#3-EDA" class="headerlink" title="3. EDA"></a>3. EDA</h3><p>EDA usually consists of <strong>variables interpretations</strong> and <strong>descriptive statistics</strong> accompanied by <strong>data visualizations</strong>. Here are some general ways I can summarize:</p>
 <blockquote>
 <ol>
 <li>Check the <strong>data types</strong>: numerical variables and categorical variables. Sometimes categorical variables use numbers but they are still discrete, and they can also classified as ordered / non-ordered variables.</li>
@@ -122,7 +122,7 @@
 </ol>
 </blockquote>
 <p>Sometimes the problem cannot be simply classified, for instance some competitions are seeking solutions of detect some pattern from images.</p>
-<h3 id="Feature-Engineering"><a href="#Feature-Engineering" class="headerlink" title="Feature Engineering"></a>Feature Engineering</h3><p>Is the feature engineering important? The answer is YES! yes yes yes …</p>
+<h3 id="4-Feature-Engineering"><a href="#4-Feature-Engineering" class="headerlink" title="4. Feature Engineering"></a>4. Feature Engineering</h3><p>Is the feature engineering important? The answer is YES! yes yes yes …</p>
 <p>There are several goals to be achieved in feature engineering:</p>
 <blockquote>
 <ol>
@@ -131,11 +131,11 @@
 <li><strong>Encoding</strong>, this is widely used for categorical variables. You can convert them into dummy variables (one-hot encoding) for non-ordered variables; you can convert them into positive integers for ordered variables.</li>
 </ol>
 </blockquote>
-<h3 id="Modeling-and-Evaluation"><a href="#Modeling-and-Evaluation" class="headerlink" title="Modeling and Evaluation"></a>Modeling and Evaluation</h3><p>There could be two categories of model, one is models like linear regression: easy to interpret, we can get many information by taking experiments on that; one is like random forest, boosting and neural networks, they are more likely to be ‘black boxes’.</p>
+<h3 id="5-Modeling-and-Evaluation"><a href="#5-Modeling-and-Evaluation" class="headerlink" title="5. Modeling and Evaluation"></a>5. Modeling and Evaluation</h3><p>There could be two categories of model, one is models like linear regression: easy to interpret, we can get many information by taking experiments on that; one is like random forest, boosting and neural networks, they are more likely to be ‘black boxes’.</p>
 <p>We should keep the assumptions of the models/algorithms in our mind all the time, like <strong>normal distribution</strong>; <strong>i.i.d.</strong>. This could always be our entry point make improvement: we might search for other methods that have more generalized assumptions.</p>
 <p>Techniques like <strong>cross-validation</strong> (model evaluation and parameters tuning), <strong>regularization</strong>, <strong>bootstrap</strong> are widely used, they are our old friends in machine learning courses, so I won’t discuss much of that here :-).</p>
 <p>Here is one technique I want to mention – <strong>model stacking</strong>. It makes good use of <strong>out-of-fold</strong> data and can be always a way to improve your current / single model (in kaggle at least), you create new friends for your model that they can work together. I will discuss this idea of modeling in a separate blog later.</p>
-<h3 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h3><p>I just get a quick summary here and hopefully I will post more details of my two competitions in the later blogs. </p>
+<h3 id="6-Summary"><a href="#6-Summary" class="headerlink" title="6. Summary"></a>6. Summary</h3><p>I just get a quick summary here and hopefully I will post more details of my two competitions in the later blogs. </p>
 <p>In addition, I also have some thoughts after I read some kernels:</p>
 <ul>
 <li>As a statistics/mathematics background person, I was surprised to see some kagglers take 3rd/4th order term to all numeric variables…</li>
@@ -177,6 +177,16 @@
     
   </div>
 </article>
+
+  
+<section id="comment">
+  
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+  
+</section>
+
 
 
     </main>

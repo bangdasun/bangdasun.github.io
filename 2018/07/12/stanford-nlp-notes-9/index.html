@@ -60,9 +60,9 @@
   <nav class="site-navigation">
     <ul>
       
-        <li><a href="/">主页</a></li>
+        <li><a href="/">Home</a></li>
       
-        <li><a href="/archives">归档</a></li>
+        <li><a href="/archives">Archives</a></li>
       
     </ul>
   </nav>
@@ -81,7 +81,7 @@
     <span class="posted-on">
       <a href="/2018/07/12/stanford-nlp-notes-9/" rel="bookmark">
         <time class="entry-date published" datetime="2018-07-13T00:25:31.000Z">
-          2018-07-12
+          2018.07.12
         </time>
       </a>
     </span>
@@ -95,7 +95,7 @@
       
         <p>Information Extraction and Named Entity Recognition</p>
 <a id="more"></a>
-<h3 id="Information-Extraction"><a href="#Information-Extraction" class="headerlink" title="Information Extraction"></a>Information Extraction</h3><p>Information extraction (IE) systems is also a widely used NLP application in real life, it can</p>
+<h3 id="1-Information-Extraction"><a href="#1-Information-Extraction" class="headerlink" title="1. Information Extraction"></a>1. Information Extraction</h3><p>Information extraction (IE) systems is also a widely used NLP application in real life, it can</p>
 <ul>
 <li>find and understanding limited relevant parts of texts</li>
 <li>gather information from many pieces of text</li>
@@ -111,14 +111,14 @@
 <li>a lot of IE relations are associations between named entities;</li>
 <li>answers from QA system are often named entities.</li>
 </ul>
-<h3 id="NER-Task"><a href="#NER-Task" class="headerlink" title="NER Task"></a>NER Task</h3><p>From machine learning perspective, NER is a classification task: whether these pieces of the text (word or phrase) is a named entity? Then the general pipeline will be:</p>
-<h4 id="Training-classifier"><a href="#Training-classifier" class="headerlink" title="Training classifier"></a>Training classifier</h4><ul>
+<h3 id="2-NER-Task"><a href="#2-NER-Task" class="headerlink" title="2. NER Task"></a>2. NER Task</h3><p>From machine learning perspective, NER is a classification task: whether these pieces of the text (word or phrase) is a named entity? Then the general pipeline will be:</p>
+<h4 id="2-1-Training-classifier"><a href="#2-1-Training-classifier" class="headerlink" title="2.1 Training classifier"></a>2.1 Training classifier</h4><ul>
 <li>collect a set of representative training documents;</li>
 <li>label each token or its entity or OTHER;</li>
 <li>feature engineering (current word, prev/next word, POS, previous label, etc);</li>
 <li>train classifiers.</li>
 </ul>
-<h4 id="Testing"><a href="#Testing" class="headerlink" title="Testing"></a>Testing</h4><ul>
+<h4 id="2-2-Testing"><a href="#2-2-Testing" class="headerlink" title="2.2 Testing"></a>2.2 Testing</h4><ul>
 <li>receive new documents</li>
 <li>apply the model for each token</li>
 <li>output the extracted entities</li>
@@ -180,6 +180,16 @@
     
   </div>
 </article>
+
+  
+<section id="comment">
+  
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+  
+</section>
+
 
 
     </main>

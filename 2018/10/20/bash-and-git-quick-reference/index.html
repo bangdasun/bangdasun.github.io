@@ -60,9 +60,9 @@
   <nav class="site-navigation">
     <ul>
       
-        <li><a href="/">主页</a></li>
+        <li><a href="/">Home</a></li>
       
-        <li><a href="/archives">归档</a></li>
+        <li><a href="/archives">Archives</a></li>
       
     </ul>
   </nav>
@@ -81,7 +81,7 @@
     <span class="posted-on">
       <a href="/2018/10/20/bash-and-git-quick-reference/" rel="bookmark">
         <time class="entry-date published" datetime="2018-10-20T15:54:08.000Z">
-          2018-10-20
+          2018.10.20
         </time>
       </a>
     </span>
@@ -96,12 +96,13 @@
         <p>Bash and Git Cheatsheet</p>
 <a id="more"></a>
 <p>This is a summary of <code>bash</code> and <code>git</code> commands that I usually need during the work. I will update it once I have new commands.</p>
-<h3 id="Bash"><a href="#Bash" class="headerlink" title="Bash"></a>Bash</h3><p>Bash is a Unix shell and command language. It has been distributed widely as the default login shell for most Linux distributions and Apple’s macOS. There is also a version available for Windows 10 now.</p>
-<h4 id="System"><a href="#System" class="headerlink" title="System"></a>System</h4><ul>
+<h3 id="1-Bash"><a href="#1-Bash" class="headerlink" title="1. Bash"></a>1. Bash</h3><p>Bash is a Unix shell and command language. It has been distributed widely as the default login shell for most Linux distributions and Apple’s macOS. There is also a version available for Windows 10 now.</p>
+<h4 id="1-1-System"><a href="#1-1-System" class="headerlink" title="1.1 System"></a>1.1 System</h4><ul>
 <li>check disk usage: <code>du -h</code></li>
 <li>get command history: <code>history</code></li>
+<li>check current running jobs: <code>top</code></li>
 </ul>
-<h4 id="File-manipulation"><a href="#File-manipulation" class="headerlink" title="File manipulation"></a>File manipulation</h4><ul>
+<h4 id="1-2-File-manipulation"><a href="#1-2-File-manipulation" class="headerlink" title="1.2 File manipulation"></a>1.2 File manipulation</h4><ul>
 <li>list files in current directory: <code>ls</code></li>
 <li>list files in folders (<code>sub-folder</code>) in current directory: <code>ls sub-folder</code></li>
 <li>go to directory <code>target-dir</code>: <code>cd target-dir</code></li>
@@ -117,30 +118,36 @@
 <li>rename file: <code>mv file new-file</code></li>
 <li>compress file or folder (tar): <code>tar -zcvf folder.tar.gz folder</code></li>
 <li>edit text file or create text file use vim: <code>vi file.txt</code></li>
-<li>count number of files in current directory: <code>ls -l | wc -l</code></li>
+<li>count number of files in directory: <code>ls dir | wc -l</code></li>
+<li>count number of lines written in file: <code>wc -l file.csv</code></li>
+<li>preview spreadsheet or other files (<code>n</code>th line): <code>head -n file.csv</code></li>
 </ul>
-<h4 id="Other"><a href="#Other" class="headerlink" title="Other"></a>Other</h4><ul>
+<h4 id="1-3-Other"><a href="#1-3-Other" class="headerlink" title="1.3 Other"></a>1.3 Other</h4><ul>
 <li>for loop: <code>for i in {n..m}; do [ ]; done</code></li>
 <li>output log file when running python script: <code>python script.py &gt; script_log.log</code></li>
 </ul>
-<h3 id="Git"><a href="#Git" class="headerlink" title="Git"></a>Git</h3><p>Git is a version control system for tracking changes in files and coordinating work on those files among multiple people.</p>
-<h4 id="System-1"><a href="#System-1" class="headerlink" title="System"></a>System</h4><ul>
+<h3 id="2-Git"><a href="#2-Git" class="headerlink" title="2. Git"></a>2. Git</h3><p>Git is a version control system for tracking changes in files and coordinating work on those files among multiple people.</p>
+<h4 id="2-1-System"><a href="#2-1-System" class="headerlink" title="2.1 System"></a>2.1 System</h4><ul>
 <li>set user name and email: <code>git config --global user.name name</code>, <code>git config --global user.email email</code></li>
 <li>check git history: <code>git log</code></li>
+<li>clone a repo: <code>git clone repo-location</code></li>
 </ul>
-<h4 id="File-changes"><a href="#File-changes" class="headerlink" title="File changes"></a>File changes</h4><ul>
+<h4 id="2-2-File-changes"><a href="#2-2-File-changes" class="headerlink" title="2.2 File changes"></a>2.2 File changes</h4><ul>
 <li>check all file modifications: <code>git status</code></li>
 <li>add files: <code>git add [file]</code></li>
 <li>add all files: <code>git add --all</code></li>
 <li>commit the changes: <code>git commit -m &quot;description&quot;</code></li>
 </ul>
-<h4 id="Branch"><a href="#Branch" class="headerlink" title="Branch"></a>Branch</h4><ul>
+<h4 id="2-3-Branch"><a href="#2-3-Branch" class="headerlink" title="2.3 Branch"></a>2.3 Branch</h4><ul>
 <li>check branch of the repo: <code>git branch</code></li>
+<li>see all branch of the repo: <code>git branch -a</code></li>
 <li>create a new branch: <code>git branch branch-name</code></li>
 <li>switch to new branch: <code>git checkout branch-name</code></li>
 </ul>
-<h4 id="Synchronize-file-changes"><a href="#Synchronize-file-changes" class="headerlink" title="Synchronize file changes"></a>Synchronize file changes</h4><ul>
+<h4 id="2-4-Synchronize-file-changes"><a href="#2-4-Synchronize-file-changes" class="headerlink" title="2.4 Synchronize file changes"></a>2.4 Synchronize file changes</h4><ul>
 <li>push to remote repo: <code>git push origin branch-name</code></li>
+<li>update commit from remote repo: <code>git fetch</code></li>
+<li>update commit from remote repo and merge with local changes (specific branch): <code>git pull</code></li>
 </ul>
 
       
@@ -174,6 +181,16 @@
     
   </div>
 </article>
+
+  
+<section id="comment">
+  
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+  
+</section>
+
 
 
     </main>

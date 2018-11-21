@@ -60,9 +60,9 @@
   <nav class="site-navigation">
     <ul>
       
-        <li><a href="/">主页</a></li>
+        <li><a href="/">Home</a></li>
       
-        <li><a href="/archives">归档</a></li>
+        <li><a href="/archives">Archives</a></li>
       
     </ul>
   </nav>
@@ -81,7 +81,7 @@
     <span class="posted-on">
       <a href="/2017/10/21/ml-overview-support-vector-machines/" rel="bookmark">
         <time class="entry-date published" datetime="2017-10-21T17:32:13.000Z">
-          2017-10-21
+          2017.10.21
         </time>
       </a>
     </span>
@@ -95,13 +95,13 @@
       
         <p>A classification method with straightforward geometric intuition.</p>
 <a id="more"></a>
-<h3 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h3><p>If you’ve read or taken the famous machine learning open course CS229 taught by Andrew Ng, and I ask you what’s first algorithm that looks more complicated than the previous one, I bet you will say Support Vector Machines (SVM) since there are lots of mathematics / algebra in steps. In this post, I will try to make SVM more intuitive and understandable.</p>
+<h3 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1. Introduction"></a>1. Introduction</h3><p>If you’ve read or taken the famous machine learning open course CS229 taught by Andrew Ng, and I ask you what’s first algorithm that looks more complicated than the previous one, I bet you will say Support Vector Machines (SVM) since there are lots of mathematics / algebra in steps. In this post, I will try to make SVM more intuitive and understandable.</p>
 <p>Similar with the Logistic Regression we discussed before, SVM is also an algorithm that try to fit a decision boundary to separate the data: define the parameter and loss function, and use optimization algorithm to minimize the loss, the result would be a decision boundary specified by the parameters.</p>
 <p>The extra point is classify different classes as far as possible, i.e. we need to maximize the distance between the decision boundaries to each class. Take binary classification as an example, our ideal decision boundary should locate at the middle of two classes, like the following figure</p>
 <p><img src="/images/decision-boundary.png" style="width: 850px; height: 450px"> </p>
 <p>As the figure shows, we will first find a closest pair of points between two classes, and place the decision boundary perpendicular to the connection line between these two points. In order to maximize the distance of decision boundary to each class, we should place the decision boundary at the middle point of the connection line. In this example, the maximum distance is \(d\), and we define it as <strong>margin</strong>. This classifier is known as <strong>Maximum Margin Classifier</strong>, it’s a special case of SVM. </p>
 <p>Looks nice, but what if the data is not linearly separable? In that case we are not able to conduct the above procedure. Don’t worry, we will back to this point later.</p>
-<h3 id="Mathematical-Basis"><a href="#Mathematical-Basis" class="headerlink" title="Mathematical Basis"></a>Mathematical Basis</h3><p>First we need some geometric backgrounds. Usually we can specify the decision boundary using a norm vector \(\mathbf{v}\), and consider a data point \(\mathbf{x}\)</p>
+<h3 id="2-Mathematical-Basis"><a href="#2-Mathematical-Basis" class="headerlink" title="2. Mathematical Basis"></a>2. Mathematical Basis</h3><p>First we need some geometric backgrounds. Usually we can specify the decision boundary using a norm vector \(\mathbf{v}\), and consider a data point \(\mathbf{x}\)</p>
 <p><img src="/images/decision-boundary2.png" style="width: 850px; height: 450px"> </p>
 <p>from the figure we can get the following relation:</p>
 <p>\[<br>\cos{\theta} = \frac{\mathbf{v}^{\top}\mathbf{x}}{||\mathbf{v}||_{2}||\mathbf{x}||_{2}}<br>\]</p>
@@ -133,12 +133,12 @@
 <p>We can solve the problem by minimize the overall \(\epsilon_{i}\) and actually we get the loss function of SVM, </p>
 <p>\[<br>L(y_{i}, \hat{y}_{i}) = \max\{0, 1 - y_{i}\hat{y}_{i}\},<br>\]</p>
 <p>this is called <strong>hinge loss</strong> and it’s a upper bound of <strong>0-1 loss</strong>. The following part is easy to go.</p>
-<h3 id="Implementation"><a href="#Implementation" class="headerlink" title="Implementation"></a>Implementation</h3><p>Here is one implementation of <a href="https://github.com/bangdasun/Algorithms/tree/master/machine-learning/classification/svm" target="_blank" rel="external">linear SVM</a> and <a href="https://github.com/bangdasun/Algorithms/blob/master/machine-learning/classification/svm/linear-svm.ipynb" target="_blank" rel="external">demo</a>.</p>
-<h3 id="More-Discussions"><a href="#More-Discussions" class="headerlink" title="More Discussions"></a>More Discussions</h3><ul>
+<h3 id="3-Implementation"><a href="#3-Implementation" class="headerlink" title="3. Implementation"></a>3. Implementation</h3><p>Here is one implementation of <a href="https://github.com/bangdasun/Algorithms/tree/master/machine-learning/classification/svm" target="_blank" rel="external">linear SVM</a> and <a href="https://github.com/bangdasun/Algorithms/blob/master/machine-learning/classification/svm/linear-svm.ipynb" target="_blank" rel="external">demo</a>.</p>
+<h3 id="4-More-Discussions"><a href="#4-More-Discussions" class="headerlink" title="4. More Discussions"></a>4. More Discussions</h3><ul>
 <li>Kernel </li>
 <li>Convex Optimization</li>
 </ul>
-<h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul>
+<h3 id="5-References"><a href="#5-References" class="headerlink" title="5. References"></a>5. References</h3><ul>
 <li><a href="http://cs231n.github.io/linear-classify/" target="_blank" rel="external">http://cs231n.github.io/linear-classify/</a></li>
 </ul>
 
@@ -173,6 +173,16 @@
     
   </div>
 </article>
+
+  
+<section id="comment">
+  
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+  
+</section>
+
 
 
     </main>

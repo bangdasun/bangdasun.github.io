@@ -60,9 +60,9 @@
   <nav class="site-navigation">
     <ul>
       
-        <li><a href="/">主页</a></li>
+        <li><a href="/">Home</a></li>
       
-        <li><a href="/archives">归档</a></li>
+        <li><a href="/archives">Archives</a></li>
       
     </ul>
   </nav>
@@ -81,7 +81,7 @@
     <span class="posted-on">
       <a href="/2018/07/11/stanford-nlp-notes-8/" rel="bookmark">
         <time class="entry-date published" datetime="2018-07-12T03:52:20.000Z">
-          2018-07-11
+          2018.07.11
         </time>
       </a>
     </span>
@@ -95,7 +95,7 @@
       
         <p>Maximum Entropy Classifiers (1)</p>
 <a id="more"></a>
-<h3 id="Generative-vs-Discriminative"><a href="#Generative-vs-Discriminative" class="headerlink" title="Generative vs Discriminative"></a>Generative vs Discriminative</h3><p>So far we’ve looked at <strong>generative models</strong>, they are modeling <strong>joint distributions</strong>: where we have some data \((x, y)\) of paired observations and hidden classes \(y\), it place probabilities over both observed data and the hidden stuff - generate the observed data from hidden stuff, it try to maximize \(P(x, y)\). It turns out to be trivial to choose weights - just use relative frequencies. All classic statistical NLP models are generative models: N-gram models, Naive Bayes Classifier, Hidden Markov Models, Probabilistic Context-free grammars, etc.</p>
+<h3 id="1-Generative-vs-Discriminative"><a href="#1-Generative-vs-Discriminative" class="headerlink" title="1. Generative vs Discriminative"></a>1. Generative vs Discriminative</h3><p>So far we’ve looked at <strong>generative models</strong>, they are modeling <strong>joint distributions</strong>: where we have some data \((x, y)\) of paired observations and hidden classes \(y\), it place probabilities over both observed data and the hidden stuff - generate the observed data from hidden stuff, it try to maximize \(P(x, y)\). It turns out to be trivial to choose weights - just use relative frequencies. All classic statistical NLP models are generative models: N-gram models, Naive Bayes Classifier, Hidden Markov Models, Probabilistic Context-free grammars, etc.</p>
 <p>But there is now much use of conditional or <strong>discriminative models</strong>, because</p>
 <ul>
 <li>they give high accuracy performance</li>
@@ -103,7 +103,7 @@
 <li>they allow automatic building of language independent, retargetable NLP modules</li>
 </ul>
 <p>It models <strong>conditional distributions</strong>, take the data as given and put a probability over hidden structure given the data, it try to maximize \(P(y|x)\), includes: Logistic Regression, Conditional Loglinear / Maximum Entropy Models, Conditional Random Fields, SVM, Perceptron, etc. </p>
-<h3 id="Extract-Features-from-Text"><a href="#Extract-Features-from-Text" class="headerlink" title="Extract Features from Text"></a>Extract Features from Text</h3><p>Features are elementary pieces of evidence that link aspects what we observed with a class \(y\) that we want to predict. It’s a function with a bounded real value:</p>
+<h3 id="2-Extract-Features-from-Text"><a href="#2-Extract-Features-from-Text" class="headerlink" title="2. Extract Features from Text"></a>2. Extract Features from Text</h3><p>Features are elementary pieces of evidence that link aspects what we observed with a class \(y\) that we want to predict. It’s a function with a bounded real value:</p>
 <p>\[<br>f: y\times x \rightarrow \mathbb{R}.<br>\]</p>
 <p>In NLP uses, a features is an <strong>indicator function</strong> of properties of the input and a particular class. Example features: we want to classify if the document is LOCATION or DRUG, we can extract features like:</p>
 <p>\[<br>\begin{aligned}<br>f_{1} &amp;= [y = \text{ LOCATION } \text{and }w_{-1}=\text{ “in” }\text{ and }isCapitalized(w)] \\<br>f_{2} &amp;= [y = \text{ LOCATION } \text{and }hasAccentedLatinChar(w)]<br>\end{aligned}<br>\]</p>
@@ -117,7 +117,7 @@
 <li>model expectation of a feature:</li>
 </ul>
 <p>\[<br>E(f_{i}) = \sum_{(x,y)}p(x,y)f_{i}(x,y).<br>\]</p>
-<h3 id="Linear-Classifiers"><a href="#Linear-Classifiers" class="headerlink" title="Linear Classifiers"></a>Linear Classifiers</h3><p>Key components:</p>
+<h3 id="3-Linear-Classifiers"><a href="#3-Linear-Classifiers" class="headerlink" title="3. Linear Classifiers"></a>3. Linear Classifiers</h3><p>Key components:</p>
 <ul>
 <li>linear function from feature sets to classes</li>
 <li>assign a weight \(w_i\) to each feature \(f_i\)</li>
@@ -165,6 +165,16 @@
     
   </div>
 </article>
+
+  
+<section id="comment">
+  
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+  
+</section>
+
 
 
     </main>

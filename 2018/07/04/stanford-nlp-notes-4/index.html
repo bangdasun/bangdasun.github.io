@@ -60,9 +60,9 @@
   <nav class="site-navigation">
     <ul>
       
-        <li><a href="/">主页</a></li>
+        <li><a href="/">Home</a></li>
       
-        <li><a href="/archives">归档</a></li>
+        <li><a href="/archives">Archives</a></li>
       
     </ul>
   </nav>
@@ -81,7 +81,7 @@
     <span class="posted-on">
       <a href="/2018/07/04/stanford-nlp-notes-4/" rel="bookmark">
         <time class="entry-date published" datetime="2018-07-04T19:40:05.000Z">
-          2018-07-04
+          2018.07.04
         </time>
       </a>
     </span>
@@ -95,7 +95,7 @@
       
         <p>Language Modeling</p>
 <a id="more"></a>
-<h3 id="Probabilistic-Language-Model"><a href="#Probabilistic-Language-Model" class="headerlink" title="Probabilistic Language Model"></a>Probabilistic Language Model</h3><p>The language model we discuss here refer to probabilistic language model, i.e. assign a probability to a sentence. This is a widely used concept. We often need to compare the probabilities of different texts:</p>
+<h3 id="1-Probabilistic-Language-Model"><a href="#1-Probabilistic-Language-Model" class="headerlink" title="1. Probabilistic Language Model"></a>1. Probabilistic Language Model</h3><p>The language model we discuss here refer to probabilistic language model, i.e. assign a probability to a sentence. This is a widely used concept. We often need to compare the probabilities of different texts:</p>
 <ul>
 <li>machine translation: the translated sentences with higher probability will be more reasonable results</li>
 <li>spell correction: we can suggest a sentence with higher probability - it contains the correct words</li>
@@ -132,7 +132,7 @@
 <p>this is also the maximum likelihood estimate. </p>
 <p>In practice, we always do this in log space, this can avoid underflow issue, also adding is faster than multiplying:</p>
 <p>\[<br>\log P(w_1w_2w_3) = \log(P(w_1)P(w_2|w_1)P(w_3|w_2)) = \log P(w_1) + \log P(w_2|w_1) + \log P(w_3|w_2).<br>\]</p>
-<h3 id="Model-Evaluation"><a href="#Model-Evaluation" class="headerlink" title="Model Evaluation"></a>Model Evaluation</h3><p>After we have the model, we want to know how good is the model. The model should prefer good sentences to bad sentences. Here we also have training set and test set: where we train the language model on training set, and test it on test set. To compare two models, we can</p>
+<h3 id="2-Model-Evaluation"><a href="#2-Model-Evaluation" class="headerlink" title="2. Model Evaluation"></a>2. Model Evaluation</h3><p>After we have the model, we want to know how good is the model. The model should prefer good sentences to bad sentences. Here we also have training set and test set: where we train the language model on training set, and test it on test set. To compare two models, we can</p>
 <ul>
 <li>put each model in a task (spelling corrector, speech recognizer, machine translation system)</li>
 <li>run the task and get accuracy for both models, see how many misspelled words corrected properly; how many words translated correctly</li>
@@ -141,7 +141,7 @@
 <p>One intuition of perplexity is Shannon game: how well can we predict the next word. A better model of a text is one which assigns a higher probability to the word that actually occurs. If you have basic machine learning knowledge, you know that a good model should have good predictions on an unseen test set. Same for language model here. Given the probability of a sentence, perplexity is the <strong>inverse</strong> probability of the test set, normalized by the number of words:</p>
 <p>\[<br>PP(w_1w_2w_3\dots w_n) = P(w_1w_2w_3\dots w_n)^{-\frac{1}{N}}.<br>\]</p>
 <p>Therefore maximizing probability is equivalent to minimize perplexity.</p>
-<h3 id="Generalization-and-Zeros"><a href="#Generalization-and-Zeros" class="headerlink" title="Generalization and Zeros"></a>Generalization and Zeros</h3><p>N-gram model only work well for word prediction if the test corpus looks like the training corpus. This is easy to understand - if there some ngrams that doesn’t exist in training set, the test performance will be bad, since we will assign zero-probabilities to those ngrams. Therefore to improve our model, we need to generalize, start from those zero-probabilities.</p>
+<h3 id="3-Generalization-and-Zeros"><a href="#3-Generalization-and-Zeros" class="headerlink" title="3. Generalization and Zeros"></a>3. Generalization and Zeros</h3><p>N-gram model only work well for word prediction if the test corpus looks like the training corpus. This is easy to understand - if there some ngrams that doesn’t exist in training set, the test performance will be bad, since we will assign zero-probabilities to those ngrams. Therefore to improve our model, we need to generalize, start from those zero-probabilities.</p>
 <p>One of the methods is smoothing. The intuition of smoothing is simple: steal probability mass to generalize better. The simplest smoothing is <strong>Add-one smoothing</strong>, also know as <strong>Laplace smoothing</strong>:</p>
 <ul>
 <li>pretend we saw each word one more time than we did</li>
@@ -150,17 +150,17 @@
 <p>therefore</p>
 <p>\[<br>P_{\text{add-one}}(w_2|w_1) = \frac{count(w_1, w_2) + 1}{count(w_1) + V}<br>\]</p>
 <p>where \(V\) is vocabulary size - make sure the total probability is still 1. In real world problems, we will usually use better smoothing method since add-one smoothing is a blunt instrument, it’s not the best one for N-gram. But in some cases it’s still useful: in text classification, we don’t care the exact estimation but just want to separate classes; in some domains there are not too much zeros it can also be a good approximation.</p>
-<h3 id="Backoff-and-Interpolation"><a href="#Backoff-and-Interpolation" class="headerlink" title="Backoff and Interpolation"></a>Backoff and Interpolation</h3><p>Now we introduce some advanced techniques. Sometimes it helps to use less context: condition on less context for contexts we haven’t learned much about. Here comes backoff and interpolation:</p>
+<h3 id="4-Backoff-and-Interpolation"><a href="#4-Backoff-and-Interpolation" class="headerlink" title="4. Backoff and Interpolation"></a>4. Backoff and Interpolation</h3><p>Now we introduce some advanced techniques. Sometimes it helps to use less context: condition on less context for contexts we haven’t learned much about. Here comes backoff and interpolation:</p>
 <p><strong>Backoff</strong>: use trigram if there are some good evidence, otherwise use bigram / unigram. </p>
 <p><strong>Interpolation</strong>: mix unigram / bigram / trigram.</p>
 <p>Usually interpolation works better:</p>
 <p>\[<br>P(w_3|w_1w_2) = \lambda_1 P(w_3|w_1w_2) + \lambda_2 P(w_3|w_2) + \lambda_3 P(w_3),<br>\]</p>
 <p>where \(\sum_{i} \lambda_i = 1\). To choose \(\lambda\), we can set a held-out corpus and see which setting gives largest probability to held-out corpus - this is similar with using cross-validation to choose hyperparameters.</p>
-<h3 id="Advanced-Smoothing-methods"><a href="#Advanced-Smoothing-methods" class="headerlink" title="Advanced Smoothing methods"></a>Advanced Smoothing methods</h3><h4 id="1-Add-k-smoothing"><a href="#1-Add-k-smoothing" class="headerlink" title="1. Add-k smoothing"></a>1. Add-k smoothing</h4><p>We can generalize to <strong>add-k smoothing</strong>:</p>
+<h3 id="5-Advanced-Smoothing-methods"><a href="#5-Advanced-Smoothing-methods" class="headerlink" title="5. Advanced Smoothing methods"></a>5. Advanced Smoothing methods</h3><h4 id="5-1-Add-k-smoothing"><a href="#5-1-Add-k-smoothing" class="headerlink" title="5.1 Add-k smoothing"></a>5.1 Add-k smoothing</h4><p>We can generalize to <strong>add-k smoothing</strong>:</p>
 <p>\[<br>P_{\text{add-k}}(w_2|w_1) = \frac{count(w_1, w_2) + k}{count(w_1) + kV},<br>\]</p>
 <p>or <strong>unigram prior smoothing</strong></p>
 <p>\[<br>P_{\text{add-k}}(w_2|w_1) = \frac{count(w_1, w_2) + k/V}{count(w_1) + k} = \frac{count(w_1, w_2) + k P(w_2)}{count(w_1) + k}.<br>\]</p>
-<h4 id="2-Estimating-unseen-count"><a href="#2-Estimating-unseen-count" class="headerlink" title="2. Estimating unseen count"></a>2. Estimating unseen count</h4><p>We can use the count of things we’ve seen once to help estimate the count of things we’ve never seen. We denote \(N_c\) to be the count of things we’ve seen \(c\) times.</p>
+<h4 id="5-2-Estimating-unseen-count"><a href="#5-2-Estimating-unseen-count" class="headerlink" title="5.2 Estimating unseen count"></a>5.2 Estimating unseen count</h4><p>We can use the count of things we’ve seen once to help estimate the count of things we’ve never seen. We denote \(N_c\) to be the count of things we’ve seen \(c\) times.</p>
 <p><strong>Example</strong>: you are fishing (a scenario from Josh Goodman) and caught: 10 carp, 3 perch, 2 whitefish, 1 trout, 1 salmon, 1 eel (18 total),</p>
 <ul>
 <li>how likely is it that next species is trout? <strong>1/18</strong></li>
@@ -170,7 +170,7 @@
 <p>Here comes <strong>Good Turing Calculation (Smoothing)</strong>,</p>
 <p>\[<br>P(\text{things with zero-count}) = \frac{N_1}{N},<br>\]</p>
 <p>\[<br>c_{\text{update}} = \frac{(c+1)N_{c+1}}{N_c}.<br>\]</p>
-<h3 id="More-Discussions"><a href="#More-Discussions" class="headerlink" title="More Discussions"></a>More Discussions</h3><p>There are more discussions about language modeling, for example <strong>Kneser-Ney Smoothing</strong>; how to apply language modeling on <strong>huge web scale</strong>, etc. The course instructor mentioned this but didn’t give too much details. Therefore we just stop here and will post more detailed discussion in the future.</p>
+<h3 id="6-More-Discussions"><a href="#6-More-Discussions" class="headerlink" title="6. More Discussions"></a>6. More Discussions</h3><p>There are more discussions about language modeling, for example <strong>Kneser-Ney Smoothing</strong>; how to apply language modeling on <strong>huge web scale</strong>, etc. The course instructor mentioned this but didn’t give too much details. Therefore we just stop here and will post more detailed discussion in the future.</p>
 
       
     </div>
@@ -203,6 +203,16 @@
     
   </div>
 </article>
+
+  
+<section id="comment">
+  
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+  
+</section>
+
 
 
     </main>

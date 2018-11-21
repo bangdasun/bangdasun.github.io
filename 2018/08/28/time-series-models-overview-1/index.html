@@ -60,9 +60,9 @@
   <nav class="site-navigation">
     <ul>
       
-        <li><a href="/">主页</a></li>
+        <li><a href="/">Home</a></li>
       
-        <li><a href="/archives">归档</a></li>
+        <li><a href="/archives">Archives</a></li>
       
     </ul>
   </nav>
@@ -81,7 +81,7 @@
     <span class="posted-on">
       <a href="/2018/08/28/time-series-models-overview-1/" rel="bookmark">
         <time class="entry-date published" datetime="2018-08-29T02:53:56.000Z">
-          2018-08-28
+          2018.08.28
         </time>
       </a>
     </span>
@@ -95,12 +95,12 @@
       
         <p>ARIMA Family</p>
 <a id="more"></a>
-<h3 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h3><p>Recently I’m working on Anomaly Detection Problem. Our team is using a developed framework called NBM (Normal Behavior Modeling), intuitively we model on normal data - then when there are abnormal data, the model should tell us it get something different. There are many models could work: One-class SVM, AutoEncoder, Clustering, etc. At the very beginning we cannot get acceptable results using Basic AutoEncoder and Denoising AutoEncoder in NBM and we decide to find alternative models, and my direction is using classical statistical time series models. I think it’s reasonable for following reasons:</p>
+<h3 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1. Introduction"></a>1. Introduction</h3><p>Recently I’m working on Anomaly Detection Problem. Our team is using a developed framework called NBM (Normal Behavior Modeling), intuitively we model on normal data - then when there are abnormal data, the model should tell us it get something different. There are many models could work: One-class SVM, AutoEncoder, Clustering, etc. At the very beginning we cannot get acceptable results using Basic AutoEncoder and Denoising AutoEncoder in NBM and we decide to find alternative models, and my direction is using classical statistical time series models. I think it’s reasonable for following reasons:</p>
 <ul>
 <li>Some time series models assume the data to be stationary, which could be one of the assumption for normal data;</li>
 <li>Most of the time series models are simple (linear), which could help us understand the relationships among features and easy to interpret.</li>
 </ul>
-<h3 id="ARIMA-Family"><a href="#ARIMA-Family" class="headerlink" title="ARIMA Family"></a>ARIMA Family</h3><ul>
+<h3 id="2-ARIMA-Family"><a href="#2-ARIMA-Family" class="headerlink" title="2. ARIMA Family"></a>2. ARIMA Family</h3><ul>
 <li>AR - Autoregressive Model</li>
 </ul>
 <p>Autoregressive model is simply a regression model plus a sequence model, where the output depends linearly on its own previous values. We denote a autoregressive model of order \(p\) as \(AP(p)\),</p>
@@ -129,7 +129,7 @@
 <p>here \(\nabla^{d}\) is the <strong>difference operator</strong>, for example 1st order difference is</p>
 <p>\[<br>\nabla Y_{t} = Y_{t} - Y_{t-1} = (1-B)Y_{t},<br>\]</p>
 <p>then 2nd order difference is therefore represented as </p>
-<p>\[<br>\begin{aligned}<br>\nabla^{2}Y_{t} &amp;= \nabla(\nabla Y_{t}) = \nabla(Y_{t} - Y_{t-1}) = \nabla Y_{t} - \nabla Y_{t-1} \\<br>                 &amp;= (1-B)\nabla Y_{t} = (1-B)^{2}Y_{t}.<br>\end{aligned}<br>\]</p>
+<p>\[<br>\begin{aligned}<br>\nabla^{2}Y_{t} &amp;= \nabla(\nabla Y_{t}) = \nabla(Y_{t} - Y_{t-1}) = \nabla Y_{t} - \nabla Y_{t-1} \\<br>​                 &amp;= (1-B)\nabla Y_{t} = (1-B)^{2}Y_{t}.<br>\end{aligned}<br>\]</p>
 <p>and higher order difference is therefore </p>
 <p>\[<br>\nabla^{d}Y_{t} = (1-B)\nabla^{d-1}Y_{t} = (1-B)(1-B)^{d-1}Y_{t} = (1-B)^{d}Y_{t}.<br>\]</p>
 <ul>
@@ -146,7 +146,7 @@
 <p>For example we have monthly data with monthly periodicity, we should set \(s=12\), \(SARIMAX(1, 0, 1, 0)\times (1, 0, 1, 12)\) is</p>
 <p>\[<br>Y_{t} = C + \psi_{1}Y_{t-1} + \psi_{12}Y_{t-12} + \phi_{1}\epsilon_{t-1} + \phi_{12}\epsilon_{t-12} + \epsilon_{t}.<br>\]</p>
 <p>The general form of \(SARIMAX(p, d, q, b)\times(P, D, Q, s)\) is </p>
-<p>\[<br>\begin{aligned}<br>\nabla^{D}\nabla^{d}Y_{t} =&amp;~ C + \sum^{p}_{i=1}\psi_{i}\nabla^{D}\nabla^{d}Y_{t-i} + \sum^{q}_{i=1}\theta_{i}\epsilon_{t-i} + \epsilon_{t} \\<br>                            +&amp;~    \sum^{P}_{i=1}\psi_{is}\nabla^{D}\nabla^{d}Y_{t-is} + \sum^{Q}_{i=1}\theta_{is}\epsilon_{t-is} \\<br>                            +&amp;~    \sum^{b}_{i=1}\beta_{i}X_{i,t}.<br>\end{aligned}<br>\]</p>
+<p>\[<br>\begin{aligned}<br>\nabla^{D}\nabla^{d}Y_{t} =&amp;~ C + \sum^{p}_{i=1}\psi_{i}\nabla^{D}\nabla^{d}Y_{t-i} + \sum^{q}_{i=1}\theta_{i}\epsilon_{t-i} + \epsilon_{t} \\<br>​                            +&amp;~    \sum^{P}_{i=1}\psi_{is}\nabla^{D}\nabla^{d}Y_{t-is} + \sum^{Q}_{i=1}\theta_{is}\epsilon_{t-is} \\<br>​                            +&amp;~    \sum^{b}_{i=1}\beta_{i}X_{i,t}.<br>\end{aligned}<br>\]</p>
 <p>To be continued …</p>
 
       
@@ -180,6 +180,16 @@
     
   </div>
 </article>
+
+  
+<section id="comment">
+  
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+  
+</section>
+
 
 
     </main>

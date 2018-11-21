@@ -60,9 +60,9 @@
   <nav class="site-navigation">
     <ul>
       
-        <li><a href="/">主页</a></li>
+        <li><a href="/">Home</a></li>
       
-        <li><a href="/archives">归档</a></li>
+        <li><a href="/archives">Archives</a></li>
       
     </ul>
   </nav>
@@ -81,7 +81,7 @@
     <span class="posted-on">
       <a href="/2017/07/04/data-visualization-ggplot2-i/" rel="bookmark">
         <time class="entry-date published" datetime="2017-07-04T17:18:24.000Z">
-          2017-07-04
+          2017.07.04
         </time>
       </a>
     </span>
@@ -96,7 +96,7 @@
         <p>Introduction to awesome R package ggplot2 - graphic grammar.</p>
 <a id="more"></a>
 <p>Brief introduction about data visualization in EDA, using <code>ggplot2</code> package in R.</p>
-<h3 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h3><p>When we start analyzing various of data sets, the first step is always the exploratory data analysis (EDA). Generally we will try to find some characteristics of the data, and data visualization is an important way to do that. </p>
+<h3 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1. Introduction"></a>1. Introduction</h3><p>When we start analyzing various of data sets, the first step is always the exploratory data analysis (EDA). Generally we will try to find some characteristics of the data, and data visualization is an important way to do that. </p>
 <p>Here I list five basic types of plot that will be useful in EDA:</p>
 <ol>
 <li><p>scatter plot</p>
@@ -118,8 +118,8 @@
 </li>
 </ol>
 <p>In summary, scatter plot and line plot must applied on two variables; histogram, box plot and bar plot are the results of aggregation on data set, and usually applied on single variable. There is a helpful <a href="https://www.rstudio.com/wp-content/uploads/2016/11/ggplot2-cheatsheet-2.1.pdf" target="_blank" rel="external">cheat sheet</a> of data visualization available on the website of Rstudio.</p>
-<h3 id="Data"><a href="#Data" class="headerlink" title="Data"></a>Data</h3><p>Next we are going to illustrate those five basic plots on a real world data set from <a href="https://www.kaggle.com/datasets" target="_blank" rel="external">kaggle</a>. Here is the housing price data in Seattle, the data has 19 variables including price, number of bedrooms and bathrooms, number of floors, etc. The data has already been split into <a href="https://github.com/bangdasun/Housing-price-analysis/blob/master/Training.csv" target="_blank" rel="external">training set</a> and <a href="https://github.com/bangdasun/Housing-price-analysis/blob/master/Test.csv" target="_blank" rel="external">testing set</a> (click them to get the data).</p>
-<h3 id="Play-with-five-basic-plots"><a href="#Play-with-five-basic-plots" class="headerlink" title="Play with five basic plots"></a>Play with five basic plots</h3><p><code>ggplot2</code> is developed by <a href="https://github.com/hadley" target="_blank" rel="external">Hadley Wickham</a>, who is the chief scientist in Rstudio. <code>ggplot2</code> now is half of the world of data visualization in R and it’s my favorite plot package.</p>
+<h3 id="2-Data"><a href="#2-Data" class="headerlink" title="2. Data"></a>2. Data</h3><p>Next we are going to illustrate those five basic plots on a real world data set from <a href="https://www.kaggle.com/datasets" target="_blank" rel="external">kaggle</a>. Here is the housing price data in Seattle, the data has 19 variables including price, number of bedrooms and bathrooms, number of floors, etc. The data has already been split into <a href="https://github.com/bangdasun/Housing-price-analysis/blob/master/Training.csv" target="_blank" rel="external">training set</a> and <a href="https://github.com/bangdasun/Housing-price-analysis/blob/master/Test.csv" target="_blank" rel="external">testing set</a> (click them to get the data).</p>
+<h3 id="3-Play-with-five-basic-plots"><a href="#3-Play-with-five-basic-plots" class="headerlink" title="3. Play with five basic plots"></a>3. Play with five basic plots</h3><p><code>ggplot2</code> is developed by <a href="https://github.com/hadley" target="_blank" rel="external">Hadley Wickham</a>, who is the chief scientist in Rstudio. <code>ggplot2</code> now is half of the world of data visualization in R and it’s my favorite plot package.</p>
 <p>First, we gonna install and load the package, also import the data,</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&gt; install.packages(&apos;ggplot2&apos;)</div><div class="line">&gt; library(ggplot2)</div><div class="line">&gt; setwd(&quot;C://Users//Bangda//Desktop//project-housing price analysis&quot;)</div><div class="line">&gt; training = read.csv(&quot;training.csv&quot;, header = TRUE)</div><div class="line">&gt; testing  = read.csv(&quot;test.csv&quot;, header = TRUE)</div></pre></td></tr></table></figure>
 <p>here we start from the training set, take a quick look at the data set:</p>
@@ -154,7 +154,7 @@
 <p>Bar plot: Similar to histogram, bar plot in some sense can be viewed as ‘discrete’ version of histogram. For example, we want to show the distribution of grade. We map grade to x-axis, and set stat = ‘count’,</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&gt; ggplot(training) +</div><div class="line">+   geom_bar(aes(x = factor(grade)), stat = &apos;count&apos;) + </div><div class="line">+   labs(x = &apos;grade&apos;)</div></pre></td></tr></table></figure>
 <p><img src="/images/barplot-01.png" style="width: 500px; height: 450px"> </p>
-<h3 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h3><p>We introduced five most basic plots in data visualization and apply four of them on a real world data set. Since line plot is similar to scatter plot on syntax, we didn’t give an example.</p>
+<h3 id="4-Summary"><a href="#4-Summary" class="headerlink" title="4. Summary"></a>4. Summary</h3><p>We introduced five most basic plots in data visualization and apply four of them on a real world data set. Since line plot is similar to scatter plot on syntax, we didn’t give an example.</p>
 <p>We see that the basic elements for creating a plot using <code>ggplot2</code> are the <strong>data</strong> (data.frame in R), <strong>aesthetics</strong> and <strong>geometric objects</strong>. This is a brand new concept for people who used to plotting using R basic graphic package and other languages like Matlab or Python.</p>
 <p>The plots for now are plain and naive, to polish them, we need to specify more aesthetics and parameters, like size and color of geometric object, scale and tick of axis, etc. Also, to extract more information, some times we also need some techniques like facet. We will discuss more details about that in later posts.</p>
 
@@ -189,6 +189,16 @@
     
   </div>
 </article>
+
+  
+<section id="comment">
+  
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+  
+</section>
+
 
 
     </main>
