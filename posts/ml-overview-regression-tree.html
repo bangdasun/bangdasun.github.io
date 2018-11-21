@@ -60,9 +60,9 @@
   <nav class="site-navigation">
     <ul>
       
-        <li><a href="/">Home</a></li>
+        <li><a href="/">主页</a></li>
       
-        <li><a href="/archives">Archives</a></li>
+        <li><a href="/archives">归档</a></li>
       
     </ul>
   </nav>
@@ -81,7 +81,7 @@
     <span class="posted-on">
       <a href="/posts/ml-overview-regression-tree.html" rel="bookmark">
         <time class="entry-date published" datetime="2017-09-04T01:11:58.000Z">
-          2017.09.03
+          2017-09-03
         </time>
       </a>
     </span>
@@ -174,8 +174,33 @@
   <span id="busuanzi_container_site_uv">
     Total visitor <span id="busuanzi_value_site_uv"></span>
   </span>
+	
+	
+  <div id="disqus_thread"></div>
+  <script>
 
+  /**
+   *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+   *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+   */
+   
+  var disqus_config = function () {
+  this.page.url = '{{content.absolute_url}}';  // Replace PAGE_URL with your page's canonical URL variable
+  this.page.identifier = '{{content_id}}'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+  };
+  
+  (function() { // DON'T EDIT BELOW THIS LINE
+  var d = document, s = d.createElement('script');
+  s.src = 'https://bangdasun-github-io.disqus.com/embed.js';
+  s.setAttribute('data-timestamp', +new Date());
+  (d.head || d.body).appendChild(s);
+  })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+	
 </footer>
+
+
     
   </div>
 </div>
