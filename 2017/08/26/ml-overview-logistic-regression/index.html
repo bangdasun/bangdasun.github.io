@@ -121,17 +121,11 @@
 <p>and actually the optimization problem is equivalent to </p>
 <p>\[<br>\hat{\beta} = \arg\min_{\beta} \left(-\sum^{n}_{i=1}\ln\left[\frac{\exp(-\mathbf{x}_{i}\beta)}{1+\exp(-\mathbf{x}_{i}\beta)}\right] - \mathbf{y}^\top\mathbf{X}\beta\right)<br>\]</p>
 <p>we can regard this as minimize the <strong>loss function</strong>. Looks a little bit complex, we can just look at the first step of log likelihood,</p>
-<p>\[</p>
-<p>\ln L(\beta) = \sum^{n}_{i=1}(1-y_{i})\ln[1-p(\mathbf{x}_{i})] + \sum^{n}_{i=1}y_{i}\ln p(\mathbf{x_{i}}),</p>
-<p>\]</p>
+<p>\[<br>\ln L(\beta) = \sum^{n}_{i=1}(1-y_{i})\ln[1-p(\mathbf{x}_{i})] + \sum^{n}_{i=1}y_{i}\ln p(\mathbf{x_{i}}),<br>\]</p>
 <p>this is very close to the form of <strong>cross entropy</strong>! The gradient of log likelihood is easier to derive from this form,</p>
-<p>\[</p>
-<p>\nabla_{\beta}\ln L(\beta) = \sum^{n}_{i=1}\left(y_{i} - p(\mathbf{x}_{i})\right)\mathbf{x}_{i},</p>
-<p>\]</p>
+<p>\[<br>\nabla_{\beta}\ln L(\beta) = \sum^{n}_{i=1}\left(y_{i} - p(\mathbf{x}_{i})\right)\mathbf{x}_{i},<br>\]</p>
 <p>note that</p>
-<p>\[</p>
-<p>\frac{\partial p(\mathbf{x}_{i})}{\partial \beta} = \mathbf{x}_{i}p(\mathbf{x}_{i)\left(1 - p(\mathbf{x}_{i)\right).</p>
-<p>\]</p>
+<p>\[<br>\frac{\partial p(\mathbf{x}_{i})}{\partial \beta} = \mathbf{x}_{i}p(\mathbf{x}_{i})\left(1 - p(\mathbf{x}_{i})\right).<br>\]</p>
 <p>Now the machine learning problem comes to the calculus problem, to find the minima of the function, we take the derivative/gradient and set it to 0…however unfortunately there is no explicit solution to this function, therefore numerical algorithms like gradient descent (<strong>GD</strong>) works.</p>
 <h3 id="2-Implementation"><a href="#2-Implementation" class="headerlink" title="2. Implementation"></a>2. Implementation</h3><p>Here are two scripts I wrote that can solve this problem, one is for <a href="https://github.com/bangdasun/Algorithms/blob/master/machine-learning/optimization/gradient-descent/gradient-descent.R" target="_blank" rel="external">gradient descent algorithm</a> and the other is <a href="https://github.com/bangdasun/Algorithms/blob/master/machine-learning/classification/logistics-regression/logistic-regression.R" target="_blank" rel="external">fit logistic regression</a>.</p>
 <p>Also <code>R</code> and <code>sklearn.linear_model (Python)</code> provide the functions. In R we have <code>glm()</code> with <code>family = binomial</code> and in <code>sklearn</code> we just need to import <code>LogisticRegression</code>. </p>
