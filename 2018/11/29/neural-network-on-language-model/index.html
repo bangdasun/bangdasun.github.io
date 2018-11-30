@@ -118,7 +118,7 @@
 </ol>
 <p>In summary,<br>\[<br>f(w_{t},w_{t-1}\cdots,w_{t-n+1}) = g(i, C(w_{t-n+1})\cdots C(w_{t-1})).<br>\]</p>
 <p>The model (neural network) structure in paper:</p>
-<center><br>  <img src="/images/nnlm.PNG" style="width: 600px; height: 400px"> <br></center>
+<center><br>  <img src="/images/nnlm.PNG" style="width: 700px; height: 400px"> <br></center>
 
 <p>As \(C\) is shared across all words in context. Training is achieved by looking for \(\theta\) that maximize</p>
 <p>\[<br>L = \frac{1}{T} \sum_{t}\log f(w_{t},w_{t-1}\cdots,w_{t-n+1}; \theta).<br>\]</p>
