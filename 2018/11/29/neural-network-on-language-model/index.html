@@ -1,0 +1,228 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Neural Network on Language Model | Bangda Sun | Practice makes perfect</title>
+
+  
+  <meta name="author" content="Bangda">
+  
+
+  
+  <meta name="description" content="Play with data">
+  
+
+  
+  
+  <meta name="keywords" content="Deep Learning,NLP,Language Model">
+  
+
+  <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <meta property="og:title" content="Neural Network on Language Model"/>
+
+  <meta property="og:site_name" content="Bangda Sun"/>
+
+  
+  <meta property="og:image" content="/favicon.ico"/>
+  
+
+  <link href="/favicon.ico" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Bangda Sun" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    jax: ["input/TeX","output/HTML-CSS"],
+    extensions: ["tex2jax.js","Safe.js"]
+  });
+  </script>
+<script type="text/javascript" async="async"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_CHTML,Safe">
+</script>
+</script>
+</head>
+
+
+<body>
+<div class="blog">
+  <div class="content">
+
+    <header>
+  <div class="site-branding">
+    <h1 class="site-title">
+      <a href="/">Bangda Sun</a>
+    </h1>
+    <p class="site-description">Practice makes perfect</p>
+  </div>
+  <nav class="site-navigation">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+    </ul>
+  </nav>
+</header>
+
+    <main class="site-main posts-loop">
+    <article>
+
+  
+    
+    <h3 class="article-title"><span>Neural Network on Language Model</span></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2018/11/29/neural-network-on-language-model/" rel="bookmark">
+        <time class="entry-date published" datetime="2018-11-30T03:27:58.000Z">
+          2018-11-29
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <p>[Paper reading] A Neural Probabilistic Language Model</p>
+<a id="more"></a>
+<h3 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1. Introduction"></a>1. Introduction</h3><p>Language model (Probabilistic)  is model that measure the probabilities of given sentences, the basic concepts are already in my previous note <a href="https://bangdasun.github.io/2018/07/04/stanford-nlp-notes-4/" target="_blank" rel="external">Stanford NLP (coursera) Notes (4) - Language Model</a>. This paper by Yoshua Bengio et al uses a Neural Network as language model, basically it is predict next word given previous words, maximize log-likelihood on training data as Ngram model does. </p>
+<p>Another important thing to notice - distributed word feature vector is learned simultaneously, as you all know <strong>Word Embeddings</strong>. </p>
+<h3 id="2-Highlights"><a href="#2-Highlights" class="headerlink" title="2. Highlights"></a>2. Highlights</h3><p>The idea comes from “fighting with Curse of Dimenstionality” - For classical language model, e.g. the vocabulary size is 100000, train on a sentence with 10 words will get potentially \(100000^{10} - 1\) parameters - because the test sentence is unseen. </p>
+<h4 id="2-1-Introduction"><a href="#2-1-Introduction" class="headerlink" title="2.1 Introduction"></a>2.1 Introduction</h4><p>The idea of improvement is summarized as follows:</p>
+<ul>
+<li>associate with each word in vocabulary a distributed word feature vector</li>
+<li>express the joint probability function of word sequences in terms of feature vectors of these words in sentence</li>
+<li>learn simultaneously the word feature vectors and parameters of the probability function</li>
+</ul>
+<p>Advantage: generalization is obtained because a sequence of words that has never seen before gets higher probability if it’s made of words that are similar to words forming an already seen sentence - where in ngram model, word similarity between words are not take into account.</p>
+<h4 id="2-2-Relation-to-Previous-Work"><a href="#2-2-Relation-to-Previous-Work" class="headerlink" title="2.2 Relation to Previous Work"></a>2.2 Relation to Previous Work</h4><p>Using neural networks to model high-dimensional discrete distribution is not first introduced here, it already been found. The model presented here could extend to <strong>large scale</strong> data.</p>
+<p>The idea of using word similarity is also not new, same for vector-space representation for words. Here the paper use <strong>word vectors</strong> to measure simiarlitiy between words. </p>
+<h4 id="2-3-Model"><a href="#2-3-Model" class="headerlink" title="2.3 Model"></a>2.3 Model</h4><ul>
+<li>Training data: \(w_{1}, w_{2},\cdots, w_{T}\) where \(w_{t}\in V\)</li>
+<li>Objective: learn probability function (conditional probability):<br>\[<br>f(w_{t},w_{t-1}\cdots,w_{t-n+1}) = P(w_{t}|w_{1},\cdots,w_{t-1})<br>\]<br>where \(\sum^{|V|}_{w_{t}} f(w_{t},w_{t-1},\cdots,w_{t-n+1}) = 1\).</li>
+</ul>
+<p>Decompose \(f(w_{t},w_{t-1}\cdots,w_{t-n+1})\) in 2 parts:</p>
+<ol>
+<li>A mapping \(C\) from word (index \(i\)) in \(V\) to a real vector \(C(i)\in\mathbb{R}^{m}\). Overall \(C\) is represented by a lookup matrix with size \(|V|\times m\)</li>
+<li>A probability function over words expressed with \(C\) - function \(g\) maps inpute sequence of word feature vectors for words in context \(\left[C(w_{t-n+1})\cdots C(w_{t-1})\right]\), to a conditional probability distribution over words in \(V\) for next \(w_{t}\). The output of \(g\) is a vector whose \(i\)-th element is the estimate of \(P(w_{t}|w_{1},\cdots,w_{t-1})\). </li>
+</ol>
+<p>In summary,<br>\[<br>f(w_{t},w_{t-1}\cdots,w_{t-n+1}) = g(i, C(w_{t-n+1})\cdots C(w_{t-1})).<br>\]</p>
+<p>The model (neural network) structure in paper:</p>
+<center><br>    <img src="/images/nnlm.png" style="width: 600px; height: 400px"> <br></center>
+
+<p>As \(C\) is shared across all words in context. Training is achieved by looking for \(\theta\) that maximize</p>
+<p>\[<br>L = \frac{1}{T} \sum_{t}\log f(w_{t},w_{t-1}\cdots,w_{t-n+1}; \theta).<br>\]</p>
+<p>And output layer is a softmax layer,</p>
+<p>\[<br>\hat{P}(w_{t}|w_{1},\cdots,w_{t-1}) = \frac{e^{y_{w_{t}}}}{\sum_{i}e^{y_{i}}}.<br>\]</p>
+<h4 id="2-4-Conclusions"><a href="#2-4-Conclusions" class="headerlink" title="2.4 Conclusions"></a>2.4 Conclusions</h4><p>Experiments on two corpora (1) more than one million samples (2) a larger one with above 15 million words. Could yield much better perplexity. Since it take advantage of learned distributed representation to fight curse of dimensionarlity, each training sentence informs the model about a combinational number of other sentences.</p>
+
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+      
+
+    <span class="post-categories">
+      <i class="icon-categories"></i>
+        <a href="/categories/Machine-Learning/">Machine Learning</a>, <a href="/categories/Machine-Learning/Deep-Learning/">Deep Learning</a>, <a href="/categories/Machine-Learning/Deep-Learning/NLP/">NLP</a>
+    </span>
+    
+
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/Deep-Learning/">Deep Learning</a><a href="/tags/NLP/">NLP</a><a href="/tags/Language-Model/">Language Model</a>
+    </span>
+    
+
+    </div>
+
+    
+  </div>
+</article>
+
+  
+<section id="comment">
+  
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+  
+</section>
+
+
+
+    </main>
+
+    <footer class="site-footer">
+  <p class="site-info">
+    Proudly powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and
+    Theme by <a href="https://github.com/CodeDaraW/Hacker" target="_blank">Hacker</a>
+    </br>
+    
+    &copy; 2018 Bangda
+    
+	
+	
+	
+  </p>
+  
+  <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+  <span id="busuanzi_container_site_pv">
+    Total viewer <span id="busuanzi_value_site_pv"></span>; 
+  </span>
+  
+  <span id="busuanzi_container_site_uv">
+    Total visitor <span id="busuanzi_value_site_uv"></span>
+  </span>
+	
+	
+  <div id="disqus_thread"></div>
+  <script>
+
+  /**
+   *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+   *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+   */
+   
+  var disqus_config = function () {
+	this.page.url = 'https://bangdasun.github.io{{ page.url }}';  // Replace PAGE_URL with your page's canonical URL variable
+	this.page.identifier = '{{ page.id }}'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+  };
+  
+  (function() { // DON'T EDIT BELOW THIS LINE
+  var d = document, s = d.createElement('script');
+  s.src = 'https://bangdasun-github-io.disqus.com/embed.js';
+  s.setAttribute('data-timestamp', +new Date());
+  (d.head || d.body).appendChild(s);
+  })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  
+  <script id="dsq-count-scr" src="//bangdasun-github-io.disqus.com/count.js" async></script>
+</footer>
+
+
+    
+  </div>
+</div>
+</body>
+</html>
