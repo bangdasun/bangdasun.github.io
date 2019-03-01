@@ -60,9 +60,9 @@
   <nav class="site-navigation">
     <ul>
       
-        <li><a href="/">主页</a></li>
+        <li><a href="/">Home</a></li>
       
-        <li><a href="/archives">归档</a></li>
+        <li><a href="/archives">Archives</a></li>
       
     </ul>
   </nav>
@@ -98,9 +98,12 @@
 <p>This is a summary of <code>bash</code> and <code>git</code> commands that I usually need during the work. I will update it once I have new commands.</p>
 <h3 id="1-Bash"><a href="#1-Bash" class="headerlink" title="1. Bash"></a>1. Bash</h3><p>Bash is a Unix shell and command language. It has been distributed widely as the default login shell for most Linux distributions and Apple’s macOS. There is also a version available for Windows 10 now.</p>
 <h4 id="1-1-System"><a href="#1-1-System" class="headerlink" title="1.1 System"></a>1.1 System</h4><ul>
-<li>check disk usage: <code>du -h</code></li>
+<li>check disk usage for each file: <code>du -h</code></li>
+<li>check disk usage for whole directory: <code>du -sh</code></li>
 <li>get command history: <code>history</code></li>
 <li>check current running jobs: <code>top</code></li>
+<li>check current running jobs of specific user: <code>top -u username</code></li>
+<li>kill a process: <code>kill -9 pid</code></li>
 </ul>
 <h4 id="1-2-File-manipulation"><a href="#1-2-File-manipulation" class="headerlink" title="1.2 File manipulation"></a>1.2 File manipulation</h4><ul>
 <li>list files in current directory: <code>ls</code></li>
@@ -134,6 +137,7 @@
 </ul>
 <h4 id="2-2-File-changes"><a href="#2-2-File-changes" class="headerlink" title="2.2 File changes"></a>2.2 File changes</h4><ul>
 <li>check all file modifications: <code>git status</code></li>
+<li>check modification details: <code>git diff</code></li>
 <li>add files: <code>git add [file]</code></li>
 <li>add all files: <code>git add --all</code></li>
 <li>commit the changes: <code>git commit -m &quot;description&quot;</code></li>
@@ -147,7 +151,7 @@
 <h4 id="2-4-Synchronize-file-changes"><a href="#2-4-Synchronize-file-changes" class="headerlink" title="2.4 Synchronize file changes"></a>2.4 Synchronize file changes</h4><ul>
 <li>push to remote repo: <code>git push origin branch-name</code></li>
 <li>update commit from remote repo: <code>git fetch</code></li>
-<li>update commit from remote repo and merge with local changes (specific branch): <code>git pull</code></li>
+<li>update commit from remote repo and merge with local changes (specific branch): <code>git pull origin branch-name</code></li>
 </ul>
 
       
