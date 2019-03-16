@@ -60,9 +60,9 @@
   <nav class="site-navigation">
     <ul>
       
-        <li><a href="/">Home</a></li>
+        <li><a href="/">主页</a></li>
       
-        <li><a href="/archives">Archives</a></li>
+        <li><a href="/archives">归档</a></li>
       
     </ul>
   </nav>
@@ -99,15 +99,19 @@
 <h3 id="1-Bash"><a href="#1-Bash" class="headerlink" title="1. Bash"></a>1. Bash</h3><p>Bash is a Unix shell and command language. It has been distributed widely as the default login shell for most Linux distributions and Apple’s macOS. There is also a version available for Windows 10 now.</p>
 <h4 id="1-1-System"><a href="#1-1-System" class="headerlink" title="1.1 System"></a>1.1 System</h4><ul>
 <li>check disk usage for each file: <code>du -h</code></li>
-<li>check disk usage for whole directory: <code>du -sh</code></li>
+<li>check disk usage for top level directory: <code>du -h -d1</code></li>
+<li>check disk usage for whole directory (summary): <code>du -sh</code></li>
 <li>get command history: <code>history</code></li>
 <li>check current running jobs: <code>top</code></li>
 <li>check current running jobs of specific user: <code>top -u username</code></li>
 <li>kill a process: <code>kill -9 pid</code></li>
+<li>list files in current directory: <code>ls</code></li>
+<li>list all files (include folders start with <code>.</code>): <code>ls -a</code></li>
+<li>list files in folders (<code>sub-folder</code>) in current directory: <code>ls sub-folder</code></li>
+<li>list top files (largest or most recent, etc): <code>ls -l | head -n 5</code></li>
+<li>sort the file by size: <code>ls -S -l</code></li>
 </ul>
 <h4 id="1-2-File-manipulation"><a href="#1-2-File-manipulation" class="headerlink" title="1.2 File manipulation"></a>1.2 File manipulation</h4><ul>
-<li>list files in current directory: <code>ls</code></li>
-<li>list files in folders (<code>sub-folder</code>) in current directory: <code>ls sub-folder</code></li>
 <li>go to directory <code>target-dir</code>: <code>cd target-dir</code></li>
 <li>back to last directory: <code>cd ..</code></li>
 <li>open all files in one folder: <code>open folder/*</code></li>
@@ -159,6 +163,7 @@
 <li>push to remote repo: <code>git push origin branch-name</code></li>
 <li>update commit from remote repo: <code>git fetch</code></li>
 <li>update commit from remote repo and merge with local changes (specific branch): <code>git pull origin branch-name</code></li>
+<li>save works done in current branch (switch to another branch), or pull from other branch but want to add the local changes:<code>git stash</code> and <code>git stash pop</code></li>
 </ul>
 
       
