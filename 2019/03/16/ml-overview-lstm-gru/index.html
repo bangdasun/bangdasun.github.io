@@ -60,9 +60,9 @@
   <nav class="site-navigation">
     <ul>
       
-        <li><a href="/">主页</a></li>
+        <li><a href="/">Home</a></li>
       
-        <li><a href="/archives">归档</a></li>
+        <li><a href="/archives">Archives</a></li>
       
     </ul>
   </nav>
@@ -93,9 +93,9 @@
   <div class="article-content">
     <div class="entry">
       
-        <p>Two important RNN structures.</p>
+        <p>Two important RNN structures</p>
 <a id="more"></a>
-<h3 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1. Introduction"></a>1. Introduction</h3><p>It was one of the lectures when I first knew RNN. I’ve used RNN like LSTM and GRU many times: course projects, kaggle competitions and work projects. They are both fundamental model structures for tasks require RNN or Sequence-to-Sequence (Seq2Seq) models, therefore this time I decide to briefly go over these two important RNN structures.</p>
+<h3 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1. Introduction"></a>1. Introduction</h3><p>It was one of the lectures of ECBM 4040 Deep Learning when I first knew RNN. I’ve used RNN like LSTM and GRU many times: course projects, kaggle competitions and work projects. They are both fundamental model structures for tasks require RNN or Sequence-to-Sequence (Seq2Seq) models, therefore this time I decide to briefly go over these two important RNN structures.</p>
 <p>At the beginning I’d like to say thanks to <a href="http://colah.github.io/posts/2015-08-Understanding-LSTMs/" target="_blank" rel="external">colah’s blog</a>, the style and structure are pretty clear, and the figures I use here are all from there.</p>
 <h3 id="2-RNN-Recurrent-Neural-Networks"><a href="#2-RNN-Recurrent-Neural-Networks" class="headerlink" title="2. RNN (Recurrent Neural Networks)"></a>2. RNN (Recurrent Neural Networks)</h3><p>To deal with sequence data (time series, natural language), researchers proposed RNN which has a “time axis” in the network structure,</p>
 <center><br>  <img src="/images/rnn.PNG" style="width: 500px; height: 150px"> <br></center>
@@ -122,7 +122,7 @@
 <h4 id="4-2-Update-gate"><a href="#4-2-Update-gate" class="headerlink" title="4.2 Update gate"></a>4.2 Update gate</h4><p>Second step is go through update gate.</p>
 <center><br>  <img src="/images/lstm-3.PNG" style="width: 350px; height: 240px"> <br></center>
 
-<p>it contains to steps:</p>
+<p>it contains two steps:</p>
 <ul>
 <li>a sigmoid layer to indicate the proportion to update</li>
 <li>a \(\tanh\) layer to create new value</li>
@@ -140,8 +140,8 @@
 <h3 id="5-GRU"><a href="#5-GRU" class="headerlink" title="5. GRU"></a>5. GRU</h3><p>GRU (Gated Recurrent Unit) is a simplification of LSTM. It combines the forget gate and update gate in LSTM to a single update gate and it also combines cell state and hidden state.</p>
 <center><br>  <img src="/images/gru.PNG" style="width: 350px; height: 240px"> <br></center>
 
-<p>As a simplification version, GRU is supposed to perform better on less data and behave like what other simplification version models do on specific cases.</p>
-<h3 id="6-Summary"><a href="#6-Summary" class="headerlink" title="6. Summary"></a>6. Summary</h3><p>There are several nice papers to show why LSTM could avoid gradient vanishing problem. I’ll read them and make some notes for sure. In short, LSTM introduces gates to control, which is different from vanilla RNN, this is the reason why gradient vanishing is prevented.</p>
+<p>As a simplification version, GRU is supposed to perform better on less data and behave like what other simplification version models do on specific cases. <strong>TO BE CONTINUED</strong>…</p>
+<h3 id="6-Summary"><a href="#6-Summary" class="headerlink" title="6. Summary"></a>6. Summary</h3><p>There are several nice papers to show why LSTM could avoid gradient vanishing problem. I’ll read them and make some notes for sure. In short, LSTM introduces gates to control, which is different from classical DNN vanilla RNN, this is the reason why gradient vanishing is prevented.</p>
 <h3 id="7-References"><a href="#7-References" class="headerlink" title="7. References"></a>7. References</h3><ul>
 <li><a href="http://colah.github.io/posts/2015-08-Understanding-LSTMs/" target="_blank" rel="external">http://colah.github.io/posts/2015-08-Understanding-LSTMs/</a></li>
 <li><a href="https://tensorflowkorea.files.wordpress.com/2017/03/cs224n-2017winter-notes-all.pdf" target="_blank" rel="external">https://tensorflowkorea.files.wordpress.com/2017/03/cs224n-2017winter-notes-all.pdf</a></li>
