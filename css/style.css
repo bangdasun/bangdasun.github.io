@@ -441,7 +441,7 @@ a {
 }
 body {
   background-color: #f7f7f7;
-  font-family: Verdana, Geneva, sans-serif;
+  font-family: "Segoe UI", Helvetica, Arial, sans-serif;
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
@@ -767,7 +767,7 @@ article .archive-tags > span > span {
 article .archive-tags,
 article .tags-cloud {
   margin: 8rem 0;
-  font-size: 1.3rem;
+  font-size: 1.1rem;
   color: #9e9e9e;
 }
 article .archive-tags a,
@@ -827,7 +827,7 @@ article .archive-categories > span > span {
 article .archive-categories,
 article .categories-cloud {
   margin: 8rem 0;
-  font-size: 1.3rem;
+  font-size: 1.1rem;
   color: #9e9e9e;
 }
 article .archive-categories a,
