@@ -1,6 +1,6 @@
 article .tags-cloud {
   width: 100%;
-  margin: 8rem 0;
+  margin: 5rem 0;
   text-align: center;
   line-height: 2rem;
 }
@@ -27,8 +27,8 @@ article .archive-tags > span > span {
 }
 article .archive-tags,
 article .tags-cloud {
-  margin: 8rem 0;
-  font-size: 1.1rem;
+  margin: 5rem 0;
+  font-size: 0.9rem;
   color: #9e9e9e;
 }
 article .archive-tags a,

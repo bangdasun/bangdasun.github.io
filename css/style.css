@@ -441,7 +441,7 @@ a {
 }
 body {
   background-color: #f7f7f7;
-  font-family: "Segoe UI", Helvetica, Arial, sans-serif;
+  font-family: Verdana, Geneva, sans-serif;
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
@@ -739,7 +739,7 @@ article.archive {
 }
 article .tags-cloud {
   width: 100%;
-  margin: 8rem 0;
+  margin: 5rem 0;
   text-align: center;
   line-height: 2rem;
 }
@@ -766,8 +766,8 @@ article .archive-tags > span > span {
 }
 article .archive-tags,
 article .tags-cloud {
-  margin: 8rem 0;
-  font-size: 1.1rem;
+  margin: 5rem 0;
+  font-size: 0.9rem;
   color: #9e9e9e;
 }
 article .archive-tags a,
@@ -827,7 +827,7 @@ article .archive-categories > span > span {
 article .archive-categories,
 article .categories-cloud {
   margin: 8rem 0;
-  font-size: 1.1rem;
+  font-size: 0.9rem;
   color: #9e9e9e;
 }
 article .archive-categories a,
