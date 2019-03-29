@@ -1,0 +1,248 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Denoising Autoencoder - A Robust Feature Extractor | Bangda Sun | Practice makes perfect</title>
+
+  
+  <meta name="author" content="Bangda">
+  
+
+  
+  <meta name="description" content="Play with data">
+  
+
+  
+  
+  <meta name="keywords" content="Deep Learning,Unsupervised Learning">
+  
+
+  <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <meta property="og:title" content="Denoising Autoencoder - A Robust Feature Extractor"/>
+
+  <meta property="og:site_name" content="Bangda Sun"/>
+
+  
+  <meta property="og:image" content="/favicon.ico"/>
+  
+
+  <link href="/favicon.ico" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Bangda Sun" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    jax: ["input/TeX","output/HTML-CSS"],
+    extensions: ["tex2jax.js","Safe.js"]
+  });
+  </script>
+<script type="text/javascript" async="async"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_CHTML,Safe">
+</script>
+</script>
+</head>
+
+
+<body>
+<div class="blog">
+  <div class="content">
+
+    <header>
+  <div class="site-branding">
+    <h1 class="site-title">
+      <a href="/">Bangda Sun</a>
+    </h1>
+    <p class="site-description">Practice makes perfect</p>
+  </div>
+  <nav class="site-navigation">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+        <li><a href="/tags">Tags</a></li>
+      
+    </ul>
+  </nav>
+</header>
+
+    <main class="site-main posts-loop">
+    <article>
+
+  
+    
+    <h3 class="article-title"><span>Denoising Autoencoder - A Robust Feature Extractor</span></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2019/03/28/denoising-autoencoders-a-robust-feature-extractor/" rel="bookmark">
+        <time class="entry-date published" datetime="2019-03-29T00:56:16.000Z">
+          2019-03-28
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <p>[Paper reading] Extracting and Composing Robust Features with Denoising Autoencoders</p>
+<a id="more"></a>
+<p>Recently there is a kaggle competition: <a href="https://www.kaggle.com/c/santander-customer-transaction-prediction" target="_blank" rel="external">Santander Customer Transaction Prediction</a>, the data is totally anonymized. I prefer meaningful features therefore I’m not in this one, but it reminds me of another similar competition: <a href="https://www.kaggle.com/c/porto-seguro-safe-driver-prediction" target="_blank" rel="external">Porto Seguro’s Safe Driver Prediction</a>, where the 1st place solution is pretty cool by using <strong>Denoising Autoencoders</strong> as feature extractor to train models. Also I tried apply it in previous work projects, my impression was: it does not need a “bottleneck” structure like basic Autoencoders. Therefore this time I decide to give on shot.</p>
+<h3 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1. Introduction"></a>1. Introduction</h3><p>In previous research, learning deep generative / discriminative models can be difficult, and this could be overcome by an initial unsupervised learning step that maps input features to a latent features. This success appears to be using a layer-by-layer initialization: each layer is first trained to produce a higher level representation of the observed patterns based on the representation it receives as input from the layer below. This technique has been shown empirically to avoid getting stuck in the kind of poor solutions one typically reaches with random initializations.</p>
+<p>The explicit criterion to train a good representation includes: retain a certain amount of information about the input. A supplement criterion is the sparsity of the representation. In this paper, a new criterion is proposed: <strong>robustness to partial destruction input</strong>.</p>
+<h3 id="2-Algorithms"><a href="#2-Algorithms" class="headerlink" title="2. Algorithms"></a>2. Algorithms</h3><h4 id="2-1-Notations"><a href="#2-1-Notations" class="headerlink" title="2.1 Notations"></a>2.1 Notations</h4><p>Let \(X\) and \(Y\) to be two random variables with joint density function \(p(X, Y)\) and marginal density \(p(X)\) and \(p(Y)\). Some notations are defined:</p>
+<ul>
+<li><p>Expectation:<br>\[<br>E_{p(X)}[f(X)] = \int p(x)f(x)dx<br>\]</p>
+</li>
+<li><p>Entropy:<br>\[<br>H(X) = H(p) = E_{p(X)}\left[-\log p(X)\right]<br>\]</p>
+</li>
+<li><p>Conditional entropy:<br>\[<br>H(X|Y) = E_{p(X, Y)}[-\log p(X|Y)]<br>\]</p>
+</li>
+<li><p>Cross entropy:<br>\[<br>H(p||q) = E_{p(X)}[-\log q(X)]<br>\]</p>
+</li>
+<li><p>KL-divergence:<br>\[<br>D_{KL}(p||q) = E_{p(X)}\left[\log\frac{p(X)}{q(X)}\right]<br>\]</p>
+</li>
+<li><p>Mutual information:<br>\[<br>I(X; Y) = H(X) - H(X|Y)<br>\]</p>
+</li>
+</ul>
+<h4 id="2-2-Basic-Autoencoder"><a href="#2-2-Basic-Autoencoder" class="headerlink" title="2.2 Basic Autoencoder"></a>2.2 Basic Autoencoder</h4><p>A basic autoencoder takes an input vector \(\mathbf{x}\in [0, 1]^{d}\) and maps to a hidden representation \(\mathbf{y} = f_{\theta}(\mathbf{x}) = s(\mathbf{Wx} + \mathbf{b})\) with parameter \(\theta\) includes weights \(\mathbf{W}\) and biases \(\mathbf{b}\). Then the hidden representation is mapped back to the reconstructed input \(\mathbf{z}\in [0, 1]^{d}\), which is \(\mathbf{z} = g_{\theta’}(\mathbf{y})=s(\mathbf{W’y} + \mathbf{b’})\) with parameter \(\theta’\) includes weights \(\mathbf{W’}\) and biases \(\mathbf{b’}\). The weight \(\mathbf{W’}\) may optionally be constrainted by \(\mathbf{W’} = \mathbf{W}^\top\) in which case the autoencoder is said to have <strong>tied weights</strong>.</p>
+<p>The parameters are learned by minimizing reconstruction loss:</p>
+<p>\[<br>\theta^{*}, \theta’^{*} = \arg\min_{\theta, \theta’} \frac{1}{n}\sum^{n}_{i=1}L\left(\mathbf{x}_{i}, \mathbf{z}_{i}\right) = \arg\min_{\theta, \theta’} \frac{1}{n}\sum^{n}_{i=1}L\left(\mathbf{x}_{i}, g_{\theta’}\left(f_{\theta}(\mathbf{x}_{i})\right)\right).<br>\]</p>
+<p>Usually the loss function could be squared loss: \(L(\mathbf{x}, \mathbf{z}) = (\mathbf{x} - \mathbf{z})^{2}\). An alternative loss, suggested by the interpretation of \(\mathbf{x}\) and \(\mathbf{z}\) as either bit vectors or vectors of bit probabilities is the cross-entropy:</p>
+<p>\[<br>L(\mathbf{x}, \mathbf{z}) = -\sum^{d}_{k=1}\left(\mathbf{x}_{k}\log \mathbf{z}_{k} + (1 - \mathbf{x}_{k})\log\left(1 - \mathbf{z}_{k}\right)\right).<br>\]</p>
+<p>Here if \(x\) is a binary vector, then \(L(\mathbf{x}, \mathbf{z})\) is a negative log-likelihood of \(\mathbf{x}\) given the Bernoulli distribution parameter \(\mathbf{z}\), then the learning objective is:</p>
+<p>\[<br>\theta^{*}, \theta’^{*} = \arg\min_{\theta, \theta’} E_{q^{0}(X)}[L(X, g_{\theta’}(f_{\theta}(X)))],<br>\]</p>
+<p>where \(q^{0}(X)\) denotes the empirical distribution associatede to \(n\) training inputs.</p>
+<h4 id="2-3-Denoising-Autoencoder"><a href="#2-3-Denoising-Autoencoder" class="headerlink" title="2.3 Denoising Autoencoder"></a>2.3 Denoising Autoencoder</h4><p>Now train the autoencoder to reconstruct a clean “repaired” input from a <strong>corrupted</strong>, partially destroyed one. This is done by first corrupting the initial input \(\mathbf{x}\) to get a partially destroyed version \(\mathbf{\tilde{x}}\) by means of a stochastic mapping \(\mathbf{\tilde{x}}\sim q_{D}(\tilde{\mathbf{x}}|\mathbf{x})\), note that this mapping is only used in training. The corrupted input \(\mathbf{\tilde{x}}\) is then mapped as with the basic autoencoder. And the loss is calculated on <strong>raw input</strong> rather than corrupted input.</p>
+<center><br>  <img src="/images/dae.PNG" style="width: 500px; height: 200px"> <br></center>
+
+<p>From point of view of the learning steps (gradient descent like algorithms), it’s also random corrputed. In this way, the autoencoder cannot learning the <strong>identity function</strong>, unlike basic autoencoder, the constraint that \(d’ &lt; d\) can be removed, the latent feature space is not necessary to be “dimension reduced”.</p>
+<h3 id="3-Relationship-to-Other-Approaches"><a href="#3-Relationship-to-Other-Approaches" class="headerlink" title="3. Relationship to Other Approaches"></a>3. Relationship to Other Approaches</h3><ul>
+<li>Image Denoising Problem</li>
+</ul>
+<p>The problem of image denoising has been extensively studied in the image processing community. The denoising autoencoder’s objective however is fundamentally different from that. The authors investigated explicit robustness to corrupting noise as a novel criterion guiding the learning of suitable intermediate representations to initialize a deep network. Thus the corruption and denoising is applied not only on the input, but also recursively to hidden layers.</p>
+<ul>
+<li>Training Data Augmenting</li>
+</ul>
+<p>In contrast to this technique, denoising autoencoder does not use any prior knowledge of image topology, nor does it produce extra labeled examples for supervised training. Denoising autoencoder uses corrupted patterns in a generic unsupervised initialization step, while the supervised training phase uses the unmodified original data.</p>
+<ul>
+<li>Regularization</li>
+</ul>
+<p>Training with “noise” and regularization are equivalent for small additive noise. By contrast, corruption in denoising autoencoder is large, non-additive and destruction of information. Also, regularizations in basic autoencoder don’t yield quantitative jump in performance.</p>
+<ul>
+<li><h3 id="4-Analysis"><a href="#4-Analysis" class="headerlink" title="4. Analysis"></a>4. Analysis</h3></li>
+</ul>
+<p>Including <strong>Manifold Learning Perspective</strong>, <strong>Top-down &amp; Generative Model Perspective</strong>, <strong>Information Theoretic Perspective</strong> and <strong>Stochastic Operator Perspective</strong>. I’ll skip this part first.</p>
+<h3 id="5-Conclustions"><a href="#5-Conclustions" class="headerlink" title="5. Conclustions"></a>5. Conclustions</h3><p>The experiments on image data (convolution neural networks) shows that: without denoising procedure, many filters appear to have learnt no interesting feature. They look like the filters obtained after the random initialization. By increasing the level of destructive corruption, an increasing number of filter resemble sensible feature detectors, they appear sensitive to larger structure spread out across more input dimensions.</p>
+<p>In summary, explicit denoising criterion helps to capture interesting structure in the input distribution. This in turn leads to intermediate representations much better suited for subsequent learning tasks such as supervised classification.</p>
+
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+      
+
+    <span class="post-categories">
+      <i class="icon-categories"></i>
+        <a href="/categories/Machine-Learning/">Machine Learning</a>, <a href="/categories/Machine-Learning/Deep-Learning/">Deep Learning</a>
+    </span>
+    
+
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/Deep-Learning/">Deep Learning</a><a href="/tags/Unsupervised-Learning/">Unsupervised Learning</a>
+    </span>
+    
+
+    </div>
+
+    
+  </div>
+</article>
+
+  
+<section id="comment">
+  
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+  
+</section>
+
+
+
+    </main>
+
+    <footer class="site-footer">
+  <p class="site-info">
+    Proudly powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and
+    Theme by <a href="https://github.com/CodeDaraW/Hacker" target="_blank">Hacker</a>
+    </br>
+    
+    &copy; 2019 Bangda
+    
+	
+	
+	
+  </p>
+  
+  <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+  <span id="busuanzi_container_site_pv">
+    Total viewer <span id="busuanzi_value_site_pv"></span>; 
+  </span>
+  
+  <span id="busuanzi_container_site_uv">
+    Total visitor <span id="busuanzi_value_site_uv"></span>
+  </span>
+	
+	
+  <div id="disqus_thread"></div>
+  <script>
+
+  /**
+   *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+   *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+   */
+   
+  var disqus_config = function () {
+	this.page.url = 'https://bangdasun.github.io{{ page.url }}';  // Replace PAGE_URL with your page's canonical URL variable
+	this.page.identifier = '{{ page.id }}'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+  };
+  
+  (function() { // DON'T EDIT BELOW THIS LINE
+  var d = document, s = d.createElement('script');
+  s.src = 'https://bangdasun-github-io.disqus.com/embed.js';
+  s.setAttribute('data-timestamp', +new Date());
+  (d.head || d.body).appendChild(s);
+  })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  
+  <script id="dsq-count-scr" src="//bangdasun-github-io.disqus.com/count.js" async></script>
+</footer>
+
+
+    
+  </div>
+</div>
+</body>
+</html>
