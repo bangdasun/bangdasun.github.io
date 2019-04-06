@@ -1,0 +1,257 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Matrix Factorization for Recommender Systems | Bangda Sun | Practice makes perfect</title>
+
+  
+  <meta name="author" content="Bangda">
+  
+
+  
+  <meta name="description" content="Play with data">
+  
+
+  
+  
+  <meta name="keywords" content="Machine Learning,Recommender Sys">
+  
+
+  <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <meta property="og:title" content="Matrix Factorization for Recommender Systems"/>
+
+  <meta property="og:site_name" content="Bangda Sun"/>
+
+  
+  <meta property="og:image" content="/favicon.ico"/>
+  
+
+  <link href="/favicon.ico" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Bangda Sun" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    jax: ["input/TeX","output/HTML-CSS"],
+    extensions: ["tex2jax.js","Safe.js"]
+  });
+  </script>
+<script type="text/javascript" async="async"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_CHTML,Safe">
+</script>
+</script>
+</head>
+
+
+<body>
+<div class="blog">
+  <div class="content">
+
+    <header>
+  <div class="site-branding">
+    <h1 class="site-title">
+      <a href="/">Bangda Sun</a>
+    </h1>
+    <p class="site-description">Practice makes perfect</p>
+  </div>
+  <nav class="site-navigation">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+        <li><a href="/tags">Tags</a></li>
+      
+    </ul>
+  </nav>
+</header>
+
+    <main class="site-main posts-loop">
+    <article>
+
+  
+    
+    <h3 class="article-title"><span>Matrix Factorization for Recommender Systems</span></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2019/04/06/matrix-factorization-for-recommender-systems/" rel="bookmark">
+        <time class="entry-date published" datetime="2019-04-06T14:31:40.000Z">
+          2019-04-06
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <p>[Paper reading] Matrix Factorization Techniques for Recommender Systems</p>
+<a id="more"></a>
+<p>This paper is an overview for Matrix Factorization methods used for Recommender Systems, the author Yehuda Koren and Robert Bell and Chris Volinsky are members in <a href="https://en.wikipedia.org/wiki/Netflix_Prize" target="_blank" rel="external">Netflix Prize Competition</a> winning team. Therefore I think their sharing about this work is highly valuable. (Forget about the fact that this is a old paper in 2009, LOL)</p>
+<h3 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1. Introduction"></a>1. Introduction</h3><p>Matching users with most appropriate items is the key the enhancing user satisfaction and loyalty. That’s why recommender systems are so important for companies involve specific business.</p>
+<p>Matrix factorization models perform much better to classic Nearst-Neighbor models (at least in Netflix Prize competition), which allow incorporation of additional info such as <strong>implicit feedback</strong>, <strong>temporal effect</strong> and <strong>confidence levels</strong>.</p>
+<h3 id="2-Recommender-System-Strategies"><a href="#2-Recommender-System-Strategies" class="headerlink" title="2. Recommender System Strategies"></a>2. Recommender System Strategies</h3><p>Basically recommender systems are based on two strategies:</p>
+<ul>
+<li><strong>Content Filtering</strong></li>
+</ul>
+<p>Content based recommendations create <strong>user profile</strong> and <strong>item profile</strong> for users and items, broadly speaking it could be vector representation, e.g. item (movies) could use genre / actors / popularity; user could use demographic / preferences. To make recommendations, user profile need to associate with product to get matched. It requires external data which might need heavy domain knowledge and not easy to collect.</p>
+<ul>
+<li><strong>Collaborative Filtering</strong></li>
+</ul>
+<p>Collaborative filtering is based on historical data about interactions between user and item, such as user ratings on items. Therefore no domain knowledge needed - which could be a issue for content based recommendation since different business direction could have huge difference. But it could suffer from <strong>cold start</strong>, which means not enough historical data at early stage for the system or introduction of new users and new items.</p>
+<p>There are two types of model for collaborative filtering:</p>
+<ol>
+<li>nearest-neighbor models: include user-based and item-based collaborative filtering;</li>
+<li>latent factor models: try to explain the ratings by characterizing both user and items on, the factors could be either interpretable or uninterpretable; a user’s predicted ratings for item relate to the dot product of user-factor and item-factor.</li>
+</ol>
+<h3 id="3-Matrix-Factorization-Methods"><a href="#3-Matrix-Factorization-Methods" class="headerlink" title="3. Matrix Factorization Methods"></a>3. Matrix Factorization Methods</h3><p>Recommender systems rely on different types of input data which are often placed in matrices with one dimension represents users and another dimension represents items, the most convenient data is <strong>explicit data</strong> which includes the explicit input by users regarding their interests in items, such as <strong>ratings</strong>. However this matrix is usually sparse since many users won’t rate on too many items. </p>
+<p>Some of the most successful latent factor models are based on matrix factorization. One of the advantages of matrix factorization is that it allows incorporates additional information. When explicit data is not available, the recommender system can infer user preferences using <strong>implicit feedback</strong>, such as: <strong>purchase history</strong>, <strong>browsing history</strong>, <strong>search patterns</strong>, <strong>actions when browsing (mouse movements)</strong>. Implicit feedback usually could be denoted by binary representations, so it is typically represented as dense matrix.</p>
+<p>Matrix factorization models map both users and items to a joint latent factor space of dimensionality \(f\), such that user-item interactions are modeled as inner products in this space. Each user \(u\) is associated with a vector \(p_{u}\in R^{f}\), each item \(i\) is associated with a vector \(q_{i}\in R^{f}\). For a given user \(u\) the elements of \(p_{u}\) measures the extent of interest of user has, in items that are high on corresponding factors. The dot product \(q_{i}^{\top}p_{u}\) captures the interactions between user and item, this is actually an approximation:</p>
+<p>\[<br>\hat{r}_{ui} = q_{i}^{\top}p_{u}.<br>\]</p>
+<p><strong>SVD</strong> could be used to get user and item vectors. However, classical SVD might not work directly on rating matrix since it’s sparse and incomplete, and it’s highly prone to overgitting.</p>
+<p>One of the solutions is <strong>imputation</strong>, but this could be very expensive and introduce bias. More recent works suggested <strong>directly model on non-missing data</strong>, from optimization perspective, user and item vectors could be learned by </p>
+<p>\[<br>\min_{q, p} \sum_{(u,i)\in k} \left(r_{ui} -q_{i}^{\top}p_{u} \right)^2 + \lambda\left(||q_{i}||_{2}^{2} + ||p_{u}||_{2}^{2}\right),<br>\]</p>
+<p>where \(k\) is the set of user-item pairs observed.</p>
+<p>There are 2 approaches proposed to solve the above optimization problem: <strong>SGD</strong> and <strong>Alternating least squares</strong>. ALS is preferred in two cases:</p>
+<ol>
+<li>system can be parallelized;</li>
+<li>system incorporates implicit feedbacks (dense matrix).</li>
+</ol>
+<h3 id="4-Improvements"><a href="#4-Improvements" class="headerlink" title="4. Improvements"></a>4. Improvements</h3><h4 id="4-1-Adding-Biases"><a href="#4-1-Adding-Biases" class="headerlink" title="4.1 Adding Biases"></a>4.1 Adding Biases</h4><p>Ratings by different users on different items could have biases, independent of any interactions. For example, some users give higher ratings, some items receives higher ratings. Therefore, the system tries to identify the <strong>portion of these values that individual user or item biases can explain</strong>, subjecting only the true interaction portion of the data to factor modeling. A first-order approximation for bias is as follows:</p>
+<p>\[<br>b_{ui} = \mu  + b_{u}+ b_{i},<br>\]</p>
+<p>where \(\mu\) is the overall average rating, \(b_{u}\) and \(b_{i}\) denote for the item and user observed deviations from average. The adjusted predicted rating is<br>\[<br>\hat{r}_{ui} = b_{ui} + q_{i}^{\top}p_{u} = \mu + b_{u} + b_{i} + q_{i}^{\top}p_{u}.<br>\]</p>
+<p>and learning problem is adjusted as </p>
+<p>\[<br>\min_{q, p, b} \sum_{(u,i)\in k} \left(r_{ui} -\mu - b_{u} - b_{i} - q_{i}^{\top}p_{u} \right)^2 + \lambda\left(||q_{i}||_{2}^{2} + ||p_{u}||_{2}^{2} + b_{u}^{2} + b_{i}^{2}\right).<br>\]</p>
+<h4 id="4-2-Additional-Input-Sources"><a href="#4-2-Additional-Input-Sources" class="headerlink" title="4.2 Additional Input Sources"></a>4.2 Additional Input Sources</h4><p>Add implicit data is one way to tackle cold start problem. Consider for binary representations, \(N(u)\) denotes the set of items (a neighbor of items) for user \(u\) expressed an implicit preference (such as viewed, cliked), item are assocated with \(x_{i}\in R^{f}\). Accordingly, a user who showed a preference for items in \(N(u)\) is characterized by </p>
+<p>\[<br>\sum_{i\in N(u)} x_{i}, \text{ or } |N(u)|^{1/2}\sum_{i\in N(u)}x_{i}^{9/2} \text{ (normalized)}<br>\]</p>
+<p>Another implicit source is from users, each user attribute (such as demographic info: gender, age) is denoted by \(A(u)\), and sum of factor vector \(y_{a}\in R^{f}\) corresponds to attributes to describe a user:</p>
+<p>\[<br>\sum_{a\in A(u)} y_{a}.<br>\]</p>
+<p>Then the predited rating is adjusted as </p>
+<p>\[<br>\hat{r}_{ui} = \mu + b_{u} + b_{i} + q_{i}^{\top}\left(p_{u} + |N(u)|^{1/2}\sum_{i\in N(u)}x_{i}^{9/2} + \sum_{a\in A(u)} y_{a}\right).<br>\]</p>
+<h4 id="4-3-Temporal-Dynamics"><a href="#4-3-Temporal-Dynamics" class="headerlink" title="4.3 Temporal Dynamics"></a>4.3 Temporal Dynamics</h4><p>Matrix factorization models also lends itself well to modeling temporal effects which could significantly improve the accuracy. Factorizing ratings into distinct terms allows the system to treat different temporal aspects separately. The biases terms vary over time, the could be re-parameterized with time factor: item biases - \(b_{i}(t)\); user biases - \(b_{u}(t)\); user preference - \(p_{u}(t)\). These changes incorporate the facts that:</p>
+<ul>
+<li>item popularity could change over time</li>
+<li>users’ baseline rating could change over time</li>
+<li>interaction between user and item also could change</li>
+</ul>
+<p>Therefore the predicted rating is adjusted as </p>
+<p>\[<br>\hat{r}_{ui}(t) =  \mu + b_{u}(t) + b_{i}(t) + q_{i}^{\top}p_{u}(t).<br>\]</p>
+<h4 id="4-4-Inputs-with-Varying-Confidence-Levels"><a href="#4-4-Inputs-with-Varying-Confidence-Levels" class="headerlink" title="4.4 Inputs with Varying Confidence Levels"></a>4.4 Inputs with Varying Confidence Levels</h4><p>Sometimes not all observed ratings should be assigned the same weight or confidence. Also, for systems built based on implicit feedback, users’ exact preference level are hard to quantify. Confidence can stem from available data such as how much time the user watched a certain item or how frequently a user bought certain item. The confidence in observing \(r_{ui}\) is denoted as \(c_{ui}\), therefore the learning problem is adjusted as </p>
+<p>\[<br>\min_{q, p, b} \sum_{(u,i)\in k} c_{ui}\left(r_{ui} -\mu - b_{u} - b_{i} - q_{i}^{\top}p_{u} \right)^2 + \lambda\left(||q_{i}||_{2}^{2} + ||p_{u}||_{2}^{2} + b_{u}^{2} + b_{i}^{2}\right).<br>\]</p>
+<h3 id="5-Applications-in-Netflix-Prize-Competition"><a href="#5-Applications-in-Netflix-Prize-Competition" class="headerlink" title="5. Applications in Netflix Prize Competition"></a>5. Applications in Netflix Prize Competition</h3><p>The winning solution for Netflix Prize competition consists of more than 100 different predictor sets, the majority of which are matrix factorization models. A comparison of different settings of matrix factorization models is shown as follows</p>
+<center><br>  <img src="/images/comparison-mf.PNG" style="width: 600px; height: 450px"> <br></center>
+
+
+
+<p>As you can see the temporal components significantly reduce the RMSE</p>
+
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+      
+
+    <span class="post-categories">
+      <i class="icon-categories"></i>
+        <a href="/categories/Recommender-Sys/">Recommender Sys</a>
+    </span>
+    
+
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/Machine-Learning/">Machine Learning</a><a href="/tags/Recommender-Sys/">Recommender Sys</a>
+    </span>
+    
+
+    </div>
+
+    
+  </div>
+</article>
+
+  
+<section id="comment">
+  
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+  
+</section>
+
+
+
+    </main>
+
+    <footer class="site-footer">
+  <p class="site-info">
+    Proudly powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and
+    Theme by <a href="https://github.com/CodeDaraW/Hacker" target="_blank">Hacker</a>
+    </br>
+    
+    &copy; 2019 Bangda
+    
+	
+	
+	
+  </p>
+  
+  <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+  <span id="busuanzi_container_site_pv">
+    Total viewer <span id="busuanzi_value_site_pv"></span>; 
+  </span>
+  
+  <span id="busuanzi_container_site_uv">
+    Total visitor <span id="busuanzi_value_site_uv"></span>
+  </span>
+	
+	
+  <div id="disqus_thread"></div>
+  <script>
+
+  /**
+   *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+   *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+   */
+   
+  var disqus_config = function () {
+	this.page.url = 'https://bangdasun.github.io{{ page.url }}';  // Replace PAGE_URL with your page's canonical URL variable
+	this.page.identifier = '{{ page.id }}'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+  };
+  
+  (function() { // DON'T EDIT BELOW THIS LINE
+  var d = document, s = d.createElement('script');
+  s.src = 'https://bangdasun-github-io.disqus.com/embed.js';
+  s.setAttribute('data-timestamp', +new Date());
+  (d.head || d.body).appendChild(s);
+  })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  
+  <script id="dsq-count-scr" src="//bangdasun-github-io.disqus.com/count.js" async></script>
+</footer>
+
+
+    
+  </div>
+</div>
+</body>
+</html>
