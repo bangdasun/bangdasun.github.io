@@ -15,7 +15,7 @@
 
   
   
-  <meta name="keywords" content="Linguistic,Statistics">
+  <meta name="keywords" content="Language Model,Linguistic,Statistics">
   
 
   <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
@@ -134,7 +134,7 @@
 <p>this is also the maximum likelihood estimate. </p>
 <p>In practice, we always do this in log space, this can avoid underflow issue, also adding is faster than multiplying:</p>
 <p>\[<br>\log P(w_1w_2w_3) = \log(P(w_1)P(w_2|w_1)P(w_3|w_2)) = \log P(w_1) + \log P(w_2|w_1) + \log P(w_3|w_2).<br>\]</p>
-<h3 id="2-Model-Evaluation"><a href="#2-Model-Evaluation" class="headerlink" title="2. Model Evaluation"></a>2. Model Evaluation</h3><p>After we have the model, we want to know how good is the model. The model should prefer good sentences to bad sentences. Here we also have training set and test set: where we train the language model on training set, and test it on test set. To compare two models, we can</p>
+<h3 id="2-Model-Evaluation"><a href="#2-Model-Evaluation" class="headerlink" title="2. Model Evaluation"></a>2. Model Evaluation</h3><p>After we have the model, we want to know how good is the model. The model should <strong>prefer good sentences to bad sentences</strong>. Here we also have training set and test set: where we train the language model on training set, and test it on test set. To compare two models, we can</p>
 <ul>
 <li>put each model in a task (spelling corrector, speech recognizer, machine translation system)</li>
 <li>run the task and get accuracy for both models, see how many misspelled words corrected properly; how many words translated correctly</li>
@@ -196,7 +196,7 @@
 
     <span class="post-tags">
       <i class="icon-tags"></i>
-        <a href="/tags/Linguistic/">Linguistic</a><a href="/tags/Statistics/">Statistics</a>
+        <a href="/tags/Language-Model/">Language Model</a><a href="/tags/Linguistic/">Linguistic</a><a href="/tags/Statistics/">Statistics</a>
     </span>
     
 
