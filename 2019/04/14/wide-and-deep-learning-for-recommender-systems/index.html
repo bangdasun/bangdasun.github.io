@@ -1,0 +1,238 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Wide and Deep Learning for Recommender Systems | Bangda Sun | Practice makes perfect</title>
+
+  
+  <meta name="author" content="Bangda">
+  
+
+  
+  <meta name="description" content="Play with data">
+  
+
+  
+  
+  <meta name="keywords" content="Machine Learning,Recommender Sys,Deep Learing">
+  
+
+  <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <meta property="og:title" content="Wide and Deep Learning for Recommender Systems"/>
+
+  <meta property="og:site_name" content="Bangda Sun"/>
+
+  
+  <meta property="og:image" content="/favicon.ico"/>
+  
+
+  <link href="/favicon.ico" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Bangda Sun" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    jax: ["input/TeX","output/HTML-CSS"],
+    extensions: ["tex2jax.js","Safe.js"]
+  });
+  </script>
+<script type="text/javascript" async="async"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_CHTML,Safe">
+</script>
+</script>
+</head>
+
+
+<body>
+<div class="blog">
+  <div class="content">
+
+    <header>
+  <div class="site-branding">
+    <h1 class="site-title">
+      <a href="/">Bangda Sun</a>
+    </h1>
+    <p class="site-description">Practice makes perfect</p>
+  </div>
+  <nav class="site-navigation">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+        <li><a href="/tags">Tags</a></li>
+      
+    </ul>
+  </nav>
+</header>
+
+    <main class="site-main posts-loop">
+    <article>
+
+  
+    
+    <h3 class="article-title"><span>Wide and Deep Learning for Recommender Systems</span></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2019/04/14/wide-and-deep-learning-for-recommender-systems/" rel="bookmark">
+        <time class="entry-date published" datetime="2019-04-14T18:31:06.000Z">
+          2019-04-14
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <p>[Paper reading] Wide &amp; Deep Learning for Recommender Systems</p>
+<a id="more"></a>
+<p>This <a href="https://arxiv.org/pdf/1606.07792.pdf" target="_blank" rel="external">paper</a> presents a new framework for recommandation tasks, which combines the advantages of </p>
+<ul>
+<li>Generalized Linear Models (logistic regression): efficient for large scale regression and classification tasks with sparse data, provide nice interpretations;</li>
+<li>Deep Neural Networks: extract more complicate feature interactions and less feature engineering.</li>
+</ul>
+<h3 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1. Introduction"></a>1. Introduction</h3><p>Recommender systems can be viewed as <strong>search &amp; ranking system</strong>, where the inputs are <strong>queries with set of of user and contextual information</strong> and outputs are <strong>ranked list of items</strong>. One of the challenges in recommender systems is to achieve both <strong>memorization</strong> and <strong>generalization</strong>.</p>
+<p>Memorization is loosely defined as learning the frequent co-occurrence of items or features, <strong>exploiting</strong> the correlations in historical data. Recommendations based on memorization are more topical and directly relevant to the items on which user have already performed actions. Therefore you’ll not expect recommendations that surprise you. Memorization could be achieved by effectively using cross-production transformations over sparse features, a.k.a feature interactions. But it doesn’t generalize to query-item feature pairs that have not appeared in historical data.</p>
+<p>Generalization is based on transitivity of correlation and <strong>explores</strong> new feature combinations that have never seen before or rarely occurred. Recommendations based on generalization tend to provide more diverse results. Embedding-based models such as <strong>factorization machines</strong> or <strong>deep neural networks</strong> can achieve this by <strong>learning a low dimensional dense embedding vector for each query and item feature</strong>. But this could be difficult to learn effectively for queries and items when the underlying query-item matrix is sparse and high-rank, users with specific preferences or niche items ith a narrow appeal.</p>
+<p>This paper shows that the Wide &amp; Deep framework significantly improves the app acquisition rate on mobile app store while satisfying the training and serving speed requirements.</p>
+<h3 id="2-Recommender-Systems-Overview"><a href="#2-Recommender-Systems-Overview" class="headerlink" title="2. Recommender Systems Overview"></a>2. Recommender Systems Overview</h3><p>Overview of recommender systems:</p>
+<center><br>  <img src="/images/recsys-overview.PNG" style="width: 600px; height: 300px"> <br></center>
+
+<p>A query which contains user and contextual features is generated when a user visits. The recommender system returns a list of items (also referred to as <strong>impressions</strong>) on which users can perform actions such as click or purchase. These actions along with queries and impressions are recorded in the logs as the training data for the model.</p>
+<p>Since in real business case, the amount of items is huge therefore the first step upon receiving a query is <strong>retrieval</strong>, the retrieval system returns a short list of items that best match the query using various signals. After reducing the candidate pool, the <strong>ranking</strong> system ranks all items by their scores, usually \(P(y|\mathbf{x})\) - the probability of a user action label \(y\) given the feature \(\mathbf{x}\), including</p>
+<ul>
+<li>user features: country, language, demographics;</li>
+<li>contextual features: device, hour of the day, day of the week;</li>
+<li>impression features: app age, historical statistics of an app.</li>
+</ul>
+<p>This paper will focus on the ranking model.</p>
+<h3 id="3-Wide-amp-Deep-Learning"><a href="#3-Wide-amp-Deep-Learning" class="headerlink" title="3. Wide &amp; Deep Learning"></a>3. Wide &amp; Deep Learning</h3><h4 id="3-1-The-Wide-Component"><a href="#3-1-The-Wide-Component" class="headerlink" title="3.1 The Wide Component"></a>3.1 The Wide Component</h4><p>The wide component is a generalized linear model of form \(y=\mathbf{w}^{\top}\mathbf{x} + b\). One of the most important part in features \(\mathbf{x}\) is the <strong>cross-product</strong> transformation, a.k.a feature interaction, it captures the interactions between one-hot binary features and adds non-linearity to the model.</p>
+<h4 id="3-2-The-Deep-Component"><a href="#3-2-The-Deep-Component" class="headerlink" title="3.2 The Deep Component"></a>3.2 The Deep Component</h4><p>The deep component is a feed-forward nerual network. The high dimensional categorical features are first convert into a low dimensional and dense real-valued vector, often referred as <strong>embeddings</strong>. The embedding vectors are initialized randomly and then the values are trained to minimize the final loss function. Then they are fed into the hidden layers with feed forward step</p>
+<p>\[<br>a^{(l+1)} = f(W^{(l)}a^{(l)} + b^{(l)}),<br>\]</p>
+<p>where \(l\) is the layer number and \(f\) is the activation function.</p>
+<h4 id="3-3-Joint-Training-of-Wide-amp-Deep-Model"><a href="#3-3-Joint-Training-of-Wide-amp-Deep-Model" class="headerlink" title="3.3 Joint Training of Wide &amp; Deep Model"></a>3.3 Joint Training of Wide &amp; Deep Model</h4><p>Combined them together with a weighted sum of their output log odds as the prediction, which is then fed to one common logistic loss function for joint training:</p>
+<p>\[<br>P(y=1|\mathbf{x}) = \sigma\left(\mathbf{w}^{\top}_{\text{wide}}\mathbf{x} + \mathbf{w}^{\top}_{\text{deep}}a^{(l_{f})} + b\right).<br>\]</p>
+<center><br>  <img src="/images/wide-deep-model.PNG" style="width: 750px; height: 220px"> <br></center>
+
+<p>In experiments, FTRL algorithm with L1 regularization is used to train wide part and AdaGrad is used for deep part.</p>
+<h3 id="4-System-Implementation"><a href="#4-System-Implementation" class="headerlink" title="4. System Implementation"></a>4. System Implementation</h3><p>The implement of the apps recommendation pipeline consists of three stages: data generation, model training and model serving as shown follows:</p>
+<center><br>  <img src="/images/app-recsys-pipeline.PNG" style="width: 600px; height: 280px"> <br></center>
+
+<p>And the model structure used for experiements is:</p>
+<center><br>  <img src="/images/wide-deep-model-structure.PNG" style="width: 500px; height: 300px"> <br></center>
+
+
+<h3 id="5-Experiments-and-Conclustions"><a href="#5-Experiments-and-Conclustions" class="headerlink" title="5. Experiments and Conclustions"></a>5. Experiments and Conclustions</h3><p>A live online experiment is conducted in an A / B testing framework for 3 weeks. For the <strong>control group, 1% of the users were randomly selected and presented with recommendations generated by a high-optimized logistic regression with rich cross-product feature transformations</strong>. For the <strong>experiment group, 1% of the users were randomly selected and presented with recommendations generated by Wide &amp; Deep model</strong>. Wide &amp; Deep model improves the acquisition rate on the main landing page of the app store by 3.9% relative to the control group, which is statistically significant. The results were also compared with another 1% group using only the deep part of the model with same features and neural network structure, the Wide &amp; Deep model had 1% gain on top the deep model, which is also statistical significant.</p>
+<p>In summary, memorization and generalization are both important for recommender systems. Wide models can effectively memorize sparse feature interactions using cross-product transformation, while deep models can generalize to previously unseen feature interactions through low dimensional embeddings. The Wide &amp; Deep model combine the strengths of both types of the model, and online experiments showed that it let to significant improvement on app acquisitions over previous models.</p>
+
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+      
+
+    <span class="post-categories">
+      <i class="icon-categories"></i>
+        <a href="/categories/Recommender-Sys/">Recommender Sys</a>, <a href="/categories/Recommender-Sys/Machine-Learning/">Machine Learning</a>, <a href="/categories/Recommender-Sys/Machine-Learning/Deep-Learning/">Deep Learning</a>
+    </span>
+    
+
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/Machine-Learning/">Machine Learning</a><a href="/tags/Recommender-Sys/">Recommender Sys</a><a href="/tags/Deep-Learing/">Deep Learing</a>
+    </span>
+    
+
+    </div>
+
+    
+  </div>
+</article>
+
+  
+<section id="comment">
+  
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+  
+</section>
+
+
+
+    </main>
+
+    <footer class="site-footer">
+  <p class="site-info">
+    Proudly powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and
+    Theme by <a href="https://github.com/CodeDaraW/Hacker" target="_blank">Hacker</a>
+    </br>
+    
+    &copy; 2019 Bangda
+    
+	
+	
+	
+  </p>
+  
+  <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+  <span id="busuanzi_container_site_pv">
+    Total viewer <span id="busuanzi_value_site_pv"></span>; 
+  </span>
+  
+  <span id="busuanzi_container_site_uv">
+    Total visitor <span id="busuanzi_value_site_uv"></span>
+  </span>
+	
+	
+  <div id="disqus_thread"></div>
+  <script>
+
+  /**
+   *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+   *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+   */
+   
+  var disqus_config = function () {
+	this.page.url = 'https://bangdasun.github.io{{ page.url }}';  // Replace PAGE_URL with your page's canonical URL variable
+	this.page.identifier = '{{ page.id }}'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+  };
+  
+  (function() { // DON'T EDIT BELOW THIS LINE
+  var d = document, s = d.createElement('script');
+  s.src = 'https://bangdasun-github-io.disqus.com/embed.js';
+  s.setAttribute('data-timestamp', +new Date());
+  (d.head || d.body).appendChild(s);
+  })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  
+  <script id="dsq-count-scr" src="//bangdasun-github-io.disqus.com/count.js" async></script>
+</footer>
+
+
+    
+  </div>
+</div>
+</body>
+</html>
