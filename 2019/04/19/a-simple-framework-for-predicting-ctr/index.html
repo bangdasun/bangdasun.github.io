@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>A Simple Framework for Display Advertising | Bangda Sun | Practice makes perfect</title>
+  <title>A Simple Framework for Predicting CTR in Display Advertising | Bangda Sun | Practice makes perfect</title>
 
   
   <meta name="author" content="Bangda">
@@ -22,7 +22,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
 
-  <meta property="og:title" content="A Simple Framework for Display Advertising"/>
+  <meta property="og:title" content="A Simple Framework for Predicting CTR in Display Advertising"/>
 
   <meta property="og:site_name" content="Bangda Sun"/>
 
@@ -75,13 +75,13 @@
 
   
     
-    <h3 class="article-title"><span>A Simple Framework for Display Advertising</span></h3>
+    <h3 class="article-title"><span>A Simple Framework for Predicting CTR in Display Advertising</span></h3>
     
   
 
   <div class="article-top-meta">
     <span class="posted-on">
-      <a href="/2019/04/19/a-simple-framework-for-display-advertising/" rel="bookmark">
+      <a href="/2019/04/19/a-simple-framework-for-predicting-ctr/" rel="bookmark">
         <time class="entry-date published" datetime="2019-04-20T02:12:12.000Z">
           2019-04-19
         </time>
@@ -97,8 +97,11 @@
       
         <p>[Paper reading]: Simple and Scalable Response Prediction for Display Advertising</p>
 <a id="more"></a>
-<p>This <a href="http://people.csail.mit.edu/romer/papers/TISTRespPredAds.pdf" target="_blank" rel="external">paper</a> gives a general introduction about two core tasks in display advertising: <strong>CTR (click-through rate)</strong> and <strong>CVR (conversion rate)</strong> prediction.</p>
-<h3 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1. Introduction"></a>1. Introduction</h3><p>Display advertising is a form of online advertising where <strong>advertisers pay publishers for placing ads on publishers’ web pages</strong>. Spot markets offer advertisers a wide range of payments options. If the goal of an advertising campaign is <strong>getting their message to the target audience</strong> then <strong>paying per impression (CPM)</strong> is normally the choice for advertiser. While, many advertisers would prefer NOT to pay for an ad impression unless that impression leads the user to their websites. Therefore there are other choices, such as <strong>cost-per-click (CPC)</strong> and <strong>cost-per-conversion (CPA)</strong>. An auction that supports these conditional payment options needs to convert advertiser bids to <strong>expected price per impression (ECPM)</strong>. For CPM ads, ECPM is identical to bid; <strong>for CPC or CPA, the ECPM will depend on the CTR and CVR</strong>.</p>
+<p>This <a href="http://people.csail.mit.edu/romer/papers/TISTRespPredAds.pdf" target="_blank" rel="external">paper</a> gives a general introduction about two core tasks in <strong>display advertising</strong>: <strong>CTR (click-through rate)</strong> and <strong>CVR (conversion rate)</strong> prediction. I had participated several CTR competitions on kaggle and Tianchi, while at that time I just treat them as binary classification problem, but had little knowledge about the background, and I think this is a good paper for me to enter this area.</p>
+<h3 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1. Introduction"></a>1. Introduction</h3><p><strong>Display advertising</strong> is a form of online advertising where <strong>advertisers pay publishers for placing ads on publishers’ web pages</strong>. Spot markets offer advertisers a wide range of payments options. If the goal of an advertising campaign is <strong>getting their message to the target audience</strong> then <strong>paying per impression (CPM)</strong> is normally the choice for advertiser. While, many advertisers would prefer NOT to pay for an ad impression unless that impression leads the user to their websites. Therefore there are other choices, such as <strong>cost-per-click (CPC)</strong> and <strong>cost-per-conversion (CPA)</strong>. An auction that supports these conditional payment options needs to convert advertiser bids to <strong>expected price per impression (ECPM)</strong>. For CPM ads, ECPM is identical to bid; <strong>for CPC or CPA, the ECPM will depend on the CTR and CVR</strong>.</p>
+<p>The challenges in display advertising are different from <strong>context of search</strong> and <strong>search advertising</strong>. In display advertising, the auctioneer doesn’t really have access to the content of ads, ads might not even hosted by the auctioneers. Furthermore, the content of ads might be generated dynamically depending on the properties of the user. </p>
+<p>While there have been some attempts to capture the content of the ad or landing pages, this requires non-trivial effort and is not always possible. Content related, web graph and anchor text information are therefore absent in display advertising, leaving the auctioneer mostly with unique identifiers for representation.</p>
+<p>Therefore in this paper, a simple ML framework is proposed to address the issues above, which is able to scale to billions of samples and hundreds of millions of parameters</p>
 <h3 id="2-Related-Works"><a href="#2-Related-Works" class="headerlink" title="2. Related Works"></a>2. Related Works</h3><p>Factors that can have an impact on users’ response for ads are included explicitly as features:</p>
 <ul>
 <li>context features: query in sponsored search, publisher page in content match, etc;</li>
@@ -139,7 +142,7 @@
 <li><strong>subsampling on negative samples</strong>: empirical results show that a subsample rate of 1% was a good trade-off between model training time and preditive accuracy;</li>
 <li><strong>subsampling on all samples</strong>: the results show that there is a drop in accuracy after subsampling.</li>
 </ul>
-<h3 id="6-Feature-Selection"><a href="#6-Feature-Selection" class="headerlink" title="6. Feature Selection"></a>6. Feature Selection</h3><p>This section discussed about feature selection using <strong>conditional mutual information</strong> and <strong>reference distribution</strong>.</p>
+<h3 id="6-Feature-Selection"><a href="#6-Feature-Selection" class="headerlink" title="6. Feature Selection"></a>6. Feature Selection</h3><p>This section discussed about feature selection using <strong>conditional mutual information</strong> and <strong>reference distribution</strong>. I’ll back here someday to give more detailed summaries.</p>
 <h3 id="7-Non-Stationary"><a href="#7-Non-Stationary" class="headerlink" title="7. Non-Stationary"></a>7. Non-Stationary</h3><p>Display advertising is a non stationary process as the set of active advertisers, campaigns, publishers and users is constantly changing. </p>
 <p>There are two perspectives to quantify the changes:</p>
 <ul>
