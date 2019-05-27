@@ -124,7 +124,7 @@
 <p>Capture all of these as a sum of two reward terms weighed by \(\alpha\) and \((1 - \alpha)\),</p>
 <p>\[<br>Recall{T}(R_{i}, P) = \alpha ExistenceReward(R_{i}, P) + (1 - \alpha) OverlapReward(R_{i}, P),<br>\]</p>
 <p>where the overlap reward consists of <strong>size</strong> reward, <strong>position</strong> bias and <strong>cardinality</strong>. </p>
-<p>If a anomaly range is identified, i.e. \(|R_{i}\cap P_{j}|\geq 1\) across all \(P_{j}\in P\), then the existence reward will be get, simply it is</p>
+<p>If a anomaly range is identified, i.e. \(|R_{i}\cap P_{j}|\geq 1\) across all \(P_{j}\in P\), then the existence reward will be satisfied, basically it is</p>
 <p>\[<br>ExistenceReward(R_{i}, P) = \left\{<br>\begin{aligned}<br>1,&amp; \text{ if } \sum^{N_{p}}_{i=1}|R_{i}\cap P_{j}|\geq 1 \\<br>0,&amp; \text{ otherwise}<br>\end{aligned}<br>\right.<br>\]</p>
 <p>And the overlap reward is consists of size, positive and cardinality. The paper gives the definitions,</p>
 <center><br>  <img src="/images/overlap_size-position_bias.PNG" style="width: 700px; height: 240px"> <br></center>
