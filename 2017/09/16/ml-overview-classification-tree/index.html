@@ -60,11 +60,11 @@
   <nav class="site-navigation">
     <ul>
       
-        <li><a href="/">Home</a></li>
+        <li><a href="/">主页</a></li>
       
-        <li><a href="/archives">Archives</a></li>
+        <li><a href="/archives">归档</a></li>
       
-        <li><a href="/tags">Tags</a></li>
+        <li><a href="/tags">标签</a></li>
       
     </ul>
   </nav>
@@ -98,7 +98,7 @@
         <p>Decision tree for classification problems</p>
 <a id="more"></a>
 <h3 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1. Introduction"></a>1. Introduction</h3><p>Last time we go through regression tree: using decision tree to tackle regression problem. It’s pretty reasonable that we can also apply decision tree on classification problem. To make this blog easier to read, I use binary classification tree which means we use decision tree to solve binary classification problem.</p>
-<h3 id="2-Mathematical-Basis"><a href="#2-Mathematical-Basis" class="headerlink" title="2. Mathematical Basis"></a>2. Mathematical Basis</h3><h4 id="2-1-Differences-with-Regression-Tree"><a href="#2-1-Differences-with-Regression-Tree" class="headerlink" title="2.1 Differences with Regression Tree"></a>2.1 Differences with Regression Tree</h4><p>Convert regression problem to classification problem, there are several points we need to clarify:</p>
+<h3 id="2-Mathematical-Basis"><a href="#2-Mathematical-Basis" class="headerlink" title="2. Mathematical Basis"></a>2. Mathematical Basis</h3><h4 id="2-1-Comparisons-with-Regression-Tree"><a href="#2-1-Comparisons-with-Regression-Tree" class="headerlink" title="2.1 Comparisons with Regression Tree"></a>2.1 Comparisons with Regression Tree</h4><p>To convert regression problem to classification problem, there are several points we need to clarify:</p>
 <ol>
 <li>How to predict the class label of a region? In regression, we use \(\bar{y}\);</li>
 <li>How to measure the performance of one split? In regression, we use squared loss function;</li>

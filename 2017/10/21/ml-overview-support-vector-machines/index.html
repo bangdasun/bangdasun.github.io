@@ -60,11 +60,11 @@
   <nav class="site-navigation">
     <ul>
       
-        <li><a href="/">Home</a></li>
+        <li><a href="/">主页</a></li>
       
-        <li><a href="/archives">Archives</a></li>
+        <li><a href="/archives">归档</a></li>
       
-        <li><a href="/tags">Tags</a></li>
+        <li><a href="/tags">标签</a></li>
       
     </ul>
   </nav>
@@ -99,13 +99,13 @@
 <a id="more"></a>
 <h3 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1. Introduction"></a>1. Introduction</h3><p>If you’ve read or taken the famous machine learning open course CS229 taught by Andrew Ng, and I ask you what’s first algorithm that looks more complicated than the previous one, I bet you will say Support Vector Machines (SVM) since there are lots of mathematics / algebra in steps. In this post, I will try to make SVM more intuitive and understandable.</p>
 <p>Similar with the Logistic Regression we discussed before, SVM is also an algorithm that try to fit a decision boundary to separate the data: <strong>define the parameter and loss function, and use optimization algorithm to minimize the loss, the result would be a decision boundary specified by the parameters</strong>.</p>
-<p>The extra point is classify different classes as far as possible, i.e. we need to <strong>maximize the distance between the decision boundaries to each class</strong>. Take binary classification as an example, our ideal decision boundary should locate at the middle of two classes, like the following figure</p>
+<p>The extra point is classifying different classes as far as possible, i.e. we need to <strong>maximize the distance between the decision boundaries to each class, not just give correct predictions</strong>. Take binary classification as an example, our ideal decision boundary should locate at the middle of two classes, like the following figure</p>
 <p><img src="/images/decision-boundary.png" style="width: 850px; height: 450px"> </p>
 <p>As the figure shows, we will first find a closest pair of points between two classes, and place the decision boundary perpendicular to the connection line between these two points. In order to maximize the distance of decision boundary to each class, we should place the decision boundary at the middle point of the connection line. In this example, the maximum distance is \(d\), and we define it as <strong>margin</strong>. This classifier is known as <strong>Maximum Margin Classifier</strong>, it’s a special case of SVM. </p>
 <p>Looks nice, but what if the data is not linearly separable? In that case we are not able to conduct the above procedure. Don’t worry, we will back to this point later.</p>
 <h3 id="2-Mathematical-Basis"><a href="#2-Mathematical-Basis" class="headerlink" title="2. Mathematical Basis"></a>2. Mathematical Basis</h3><h4 id="2-1-Geometric-Interpretation"><a href="#2-1-Geometric-Interpretation" class="headerlink" title="2.1 Geometric Interpretation"></a>2.1 Geometric Interpretation</h4><p>First we need some geometric backgrounds. Usually we can specify the decision boundary using a norm vector \(\mathbf{v}\), and consider a data point \(\mathbf{x}\)</p>
 <p><img src="/images/decision-boundary2.png" style="width: 850px; height: 450px"> </p>
-<p>from the figure we can get the following relation:</p>
+<p>from the figure we can get the following relation (law of cosine):</p>
 <p>\[<br>\cos{\theta} = \frac{\mathbf{v}^{\top}\mathbf{x}}{||\mathbf{v}||_{2}||\mathbf{x}||_{2}}<br>\]</p>
 <p>where \(||\mathbf{v}||_{2}\) means the length of vector \(\mathbf{v}\). So what’s the distance of data point \(\mathbf{x}\) to the decision boundary? We have</p>
 <p>\[<br>d = ||\mathbf{x}||_{2} \cos{\theta} = \frac{\mathbf{v}^{\top}\mathbf{x}}{||\mathbf{v}||_{2}}<br>\]</p>
