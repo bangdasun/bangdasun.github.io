@@ -15,7 +15,7 @@
 
   
   
-  <meta name="keywords" content="Classification,Naive Bayes">
+  <meta name="keywords" content="Machine Learning,NLP,Classification,Naive Bayes">
   
 
   <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
@@ -60,11 +60,11 @@
   <nav class="site-navigation">
     <ul>
       
-        <li><a href="/">主页</a></li>
+        <li><a href="/">Home</a></li>
       
-        <li><a href="/archives">归档</a></li>
+        <li><a href="/archives">Archives</a></li>
       
-        <li><a href="/tags">标签</a></li>
+        <li><a href="/tags">Tags</a></li>
       
     </ul>
   </nav>
@@ -105,11 +105,11 @@
 <li>sentiment analysis;</li>
 <li>detect subject of the article.</li>
 </ul>
-<p>I’ll use machine learning jargon for this post since it has much overlap with machine learning.</p>
+<p>I’ll use machine learning jargon for this post since it has big overlap with machine learning.</p>
 <h3 id="1-Text-Classification"><a href="#1-Text-Classification" class="headerlink" title="1. Text Classification"></a>1. Text Classification</h3><p>Definition: we have input text \(x\) and set of classes \(C={c_1, c_2, \dots, c_n}\), and the output is predicted class \(y\in C\) given by a classifier.</p>
 <p>There are mainly two kinds of classifiers:</p>
 <h4 id="1-1-Hand-coded-rules"><a href="#1-1-Hand-coded-rules" class="headerlink" title="1.1 Hand-coded rules"></a>1.1 Hand-coded rules</h4><p>Use rules based on domain knowledge: combinations of words or other features. The accuracy could be high if rules are carefully designed, also not too much data needed, but build it could be expensive.</p>
-<h4 id="1-2-Supervised-machine-learning-algorithm"><a href="#1-2-Supervised-machine-learning-algorithm" class="headerlink" title="1.2 Supervised machine learning algorithm"></a>1.2 Supervised machine learning algorithm</h4><p>Including many classifier you know: Naive Bayes, SVM, Logistic Regression, KNN, LDA/QDA etc. It needs a training set which contains text and labels.</p>
+<h4 id="1-2-Supervised-learning-algorithms"><a href="#1-2-Supervised-learning-algorithms" class="headerlink" title="1.2 Supervised learning algorithms"></a>1.2 Supervised learning algorithms</h4><p>Including many classifier you know: Naive Bayes, SVM, Logistic Regression, KNN, LDA/QDA etc. It needs a training set which contains text and labels.</p>
 <h3 id="2-Naiver-Bayes"><a href="#2-Naiver-Bayes" class="headerlink" title="2. Naiver Bayes"></a>2. Naiver Bayes</h3><p>This is a very simple method and can be a good start. Before modeling, we need first convert raw texts to structured format. <strong>Bag-of-words</strong> could be a solution (but lose sequence information). Each text will represented as a vector with length to be the number of words in the corpus, it will be a sparse vector.</p>
 <p>Then we want to calculate the probability of text class given by the content \(P(y|x)\), we can apply Bayes rule: where the posterior is proportional to likelihood times prior:</p>
 <p>\[<br>P(y|x) = \frac{P(x|y)P(y)}{P(x)} \propto P(x|y)P(y).<br>\]</p>
@@ -123,9 +123,9 @@
 <p>\[<br>\hat{y} = \arg\max_{y\in C} P(y)\prod^{n}_{i=1} P(x_i|y),<br>\]</p>
 <p>then we can estimate</p>
 <p>\[<br>\hat{P}(y_j) = \frac{count(C=c_j)}{\text{number of texts}}, ~<br>\hat{P}(x_i|y_j) = \frac{count(x_i, y_j)}{\sum_i count(x_i, y_j)}.<br>\]</p>
-<p>In practice, we can also apply <strong>smoothing</strong> methods to deal with zero-probability issue and unknown words issue:</p>
+<p>In practice, we can also apply <strong>smoothing</strong> methods to deal with <strong>zero-probabilit</strong>y issue and <strong>unknown words</strong> issue:</p>
 <p>\[<br>\hat{P}(x_i|y_j) = \frac{count(x_i, y_j) + 1}{\sum_i count(x_i, y_j) + V}.<br>\]</p>
-<h3 id="3-Relationship-to-Language-Model"><a href="#3-Relationship-to-Language-Model" class="headerlink" title="3. Relationship to Language Model"></a>3. Relationship to Language Model</h3><p>In previous section we only use bag-of-words features for Naive Bayes classifier, therefore we are actually regard it as a language model: each class is a unigram model.</p>
+<h3 id="3-Relationship-to-Language-Model"><a href="#3-Relationship-to-Language-Model" class="headerlink" title="3. Relationship to Language Model"></a>3. Relationship to Language Model</h3><p>In previous section we only use bag-of-words features for Naive Bayes classifier, therefore we are actually regard it as a language model: each class is a <strong>unigram model</strong>.</p>
 
       
     </div>
@@ -136,20 +136,13 @@
     <div class="article-meta pull-left">
 
     
-      
-
-    <span class="post-categories">
-      <i class="icon-categories"></i>
-        <a href="/categories/NLP/">NLP</a>, <a href="/categories/NLP/Machine-Learning/">Machine Learning</a>
-    </span>
-    
 
     
     
 
     <span class="post-tags">
       <i class="icon-tags"></i>
-        <a href="/tags/Classification/">Classification</a><a href="/tags/Naive-Bayes/">Naive Bayes</a>
+        <a href="/tags/Machine-Learning/">Machine Learning</a><a href="/tags/NLP/">NLP</a><a href="/tags/Classification/">Classification</a><a href="/tags/Naive-Bayes/">Naive Bayes</a>
     </span>
     
 

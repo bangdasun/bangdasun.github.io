@@ -15,7 +15,7 @@
 
   
   
-  <meta name="keywords" content="Classification,SVM">
+  <meta name="keywords" content="Machine Learning,Classification,SVM">
   
 
   <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
@@ -60,11 +60,11 @@
   <nav class="site-navigation">
     <ul>
       
-        <li><a href="/">主页</a></li>
+        <li><a href="/">Home</a></li>
       
-        <li><a href="/archives">归档</a></li>
+        <li><a href="/archives">Archives</a></li>
       
-        <li><a href="/tags">标签</a></li>
+        <li><a href="/tags">Tags</a></li>
       
     </ul>
   </nav>
@@ -97,13 +97,13 @@
       
         <p>A classification method with straightforward geometric intuition.</p>
 <a id="more"></a>
-<h3 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1. Introduction"></a>1. Introduction</h3><p>If you’ve read or taken the famous machine learning open course CS229 taught by Andrew Ng, and I ask you what’s first algorithm that looks more complicated than the previous one, I bet you will say Support Vector Machines (SVM) since there are lots of mathematics / algebra in steps. In this post, I will try to make SVM more intuitive and understandable.</p>
-<p>Similar with the Logistic Regression we discussed before, SVM is also an algorithm that try to fit a decision boundary to separate the data: <strong>define the parameter and loss function, and use optimization algorithm to minimize the loss, the result would be a decision boundary specified by the parameters</strong>.</p>
+<h3 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1. Introduction"></a>1. Introduction</h3><p>If you’ve read or taken the famous machine learning open course CS229 taught by Andrew Ng, and I ask you what’s first algorithm that looks more complicated than the previous one, I bet you will say Support Vector Machines (SVM) since there are lots of mathematics / algebra reasoning steps. In this post, I will try to make SVM more intuitive and understandable.</p>
+<p>Similar with the Logistic Regression we discussed before, SVM is also an algorithm that try to fit a decision boundary to separate the data (as a classifier): <strong>define the parameter and loss function, and use optimization algorithm to minimize the loss and learn the parameters, the result would be a decision boundary specified by the parameters</strong>.</p>
 <p>The extra point is classifying different classes as far as possible, i.e. we need to <strong>maximize the distance between the decision boundaries to each class, not just give correct predictions</strong>. Take binary classification as an example, our ideal decision boundary should locate at the middle of two classes, like the following figure</p>
 <p><img src="/images/decision-boundary.png" style="width: 850px; height: 450px"> </p>
 <p>As the figure shows, we will first find a closest pair of points between two classes, and place the decision boundary perpendicular to the connection line between these two points. In order to maximize the distance of decision boundary to each class, we should place the decision boundary at the middle point of the connection line. In this example, the maximum distance is \(d\), and we define it as <strong>margin</strong>. This classifier is known as <strong>Maximum Margin Classifier</strong>, it’s a special case of SVM. </p>
 <p>Looks nice, but what if the data is not linearly separable? In that case we are not able to conduct the above procedure. Don’t worry, we will back to this point later.</p>
-<h3 id="2-Mathematical-Basis"><a href="#2-Mathematical-Basis" class="headerlink" title="2. Mathematical Basis"></a>2. Mathematical Basis</h3><h4 id="2-1-Geometric-Interpretation"><a href="#2-1-Geometric-Interpretation" class="headerlink" title="2.1 Geometric Interpretation"></a>2.1 Geometric Interpretation</h4><p>First we need some geometric backgrounds. Usually we can specify the decision boundary using a norm vector \(\mathbf{v}\), and consider a data point \(\mathbf{x}\)</p>
+<h3 id="2-Mathematical-Basis"><a href="#2-Mathematical-Basis" class="headerlink" title="2. Mathematical Basis"></a>2. Mathematical Basis</h3><h4 id="2-1-Geometric-Interpretation"><a href="#2-1-Geometric-Interpretation" class="headerlink" title="2.1 Geometric Interpretation"></a>2.1 Geometric Interpretation</h4><p>First we need some geometric backgrounds. Usually we can specify the decision boundary, which is line or hyper plane, using a norm vector \(\mathbf{v}\), and consider a data point \(\mathbf{x}\)</p>
 <p><img src="/images/decision-boundary2.png" style="width: 850px; height: 450px"> </p>
 <p>from the figure we can get the following relation (law of cosine):</p>
 <p>\[<br>\cos{\theta} = \frac{\mathbf{v}^{\top}\mathbf{x}}{||\mathbf{v}||_{2}||\mathbf{x}||_{2}}<br>\]</p>
@@ -118,7 +118,7 @@
 <p>And we define the correct classification to be  \(y_{i}(\mathbf{v}^{\top}\mathbf{x}_{i} -c)\) to be greater than 1 rather than 0. This is useful in the later discussion, here you just need to know that we generate two parallel lines at both sides of the decision boundary. Therefore we will get the classification result like this,</p>
 <p><img src="/images/decision-boundary3.png" style="width: 850px; height: 450px"> </p>
 <p>The classifier we got is known as <strong>Maximum Margin Classifier</strong>. The length of the margin is the distance between the solid line (decision boundary) and the dashed line. The constraints here means the points cannot exceed the margin. And the points on the margin are called <strong>support vectors</strong>.</p>
-<h4 id="2-3-Parameters-Estimation-by-Optimizations-with-Constraints"><a href="#2-3-Parameters-Estimation-by-Optimizations-with-Constraints" class="headerlink" title="2.3 Parameters Estimation by Optimizations with Constraints"></a>2.3 Parameters Estimation by Optimizations with Constraints</h4><p>Solving this optimization problem is not easy since the constraints are functions. Using <strong>Lagrange multipliers</strong> we can rewrite optimization problem like this</p>
+<h4 id="2-3-Parameters-Estimation-by-Optimizations-with-Constraints"><a href="#2-3-Parameters-Estimation-by-Optimizations-with-Constraints" class="headerlink" title="2.3 Parameters Estimation by Optimizations with Constraints"></a>2.3 Parameters Estimation by Optimizations with Constraints</h4><p>Solving this optimization problem is not easy since the constraints are functions. Using <strong>Lagrange multipliers</strong> we can rewrite optimization problem:</p>
 <p>\[<br>\min_{\mathbf{v}, c} ~\ell = ||\mathbf{v}||_{2} - \sum^{n}_{i=1}\alpha_{i}[y_{i}(\mathbf{v}^{\top}\mathbf{x}_{i} -c) - 1]<br>\]</p>
 <p>take the derivatives respect to \(\mathbf{v}\) and \(c\) we can get</p>
 <p>\[<br>\begin{aligned}<br>\frac{\partial\ell}{d\mathbf{v}} = \mathbf{v} - \sum^{n}_{i=1}\alpha_{i}y_{i}\mathbf{x}_{i}=0&amp;~\rightarrow \mathbf{v}=\sum^{n}_{i=1}\alpha_{i}y_{i}\mathbf{x}_{i} \\<br>\frac{\partial\ell}{d c} = -\sum^{n}_{i=1}\alpha_{i}y_{i}=0&amp;~\rightarrow \sum^{n}_{i=1}\alpha_{i}y_{i}=0<br>\end{aligned}<br>\]</p>
@@ -142,7 +142,7 @@
 <li>Convex Optimization</li>
 </ul>
 <h3 id="5-References"><a href="#5-References" class="headerlink" title="5. References"></a>5. References</h3><ul>
-<li><a href="http://cs231n.github.io/linear-classify/" target="_blank" rel="external">http://cs231n.github.io/linear-classify/</a></li>
+<li>Linear Classification, CS231n Standford University lecture notes. <a href="http://cs231n.github.io/linear-classify/" target="_blank" rel="external">http://cs231n.github.io/linear-classify/</a></li>
 </ul>
 
       
@@ -154,20 +154,13 @@
     <div class="article-meta pull-left">
 
     
-      
-
-    <span class="post-categories">
-      <i class="icon-categories"></i>
-        <a href="/categories/Machine-Learning/">Machine Learning</a>
-    </span>
-    
 
     
     
 
     <span class="post-tags">
       <i class="icon-tags"></i>
-        <a href="/tags/Classification/">Classification</a><a href="/tags/SVM/">SVM</a>
+        <a href="/tags/Machine-Learning/">Machine Learning</a><a href="/tags/Classification/">Classification</a><a href="/tags/SVM/">SVM</a>
     </span>
     
 
