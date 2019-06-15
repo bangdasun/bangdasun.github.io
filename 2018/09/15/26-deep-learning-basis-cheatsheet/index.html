@@ -1,0 +1,296 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Deep Learning Basis &amp; Cheatsheet | Bangda Sun | Practice makes perfect</title>
+
+  
+  <meta name="author" content="Bangda">
+  
+
+  
+  <meta name="description" content="Play with data">
+  
+
+  
+  
+  <meta name="keywords" content="Machine Learning,Deep Learning">
+  
+
+  <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <meta property="og:title" content="Deep Learning Basis &amp; Cheatsheet"/>
+
+  <meta property="og:site_name" content="Bangda Sun"/>
+
+  
+  <meta property="og:image" content="/favicon.ico"/>
+  
+
+  <link href="/favicon.ico" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Bangda Sun" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    jax: ["input/TeX","output/HTML-CSS"],
+    extensions: ["tex2jax.js","Safe.js"]
+  });
+  </script>
+<script type="text/javascript" async="async"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_CHTML,Safe">
+</script>
+</script>
+</head>
+
+
+<body>
+<div class="blog">
+  <div class="content">
+
+    <header>
+  <div class="site-branding">
+    <h1 class="site-title">
+      <a href="/">Bangda Sun</a>
+    </h1>
+    <p class="site-description">Practice makes perfect</p>
+  </div>
+  <nav class="site-navigation">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/tags">Tags</a></li>
+      
+    </ul>
+  </nav>
+</header>
+
+    <main class="site-main posts-loop">
+    <article>
+
+  
+    
+    <h3 class="article-title"><span>Deep Learning Basis &amp; Cheatsheet</span></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2018/09/15/26-deep-learning-basis-cheatsheet/" rel="bookmark">
+        <time class="entry-date published" datetime="2018-09-15T15:14:16.000Z">
+          2018-09-15
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <p>Deep Learning Basic Cheatsheet</p>
+<a id="more"></a>
+<p>As we all know, deep learning - neural networks are regarded as black boxes because of the complexity. And it usually takes long time to tune the model. So here I’d like to briefly summarize some basic stuff that necessary for playing with neural networks. I think Andrew Ng’s course on coursera is a nice choice if you don’t have too much experience but want to start. Therefore some of the materials are from that course series. Here is the <a href="https://www.coursera.org/specializations/deep-learning" target="_blank" rel="external">link</a>.</p>
+<h3 id="1-Notations-and-Terminology"><a href="#1-Notations-and-Terminology" class="headerlink" title="1. Notations and Terminology"></a>1. Notations and Terminology</h3><ul>
+<li>Components</li>
+</ul>
+<p>No matter what kind of neural networks, all of them have <strong>input layer</strong>, <strong>hidden layers</strong> and <strong>output layer</strong>. Each layer contains a few <strong>nodes</strong>, or called <strong>units</strong>. A general form to represent the relationship between the input and output of \(i\)th layer is like this</p>
+<p>\[<br>Z^{[i]} = W^{[i]}Z^{[i-1]} + b^{[i]},<br>\]</p>
+<p>where \(Z^{[i]}\) is the output (a vector) of \(i\)th layer (also the input of \((i+1)\)th layer), we can denote the input layer as 0th layer, then \(Z^{[0]}\) is just \(X\). The shape of the \(X\) is \(m\times p\) with \(m\) observations and \(p\) features; \(W^{[i]}\) is the weights of the connections between \((i-1)\)th layer and \(i\)th layer with shape \(n_{i-1}\times n_{i}\), \(n_{i}\) is the number of units in \(i\)th layer, \(b^{[i]}\) is the bias term.</p>
+<ul>
+<li>Activation functions</li>
+</ul>
+<p>Activation function is a function \(g\) to be applied on the output of each layer, then do a simple change we have</p>
+<p>\[<br>A^{[i]} = g\left(W^{[i]}Z^{[i-1]} + b^{[i]}\right).<br>\]</p>
+<p>Common activation functions include: <strong>sigmoid</strong>, <strong>tanh</strong>, <strong>ReLU (rectified linear unit)</strong>, <strong>Leaky ReLU</strong>.</p>
+<ul>
+<li>Loss functions</li>
+</ul>
+<p>Loss function \(L(\hat{y}, y)\) measure how good the prediction is, the lower the better. For regression, the common loss functions are <strong>MSE (mean squared error) loss</strong>, <strong>Huber loss</strong>; for classification, the common loss functions are <strong>Log loss (cross entropy)</strong>, <strong>Hinge loss</strong>. More loss functions could be find <a href="https://ml-cheatsheet.readthedocs.io/en/latest/loss_functions.html" target="_blank" rel="external">here</a>.</p>
+<ul>
+<li>Forward-propagation</li>
+</ul>
+<p>The process that propagate the inputs forward through the network to get outputs (predictions), loss function could be evaluated after the outputs are generated. For example we have a neural network with one hidden layer, a forward-propagation process includes</p>
+<p>\[<br>\begin{aligned}<br>Z^{[1]} &amp;= W^{[1]}X + b^{[1]}, \\<br>\hat{y} &amp;= A^{[1]} = g\left(Z^{[1]}\right). \\<br>\end{aligned}<br>\]</p>
+<ul>
+<li>Back-propagation</li>
+</ul>
+<p>The process that propagate from the output to input, \(W\) and \(b\) are updated by calculate the gradients during the propagation. For example we have a neural network with one hidden layer, the gradients of \(W\) and \(b\) are given by</p>
+<p>\[<br>\begin{aligned}<br>\frac{\partial L(\hat{y}, y)}{\partial W^{[1]}} = \frac{\partial L(\hat{y}, y)}{\partial A^{[1]}} \frac{\partial A^{[1]}}{\partial Z^{[1]}} \frac{\partial Z^{[1]}}{\partial W^{[1]}},\\<br>\frac{\partial L(\hat{y}, y)}{\partial b^{[1]}} = \frac{\partial L(\hat{y}, y)}{\partial A^{[1]}} \frac{\partial A^{[1]}}{\partial Z^{[1]}} \frac{\partial Z^{[1]}}{\partial b^{[1]}}.<br>\end{aligned}<br>\]</p>
+<h3 id="2-Optimization"><a href="#2-Optimization" class="headerlink" title="2. Optimization"></a>2. Optimization</h3><ul>
+<li>Mini-batch gradient descent</li>
+</ul>
+<p>In regular gradient descent, the update of weights are given by</p>
+<p>\[<br>\begin{aligned}<br>W\leftarrow~&amp; W -\alpha\frac{\partial L(\hat{y}, y)}{\partial W},\\<br>b\leftarrow~&amp; b -\alpha\frac{\partial L(\hat{y}, y)}{\partial b},\\<br>\end{aligned}<br>\]</p>
+<p>where \(\alpha\) is the <strong>learning rate</strong>.<br>It takes a long time to train a neural network if we have a large training data set (usually larger than hundred thousand), specifically, doing backpropagation on the whole training set. Therefore one way to speed up the training is divide the data into equal size subgroups and train the model on those subgroups one by one until the whole training set is used. The size of each group is called <strong>batch size</strong>. When batch size is \(m\), the whole training set is used. A single pass through the training set is called one <strong>epoch</strong>. By plotting the number of iteration (epoch) and loss, the loss will not keep decreasing in each step, but the overall trend is decreasing, mini-batch training will introduce randomness.</p>
+<ul>
+<li>Gradient descent with Momentum</li>
+</ul>
+<p>The update of weights is given by</p>
+<p>\[<br>\begin{aligned}<br>V_{W}\leftarrow~&amp; \beta V_{W} - (1 - \beta)\frac{\partial L(\hat{y}, y)}{\partial W},\\<br>V_{b}\leftarrow~&amp; \beta V_{b} - (1 - \beta)\frac{\partial L(\hat{y}, y)}{\partial b},\\<br>W\leftarrow~&amp; W -\alpha V_{W},\\<br>b\leftarrow~&amp; b -\alpha V_{b},\\<br>\end{aligned}<br>\]</p>
+<p>where a <strong>exponential weighted average</strong> is applied on gradients, \(V_{w}\) and \(V_{d}\) are all initialized as 0.</p>
+<ul>
+<li>RMSprop</li>
+</ul>
+<p>Root mean squared prop also revise the update equations,</p>
+<p>\[<br>\begin{aligned}<br>S_{W}\leftarrow~&amp; \beta S_{W} - (1 - \beta)\left(\frac{\partial L(\hat{y}, y)}{\partial W}\right)^2,\\<br>S_{b}\leftarrow~&amp; \beta S_{b} - (1 - \beta)\left(\frac{\partial L(\hat{y}, y)}{\partial b}\right)^2,\\<br>W\leftarrow~&amp; W -\alpha \frac{\frac{\partial L(\hat{y}, y)}{\partial W}}{\sqrt{S_{W}}},\\<br>b\leftarrow~&amp; b -\alpha \frac{\frac{\partial L(\hat{y}, y)}{\partial b}}{\sqrt{S_{b}}},\\<br>\end{aligned}<br>\]</p>
+<p>where \(S_{w}\) and \(S_{d}\) are all initialized as 0.</p>
+<ul>
+<li>Adam</li>
+</ul>
+<p>Adaptive moment estimation is the combination of momentum and RMSprop, the update of equations are now</p>
+<p>\[<br>\begin{aligned}<br>W\leftarrow~&amp; W - \alpha\frac{V_{W}}{\sqrt{S_{W}} + \epsilon},\\<br>b\leftarrow~&amp; b - \alpha\frac{V_{b}}{\sqrt{S_{b}} + \epsilon},<br>\end{aligned}<br>\]</p>
+<p>the exponential weighted average weights are \(\beta_{1}\) and \(\beta_{2}\) respectively for momentum and RMSprop.</p>
+<h3 id="3-Regularization"><a href="#3-Regularization" class="headerlink" title="3. Regularization"></a>3. Regularization</h3><ul>
+<li>L1-norm and L2-norm</li>
+</ul>
+<p>L1-norm and L2-norm corresponding to add squared term and absolute value term into the loss function:</p>
+<p>\[<br>\begin{aligned}<br>\text{(L1-norm): }&amp; + \lambda\sum^{L}_{i=1}\sum^{n_{l}}_{j=1} |W_{ij}| \\<br>\text{(L2-norm): }&amp; + \lambda\sum^{L}_{i=1}\sum^{n_{l}}_{j=1} W_{ij}^2<br>\end{aligned}<br>\]</p>
+<p>L2-norm is more likely to be used in my practice. Large weights will have heavy penalty, therefore this regularization will lead to smaller weights. Also note we cannot get explicit gradients for L1-norm.</p>
+<ul>
+<li>Dropout</li>
+</ul>
+<p>Eliminate some connections between layers and layers randomly (\(W_{ij}=0\)), intuitively some connections are “dropped”. This is implemented by set a <strong>drop rate</strong> \(p\) or <strong>keep rate</strong> \((1-p)\). Usually we will update the weights by run through the whole training set multiple times (multiple epochs), each time the drop out connections are different, and the output of the layer will be updated by dividing the keep rate, this make sure the expectation of the output remains same - since some weights are dropped, the expectation of output is lower. This is also called <strong>inverted dropout</strong>. In that way, for testing data, no dropout will be applied.</p>
+<ul>
+<li>Data augmentation</li>
+</ul>
+<p>This means add more training data to the model - not collect more data. For example, for image data, we can do some simple operations including flip, rotation, scaling, add noise to images, and labels are not changed; for text data, we can translate the text to other language and translate back - some form might be changed but the labels are also not changed.</p>
+<ul>
+<li>Early stopping</li>
+</ul>
+<p>This requires to split a develop / validation / set out of training data, only train the model on the rest of the data, and evaluate the model on the hold-out data set and monitor the performance for each iteration. The training should be stopped if the loss on the hold-out set are not decreasing for a certain number of rounds.</p>
+<ul>
+<li>Batch Normalization</li>
+</ul>
+<p>Seriously this is not regarded as regularization, but it could be viewed to have regularization effect. BN denotes to normalize the intermediate value of the network, give the output of \(i\)th layer \(Z^{[i]}\), we calculate</p>
+<p>\[<br>\mu = \frac{1}{m}\sum^{m}_{j=1}Z^{[i]}_{j},~ \sigma^{2} = \frac{1}{m}\sum^{m}_{j=1} \left(Z^{[i]}_{j} - \mu\right)^{2}<br>\]</p>
+<p>then normalize \(Z^{[i]}\)</p>
+<p>\[<br>Z^{[i]}_{\text{norm}} = \gamma\frac{Z^{[i]} - \mu}{\sqrt{\sigma^{2} + \epsilon}} + \beta,<br>\]</p>
+<p>where \(\epsilon\) is a very small number to avoid dividing 0 issue.</p>
+<p>Usually this normalization step is done before applying the activation function. This could make later layers’ weights be more robust to the changes of the weights in the earlier layers. If we use mini-batch training, this also add some noise to the data since it is normalized by “local mean” and “local standard deviation”, that’s why it has some regularization effect.</p>
+<h3 id="4-Other-Terminology"><a href="#4-Other-Terminology" class="headerlink" title="4. Other Terminology"></a>4. Other Terminology</h3><ul>
+<li>Vanishing / Exploding gradients</li>
+</ul>
+<p>This is usually happened in deep neural networks, intuitively a number larger than 1 will be very large by taking a high power; a number smaller than 1 will be very small by taking a high power. This will make the training very difficult. A partial solution is to initialize the weights very carefully.</p>
+<ul>
+<li>Hyper-parameters</li>
+</ul>
+<p>Hyper-parameters denote to parameters that will not change during the training process. In summary, the hyper-parameters we go through from the above section including:</p>
+<ol>
+<li>structure: number of layers, number of units in layers, activation functions;</li>
+<li>optimization algorithms: learning rate, learning decay type, batch size, number of training epochs, exponential weighted average weights in momentum/RMSprop/Adam;</li>
+<li>regularization: penalty term of L1-norm and L2-norm, dropout rate, adding batch normalization</li>
+</ol>
+<p>This is general case, when we have different type of networks we will have more options. </p>
+<h3 id="5-References"><a href="#5-References" class="headerlink" title="5. References"></a>5. References</h3><ul>
+<li>Coursera Notes, <ul>
+<li><a href="https://www.coursera.org/specializations/deep-learning" target="_blank" rel="external">https://www.coursera.org/specializations/deep-learning</a></li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+      
+
+    <span class="post-categories">
+      <i class="icon-categories"></i>
+        <a href="/categories/Machine-Learning/">Machine Learning</a>, <a href="/categories/Machine-Learning/Deep-Learning/">Deep Learning</a>
+    </span>
+    
+
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/Machine-Learning/">Machine Learning</a><a href="/tags/Deep-Learning/">Deep Learning</a>
+    </span>
+    
+
+    </div>
+
+    
+  </div>
+</article>
+
+  
+<section id="comment">
+  
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+  
+</section>
+
+
+
+    </main>
+
+    <footer class="site-footer">
+  <p class="site-info">
+    Proudly powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and
+    Theme by <a href="https://github.com/CodeDaraW/Hacker" target="_blank">Hacker</a>
+    </br>
+    
+    &copy; 2019 Bangda
+    
+	
+	
+	
+  </p>
+  
+  <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+  <span id="busuanzi_container_site_pv">
+    Total viewer <span id="busuanzi_value_site_pv"></span>; 
+  </span>
+  
+  <span id="busuanzi_container_site_uv">
+    Total visitor <span id="busuanzi_value_site_uv"></span>
+  </span>
+	
+	
+  <div id="disqus_thread"></div>
+  <script>
+
+  /**
+   *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+   *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+   */
+   
+  var disqus_config = function () {
+	this.page.url = 'https://bangdasun.github.io{{ page.url }}';  // Replace PAGE_URL with your page's canonical URL variable
+	this.page.identifier = '{{ page.id }}'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+  };
+  
+  (function() { // DON'T EDIT BELOW THIS LINE
+  var d = document, s = d.createElement('script');
+  s.src = 'https://bangdasun-github-io.disqus.com/embed.js';
+  s.setAttribute('data-timestamp', +new Date());
+  (d.head || d.body).appendChild(s);
+  })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  
+  <script id="dsq-count-scr" src="//bangdasun-github-io.disqus.com/count.js" async></script>
+</footer>
+
+
+    
+  </div>
+</div>
+</body>
+</html>

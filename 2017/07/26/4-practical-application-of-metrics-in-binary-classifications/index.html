@@ -1,0 +1,222 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Practical Application of Metrics in Binary Classifications | Bangda Sun | Practice makes perfect</title>
+
+  
+  <meta name="author" content="Bangda">
+  
+
+  
+  <meta name="description" content="Play with data">
+  
+
+  
+  
+  <meta name="keywords" content="Machine Learning,Model Evaluation,Metrics">
+  
+
+  <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <meta property="og:title" content="Practical Application of Metrics in Binary Classifications"/>
+
+  <meta property="og:site_name" content="Bangda Sun"/>
+
+  
+  <meta property="og:image" content="/favicon.ico"/>
+  
+
+  <link href="/favicon.ico" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Bangda Sun" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    jax: ["input/TeX","output/HTML-CSS"],
+    extensions: ["tex2jax.js","Safe.js"]
+  });
+  </script>
+<script type="text/javascript" async="async"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_CHTML,Safe">
+</script>
+</script>
+</head>
+
+
+<body>
+<div class="blog">
+  <div class="content">
+
+    <header>
+  <div class="site-branding">
+    <h1 class="site-title">
+      <a href="/">Bangda Sun</a>
+    </h1>
+    <p class="site-description">Practice makes perfect</p>
+  </div>
+  <nav class="site-navigation">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/tags">Tags</a></li>
+      
+    </ul>
+  </nav>
+</header>
+
+    <main class="site-main posts-loop">
+    <article>
+
+  
+    
+    <h3 class="article-title"><span>Practical Application of Metrics in Binary Classifications</span></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2017/07/26/4-practical-application-of-metrics-in-binary-classifications/" rel="bookmark">
+        <time class="entry-date published" datetime="2017-07-27T00:47:19.000Z">
+          2017-07-26
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <p>How to deal with metrics in binary classifications</p>
+<a id="more"></a>
+<h3 id="1-Different-Types-of-Error"><a href="#1-Different-Types-of-Error" class="headerlink" title="1. Different Types of Error"></a>1. Different Types of Error</h3><p>This time we will discuss more details about the application of metrics: <strong>TPR</strong> (<strong>Recall</strong>), <strong>FPR</strong>, <strong>Precision</strong>, <strong>PRC</strong>, <strong>ROC</strong>/<strong>AUC</strong> and <strong>F1-score</strong>.</p>
+<p>We will have different requirements when we facing different problems. Actually it depends on our tolerance of different types of error. Therefore we have two scenarios:</p>
+<ul>
+<li>We hope less TPR </li>
+</ul>
+<blockquote>
+<p>From the definition of TPR, we see that this is the proportion of “correctly classified as positive” and total actual positive. Since total actual positive is a constant, this means we don’t care much about “correctly classified as positive”. </p>
+<p>For instance, in spam classification we want predict whether it’s a spam. Define “spam” as positive and “email” as negative. Although we want filter out the spam, we won’t want the email to be filtered out. We can tolerate more spam to be classified as email (<strong>false negative</strong>), but if emails are classified as spam (false positive), we might miss important events. This case we hope high precision. </p>
+</blockquote>
+<ul>
+<li>We hope high TPR</li>
+</ul>
+<blockquote>
+<p>We hope high Recall in this case and don’t care too much about the precision.</p>
+<p>For instance, in flood prediction we will make alarm if we expect there will be a flood. Define “flood” as positive. We hope that all of the flood can be detected therefore we have high tolerance of <strong>false positive</strong>. Since typically the losses made by flood is always higher than cost of extra precaution. </p>
+</blockquote>
+<p>As a result, we can see that <strong>Accuracy</strong> is not always the goal we want to achieve, sometimes we may focus on reducing certain types of error rather than total error. </p>
+<h3 id="2-ROC-and-PRC"><a href="#2-ROC-and-PRC" class="headerlink" title="2. ROC and PRC"></a>2. ROC and PRC</h3><p>Unfortunately I cannot summarize how to select algorithms from ROC and PRC (at least for now). We need discuss that with certain examples. One thing is clear that ROC is draw from a set of pairs of FPR and TPR with different threshold (we can always get the probability of data to be one of the classes).</p>
+<p>In addition, there are numerous imbalanced classification problems, the situations are more complex. For instance, it is possible that the algorithm performs terrible on PRC but looks perfect on ROC. Therefore don’t forget to check PRC after plotting ROC, especially for imbalanced data set. More detailed research can be found <a href="http://mark.goadrich.com/articles/davisgoadrichcamera2.pdf" target="_blank" rel="external">here</a>.</p>
+<p>However AUC could provide direct support to us since it is a straightforward way to measure the performance of algorithm.</p>
+<h3 id="3-Summary"><a href="#3-Summary" class="headerlink" title="3. Summary"></a>3. Summary</h3><p>There are still more issues need to be considered in real world applications since we need to incorporate more factors. Thus it’s always a good habit that don’t always rely on one metrics.</p>
+<h3 id="4-Reference"><a href="#4-Reference" class="headerlink" title="4. Reference"></a>4. Reference</h3><ul>
+<li>Jesse Davis, Mark Goadrich, The Relationship Betwen Precision-Recall and ROC Curves</li>
+</ul>
+
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+      
+
+    <span class="post-categories">
+      <i class="icon-categories"></i>
+        <a href="/categories/Machine-Learning/">Machine Learning</a>
+    </span>
+    
+
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/Machine-Learning/">Machine Learning</a><a href="/tags/Model-Evaluation/">Model Evaluation</a><a href="/tags/Metrics/">Metrics</a>
+    </span>
+    
+
+    </div>
+
+    
+  </div>
+</article>
+
+  
+<section id="comment">
+  
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+  
+</section>
+
+
+
+    </main>
+
+    <footer class="site-footer">
+  <p class="site-info">
+    Proudly powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and
+    Theme by <a href="https://github.com/CodeDaraW/Hacker" target="_blank">Hacker</a>
+    </br>
+    
+    &copy; 2019 Bangda
+    
+	
+	
+	
+  </p>
+  
+  <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+  <span id="busuanzi_container_site_pv">
+    Total viewer <span id="busuanzi_value_site_pv"></span>; 
+  </span>
+  
+  <span id="busuanzi_container_site_uv">
+    Total visitor <span id="busuanzi_value_site_uv"></span>
+  </span>
+	
+	
+  <div id="disqus_thread"></div>
+  <script>
+
+  /**
+   *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+   *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+   */
+   
+  var disqus_config = function () {
+	this.page.url = 'https://bangdasun.github.io{{ page.url }}';  // Replace PAGE_URL with your page's canonical URL variable
+	this.page.identifier = '{{ page.id }}'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+  };
+  
+  (function() { // DON'T EDIT BELOW THIS LINE
+  var d = document, s = d.createElement('script');
+  s.src = 'https://bangdasun-github-io.disqus.com/embed.js';
+  s.setAttribute('data-timestamp', +new Date());
+  (d.head || d.body).appendChild(s);
+  })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  
+  <script id="dsq-count-scr" src="//bangdasun-github-io.disqus.com/count.js" async></script>
+</footer>
+
+
+    
+  </div>
+</div>
+</body>
+</html>
