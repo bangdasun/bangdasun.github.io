@@ -15,7 +15,7 @@
 
   
   
-  <meta name="keywords" content="Linguistic,Text Processing">
+  <meta name="keywords" content="NLP,Linguistic,Text Processing">
   
 
   <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
@@ -127,7 +127,7 @@
 <h4 id="3-2-Case-folding"><a href="#3-2-Case-folding" class="headerlink" title="3.2 Case folding"></a>3.2 Case folding</h4><p>Reduce all letters to lower case is a common method in text normalization. But sometimes case is also helpful, like words “US”, “MT”.</p>
 <h4 id="3-3-Lemmatization"><a href="#3-3-Lemmatization" class="headerlink" title="3.3 Lemmatization"></a>3.3 Lemmatization</h4><p>Lemmatization means reduce inflections or variant forms to base form: “am”, “are”, “is” are reduced to “be”; “cat”, “cats”, “cat’s”, “cats’” are reduced to “cat”. In this way we have to find correct dictionary headword form to make sure we don’t make spell errors.</p>
 <h4 id="3-4-Stemming"><a href="#3-4-Stemming" class="headerlink" title="3.4 Stemming"></a>3.4 Stemming</h4><p>Morphemes consists of <strong>stems</strong> (core meaning-bearing units) and <strong>affixes</strong> (bits and pieces that adhere to stems). </p>
-<p>Stemming means reduce terms to their stems in information retrieval, it is crude chopping of affixes. For example “automates”, “automatic” and “automation” are all reduced to “automat”. You can see the difference with lemmatization: “automat” is not a element in vocabulary.</p>
+<p>Stemming means reduce terms to their stems in information retrieval, it is crude chopping of affixes. For example “automates”, “automatic” and “automation” are all reduced to “automat”. You can see the difference with lemmatization: “automat” is not a element in vocabulary. That says, <strong>stemming a word or sentence may result in words that are not actual words</strong>.</p>
 <p>There are many stemming algorithms, the most common one is <strong>Porter’s algorithm</strong>. It’s consists of some rules for reducing: <code>sess -&gt; ss</code>, <code>ies -&gt; i</code>, <code>(v)ing -&gt; (v)</code>, <code>(v)ed -&gt; (v)</code>; <code>ational -&gt; ate</code>, <code>izer -&gt; ize</code>, <code>ator -&gt; ate</code> etc. We can observe that these rules are based on linguistics.</p>
 <h3 id="4-Sentence-Segmentation"><a href="#4-Sentence-Segmentation" class="headerlink" title="4. Sentence Segmentation"></a>4. Sentence Segmentation</h3><p>In most case we are not only facing with words, we facing documents such as comments, reviews and articles. Therefore how to segment sentence is also one important aspect.</p>
 <p>Punctuation is one aspect we should consider in sentence segmentation. <code>!</code> and <code>?</code> are sometimes useful for indicating sentiments but <code>.</code> is quite ambiguous: it could be the end of the sentence, it could also be abbreviations like “Dr.”, “Inc.” and numbers like “0.5”, “4.3%”. Sometimes we need use some specific rules to determine this and use regular expressions for implementation.</p>
@@ -154,7 +154,7 @@
 
     <span class="post-tags">
       <i class="icon-tags"></i>
-        <a href="/tags/Linguistic/">Linguistic</a><a href="/tags/Text-Processing/">Text Processing</a>
+        <a href="/tags/NLP/">NLP</a><a href="/tags/Linguistic/">Linguistic</a><a href="/tags/Text-Processing/">Text Processing</a>
     </span>
     
 
