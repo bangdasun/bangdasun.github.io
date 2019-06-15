@@ -1,0 +1,344 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Deep Learning for Anomaly Detection | Bangda Sun | Practice makes perfect</title>
+
+  
+  <meta name="author" content="Bangda">
+  
+
+  
+  <meta name="description" content="Play with data">
+  
+
+  
+  
+  <meta name="keywords" content="Machine Learning,Deep Learning,Anomaly Detection">
+  
+
+  <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <meta property="og:title" content="Deep Learning for Anomaly Detection"/>
+
+  <meta property="og:site_name" content="Bangda Sun"/>
+
+  
+  <meta property="og:image" content="/favicon.ico"/>
+  
+
+  <link href="/favicon.ico" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Bangda Sun" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    jax: ["input/TeX","output/HTML-CSS"],
+    extensions: ["tex2jax.js","Safe.js"]
+  });
+  </script>
+<script type="text/javascript" async="async"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_CHTML,Safe">
+</script>
+</script>
+</head>
+
+
+<body>
+<div class="blog">
+  <div class="content">
+
+    <header>
+  <div class="site-branding">
+    <h1 class="site-title">
+      <a href="/">Bangda Sun</a>
+    </h1>
+    <p class="site-description">Practice makes perfect</p>
+  </div>
+  <nav class="site-navigation">
+    <ul>
+      
+        <li><a href="/">主页</a></li>
+      
+        <li><a href="/tags">标签</a></li>
+      
+    </ul>
+  </nav>
+</header>
+
+    <main class="site-main posts-loop">
+    <article>
+
+  
+    
+    <h3 class="article-title"><span>Deep Learning for Anomaly Detection</span></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2019/03/09/34-deep-learning-for-anomaly-detection/" rel="bookmark">
+        <time class="entry-date published" datetime="2019-03-09T16:46:02.000Z">
+          2019-03-09
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <p>[Paper reading] Deep Learning for Anomaly Detection: A Survey</p>
+<a id="more"></a>
+<p>This <a href="https://arxiv.org/abs/1901.03407" target="_blank" rel="external">paper</a> was the first paper posted in <strong>Data Science Read Club</strong> of our company, since many teams have works relate to anomaly detection, includes classical ML and deep learning, therefore an overview of this area is necessary.</p>
+<h3 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1. Introduction"></a>1. Introduction</h3><h4 id="1-2-What-are-Anomalies"><a href="#1-2-What-are-Anomalies" class="headerlink" title="1.2 What are Anomalies?"></a>1.2 What are Anomalies?</h4><p><strong>Anomalies</strong>: instances stand out as being dissimilar to others. Anomalies at sometimes are also called <strong>abnormalities</strong>, <strong>deviants</strong>, <strong>outliers</strong>. Anomalies arise due to multiple reasons: malicious actions, system failures, intentional fraud, etc.</p>
+<h4 id="1-3-What-are-Novelties"><a href="#1-3-What-are-Novelties" class="headerlink" title="1.3 What are Novelties?"></a>1.3 What are Novelties?</h4><p>Novelty detection is different from anomaly detection. It is the identification of novel (new) or unobserved patterns in the data, therefore novelties might not be anomalies. One of the examples could be: first time you see a white tiger while you only see normal tigers before, but white tiger is still classified as one type of tiger.</p>
+<h4 id="1-4-Different-Aspects-of-Deep-Learning"><a href="#1-4-Different-Aspects-of-Deep-Learning" class="headerlink" title="1.4 Different Aspects of Deep Learning"></a>1.4 Different Aspects of Deep Learning</h4><p>For anomaly detection task, aspects of deep learning could be followings:</p>
+<ul>
+<li>Nature of data<ul>
+<li>sequential (time series, text) </li>
+<li>non-sequential (image)</li>
+</ul>
+</li>
+<li>Based on availabilities of labels <ul>
+<li>supervised</li>
+<li>semi-supervised</li>
+<li>unsupervised</li>
+</ul>
+</li>
+<li><p>Based on training objects</p>
+<ul>
+<li>deep hybrid models: use NN as feature extraction (e.g. <strong>AutoEncoders</strong>), features learned within the hidden representations of AutoEncoders are input to traditional anomaly detection algorithm.</li>
+<li>one-class NN: extract and learn the representation of data to create a tight envelope around normal data, inspired by algorithms like <strong>OC-SVM</strong>.</li>
+</ul>
+</li>
+<li><p>Type of anomaly</p>
+<ul>
+<li>point anomalies: represents an irregularity or deviation.</li>
+<li>contextual anomalies: means conditional anomalies, data is consider as contextual anomalies in some specific context.</li>
+<li>collective (group) anomalies: single data in the group is normal but the group could be considered as anomaly compared with other groups.</li>
+</ul>
+</li>
+<li>Output of model<ul>
+<li>anomaly score: could be normalized as probability</li>
+<li>labels</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-Application-of-Deep-Anomaly-Detection"><a href="#2-Application-of-Deep-Anomaly-Detection" class="headerlink" title="2. Application of Deep Anomaly Detection"></a>2. Application of Deep Anomaly Detection</h3><p>I won’t list too much details here, main areas include:</p>
+<ul>
+<li>Intrusion detection</li>
+<li>Fraud detection</li>
+<li>Malware detection</li>
+<li>Medical anomaly detection</li>
+<li>Social networks</li>
+<li>Log anomaly detection</li>
+<li>IoT big data anomaly detection</li>
+<li>Industrial anomaly detection</li>
+<li>Time series anomaly detection</li>
+<li>Video surveillance </li>
+</ul>
+<h3 id="3-Deep-Anomaly-Detection-Models"><a href="#3-Deep-Anomaly-Detection-Models" class="headerlink" title="3. Deep Anomaly Detection Models"></a>3. Deep Anomaly Detection Models</h3><h4 id="3-1-Supervised-Deep-Anomaly-Detection"><a href="#3-1-Supervised-Deep-Anomaly-Detection" class="headerlink" title="3.1 Supervised Deep Anomaly Detection"></a>3.1 Supervised Deep Anomaly Detection</h4><p><strong>Assumptions</strong>: depend on given labels, requires large number of training data.</p>
+<p><strong>Pros</strong>:</p>
+<ul>
+<li>more accurate than semi-supervised and unsupervised models</li>
+<li>test (predict) stage is fast using trained models</li>
+</ul>
+<p><strong>Cons</strong>:</p>
+<ul>
+<li>good label is not very easy to get</li>
+<li>fail to separate normal form anomalies if the feature space is highly complex and non-linear</li>
+</ul>
+<h4 id="3-2-Semi-supervised-Deep-Anomaly-Detection"><a href="#3-2-Semi-supervised-Deep-Anomaly-Detection" class="headerlink" title="3.2 Semi-supervised Deep Anomaly Detection"></a>3.2 Semi-supervised Deep Anomaly Detection</h4><p><strong>Assumptions</strong>: models are trained on one class label (normal data), the models learn discriminative boundary around the normal data. Therefore to flag anomalies:</p>
+<ul>
+<li>proximity and continuity: points which are close to each other both in input space and feature space are more like to share same label</li>
+<li>robust features are learned within hidden layers of deep neural network layers and retain the discriminative attributes</li>
+</ul>
+<p><strong>Pros</strong>:</p>
+<ul>
+<li>models like <strong>GAN</strong> trained in semi-supervised learning mode have shown great promise even with very few labeled data</li>
+<li>use of labeled data (one-class) can produce considerable performance improvement over unsupervised techniques</li>
+</ul>
+<p><strong>Cons</strong>:</p>
+<ul>
+<li>the hierarchical features extracted within hidden layers may not be representative of fewer anomalies hence are prone to over-fitting</li>
+</ul>
+<h4 id="3-3-Hybrid-Deep-Anomaly-Detection"><a href="#3-3-Hybrid-Deep-Anomaly-Detection" class="headerlink" title="3.3 Hybrid Deep Anomaly Detection"></a>3.3 Hybrid Deep Anomaly Detection</h4><p><strong>Assumptions</strong>: NN models are used as feature extractors to learn robust features. The hybrid models employ two steps learning:</p>
+<ul>
+<li>robust features are extracted within hidden layers</li>
+<li>build a robust anomaly detection model on features extracted</li>
+</ul>
+<p><strong>Pros</strong>:</p>
+<ul>
+<li>features extracted greatly reduce the “curse of dimensionality” especially in high dimensional domain</li>
+<li>more scalable and computationally efficient since the linear or non-linear kernel models operate on reduce input dimension</li>
+</ul>
+<p><strong>Cons</strong>:</p>
+<ul>
+<li>hybrid model is suboptimal because it is unable to influence representational learning within the hidden layers of feature extractor, since generic loss functions are used instead of customized one.</li>
+<li>deeper hybrid models tend to perform better which introduces computational expenditure</li>
+</ul>
+<h4 id="3-4-One-Class-Neural-Networks"><a href="#3-4-One-Class-Neural-Networks" class="headerlink" title="3.4 One-Class Neural Networks"></a>3.4 One-Class Neural Networks</h4><p><strong>Assumptions</strong>: </p>
+<ul>
+<li>OC-NN models extracts the common factors of variation within the data distribution within the hidden layers of deep neural network</li>
+<li>performs combined representation learning and produces anomaly score</li>
+<li>anomalies don’t contain common factors hence hidden layers fail to capture the representation of anomalies</li>
+</ul>
+<p><strong>Pros</strong>:</p>
+<ul>
+<li>OC-NN models jointly trains a deep neural network while optimizing a data-enclosing hypersphere or hyperplane in output space</li>
+<li>OC-NN propose an alternating minimization algorithm for learning the parameters of OC-NN</li>
+</ul>
+<p><strong>Cons</strong>:</p>
+<ul>
+<li>training time and model update time may be longer for high dimensional data</li>
+</ul>
+<p>Here actually I don’t see the main difference with <strong>semi-supervised</strong> models, since semi-supervised usually trained on one label data.</p>
+<h4 id="3-5-Unsupervised-Deep-Anomaly-Detection"><a href="#3-5-Unsupervised-Deep-Anomaly-Detection" class="headerlink" title="3.5 Unsupervised Deep Anomaly Detection"></a>3.5 Unsupervised Deep Anomaly Detection</h4><p><strong>Assumptions</strong>:</p>
+<ul>
+<li>the normal region in the feature space can be distinguished from anomaly region</li>
+<li>the majority data are normal</li>
+</ul>
+<p><strong>Pros</strong>:</p>
+<ul>
+<li>learns the inherent data characteristics to separate normal form anomalies</li>
+<li>cost effective techniques to find the anomalies since it doesn’t require labels</li>
+</ul>
+<p><strong>Cons</strong>:</p>
+<ul>
+<li>often it is difficult to learn commonalities within data in a complex and high dimensional space</li>
+<li>parameters are not easy to tune</li>
+<li>sensitive to noise, usually less accurate than supervised or semi-supervised models</li>
+</ul>
+<h4 id="3-6-Miscellaneous-Techniques"><a href="#3-6-Miscellaneous-Techniques" class="headerlink" title="3.6 Miscellaneous Techniques"></a>3.6 Miscellaneous Techniques</h4><ul>
+<li>Transfer Learning based</li>
+<li>Zero Shot Learning based</li>
+<li>Clustering based</li>
+<li>Deep Reinforcement Learning based</li>
+<li>Statistical Techniques based</li>
+</ul>
+<h3 id="4-Commonly-used-Neural-Network-Architectures"><a href="#4-Commonly-used-Neural-Network-Architectures" class="headerlink" title="4. Commonly used Neural Network Architectures"></a>4. Commonly used Neural Network Architectures</h3><p>For more details, check the reference papers listed there.</p>
+<ul>
+<li>Deep Neural Networks</li>
+<li>Spatial Temporal Networks</li>
+<li>Sum-Product Networks</li>
+<li>Word2Vec Models</li>
+<li>Generative Models</li>
+<li>Convolutional Neural Networks</li>
+<li>Sequence Models</li>
+<li>AutoEncoders</li>
+</ul>
+<h4 id="5-Summary"><a href="#5-Summary" class="headerlink" title="5. Summary"></a>5. Summary</h4><p>Summarize approaches in one figure(refer from paper):</p>
+<center><br>  <img src="/images/DAD-summary.PNG" style="width: 750px; height: 350px"> <br></center>
+
+
+
+
+
+
+
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+      
+
+    <span class="post-categories">
+      <i class="icon-categories"></i>
+        <a href="/categories/Machine-Learning/">Machine Learning</a>, <a href="/categories/Machine-Learning/Deep-Learning/">Deep Learning</a>, <a href="/categories/Machine-Learning/Deep-Learning/Anomaly-Detection/">Anomaly Detection</a>
+    </span>
+    
+
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/Machine-Learning/">Machine Learning</a><a href="/tags/Deep-Learning/">Deep Learning</a><a href="/tags/Anomaly-Detection/">Anomaly Detection</a>
+    </span>
+    
+
+    </div>
+
+    
+  </div>
+</article>
+
+  
+<section id="comment">
+  
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+  
+</section>
+
+
+
+    </main>
+
+    <footer class="site-footer">
+  <p class="site-info">
+    Proudly powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and
+    Theme by <a href="https://github.com/CodeDaraW/Hacker" target="_blank">Hacker</a>
+    </br>
+    
+    &copy; 2019 Bangda
+    
+	
+	
+	
+  </p>
+  
+  <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+  <span id="busuanzi_container_site_pv">
+    Total viewer <span id="busuanzi_value_site_pv"></span>; 
+  </span>
+  
+  <span id="busuanzi_container_site_uv">
+    Total visitor <span id="busuanzi_value_site_uv"></span>
+  </span>
+	
+	
+  <div id="disqus_thread"></div>
+  <script>
+
+  /**
+   *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+   *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+   */
+   
+  var disqus_config = function () {
+	this.page.url = 'https://bangdasun.github.io{{ page.url }}';  // Replace PAGE_URL with your page's canonical URL variable
+	this.page.identifier = '{{ page.id }}'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+  };
+  
+  (function() { // DON'T EDIT BELOW THIS LINE
+  var d = document, s = d.createElement('script');
+  s.src = 'https://bangdasun-github-io.disqus.com/embed.js';
+  s.setAttribute('data-timestamp', +new Date());
+  (d.head || d.body).appendChild(s);
+  })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  
+  <script id="dsq-count-scr" src="//bangdasun-github-io.disqus.com/count.js" async></script>
+</footer>
+
+
+    
+  </div>
+</div>
+</body>
+</html>

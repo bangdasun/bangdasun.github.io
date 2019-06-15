@@ -1,0 +1,259 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Data Visualization with ggplot2 (1) | Bangda Sun | Practice makes perfect</title>
+
+  
+  <meta name="author" content="Bangda">
+  
+
+  
+  <meta name="description" content="Play with data">
+  
+
+  
+  
+  <meta name="keywords" content="R,Data Visualization">
+  
+
+  <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <meta property="og:title" content="Data Visualization with ggplot2 (1)"/>
+
+  <meta property="og:site_name" content="Bangda Sun"/>
+
+  
+  <meta property="og:image" content="/favicon.ico"/>
+  
+
+  <link href="/favicon.ico" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Bangda Sun" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    jax: ["input/TeX","output/HTML-CSS"],
+    extensions: ["tex2jax.js","Safe.js"]
+  });
+  </script>
+<script type="text/javascript" async="async"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_CHTML,Safe">
+</script>
+</script>
+</head>
+
+
+<body>
+<div class="blog">
+  <div class="content">
+
+    <header>
+  <div class="site-branding">
+    <h1 class="site-title">
+      <a href="/">Bangda Sun</a>
+    </h1>
+    <p class="site-description">Practice makes perfect</p>
+  </div>
+  <nav class="site-navigation">
+    <ul>
+      
+        <li><a href="/">主页</a></li>
+      
+        <li><a href="/tags">标签</a></li>
+      
+    </ul>
+  </nav>
+</header>
+
+    <main class="site-main posts-loop">
+    <article>
+
+  
+    
+    <h3 class="article-title"><span>Data Visualization with ggplot2 (1)</span></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2017/07/04/1-data-visualization-ggplot2-i/" rel="bookmark">
+        <time class="entry-date published" datetime="2017-07-04T17:18:24.000Z">
+          2017-07-04
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <p>Introduction to awesome R package ggplot2 - graphic grammar</p>
+<a id="more"></a>
+<h3 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1. Introduction"></a>1. Introduction</h3><p>When we start analyzing various of data sets, the first step is always the exploratory data analysis (EDA). Generally we will try to find some characteristics of the data, and data visualization is an important way to do that. </p>
+<p>Here I list five basic types of plot that will be useful in EDA:</p>
+<ol>
+<li><p>scatter plot</p>
+<p> Scatter plot is useful to show the relationship between two variables (both numerical and categorical variable). For example, we can use the scatter plot to display the relationship between people’s weight and height, people’s years of education and their average salaries.</p>
+</li>
+</ol>
+<ol>
+<li><p>line plot</p>
+<p> Line plot is also a way to illustrate the relationship between two variables, specifically, it’s useful to visualize time series data, where the data is time indexed. For example, we can visualize the daily stock price of Apple in the past two years using line plot.</p>
+</li>
+<li><p>histogram</p>
+<p> Histogram is a way to show the distribution of numerical (continuous) variables, such as the height of people. Personally speaking, the ‘limit’ version of histogram will be the plot of probability density function of the variable. In practice, we can also add a layer of density plot upon the histogram layer.</p>
+</li>
+<li><p>box plot</p>
+<p> Like histogram, box plot is also one way to show the distribution of numerical variables. In addition, it has more characteristics of the data: it will attach with the quantiles of the data - minimum, 25% quantile, median, 75% quantile and maximum. It will be useful to let the outliers stand out.</p>
+</li>
+<li><p>bar plot </p>
+<p> Bar plot is useful when we dealing with the distribution of categorical variables. For example, we want to know the usage of top 10 machine learning algorithms in FLAG.</p>
+</li>
+</ol>
+<p>In summary, scatter plot and line plot must applied on two variables; histogram, box plot and bar plot are the results of aggregation on data set, and usually applied on single variable. There is a helpful <a href="https://www.rstudio.com/wp-content/uploads/2016/11/ggplot2-cheatsheet-2.1.pdf" target="_blank" rel="external">cheat sheet</a> of data visualization available on the website of Rstudio.</p>
+<h3 id="2-Data"><a href="#2-Data" class="headerlink" title="2. Data"></a>2. Data</h3><p>Next we are going to illustrate those five basic plots on a real world data set from <a href="https://www.kaggle.com/datasets" target="_blank" rel="external">kaggle</a>. Here is the housing price data in Seattle, the data has 19 variables including price, number of bedrooms and bathrooms, number of floors, etc. The data has already been split into <a href="https://github.com/bangdasun/Housing-price-analysis/blob/master/Training.csv" target="_blank" rel="external">training set</a> and <a href="https://github.com/bangdasun/Housing-price-analysis/blob/master/Test.csv" target="_blank" rel="external">testing set</a> (click them to get the data).</p>
+<h3 id="3-Play-with-five-basic-plots"><a href="#3-Play-with-five-basic-plots" class="headerlink" title="3. Play with five basic plots"></a>3. Play with five basic plots</h3><p><code>ggplot2</code> is developed by <a href="https://github.com/hadley" target="_blank" rel="external">Hadley Wickham</a>, who is the chief scientist in Rstudio. <code>ggplot2</code> now is half of the world of data visualization in R and it’s my favorite plot package.</p>
+<p>First, we gonna install and load the package, also import the data,</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&gt; install.packages(&apos;ggplot2&apos;)</div><div class="line">&gt; library(ggplot2)</div><div class="line">&gt; setwd(&quot;C://Users//Bangda//Desktop//project-housing price analysis&quot;)</div><div class="line">&gt; training = read.csv(&quot;training.csv&quot;, header = TRUE)</div><div class="line">&gt; testing  = read.csv(&quot;test.csv&quot;, header = TRUE)</div></pre></td></tr></table></figure>
+<p>here we start from the training set, take a quick look at the data set:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">&gt; str(training)</div><div class="line">&apos;data.frame&apos;:	7088 obs. of  21 variables:</div><div class="line"> $ id           : num  7.13e+09 6.41e+09 5.63e+09 2.49e+09 1.95e+09 ...</div><div class="line"> $ date         : Factor w/ 340 levels &quot;20140502T000000&quot;,..: 152 202 265 202 258 10 55 231 310 278 ...</div><div class="line"> $ price        : num  221900 538000 180000 604000 510000 ...</div><div class="line"> $ bedrooms     : int  3 3 2 4 3 4 3 3 3 3 ...</div><div class="line"> $ bathrooms    : num  1 2.25 1 3 2 4.5 2.25 1.5 1 2.5 ...</div><div class="line"> $ sqft_living  : int  1180 2570 770 1960 1680 5420 1715 1060 1780 1890 ...</div><div class="line"> $ sqft_lot     : int  5650 7242 10000 5000 8080 101930 6819 9711 7470 6560 ...</div><div class="line"> $ floors       : num  1 2 1 1 1 1 2 1 1 2 ...</div><div class="line"> $ waterfront   : int  0 0 0 0 0 0 0 0 0 0 ...</div><div class="line"> $ view         : int  0 0 0 0 0 0 0 0 0 0 ...</div><div class="line"> $ condition    : int  3 3 3 5 3 3 3 3 3 3 ...</div><div class="line"> $ grade        : int  7 7 6 7 8 11 7 7 7 7 ...</div><div class="line"> $ sqft_above   : int  1180 2170 770 1050 1680 3890 1715 1060 1050 1890 ...</div><div class="line"> $ sqft_basement: int  0 400 0 910 0 1530 0 0 730 0 ...</div><div class="line"> $ yr_built     : int  1955 1951 1933 1965 1987 2001 1995 1963 1960 2003 ...</div><div class="line"> $ yr_renovated : int  0 1991 0 0 0 0 0 0 0 0 ...</div><div class="line"> $ zipcode      : int  98178 98125 98028 98136 98074 98053 98003 98198 98146 98038 ...</div><div class="line"> $ lat          : num  47.5 47.7 47.7 47.5 47.6 ...</div><div class="line"> $ long         : num  -122 -122 -122 -122 -122 ...</div><div class="line"> $ sqft_living15: int  1340 1690 2720 1360 1800 4760 2238 1650 1780 2390 ...</div><div class="line"> $ sqft_lot15   : int  5650 7639 8062 5000 7503 101930 6819 9711 8113 7570 ...</div></pre></td></tr></table></figure>
+<p>Ok, all set. We can start doing some visualizations now!</p>
+<p><code>ggplot2</code> will plotting based on the <strong>data.frame</strong>, which is the basic data structure in R. The basic idea of <code>ggplot2</code> is using grammar of graphics, which is different from many other packages and software. There are two principles:</p>
+<blockquote>
+<ol>
+<li>graphics are consists of distinct layers of grammatical elements;</li>
+<li>meaningful plots through is from aesthetic mapping.</li>
+</ol>
+</blockquote>
+<p>Here are three basic grammatical elements to create a plot using <code>ggplot2</code>: </p>
+<blockquote>
+<ol>
+<li>data;</li>
+<li>aesthetics;</li>
+<li>geometrics;</li>
+</ol>
+</blockquote>
+<p>The basic function is <strong>ggplot()</strong>, where will we specify the data as the parameter of <strong>ggplot()</strong>. Next always comes the geometric objects, in <code>ggplot2</code> we using <strong>geom_obj</strong>, for example, we use <strong>geom_point()</strong> for scatter plots; <strong>geom_histogram()</strong> for histograms. Also we need to specify the aesthetic mapping, the basic statement is <strong>mapping = aes(x = .., y = ..)</strong> and it could be specified in both <strong>ggplot()</strong> and <strong>geom_obj</strong>.</p>
+<p>Scatter plot: we want to show the relationship between sqft_living (Square footage of the apartments interior living space) and price, we specify the aesthetic to be: sqft_living maps to x-axis, price maps to y-axis, and set size = 2, later we will get to the discussion of alpha. Therefore here is our first plot</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&gt; ggplot(training) + </div><div class="line">+   geom_point(mapping = aes(x = sqft_living, y = price), alpha = I(1/10), size = 2) + </div><div class="line">+   labs(x = &apos;sqft living&apos;, y = &apos;price&apos;, title = &apos;price ~ sqft living&apos;)</div></pre></td></tr></table></figure>
+<p><img src="/images/scatterplot-01.png" style="width: 500px; height: 450px"> </p>
+<p>Box plot: then we want to show the distribution of the price in different groups of views. We specify aesthetic to be: view maps to x-axis, price maps to y-axis. Notice that in the original data set, view are described as numerical data types, actually we should treat it as categorical variable, therefore we apply <strong>factor()</strong> on it. And get our second plot!</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&gt; ggplot(training) + </div><div class="line">+   geom_boxplot(mapping =  aes(x = factor(view), y = price)) +</div><div class="line">+   labs(x = &quot;view&quot;, y = &quot;price&quot;, title = &quot;price ~ views&quot;)</div></pre></td></tr></table></figure>
+<p><img src="/images/boxplot-01.png" style="width: 500px; height: 450px"> </p>
+<p>Histogram: Then we play with the 3rd most basic plot. Supposed we just want to know the distribution of house price. price should be mapped to x-axis, and for y-axis there is no variable (here we specify it as ..density.. to make sure the y-axis is probability rather than frequency), because some statistical transformation has been done to produce the histogram.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&gt; ggplot(training) +</div><div class="line">+   geom_histogram(aes(x = price, y = ..density..)) + </div><div class="line">+   labs(x = &quot;price&quot;)</div><div class="line">`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</div></pre></td></tr></table></figure>
+<p><img src="/images/hist-01.png" style="width: 500px; height: 450px"> </p>
+<p>Every time you get your first histogram using <code>ggplot2</code>, it will remind you to try difference <strong>bins</strong> to get better view of the histogram, that actually what we should do when dealing with histograms, we will discuss more about that later.</p>
+<p>Bar plot: Similar to histogram, bar plot in some sense can be viewed as ‘discrete’ version of histogram. For example, we want to show the distribution of grade. We map grade to x-axis, and set stat = ‘count’,</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&gt; ggplot(training) +</div><div class="line">+   geom_bar(aes(x = factor(grade)), stat = &apos;count&apos;) + </div><div class="line">+   labs(x = &apos;grade&apos;)</div></pre></td></tr></table></figure>
+<p><img src="/images/barplot-01.png" style="width: 500px; height: 450px"> </p>
+<h3 id="4-Summary"><a href="#4-Summary" class="headerlink" title="4. Summary"></a>4. Summary</h3><p>We introduced five most basic plots in data visualization and apply four of them on a real world data set. Since line plot is similar to scatter plot on syntax, we didn’t give an example.</p>
+<p>We see that the basic elements for creating a plot using <code>ggplot2</code> are the <strong>data</strong> (data.frame in R), <strong>aesthetics</strong> and <strong>geometric objects</strong>. This is a brand new concept for people who used to plotting using R basic graphic package and other languages like Matlab or Python.</p>
+<p>The plots for now are plain and naive, to polish them, we need to specify more aesthetics and parameters, like size and color of geometric object, scale and tick of axis, etc. Also, to extract more information, some times we also need some techniques like facet. We will discuss more details about that in later posts.</p>
+
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+      
+
+    <span class="post-categories">
+      <i class="icon-categories"></i>
+        <a href="/categories/R/">R</a>, <a href="/categories/R/Data-Visualization/">Data Visualization</a>
+    </span>
+    
+
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/R/">R</a><a href="/tags/Data-Visualization/">Data Visualization</a>
+    </span>
+    
+
+    </div>
+
+    
+  </div>
+</article>
+
+  
+<section id="comment">
+  
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+  
+</section>
+
+
+
+    </main>
+
+    <footer class="site-footer">
+  <p class="site-info">
+    Proudly powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and
+    Theme by <a href="https://github.com/CodeDaraW/Hacker" target="_blank">Hacker</a>
+    </br>
+    
+    &copy; 2019 Bangda
+    
+	
+	
+	
+  </p>
+  
+  <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+  <span id="busuanzi_container_site_pv">
+    Total viewer <span id="busuanzi_value_site_pv"></span>; 
+  </span>
+  
+  <span id="busuanzi_container_site_uv">
+    Total visitor <span id="busuanzi_value_site_uv"></span>
+  </span>
+	
+	
+  <div id="disqus_thread"></div>
+  <script>
+
+  /**
+   *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+   *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+   */
+   
+  var disqus_config = function () {
+	this.page.url = 'https://bangdasun.github.io{{ page.url }}';  // Replace PAGE_URL with your page's canonical URL variable
+	this.page.identifier = '{{ page.id }}'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+  };
+  
+  (function() { // DON'T EDIT BELOW THIS LINE
+  var d = document, s = d.createElement('script');
+  s.src = 'https://bangdasun-github-io.disqus.com/embed.js';
+  s.setAttribute('data-timestamp', +new Date());
+  (d.head || d.body).appendChild(s);
+  })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  
+  <script id="dsq-count-scr" src="//bangdasun-github-io.disqus.com/count.js" async></script>
+</footer>
+
+
+    
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,232 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Stanford NLP (coursera) Notes (2) - Text Processing | Bangda Sun | Practice makes perfect</title>
+
+  
+  <meta name="author" content="Bangda">
+  
+
+  
+  <meta name="description" content="Play with data">
+  
+
+  
+  
+  <meta name="keywords" content="Linguistic,NLP,Text Processing">
+  
+
+  <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <meta property="og:title" content="Stanford NLP (coursera) Notes (2) - Text Processing"/>
+
+  <meta property="og:site_name" content="Bangda Sun"/>
+
+  
+  <meta property="og:image" content="/favicon.ico"/>
+  
+
+  <link href="/favicon.ico" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Bangda Sun" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    jax: ["input/TeX","output/HTML-CSS"],
+    extensions: ["tex2jax.js","Safe.js"]
+  });
+  </script>
+<script type="text/javascript" async="async"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_CHTML,Safe">
+</script>
+</script>
+</head>
+
+
+<body>
+<div class="blog">
+  <div class="content">
+
+    <header>
+  <div class="site-branding">
+    <h1 class="site-title">
+      <a href="/">Bangda Sun</a>
+    </h1>
+    <p class="site-description">Practice makes perfect</p>
+  </div>
+  <nav class="site-navigation">
+    <ul>
+      
+        <li><a href="/">主页</a></li>
+      
+        <li><a href="/tags">标签</a></li>
+      
+    </ul>
+  </nav>
+</header>
+
+    <main class="site-main posts-loop">
+    <article>
+
+  
+    
+    <h3 class="article-title"><span>Stanford NLP (coursera) Notes (2) - Text Processing</span></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2018/03/15/16-stanford-nlp-notes-2/" rel="bookmark">
+        <time class="entry-date published" datetime="2018-03-15T19:29:43.000Z">
+          2018-03-15
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <p>Text Processing</p>
+<a id="more"></a>
+<h3 id="1-Regular-Expressions"><a href="#1-Regular-Expressions" class="headerlink" title="1. Regular Expressions"></a>1. Regular Expressions</h3><p>First concept in text processing is Regular expression. It’s a formal language for specifying text strings, we can use regular expression to search specific patterns in text and do more processing based on this.</p>
+<h4 id="1-1-Disjunctions"><a href="#1-1-Disjunctions" class="headerlink" title="1.1 Disjunctions"></a>1.1 Disjunctions</h4><p>If we want to find a pattern with a set of letters or symbols, the basic way to put them into brackets <code>[ ]</code> (one square brackets match one symbol). For examples pattern <code>[wW]ood</code> matches <code>Wood</code> and <code>wood</code>, and commonly used ranges include <code>[A-Z]</code> (an upper case letter); <code>[a-z]</code> (a lower case letter); <code>[0-9]</code> (a single digit).</p>
+<p>The opposite way is negate disjunctions. We can add carat in the square bracket. For example <code>[^wW]ood</code> will match any words with last three letters to be <code>ood</code> but not contain <code>W</code> and <code>w</code> in the first place, or simply say: “don’t find Wood and wood”.</p>
+<p>Other disjunctions include:</p>
+<blockquote>
+<ol>
+<li><code>|</code> - or</li>
+<li><code>?</code> - 0 or 1 previous char</li>
+<li><code>*</code> - 0 or more previous char</li>
+<li><code>+</code> - 1 or more previous char</li>
+<li><code>.</code> - any char, placeholder</li>
+</ol>
+</blockquote>
+<h4 id="1-2-Anchors"><a href="#1-2-Anchors" class="headerlink" title="1.2 Anchors"></a>1.2 Anchors</h4><p>Two main anchors is <code>^</code> and <code>$</code> which represent the beginning and the end of the text. For example, <code>^[A-Za-z]</code> will match <code>Regular</code> in “Regular expression” and <code>^[^A-Za-z]</code> will match <code>1</code> in “1. introduction”; <code>.$</code> will match <code>?</code> in “The end?”.</p>
+<p>Generally speaking, regular expressions are widely used and could provide surprisingly large role in NLP. We can use it to do text cleansing or generate features for machine learning algorithms.</p>
+<h3 id="2-Word-Tokenization"><a href="#2-Word-Tokenization" class="headerlink" title="2. Word Tokenization"></a>2. Word Tokenization</h3><p>Text normalization is very important and every NLP task needs to do it. Since we are facing different format of text (symbols, characters, words, sentences and documents) in NLP, not standard tabular data format in machine learning text book. Text normalization includes: </p>
+<blockquote>
+<ol>
+<li>Segmenting / tokenizing words in running text</li>
+<li>Normalizing word formats</li>
+<li>Segmenting sentences in running text</li>
+</ol>
+</blockquote>
+<p>And we use <strong>Type</strong> to indicate an element of vocabulary, <strong>Token</strong> to indicate an instance of that type in running text.</p>
+<p>We will have many issues in word tokenization. For example, whether we should remove “-“ in “state-of-the-art”? what’s the number of tokens of “San Francisco” (one or two)? Also different languages will have different issues. Take Chinese as an example, Chinese words are composed of characters (characters are generally 1 syllable and 1 morpheme, average word is 2.4 characters long), therefore we always need an extra step called <strong>word segmentation</strong>. And to do this we have many algorithms available like <strong>Maximum matching algorithm</strong>.</p>
+<h3 id="3-Word-Normalization-and-Stemming"><a href="#3-Word-Normalization-and-Stemming" class="headerlink" title="3. Word Normalization and Stemming"></a>3. Word Normalization and Stemming</h3><h4 id="3-1-Normalization"><a href="#3-1-Normalization" class="headerlink" title="3.1 Normalization"></a>3.1 Normalization</h4><p>Words also have different format. <strong>Lemma</strong> means same stem, for instance “cat” and “cats” have same lemma; <strong>Wordform</strong> is the full inflected surface form, “cat” and “cats” have different wordforms.</p>
+<p>Also, in information retrieval, we need the indexed text and query terms must have same form: “U.S.A.” should match “USA”. In that way, we can implicitly define equivalence classes of terms</p>
+<h4 id="3-2-Case-folding"><a href="#3-2-Case-folding" class="headerlink" title="3.2 Case folding"></a>3.2 Case folding</h4><p>Reduce all letters to lower case is a common method in text normalization. But sometimes case is also helpful, like words “US”, “MT”.</p>
+<h4 id="3-3-Lemmatization"><a href="#3-3-Lemmatization" class="headerlink" title="3.3 Lemmatization"></a>3.3 Lemmatization</h4><p>Lemmatization means reduce inflections or variant forms to base form: “am”, “are”, “is” are reduced to “be”; “cat”, “cats”, “cat’s”, “cats’” are reduced to “cat”. In this way we have to find correct dictionary headword form to make sure we don’t make spell errors.</p>
+<h4 id="3-4-Stemming"><a href="#3-4-Stemming" class="headerlink" title="3.4 Stemming"></a>3.4 Stemming</h4><p>Morphemes consists of <strong>stems</strong> (core meaning-bearing units) and <strong>affixes</strong> (bits and pieces that adhere to stems). </p>
+<p>Stemming means reduce terms to their stems in information retrieval, it is crude chopping of affixes. For example “automates”, “automatic” and “automation” are all reduced to “automat”. You can see the difference with lemmatization: “automat” is not a element in vocabulary. That says, <strong>stemming a word or sentence may result in words that are not actual words</strong>.</p>
+<p>There are many stemming algorithms, the most common one is <strong>Porter’s algorithm</strong>. It’s consists of some rules for reducing: <code>sess -&gt; ss</code>, <code>ies -&gt; i</code>, <code>(v)ing -&gt; (v)</code>, <code>(v)ed -&gt; (v)</code>; <code>ational -&gt; ate</code>, <code>izer -&gt; ize</code>, <code>ator -&gt; ate</code> etc. We can observe that these rules are based on linguistics.</p>
+<h3 id="4-Sentence-Segmentation"><a href="#4-Sentence-Segmentation" class="headerlink" title="4. Sentence Segmentation"></a>4. Sentence Segmentation</h3><p>In most case we are not only facing with words, we facing documents such as comments, reviews and articles. Therefore how to segment sentence is also one important aspect.</p>
+<p>Punctuation is one aspect we should consider in sentence segmentation. <code>!</code> and <code>?</code> are sometimes useful for indicating sentiments but <code>.</code> is quite ambiguous: it could be the end of the sentence, it could also be abbreviations like “Dr.”, “Inc.” and numbers like “0.5”, “4.3%”. Sometimes we need use some specific rules to determine this and use regular expressions for implementation.</p>
+
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+      
+
+    <span class="post-categories">
+      <i class="icon-categories"></i>
+        <a href="/categories/NLP/">NLP</a>
+    </span>
+    
+
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/Linguistic/">Linguistic</a><a href="/tags/NLP/">NLP</a><a href="/tags/Text-Processing/">Text Processing</a>
+    </span>
+    
+
+    </div>
+
+    
+  </div>
+</article>
+
+  
+<section id="comment">
+  
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+  
+</section>
+
+
+
+    </main>
+
+    <footer class="site-footer">
+  <p class="site-info">
+    Proudly powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and
+    Theme by <a href="https://github.com/CodeDaraW/Hacker" target="_blank">Hacker</a>
+    </br>
+    
+    &copy; 2019 Bangda
+    
+	
+	
+	
+  </p>
+  
+  <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+  <span id="busuanzi_container_site_pv">
+    Total viewer <span id="busuanzi_value_site_pv"></span>; 
+  </span>
+  
+  <span id="busuanzi_container_site_uv">
+    Total visitor <span id="busuanzi_value_site_uv"></span>
+  </span>
+	
+	
+  <div id="disqus_thread"></div>
+  <script>
+
+  /**
+   *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+   *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+   */
+   
+  var disqus_config = function () {
+	this.page.url = 'https://bangdasun.github.io{{ page.url }}';  // Replace PAGE_URL with your page's canonical URL variable
+	this.page.identifier = '{{ page.id }}'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+  };
+  
+  (function() { // DON'T EDIT BELOW THIS LINE
+  var d = document, s = d.createElement('script');
+  s.src = 'https://bangdasun-github-io.disqus.com/embed.js';
+  s.setAttribute('data-timestamp', +new Date());
+  (d.head || d.body).appendChild(s);
+  })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  
+  <script id="dsq-count-scr" src="//bangdasun-github-io.disqus.com/count.js" async></script>
+</footer>
+
+
+    
+  </div>
+</div>
+</body>
+</html>

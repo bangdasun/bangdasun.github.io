@@ -1,0 +1,296 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Linear Algebra Review | Bangda Sun | Practice makes perfect</title>
+
+  
+  <meta name="author" content="Bangda">
+  
+
+  
+  <meta name="description" content="Play with data">
+  
+
+  
+  
+  <meta name="keywords" content="Mathematics,Linear Algebra">
+  
+
+  <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <meta property="og:title" content="Linear Algebra Review"/>
+
+  <meta property="og:site_name" content="Bangda Sun"/>
+
+  
+  <meta property="og:image" content="/favicon.ico"/>
+  
+
+  <link href="/favicon.ico" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Bangda Sun" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    jax: ["input/TeX","output/HTML-CSS"],
+    extensions: ["tex2jax.js","Safe.js"]
+  });
+  </script>
+<script type="text/javascript" async="async"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_CHTML,Safe">
+</script>
+</script>
+</head>
+
+
+<body>
+<div class="blog">
+  <div class="content">
+
+    <header>
+  <div class="site-branding">
+    <h1 class="site-title">
+      <a href="/">Bangda Sun</a>
+    </h1>
+    <p class="site-description">Practice makes perfect</p>
+  </div>
+  <nav class="site-navigation">
+    <ul>
+      
+        <li><a href="/">主页</a></li>
+      
+        <li><a href="/tags">标签</a></li>
+      
+    </ul>
+  </nav>
+</header>
+
+    <main class="site-main posts-loop">
+    <article>
+
+  
+    
+    <h3 class="article-title"><span>Linear Algebra Review</span></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2019/04/06/41-linear-algebra-review/" rel="bookmark">
+        <time class="entry-date published" datetime="2019-04-06T14:30:40.000Z">
+          2019-04-06
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <p>Linear Algebra Quick Review &amp; Cheatsheet</p>
+<a id="more"></a>
+<p>Here is the quick review for linear algebra, examples and some definitions are from MIT 18.06 Linear Algebra.</p>
+<h3 id="1-Basic-Concepts-and-Terminologies"><a href="#1-Basic-Concepts-and-Terminologies" class="headerlink" title="1. Basic Concepts and Terminologies"></a>1. Basic Concepts and Terminologies</h3><ul>
+<li><strong>Matrix Multiplication</strong>: multiply matrix \(A\in R^{m\times n}\) and \(B\in R^{n\times p}\) get matrix \(C\in R^{m\times p}\) where</li>
+</ul>
+<p>\[<br>C_{ij} = \sum^{n}_{k=1}A_{ik}B_{kj}~.<br>\]</p>
+<ul>
+<li><p><strong>Matrix Transpose</strong>: the transpose of matrix \(A\in R^{m\times n}\) is \(A^{\top}\in R^{n\times m}\), which is a result of flipping rows and columns: \(A_{ij} = A^{\top}_{ji}\).<br>\[<br>\begin{aligned}<br>&amp;\left(A^{\top}\right)^{\top} = A \\<br>&amp;\left(AB\right)^\top = B^\top A^\top \\<br>&amp;(A + B)^\top = A^\top + B^\top~.<br>\end{aligned}<br>\]</p>
+</li>
+<li><p><strong>Matrix Trace</strong>: the trace of matrix \(A\in R^{n\times n}\) (square matrix) is the sum of diagonal elements in the matrix:</p>
+</li>
+</ul>
+<p>\[<br>\text{tr}(A) = \sum^{n}_{i=1}A_{ii}~.<br>\]</p>
+<p>For matrix \(A\) and \(B\) with equal size, \(\text{tr}(AB) = \text{tr}(BA)\).</p>
+<ul>
+<li><strong>Matrix Inverse</strong>: the inverse of matrix \(A\in R^{n\times n}\) (square matrix) is denoted as \(A^{-1}\) and is the unique matrix such that</li>
+</ul>
+<p>\[<br>A^{-1}A = I = AA^{-1},<br>\]</p>
+<p>where \(I\) is identity matrix. Matrices not invertible are called <strong>singluar matrices</strong>. Suppose \(A\) and \(B\) are non-singular and equal size:</p>
+<p>\[<br>\begin{aligned}<br>&amp; \left(A^{-1}\right)^{-1} = A \\<br>&amp; \left(AB\right)^{-1} = B^{-1}A^{-1} \\<br>&amp; \left(A^{-1}\right)^\top = \left(A^{\top}\right)^{-1}~.<br>\end{aligned}<br>\]</p>
+<ul>
+<li><strong>Determinant</strong>: determinant of a square matrix \(A\in R^{n\times n}\) is a function:</li>
+</ul>
+<p>\[<br>|A|: R^{n\times n}\rightarrow R~.<br>\]</p>
+<p>And</p>
+<p>\[<br>\begin{aligned}<br>&amp; |A| = |A^{\top}| \\<br>&amp; |AB| = |A||B| \\<br>&amp; |A^{-1}| = (|A|)^{-1}~.<br>\end{aligned}<br>\]</p>
+<h3 id="2-Gaussian-Elimination"><a href="#2-Gaussian-Elimination" class="headerlink" title="2. Gaussian Elimination"></a>2. Gaussian Elimination</h3><ul>
+<li><strong>Row Operations</strong></li>
+</ul>
+<p>To solve linear equations, we usually do row operations to get <strong>upper triangular</strong> form to reduce the unknowns. For example, substract 3 row 1 from row 2 in matrix \(A\), i.e. \(r_{2} - 3r_{1}\):</p>
+<p>\[<br>\begin{bmatrix}<br>1 &amp; 2 &amp; 1 \\<br>3 &amp; 8 &amp; 1 \\<br>0 &amp; 4 &amp; 7 \\<br>\end{bmatrix} \longrightarrow r_{2} - 3r_{1} \longrightarrow<br>\begin{bmatrix}<br>1 &amp; 2 &amp; 1 \\<br>0 &amp; 2 &amp; -2 \\<br>0 &amp; 4 &amp; 7 \\<br>\end{bmatrix}<br>\]</p>
+<p>This step is equivalent to multiply a elimination matrix at left side of \(A\), the multiplier is represented at (2, 1) of elimination</p>
+<p>\[<br>E_{21}A =<br>\begin{bmatrix}<br>1 &amp; ~ &amp; ~ \\<br>-3 &amp; 1 &amp; ~ \\<br>~ &amp; ~ &amp; 1 \\<br>\end{bmatrix}<br>\begin{bmatrix}<br>1 &amp; 2 &amp; 1 \\<br>3 &amp; 8 &amp; 1 \\<br>0 &amp; 4 &amp; 7 \\<br>\end{bmatrix}  =<br>\begin{bmatrix}<br>1 &amp; 2 &amp; 1 \\<br>0 &amp; 2 &amp; -2 \\<br>0 &amp; 4 &amp; 7 \\<br>\end{bmatrix}<br>\]</p>
+<ul>
+<li><strong>LU Decomposition</strong> </li>
+</ul>
+<p>Continue elimination will get the upper triangular matrix:</p>
+<p>\[<br>E_{32}E_{21}A =<br>\begin{bmatrix}<br>1 &amp; ~ &amp; ~ \\<br>~ &amp; 1 &amp; ~ \\<br>~ &amp; -2 &amp; 1 \\<br>\end{bmatrix}<br>\begin{bmatrix}<br>1 &amp; ~ &amp; ~ \\<br>-3 &amp; 1 &amp; ~ \\<br>~ &amp; ~ &amp; 1 \\<br>\end{bmatrix}<br>\begin{bmatrix}<br>1 &amp; 2 &amp; 1 \\<br>3 &amp; 8 &amp; 1 \\<br>0 &amp; 4 &amp; 7 \\<br>\end{bmatrix}  =<br>\begin{bmatrix}<br>1 &amp; 2 &amp; 1 \\<br>~ &amp; 2 &amp; -2 \\<br>~ &amp; ~ &amp; 11 \\<br>\end{bmatrix} = U,<br>\]</p>
+<p>and if the elimination matrix could be moved to right hand side, we will get</p>
+<p>\[<br>A = (E_{32}E_{21})^{-1}U = \begin{bmatrix}<br>1 &amp; ~ &amp; ~ \\<br>~ &amp; 1 &amp; ~ \\<br>~ &amp; 2 &amp; 1 \\<br>\end{bmatrix}<br>\begin{bmatrix}<br>1 &amp; ~ &amp; ~ \\<br>3 &amp; 1 &amp; ~ \\<br>~ &amp; ~ &amp; 1 \\<br>\end{bmatrix}<br>\begin{bmatrix}<br>1 &amp; 2 &amp; 1 \\<br>~ &amp; 2 &amp; -2 \\<br>~ &amp; ~ &amp; 11 \\<br>\end{bmatrix} =<br>\begin{bmatrix}<br>1 &amp; ~ &amp; ~ \\<br>3 &amp; 1 &amp; ~ \\<br>0 &amp; 2 &amp; 1 \\<br>\end{bmatrix}<br>\begin{bmatrix}<br>1 &amp; 2 &amp; 1 \\<br>~ &amp; 2 &amp; -2 \\<br>~ &amp; ~ &amp; 11 \\<br>\end{bmatrix} = LU,<br>\]</p>
+<p>therefore \(A\) is factorized into a lower triangular and an upper triangular matrix which is \(A=LU\).</p>
+<ul>
+<li><strong>Solve for Inverse (Gaussian - Jordan Elimination)</strong></li>
+</ul>
+<p>Solving inverse matrix is solving the equation \(AA^{-1} = I\), and it could be done by solve \(AA^{-1}_{. i} = I_{. i}\) for \(i\) to be column index using Guassian elimination. While Guassian-Jordan elimination could solve it at once. Basically the elimination will transform \(\left[~A~|~I~\right]\) to \(\left[~I~|~A^{-1}\right]\) rather than \(U\) at left.</p>
+<h3 id="3-Solve-Linear-Equations"><a href="#3-Solve-Linear-Equations" class="headerlink" title="3. Solve Linear Equations"></a>3. Solve Linear Equations</h3><p>This involves solve \(Ax = b\) and \(Ax = 0\) (homogenous).</p>
+<ul>
+<li><strong>Vector Space</strong>: if two vectors \(v\) and \(w\) could span a vector space, then all linear combinations of them are also in the same space.</li>
+<li><strong>Subspace</strong>: subset of the vector space, it is also a vector space, e.g. a plane in 3D space \(R^{3}\) is a subpace.</li>
+<li><strong>Column Space</strong>: column vectors of matrix \(A\) span its column space \(C(A)\).</li>
+<li><strong>Null Space</strong>: all vectors \(x\) satisfiy \(Ax=0\) span its null space \(N(A)\).</li>
+<li><strong>Linear Independent</strong>: if no vectors in \(x_{1}, x_{2}, \cdots, x_{n}\) can be represented as a linear combination of remaining vectors then this group of vectos is linearly independent.</li>
+<li><strong>Rank</strong>: the size of group of linear independent column vector of \(A\) is the column rank;  the size of group of linear independent row vector of \(A\) is the row rank. \(A\) is <strong>full rank</strong> if \(\text{rank}(A) = \min(m, n)\), also for \(A\in R^{m\times n}\),</li>
+</ul>
+<p>\[<br>\begin{aligned}<br>&amp; \text{rank}(A) \leq \min(m, n) \\<br>&amp; \text{rank}(A) = \text{rank}(A^{\top}) \\<br>&amp; \text{rank}(AB) \leq \min(\text{rank}(A), \text{rank}(B)) \\<br>&amp; \text{rank}(A + B) \leq \text{rank}(A) + \text{rank}(B)<br>\end{aligned}<br>\]</p>
+<ul>
+<li><strong>Basis of Vector Space</strong>: a group of vector forms a basis if (1) they are linear independent; (2) they span a space.</li>
+<li><strong>Dimension of Vector Space</strong>: number of vectors in each basis.</li>
+</ul>
+<h3 id="4-Orthogonality"><a href="#4-Orthogonality" class="headerlink" title="4. Orthogonality"></a>4. Orthogonality</h3><ul>
+<li><strong>Orthogonal Matrices</strong>: matrix \(Q\) (square) is orthogonal if all columns are orthogonal, which is</li>
+</ul>
+<p>\[<br>Q^{\top}Q = I = QQ^{\top}~.<br>\]</p>
+<p>Therefore if \(Q\) is invertible, then \(Q^{-1} = Q^{\top}\).</p>
+<ul>
+<li><strong>Projection</strong>: suppose vector \(x\) and \(y\) are independent, the projection of \(x\) on \(y\) is \(p\) where \(p=cy\), \(c\) is constant, since</li>
+</ul>
+<p>\[<br>(x - p)^{\top}y = (x - cy)^{\top}y = x^{\top}y - cy^{\top}y = 0 \rightarrow c = \frac{x^{\top}y}{y^{\top}y}~.<br>\]</p>
+<p><strong>Gram-Schmidt Process</strong>: a method to find orthogonal basis for given linear independent vectors. Basically the process is <strong>subtract from every new vector by its projection in the directions already set</strong>. For example, given 3 independent vector \(a, b, c\), the orthogonal basis \(q_{1}, q_{2}, q_{3}\) is solved by:</p>
+<p>\[<br>\begin{aligned}<br>&amp; q_{1} = a \\<br>&amp; q_{2} = b - \frac{q_{1}^{\top} b}{q_{1}^{\top}q_{1}}q_{1} \\<br>&amp; q_{3} = c - \frac{q_{1}^{\top} c}{q_{1}^{\top}q_{1}}q_{1}  - \frac{q_{2}^{\top} c}{q_{2}^{\top}q_{2}}q_{2}~.<br>\end{aligned}<br>\]</p>
+<ul>
+<li><strong>QR Decomposition</strong>: matrix \(A\) (square) can be decomposed as \(A=QR\) where \(Q\) is an orthogonal matrix with columns to be orthogonal basis of columns of A, \(R\) is an upper triangular matrix.</li>
+</ul>
+<h3 id="5-Eigenvalue-and-Eigenvectors"><a href="#5-Eigenvalue-and-Eigenvectors" class="headerlink" title="5. Eigenvalue and Eigenvectors"></a>5. Eigenvalue and Eigenvectors</h3><ul>
+<li><strong>Eigenvalue and Eigenvectors</strong>: for square matrix \(A\), if vector \(v\) and scalar \(\lambda\) could make</li>
+</ul>
+<p>\[<br>Av = \lambda v~,<br>\]</p>
+<p>which means the transformation \(A\) apply on \(v\) is a stretching not rotation; then \(\lambda\) is the eigenvalue and \(v\) is the eigenvector of \(A\). Eigenvalues could be solved by<br>\[<br>|\lambda I - A| = 0<br>\]</p>
+<p>In matrix form the defintion is<br>\[<br>AS = S\Lambda<br>\]<br>where columns of \(S\) are eigenvectors and \(\Lambda\) is diagonal matrix with eigenvalues on diagonal. Eigenvalues also relate to trace and determinant of \(A\):</p>
+<p>\[<br>\begin{aligned}<br>\text{tr}(A) &amp;= \sum^{n}_{i=1}\lambda_{i} \\<br>|A| &amp;= \prod^{n}_{i=1}\lambda_{i}~.<br>\end{aligned}<br>\]</p>
+<ul>
+<li><strong>Diagonalization</strong>: if \(A\) is invertible, then \(S\) is invertible,</li>
+</ul>
+<p>\[<br>A = S\Lambda S^{-1}~.<br>\]</p>
+<p>where columns of \(S\) are eigenvectors and \(\Lambda\) is diagonal matrix with eigenvalues on diagonal.</p>
+<h3 id="6-Symmetric-Matrices"><a href="#6-Symmetric-Matrices" class="headerlink" title="6. Symmetric Matrices"></a>6. Symmetric Matrices</h3><ul>
+<li><p><strong>Eigen Decomposition</strong>: symmetric matrices are defined as \(A = A^{\top}\), therefore it has to be square matrices. It can be decomposed into:<br>\[<br>A = Q\Lambda Q^{\top},<br>\]<br>where \(Q\) is orthogonal matrix, \(Q^{\top}=Q^{-1}\)</p>
+</li>
+<li><p><strong>Quadratic Form</strong>: scalue value \(x^{\top}Ax\) is the quadratic form, with explicit form:</p>
+</li>
+</ul>
+<p>\[<br>x^{\top}Ax = \sum^{n}_{i=1}\sum^{n}_{j=1}a_{ij}x_{i}x_{j}.<br>\]</p>
+<ul>
+<li><strong>Positive Semi-Definite Matrices</strong>: given a symmetric matrix \(A\), for all vectors \(x\)  if \(x^{\top}Ax\geq 0\) then \(A\) is positive semi-definite.</li>
+</ul>
+<h3 id="7-Singular-Value-Decomposition-SVD"><a href="#7-Singular-Value-Decomposition-SVD" class="headerlink" title="7. Singular Value Decomposition (SVD)"></a>7. Singular Value Decomposition (SVD)</h3><p>For matrix \(A\) with any size, there is a decomposition:<br>\[<br>A = U\Sigma V^{\top},<br>\]</p>
+<p>where \(U\) and \(V^{\top}\) are both orthogonal matrices, and \(\Sigma\) contains the singular values on diagonal. This decomposition could be analyticall solved by:</p>
+<p>\[<br>\begin{aligned}<br>&amp; A^{\top}A = V\Sigma^{\top}\Sigma V^{\top} \\<br>&amp; AA^{\top} = U\Sigma\Sigma^{\top} U^{\top},<br>\end{aligned}<br>\]</p>
+<p>where \(A^{\top}A\) and \(AA^{\top}\) are both squared and symmetric matrix, and they are also positive semi-definite; diagonal matrix \(\Sigma^{\top}\Sigma\) and \(\Sigma\Sigma^{\top}\) contains the eigenvalues.</p>
+
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+      
+
+    <span class="post-categories">
+      <i class="icon-categories"></i>
+        <a href="/categories/Mathematics/">Mathematics</a>
+    </span>
+    
+
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/Mathematics/">Mathematics</a><a href="/tags/Linear-Algebra/">Linear Algebra</a>
+    </span>
+    
+
+    </div>
+
+    
+  </div>
+</article>
+
+  
+<section id="comment">
+  
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+  
+</section>
+
+
+
+    </main>
+
+    <footer class="site-footer">
+  <p class="site-info">
+    Proudly powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and
+    Theme by <a href="https://github.com/CodeDaraW/Hacker" target="_blank">Hacker</a>
+    </br>
+    
+    &copy; 2019 Bangda
+    
+	
+	
+	
+  </p>
+  
+  <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+  <span id="busuanzi_container_site_pv">
+    Total viewer <span id="busuanzi_value_site_pv"></span>; 
+  </span>
+  
+  <span id="busuanzi_container_site_uv">
+    Total visitor <span id="busuanzi_value_site_uv"></span>
+  </span>
+	
+	
+  <div id="disqus_thread"></div>
+  <script>
+
+  /**
+   *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+   *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+   */
+   
+  var disqus_config = function () {
+	this.page.url = 'https://bangdasun.github.io{{ page.url }}';  // Replace PAGE_URL with your page's canonical URL variable
+	this.page.identifier = '{{ page.id }}'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+  };
+  
+  (function() { // DON'T EDIT BELOW THIS LINE
+  var d = document, s = d.createElement('script');
+  s.src = 'https://bangdasun-github-io.disqus.com/embed.js';
+  s.setAttribute('data-timestamp', +new Date());
+  (d.head || d.body).appendChild(s);
+  })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  
+  <script id="dsq-count-scr" src="//bangdasun-github-io.disqus.com/count.js" async></script>
+</footer>
+
+
+    
+  </div>
+</div>
+</body>
+</html>

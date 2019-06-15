@@ -1,0 +1,247 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Time Series Precision Recall | Bangda Sun | Practice makes perfect</title>
+
+  
+  <meta name="author" content="Bangda">
+  
+
+  
+  <meta name="description" content="Play with data">
+  
+
+  
+  
+  <meta name="keywords" content="Machine Learning,Model Evaluation,Time Series,Metrics,Anomaly Detection">
+  
+
+  <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <meta property="og:title" content="Time Series Precision Recall"/>
+
+  <meta property="og:site_name" content="Bangda Sun"/>
+
+  
+  <meta property="og:image" content="/favicon.ico"/>
+  
+
+  <link href="/favicon.ico" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Bangda Sun" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    jax: ["input/TeX","output/HTML-CSS"],
+    extensions: ["tex2jax.js","Safe.js"]
+  });
+  </script>
+<script type="text/javascript" async="async"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_CHTML,Safe">
+</script>
+</script>
+</head>
+
+
+<body>
+<div class="blog">
+  <div class="content">
+
+    <header>
+  <div class="site-branding">
+    <h1 class="site-title">
+      <a href="/">Bangda Sun</a>
+    </h1>
+    <p class="site-description">Practice makes perfect</p>
+  </div>
+  <nav class="site-navigation">
+    <ul>
+      
+        <li><a href="/">主页</a></li>
+      
+        <li><a href="/tags">标签</a></li>
+      
+    </ul>
+  </nav>
+</header>
+
+    <main class="site-main posts-loop">
+    <article>
+
+  
+    
+    <h3 class="article-title"><span>Time Series Precision Recall</span></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2019/02/22/33-time-series-precision-recall/" rel="bookmark">
+        <time class="entry-date published" datetime="2019-02-23T02:35:38.000Z">
+          2019-02-22
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <p>[Paper reading] Precision and Recall for Time Series</p>
+<a id="more"></a>
+<p>This <a href="https://arxiv.org/pdf/1803.03639.pdf" target="_blank" rel="external">paper</a> was proposed by my team leader one month ago, she thought we can apply these new metrics to our current Anomaly Detection project. I read it and think the ideas are very interesting therefore would like to make a note to summarize it. </p>
+<h3 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1. Introduction"></a>1. Introduction</h3><p>For anomaly detection tasks in real world, many of them are under time series scenarios. The anomalies are usually occur over a consecutive sequence of timestamps, in other words, the anomalies are <strong>range-based</strong> rather than <strong>point-based</strong>.  As you can image, it will looks like this:</p>
+<center><br>  <img src="/images/ts-precision-recall.PNG" style="width: 700px; height: 200px"> <br></center>
+
+<p>Therefore if the precision and recall are still calculated based on point-based, the real model performance might be misrepresented. The author of the paper proposed a new customized model which can be used to evaluate and compare the anomaly detection algorithms in time series scenarios. Also, outside the scope of model evaluation, this new model can be used as the objection function for ML algorithms’ training.</p>
+<h3 id="2-Problem-Motivation-and-Design-Goals"><a href="#2-Problem-Motivation-and-Design-Goals" class="headerlink" title="2. Problem Motivation and Design Goals"></a>2. Problem Motivation and Design Goals</h3><p>In point-based case, a predicted anomaly is either a TP (True Positive) or an FP (False Positive). In range-based case, it will take the range as the basic unit: a predicted anomaly range might partially overlap with real anomaly ranges, therefore it will be partially a TP or partially an FP at some time. As figure shows above, the overlap is important.</p>
+<p>New model has following design goals:</p>
+<ul>
+<li>Expressive: could capture overlap position and cardinality</li>
+<li>Flexible: support adjustable weights across multiple criteria for domain-specific needs</li>
+<li>Extensible: support inclusion of additional domain-specific criteria that don’t have prior knowledge</li>
+</ul>
+<p>Here the <strong>cardinality</strong> means: specific domain might care if each independent anomaly range is detected as a single unit or not. For example, when a real anomaly range is captured, the case that it overlap with multiple predicted anomaly range might be worse than overlap with a single predicted anomaly range. </p>
+<p>So compared with range-based, point-based only count the overlap size.</p>
+<h3 id="3-Precision-and-Recall-for-Ranges"><a href="#3-Precision-and-Recall-for-Ranges" class="headerlink" title="3. Precision and Recall for Ranges"></a>3. Precision and Recall for Ranges</h3><p>Suppose there is a set of real anomaly ranges \(R = \{R_{i}\}\) and a set of predicted anomaly ranges \(P = \{P_{j}\}\), \(N\) is the number of data points, \(N_{r}\) is the size of set \(R\) and \(N_{p}\) is the size of set \(P\).</p>
+<h4 id="3-1-Range-based-Recall"><a href="#3-1-Range-based-Recall" class="headerlink" title="3.1 Range-based Recall"></a>3.1 Range-based Recall</h4><p>The calculation of \(Recall_{T}(R, P)\) will iterates over the set of anomaly range \(R\), then average over the number of real anomaly ranges,</p>
+<p>\[<br>Recall_{T}(R, P) = \frac{1}{N_{r}} \sum^{N_{r}}_{i=1} Recall_{T}(R_{i}, P).<br>\]</p>
+<p>Then for \(Recall_{T}(R_{i}, P)\) the follow components are considered:</p>
+<ul>
+<li>Existence: catching the existence of an anomaly</li>
+<li>Size: size of correctly predicted portion of \(R_{i}\)</li>
+<li>Position: relative position of correctly predicted portion of \(R_{i}\)</li>
+<li>Cardinality: detecting \(R_{i}\) with single \(P_{j} \in P\) may be more valuable than multiple \(P\)</li>
+</ul>
+<p>Capture all of these as a sum of two reward terms weighed by \(\alpha\) and \((1 - \alpha)\),</p>
+<p>\[<br>Recall{T}(R_{i}, P) = \alpha ExistenceReward(R_{i}, P) + (1 - \alpha) OverlapReward(R_{i}, P),<br>\]</p>
+<p>where the overlap reward consists of <strong>size</strong> reward, <strong>position</strong> bias and <strong>cardinality</strong>. </p>
+<p>If a anomaly range is identified, i.e. \(|R_{i}\cap P_{j}|\geq 1\) across all \(P_{j}\in P\), then the existence reward will be satisfied, basically it is</p>
+<p>\[<br>ExistenceReward(R_{i}, P) = \left\{<br>\begin{aligned}<br>1,&amp; \text{ if } \sum^{N_{p}}_{i=1}|R_{i}\cap P_{j}|\geq 1 \\<br>0,&amp; \text{ otherwise}<br>\end{aligned}<br>\right.<br>\]</p>
+<p>And the overlap reward is consists of size, positive and cardinality. The paper gives the definitions,</p>
+<center><br>  <img src="/images/overlap_size-position_bias.PNG" style="width: 700px; height: 240px"> <br></center>
+
+<p>the cardinality term serves as a scaling factor for the rewards earned form overlap size and position bias,</p>
+<p>\[<br>CardinalityFactor(R_{i}, P) =  \left\{<br>\begin{aligned}<br>&amp;1,                             \text{ if }R_{i}\text{ overlaps with at most one }P_{j}\in P  \\<br>&amp;\gamma(R_{i}, P), \text{ otherwise}<br>\end{aligned}<br>\right.<br>\]</p>
+<p>Here \(\gamma() \leq 1\) which should be determined by specific domain. Then the overlap reward is</p>
+<p>\[<br>OverlapReward(R_{i}, P) = CardinalityFactor(R_{i}, P)\sum^{N_{p}}_{j=1}\omega\left(R_{i}, R_{i}\cap P_{j}, \delta \right).<br>\]</p>
+<p>Here both the weight \(\alpha\) and functions (\(\gamma(), \omega(), \delta()\)) are tuning parameters and could be customized in specific domain problems.</p>
+<h4 id="3-2-Range-based-Precision"><a href="#3-2-Range-based-Precision" class="headerlink" title="3.2 Range-based Precision"></a>3.2 Range-based Precision</h4><p>Similar with recall calculation, we have</p>
+<p>\[<br>Precision_{T}(R, P) = \frac{1}{N_{p}} \sum^{N_{p}}_{i=1} Precision_{T}(R, P_{i}).<br>\]</p>
+<p>For precision calculation there is no need for existence reward, since precision by definition emphasizes the prediction quanlity. Therefore,</p>
+<p>\[<br>Precision_{T}(R, P_{i}) = CardinalityFactor(P_{i}, R)\sum^{N_{r}}_{j=1}\omega\left(P_{i}, P_{i}\cap R_{j}, \delta \right).<br>\]</p>
+<h3 id="4-Experiments-Study-and-Conclusions"><a href="#4-Experiments-Study-and-Conclusions" class="headerlink" title="4. Experiments Study and Conclusions"></a>4. Experiments Study and Conclusions</h3><p>Next the authors ran a bunch of experiments with diverse datasets and anomaly detection algorithms, some results are listed here</p>
+<ul>
+<li>position bias sensitivity is captured by ranged-based recall, which cannot be captured by the point-based recall</li>
+<li>range-based precision is more range-aware than point-based precision and therefore can judge exactness of rang-based predictions more accurately</li>
+<li>range-based model’s expressiveness for recall and precision carries into combined metrics like F1 score</li>
+<li>new model’s flexibility and generality over the NAB scoring model</li>
+</ul>
+<p>Overall it illustrated that the new metrics are <strong>expressive</strong>, <strong>flexible</strong> and <strong>extensible</strong> with a number of tunable parameters.</p>
+
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+      
+
+    <span class="post-categories">
+      <i class="icon-categories"></i>
+        <a href="/categories/Machine-Learning/">Machine Learning</a>, <a href="/categories/Machine-Learning/Anomaly-Detection/">Anomaly Detection</a>
+    </span>
+    
+
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/Machine-Learning/">Machine Learning</a><a href="/tags/Model-Evaluation/">Model Evaluation</a><a href="/tags/Time-Series/">Time Series</a><a href="/tags/Metrics/">Metrics</a><a href="/tags/Anomaly-Detection/">Anomaly Detection</a>
+    </span>
+    
+
+    </div>
+
+    
+  </div>
+</article>
+
+  
+<section id="comment">
+  
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+  
+</section>
+
+
+
+    </main>
+
+    <footer class="site-footer">
+  <p class="site-info">
+    Proudly powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and
+    Theme by <a href="https://github.com/CodeDaraW/Hacker" target="_blank">Hacker</a>
+    </br>
+    
+    &copy; 2019 Bangda
+    
+	
+	
+	
+  </p>
+  
+  <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+  <span id="busuanzi_container_site_pv">
+    Total viewer <span id="busuanzi_value_site_pv"></span>; 
+  </span>
+  
+  <span id="busuanzi_container_site_uv">
+    Total visitor <span id="busuanzi_value_site_uv"></span>
+  </span>
+	
+	
+  <div id="disqus_thread"></div>
+  <script>
+
+  /**
+   *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+   *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+   */
+   
+  var disqus_config = function () {
+	this.page.url = 'https://bangdasun.github.io{{ page.url }}';  // Replace PAGE_URL with your page's canonical URL variable
+	this.page.identifier = '{{ page.id }}'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+  };
+  
+  (function() { // DON'T EDIT BELOW THIS LINE
+  var d = document, s = d.createElement('script');
+  s.src = 'https://bangdasun-github-io.disqus.com/embed.js';
+  s.setAttribute('data-timestamp', +new Date());
+  (d.head || d.body).appendChild(s);
+  })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  
+  <script id="dsq-count-scr" src="//bangdasun-github-io.disqus.com/count.js" async></script>
+</footer>
+
+
+    
+  </div>
+</div>
+</body>
+</html>

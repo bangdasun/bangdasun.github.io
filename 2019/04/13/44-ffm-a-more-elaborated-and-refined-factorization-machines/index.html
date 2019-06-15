@@ -1,0 +1,230 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>FFM - More Elaborated and Refined Factorization Machines | Bangda Sun | Practice makes perfect</title>
+
+  
+  <meta name="author" content="Bangda">
+  
+
+  
+  <meta name="description" content="Play with data">
+  
+
+  
+  
+  <meta name="keywords" content="Machine Learning,Recommender Sys,Factorization Models,CTR">
+  
+
+  <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <meta property="og:title" content="FFM - More Elaborated and Refined Factorization Machines"/>
+
+  <meta property="og:site_name" content="Bangda Sun"/>
+
+  
+  <meta property="og:image" content="/favicon.ico"/>
+  
+
+  <link href="/favicon.ico" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Bangda Sun" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    jax: ["input/TeX","output/HTML-CSS"],
+    extensions: ["tex2jax.js","Safe.js"]
+  });
+  </script>
+<script type="text/javascript" async="async"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_CHTML,Safe">
+</script>
+</script>
+</head>
+
+
+<body>
+<div class="blog">
+  <div class="content">
+
+    <header>
+  <div class="site-branding">
+    <h1 class="site-title">
+      <a href="/">Bangda Sun</a>
+    </h1>
+    <p class="site-description">Practice makes perfect</p>
+  </div>
+  <nav class="site-navigation">
+    <ul>
+      
+        <li><a href="/">主页</a></li>
+      
+        <li><a href="/tags">标签</a></li>
+      
+    </ul>
+  </nav>
+</header>
+
+    <main class="site-main posts-loop">
+    <article>
+
+  
+    
+    <h3 class="article-title"><span>FFM - More Elaborated and Refined Factorization Machines</span></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2019/04/13/44-ffm-a-more-elaborated-and-refined-factorization-machines/" rel="bookmark">
+        <time class="entry-date published" datetime="2019-04-13T20:13:23.000Z">
+          2019-04-13
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <p>[Paper reading]: Field-aware Factorization Machines for CTR Prediction</p>
+<a id="more"></a>
+<p>Linear models (logistic regression, factorization machines) are widely used in CTR prediction tasks. This <a href="https://www.csie.ntu.edu.tw/~cjlin/papers/ffm.pdf" target="_blank" rel="external">paper</a> proposes <strong>Field-aware factorization machines</strong>, which is a variant of factorization machines, it is famous for winning several CTR prediction competitions on, the key component is <strong>field</strong>.</p>
+<h3 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1. Introduction"></a>1. Introduction</h3><p>Logistic regression is widely used in CTR prediction task due to it’s simplicity and high efficiency. Given dataset \( (\mathbf{x}_{i}, y_{i})\) for \(i = 1,2,\cdots,m\), where label \(y_{i}\in\{-1, +1\}\), the logistic regression is learned by minimizing <strong>logistic loss (a.k.a log loss or cross entropy loss)</strong>:</p>
+<p>\[<br>\mathbf{w} = \arg\min_{\mathbf{w}} \sum^{m}_{i=1}\log\left(1 + \exp(-y_{i}\phi_{\text{LM}}(\mathbf{w}, \mathbf{x}_{i}))\right) + \frac{\lambda}{2}||\mathbf{w}||^{2}_{2},<br>\]</p>
+<p>where \(\phi_{\text{LM}}(\mathbf{w}, \mathbf{x}_{i}) = \mathbf{x}_{i}^{\top}\mathbf{w}\).</p>
+<p>Well, here only raw features are used for modeling, each feature are assumed to be independent. However, <strong>feature interactions (a.k.a feature conjunctions)</strong> are crucial for CTR prediction. Brute forcely enumerate all combinations of feature interactions or using polynomial kernel SVM could work, but there is a more efficient model called <strong>factorization machines</strong> which factorize the interaction matrix.</p>
+<p>A variant of FM called <strong>pairwise interaction tensor factorization (PITF)</strong> was proposed earlier for personalized tag recommendation task, it not only consider the interactin between user and item, but also tag: (user, item), (user, tag) and (item, tag). FFM is a more general predictor in doing this.</p>
+<h3 id="2-FFM"><a href="#2-FFM" class="headerlink" title="2. FFM"></a>2. FFM</h3><h4 id="2-1-Motivation-and-Basis"><a href="#2-1-Motivation-and-Basis" class="headerlink" title="2.1 Motivation and Basis"></a>2.1 Motivation and Basis</h4><p>As mentioned before, <strong>Poly2</strong> and <strong>FM</strong> with \(n\) features model 2-way feature interactions as follow:</p>
+<p>\[<br>\begin{aligned}<br>\phi_{\text{Poly2}}(\mathbf{w}, \mathbf{x}) &amp;= \sum^{n}_{j_{1}=1}\sum^{n}_{j_{2}=j_{1} +1}w_{j_{1}j_{2}}x_{j_{1}}x_{j_{2}} \\<br>\phi_{\text{FM}}(\mathbf{w}, \mathbf{x}) &amp;= \sum^{n}_{j_{1}=1}\sum^{n}_{j_{2}=j_{1} +1}\langle w_{j_{1}}, w_{j_{2}}\rangle x_{j_{1}}x_{j_{2}} \\<br>\end{aligned}<br>\]</p>
+<p>Here is the example data, where “+” and “-“ represents the number of clicked and unclicked.</p>
+<center><br>  <img src="/images/ctr-data-example.PNG" style="width: 400px; height: 250px"> <br></center>
+
+<p>For most CTR datasets like this, features can be grouped into <strong>fields</strong>. In example data, feature <em>ESPN</em>, <em>Vogue</em>, <em>NBC</em> are all belong to field <em>Publisher</em>; feature <em>Nike</em>, <em>Gucci</em>, <em>Adidas</em> are all belong to field <em>Advertiser</em>. And FFM incorporates these field informations. If one sample is: <code>Cliked Publisher: ESPN, Advertiser: Nike, Gender: Male</code>, FM models the feature interaction like follows:<br>\[<br>\langle \mathbf{w}_{\text{ESPN}}, \mathbf{w}_{\text{Nike}} \rangle + \langle \mathbf{w}_{\text{ESPN}}, \mathbf{w}_{\text{Male}} \rangle + \langle \mathbf{w}_{\text{Nike}}, \mathbf{w}_{\text{Male}} \rangle,<br>\]</p>
+<p>which are <strong>all combinations of dot products of row “ESPN”, “Nike” and “Male” in latent factor matrix</strong> \(\mathbf{W}\in R^{n\times k}\).<br>In FFM, unlike FM that each feature only has one latent factor vector, it lets each feature has several latent factor vectors, depends on fields:</p>
+<p>\[<br>\langle \mathbf{w}_{\text{ESPN}, A}, \mathbf{w}_{\text{Nike}, P} \rangle + \langle \mathbf{w}_{\text{ESPN}, G}, \mathbf{w}_{\text{Male}, P} \rangle + \langle \mathbf{w}_{\text{Nike}, G}, \mathbf{w}_{\text{Male}, A} \rangle,<br>\]</p>
+<p>therefore instead of use one latent factor matrix, here there are <strong>three latent factor matrices: (Publisher, Advertiser), (Publisher, Gender), (Advertiser, Gender)</strong>. This is based on the assumption that: <strong>interactions from different fields could be different</strong>. Therefore:</p>
+<p>\[<br>\phi_{\text{FFM}}(\mathbf{w}, \mathbf{x}) = \sum^{n}_{j_{1}=1}\sum^{n}_{j_{2} = j_{1}+1}\langle \mathbf{w}_{j_{1}f_{2}}, \mathbf{w}_{j_{2}f_{1}} \rangle x_{j_{1}} x_{j_{2}},<br>\]</p>
+<p>where \(f_{1}\) and \(f_{2}\) are respectively the fields of \(j_{1}\) and \(j_{2}\). If the latent factor is \(k\), the number of parameters in feature interactionsof FM is \(nk\), with time complexity \(O(nk)\); the number of parameters in feature interactions of FFM is \(fnk\), with time complexity \(O(n^{2}k)\), there \(f\) is the number of fields. However, since in FFM each latent vector only needs to learn the effect with a specific field, usually</p>
+<p>\[<br>k_{\text{FFM}} \ll k_{\text{FM}}.<br>\]</p>
+<h4 id="2-2-Incorporate-Field-Information"><a href="#2-2-Incorporate-Field-Information" class="headerlink" title="2.2 Incorporate Field Information"></a>2.2 Incorporate Field Information</h4><p>For categorical features, the fields are usually easy to identify based on the format of data. For numerical features, a naive way is to treat each feature as a dummy field, but it is possible there are too many unique values. Another possible way is to discretize each numerical feature to categorical one, in other words use historgram to approxmiate the exact distribution.</p>
+<p>There are also cases that all features are all in one field, this is the situation happens in NLP. The only field is the text, say “sentence”. If there is only one field then FFM is actually reduced to FM.</p>
+<h3 id="3-Experiments-and-Conclusions"><a href="#3-Experiments-and-Conclusions" class="headerlink" title="3. Experiments and Conclusions"></a>3. Experiments and Conclusions</h3><p>Experiments are mainly done based on two CTR kaggle competition datasets <code>Criteo</code> and <code>Avazu</code>, and the comparisons are among three models: logistic regression, FM and FFM. The results show that:</p>
+<ul>
+<li>since logistic regression is a convex optimization problem, therefore different optimization methods should generate same result <strong>theoretically</strong>, however they are not; therefore indicate that stop condition of optimization methods can affect the performance of model.</li>
+<li>FFM outperforms other models in terms of log loss, but it also takes longer training time.</li>
+<li>FM is a good balance between log loss and speed.</li>
+</ul>
+<p>Finally a guideline of applying FFM on different kinds of datasets is summarized:</p>
+<ul>
+<li>FFM should be effective for datasets that contain categorical features and are transformed to binary features.</li>
+<li>If the transformed dataset is not sparse enough, FFM seem to bring less benefit.</li>
+<li>It is more difficule to apply FFM on numerical datasets.</li>
+</ul>
+
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+      
+
+    <span class="post-categories">
+      <i class="icon-categories"></i>
+        <a href="/categories/Machine-Learning/">Machine Learning</a>
+    </span>
+    
+
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/Machine-Learning/">Machine Learning</a><a href="/tags/Recommender-Sys/">Recommender Sys</a><a href="/tags/Factorization-Models/">Factorization Models</a><a href="/tags/CTR/">CTR</a>
+    </span>
+    
+
+    </div>
+
+    
+  </div>
+</article>
+
+  
+<section id="comment">
+  
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+  
+</section>
+
+
+
+    </main>
+
+    <footer class="site-footer">
+  <p class="site-info">
+    Proudly powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and
+    Theme by <a href="https://github.com/CodeDaraW/Hacker" target="_blank">Hacker</a>
+    </br>
+    
+    &copy; 2019 Bangda
+    
+	
+	
+	
+  </p>
+  
+  <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+  <span id="busuanzi_container_site_pv">
+    Total viewer <span id="busuanzi_value_site_pv"></span>; 
+  </span>
+  
+  <span id="busuanzi_container_site_uv">
+    Total visitor <span id="busuanzi_value_site_uv"></span>
+  </span>
+	
+	
+  <div id="disqus_thread"></div>
+  <script>
+
+  /**
+   *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+   *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+   */
+   
+  var disqus_config = function () {
+	this.page.url = 'https://bangdasun.github.io{{ page.url }}';  // Replace PAGE_URL with your page's canonical URL variable
+	this.page.identifier = '{{ page.id }}'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+  };
+  
+  (function() { // DON'T EDIT BELOW THIS LINE
+  var d = document, s = d.createElement('script');
+  s.src = 'https://bangdasun-github-io.disqus.com/embed.js';
+  s.setAttribute('data-timestamp', +new Date());
+  (d.head || d.body).appendChild(s);
+  })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  
+  <script id="dsq-count-scr" src="//bangdasun-github-io.disqus.com/count.js" async></script>
+</footer>
+
+
+    
+  </div>
+</div>
+</body>
+</html>

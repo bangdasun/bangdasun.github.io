@@ -1,0 +1,248 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>First Journey through Kaggle | Bangda Sun | Practice makes perfect</title>
+
+  
+  <meta name="author" content="Bangda">
+  
+
+  
+  <meta name="description" content="Play with data">
+  
+
+  
+  
+  <meta name="keywords" content="Machine Learning,Kaggle">
+  
+
+  <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <meta property="og:title" content="First Journey through Kaggle"/>
+
+  <meta property="og:site_name" content="Bangda Sun"/>
+
+  
+  <meta property="og:image" content="/favicon.ico"/>
+  
+
+  <link href="/favicon.ico" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Bangda Sun" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    jax: ["input/TeX","output/HTML-CSS"],
+    extensions: ["tex2jax.js","Safe.js"]
+  });
+  </script>
+<script type="text/javascript" async="async"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_CHTML,Safe">
+</script>
+</script>
+</head>
+
+
+<body>
+<div class="blog">
+  <div class="content">
+
+    <header>
+  <div class="site-branding">
+    <h1 class="site-title">
+      <a href="/">Bangda Sun</a>
+    </h1>
+    <p class="site-description">Practice makes perfect</p>
+  </div>
+  <nav class="site-navigation">
+    <ul>
+      
+        <li><a href="/">主页</a></li>
+      
+        <li><a href="/tags">标签</a></li>
+      
+    </ul>
+  </nav>
+</header>
+
+    <main class="site-main posts-loop">
+    <article>
+
+  
+    
+    <h3 class="article-title"><span>First Journey through Kaggle</span></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2017/08/13/5-first-journey-through-kaggle/" rel="bookmark">
+        <time class="entry-date published" datetime="2017-08-13T17:43:17.000Z">
+          2017-08-13
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <p>Comments from a kaggle novice</p>
+<script src="/scripts/mathjax-config.js"></script>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+<a id="more"></a>
+<p>Just spent the last five weeks (nights and weekends to be precise) on two kaggle competitions. I think it’s a good point to stop by and summarize what I did and learned for now. Really nice experience, especially when I heard the sound of disk spin – felt data’s coming.</p>
+<p><img src="/images/watching.jpg" style="width: 300px; height: 200px"> </p>
+<h3 id="1-Motivation"><a href="#1-Motivation" class="headerlink" title="1. Motivation"></a>1. Motivation</h3><p>Kaggle is a nice place to interact machine learning experts in different countries and backgrounds. You can really learn a lot from the kernels and discussion panel. What I do is analyzing data and modeling by myself until I have no idea about improvement, then I will refer to the kernels. Since it is helpful to me to think independently and critically. </p>
+<p>I have some mathematical modeling contests experiences before, therefore I’m very comfortable with modeling, predicting, analyzing. Competitions in kaggle are more data oriented – you win if you family with the data better than others. On top of that, I’ve taken courses like statistical computing, machine learning and some programming courses as well as some projects, there is no need to start from the very beginning point. I can just fetch the data and start working on that.</p>
+<h3 id="2-Play-with-Data"><a href="#2-Play-with-Data" class="headerlink" title="2. Play with Data"></a>2. Play with Data</h3><p>The general procedure of a kaggle competition can be decomposed to these parts:</p>
+<blockquote>
+<p><strong>Exploration Data Analysis (EDA)</strong>;<br> <strong>Feature Engineering</strong>;<br> <strong>Modeling</strong>;<br> <strong>Model Evaluations and Improvement</strong>.</p>
+</blockquote>
+<p>Then submit the result and check the Leaderboard; if you’re not satisfied with the score you can jump back to any step and do it again.</p>
+<h3 id="3-EDA"><a href="#3-EDA" class="headerlink" title="3. EDA"></a>3. EDA</h3><p>EDA usually consists of <strong>variables interpretations</strong> and <strong>descriptive statistics</strong> accompanied by <strong>data visualizations</strong>. Here are some general ways I can summarize:</p>
+<blockquote>
+<ol>
+<li>Check the <strong>data types</strong>: numerical variables and categorical variables. Sometimes categorical variables use numbers but they are still discrete, and they can also classified as ordered / non-ordered variables.</li>
+<li>Get familiar with the <strong>response variable</strong> (target variable): for regression problem, check the distributions, ideally it’s not skewed; for classification problem, check the proportion of the different classes (binary case or multiple case), sometimes the classes could be imbalanced.</li>
+<li>Read the <strong>data description</strong> files carefully, and try to interpret variables as much as possible (google them if you still don’t know too much about that from description files), I know it’s time consuming but you will surely get benefits from it.</li>
+<li>Check <strong>missing value</strong> in features (predictors), some missing cases are random (we can use mean/median/mode/random number generating to impute) while some have certain pattern (we need find the relationship with other variables, applying some algorithms to impute). Sometimes visualize observations and variables would be helpful.</li>
+<li>Use <strong>correlation</strong> matrix (visualize it as heatmap), pair plot to get the general idea of correlation, and use correlation coefficients with caution when there are categorical variables.</li>
+<li><strong>Collinearity</strong> could exist when there are a lot of features, this would probably make the truly important variables looks ‘unimportant’ and destroy your model.</li>
+<li>Check the <strong>skewness</strong> of variables, this is similar to point (2).</li>
+<li><strong>Outliers</strong>, you can delete them or treat them carefully, based on your problem background.</li>
+<li>For <strong>visualization</strong>, you can get some basic idea from my <a href="https://bangdasun.github.io/2017/07/04/data-visualization-ggplot2-i/" target="_blank" rel="external">previous blog</a>. Tricks like facet, positioning (in barplot), conditioning plot are usually used when you try to visualize multiple variables simultaneously. <code>ggplot2</code> and <code>seaborn</code> are your best friends to do this since you can place different variables as aesthetics.</li>
+</ol>
+</blockquote>
+<p>Sometimes the problem cannot be simply classified, for instance some competitions are seeking solutions of detect some pattern from images.</p>
+<h3 id="4-Feature-Engineering"><a href="#4-Feature-Engineering" class="headerlink" title="4. Feature Engineering"></a>4. Feature Engineering</h3><p>Is the feature engineering important? The answer is YES! yes yes yes …</p>
+<p>There are several goals to be achieved in feature engineering:</p>
+<blockquote>
+<ol>
+<li>Create <strong>new</strong> features, you can <strong>extract</strong> from already existing variables; you can <strong>synthesize</strong> several variables (based on variables’ meaning; interaction effect; PCA, etc); you can do <strong>transformation</strong> (logarithm, Box-Cox on skewed variables; normalize and standardize for extreme values; higher order terms for non-linear relationship). </li>
+<li>Features <strong>selection</strong>, for collinearity you probably want drop some variables since other highly correlated variables still could give the information; Some variables don’t have too much variation they do less contribution to your prediction. Algorithms like random forest, boosting could return the variable importance based on error reduction.</li>
+<li><strong>Encoding</strong>, this is widely used for categorical variables. You can convert them into dummy variables (one-hot encoding) for non-ordered variables; you can convert them into positive integers for ordered variables.</li>
+</ol>
+</blockquote>
+<h3 id="5-Modeling-and-Evaluation"><a href="#5-Modeling-and-Evaluation" class="headerlink" title="5. Modeling and Evaluation"></a>5. Modeling and Evaluation</h3><p>There could be two categories of model, one is models like linear regression: easy to interpret, we can get many information by taking experiments on that; one is like random forest, boosting and neural networks, they are more likely to be ‘black boxes’.</p>
+<p>We should keep the assumptions of the models/algorithms in our mind all the time, like <strong>normal distribution</strong>; <strong>i.i.d.</strong>. This could always be our entry point make improvement: we might search for other methods that have more generalized assumptions.</p>
+<p>Techniques like <strong>cross-validation</strong> (model evaluation and parameters tuning), <strong>regularization</strong>, <strong>bootstrap</strong> are widely used, they are our old friends in machine learning courses, so I won’t discuss much of that here :-).</p>
+<p>Here is one technique I want to mention – <strong>model stacking</strong>. It makes good use of <strong>out-of-fold</strong> data and can be always a way to improve your current / single model (in kaggle at least), you create new friends for your model that they can work together. I will discuss this idea of modeling in a separate blog later.</p>
+<h3 id="6-Summary"><a href="#6-Summary" class="headerlink" title="6. Summary"></a>6. Summary</h3><p>I just get a quick summary here and hopefully I will post more details of my two competitions in the later blogs. </p>
+<p>In addition, I also have some thoughts after I read some kernels:</p>
+<ul>
+<li>As a statistics/mathematics background person, I was surprised to see some kagglers take 3rd/4th order term to all numeric variables…</li>
+</ul>
+<p><img src="/images/confusion.png" style="width: 400px; height: 350px"> </p>
+<p>… and the PB score is really good. Cool.</p>
+<ul>
+<li>Include all variables they created into models, some models have more than 200 variables, I think there could be collinearities…</li>
+</ul>
+
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+      
+
+    <span class="post-categories">
+      <i class="icon-categories"></i>
+        <a href="/categories/Machine-Learning/">Machine Learning</a>, <a href="/categories/Machine-Learning/Kaggle/">Kaggle</a>
+    </span>
+    
+
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/Machine-Learning/">Machine Learning</a><a href="/tags/Kaggle/">Kaggle</a>
+    </span>
+    
+
+    </div>
+
+    
+  </div>
+</article>
+
+  
+<section id="comment">
+  
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+  
+</section>
+
+
+
+    </main>
+
+    <footer class="site-footer">
+  <p class="site-info">
+    Proudly powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and
+    Theme by <a href="https://github.com/CodeDaraW/Hacker" target="_blank">Hacker</a>
+    </br>
+    
+    &copy; 2019 Bangda
+    
+	
+	
+	
+  </p>
+  
+  <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+  <span id="busuanzi_container_site_pv">
+    Total viewer <span id="busuanzi_value_site_pv"></span>; 
+  </span>
+  
+  <span id="busuanzi_container_site_uv">
+    Total visitor <span id="busuanzi_value_site_uv"></span>
+  </span>
+	
+	
+  <div id="disqus_thread"></div>
+  <script>
+
+  /**
+   *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+   *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+   */
+   
+  var disqus_config = function () {
+	this.page.url = 'https://bangdasun.github.io{{ page.url }}';  // Replace PAGE_URL with your page's canonical URL variable
+	this.page.identifier = '{{ page.id }}'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+  };
+  
+  (function() { // DON'T EDIT BELOW THIS LINE
+  var d = document, s = d.createElement('script');
+  s.src = 'https://bangdasun-github-io.disqus.com/embed.js';
+  s.setAttribute('data-timestamp', +new Date());
+  (d.head || d.body).appendChild(s);
+  })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  
+  <script id="dsq-count-scr" src="//bangdasun-github-io.disqus.com/count.js" async></script>
+</footer>
+
+
+    
+  </div>
+</div>
+</body>
+</html>

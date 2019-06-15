@@ -1,0 +1,256 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Factorization Machine - A General Predictor for Sparse Data | Bangda Sun | Practice makes perfect</title>
+
+  
+  <meta name="author" content="Bangda">
+  
+
+  
+  <meta name="description" content="Play with data">
+  
+
+  
+  
+  <meta name="keywords" content="Machine Learning,Recommender Sys,Factorization Models">
+  
+
+  <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <meta property="og:title" content="Factorization Machine - A General Predictor for Sparse Data"/>
+
+  <meta property="og:site_name" content="Bangda Sun"/>
+
+  
+  <meta property="og:image" content="/favicon.ico"/>
+  
+
+  <link href="/favicon.ico" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Bangda Sun" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    jax: ["input/TeX","output/HTML-CSS"],
+    extensions: ["tex2jax.js","Safe.js"]
+  });
+  </script>
+<script type="text/javascript" async="async"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_CHTML,Safe">
+</script>
+</script>
+</head>
+
+
+<body>
+<div class="blog">
+  <div class="content">
+
+    <header>
+  <div class="site-branding">
+    <h1 class="site-title">
+      <a href="/">Bangda Sun</a>
+    </h1>
+    <p class="site-description">Practice makes perfect</p>
+  </div>
+  <nav class="site-navigation">
+    <ul>
+      
+        <li><a href="/">主页</a></li>
+      
+        <li><a href="/tags">标签</a></li>
+      
+    </ul>
+  </nav>
+</header>
+
+    <main class="site-main posts-loop">
+    <article>
+
+  
+    
+    <h3 class="article-title"><span>Factorization Machine - A General Predictor for Sparse Data</span></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2019/04/07/43-factorization-machine-a-general-predictor-for-sparse-data/" rel="bookmark">
+        <time class="entry-date published" datetime="2019-04-07T18:49:28.000Z">
+          2019-04-07
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <p>[Paper reading]: Factorization Machines</p>
+<a id="more"></a>
+<h3 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1. Introduction"></a>1. Introduction</h3><p>In this <a href="https://www.csie.ntu.edu.tw/~b97053/paper/Rendle2010FM.pdf" target="_blank" rel="external">paper</a>, a new model class Factorization Machine is proposed with several advantages:</p>
+<ul>
+<li>Allow parameter estimation (for feature interaction) under huge sparse data (like recommender systems), where SVMs fail to learn reliable hyperplane;</li>
+<li>Can be optimized in primal form (rather than SVM to be solved in dual form) in linear time;</li>
+<li>As a general predictor to work with any real valued features rather than other factorization models (SVD++, PITF, FPMC, etc) that have restrictions on inputs; and actually by using right indicators in the input feature vectors, FM are identical or very similar to many of the specialized models that are only applicable only for specific task.</li>
+</ul>
+<h3 id="2-Prediction-Under-Sparsity"><a href="#2-Prediction-Under-Sparsity" class="headerlink" title="2. Prediction Under Sparsity"></a>2. Prediction Under Sparsity</h3><p>General supervised learning task is learn a mapping or function: \(f: x \in R^{n}\rightarrow y\). Here the problem need to deal with is high sparsity in data, this usually raised in domains with categorical features take high dimensions like ID features. For example, on movie retail website, it records which user \(u\in U\) rates a movie \(i\in I\) with rating \(r\) from 1 to 5, specifically:</p>
+<p>\[<br>\begin{aligned}<br>&amp; U = \{\text{Alice }(A), \text{Bob }(B), \text{Charlie }(C), \cdots\} \\<br>&amp; I = \{\text{Titanic }(TI), \text{Notting Hill }(NH), \cdots\}<br>\end{aligned}<br>\]</p>
+<p>the task is to predict rating.</p>
+<center><br>  <img src="/images/fm-example.PNG" style="width: 600px; height: 250px"> <br></center>
+
+<p>As you can see user ID and movie ID are encoded as one-hot vector and high sparsity is very easy to notice.</p>
+<h4 id="2-1-Factorization-Machines-FM"><a href="#2-1-Factorization-Machines-FM" class="headerlink" title="2.1 Factorization Machines (FM)"></a>2.1 Factorization Machines (FM)</h4><p>The explicit form of FM is as follows (degree \(d=2\): only consider 2-way feature interactions):</p>
+<p>\[<br>\hat{y}(\mathbf{x}) = w_{0} + \sum^{n}_{i=1}w_{i}x_{i} + \sum^{n}_{i=1}\sum^{n}_{j=i+1}\langle\mathbf{v}_{i}, \mathbf{v}_{j} \rangle x_{i}x_{j},<br>\]</p>
+<p>where \(n\) is the number of input features, the model consists of a bias (constant) term \(w_{0}\), linear weights \(\mathbf{w}\in R^{n}\) (just like linear regression) and interaction weights \(\mathbf{V}\in R^{n\times k}\) and </p>
+<p>\[<br>\langle\mathbf{v}_{i}, \mathbf{v}_{j} \rangle = \sum^{k}_{f=1}v_{if}v_{fj},<br>\]</p>
+<p>is the dot product (inner product) of row \(i\) and row \(j\) of \(\mathbf{V}\). This is <strong>key</strong> part of FM. For other models like linear regression, if we want to model on 2-way feature interactions, this part would be </p>
+<p>\[<br>\sum^{n}_{i=1}\sum^{n}_{j=i+1}w_{ij}^{(2)}x_{i}x_{j}<br>\]</p>
+<p>where \(w^{(2)}_{ij}\) is the \((i, j)\)th element of \(\mathbf{W}^{(2)}\in R^{n\times n}\). Therefore, FM models <strong>feature interactions by factorizing interaction weight matrix</strong>: for positive definite matrix \(\mathbf{W}\) there exists a matrix \(\mathbf{V}\) such that \(\mathbf{W} = \mathbf{V}\mathbf{V}^{\top}\), hence for sufficient large \(k\) FM can express any interaction matrix.</p>
+<h4 id="2-2-Parameter-Estimation-Under-Sparsity"><a href="#2-2-Parameter-Estimation-Under-Sparsity" class="headerlink" title="2.2 Parameter Estimation Under Sparsity"></a>2.2 Parameter Estimation Under Sparsity</h4><p>In sparse settings there is usually not enough data to estimate interactions between variables directly and independently. And Factorization Machines can estimate interactions well because they <strong>break the independence of the interaction parameters by factorizing them</strong>. This means that <strong>data for one interaction helps also to esimate the parameters for related interactions</strong>. </p>
+<p>For example, the direct estimation for interaction between feature \(I(user = \text{Alice})\) and feature \(I(movie = \text{Star Trek})\) is 0, since <em>Alice</em> never seen <em>Star Trek</em> before. FM will estimate \(\langle\mathbf{v}_{A},\mathbf{v}_{ST} \rangle\), </p>
+<ul>
+<li><em>Bob</em> and <em>Charlie</em> have similar interaction with <em>Star War</em>, therefore \(\langle\mathbf{v}_{B},\mathbf{v}_{SW} \rangle\) and  \(\langle\mathbf{v}_{C},\mathbf{v}_{SW} \rangle\) are similar; </li>
+<li><em>Alice</em> will have different factor vector \(\mathbf{v}_{A}\) from <em>Charlie</em> \(\mathbf{v}_{C}\) because she has different interactions with factors of <em>Titanic</em> and <em>Star Wars</em>;</li>
+<li>factor vector of <em>Star Trek</em> are likely to be similar to be one of <em>Star Wars</em> because <em>Bob</em> has similar interactions for both movies.</li>
+</ul>
+<p>In total, the dot product of factor vector \(\mathbf{v}_{A}\) and \(\mathbf{v}_{ST}\) will be similar to one of <em>Alice</em> and <em>Star Wars</em></p>
+<h4 id="2-3-Computation-and-Learning"><a href="#2-3-Computation-and-Learning" class="headerlink" title="2.3 Computation and Learning"></a>2.3 Computation and Learning</h4><p>The time complexity to directly compute FM is \(O\left(kn^{2}\right)\), by reformulating this it could be reduced to linear (\(O(kn)\)), only look at the interaction part:</p>
+<p>\[<br>\begin{aligned}<br> &amp;\sum^{n}_{i=1}\sum^{n}_{j=i+1} \langle \mathbf{v}_{i}, \mathbf{v}_{j} \rangle x_{i}x_{j} \\<br>=&amp;\frac{1}{2}\sum^{n}_{i=1}\sum^{n}_{j=1} \langle \mathbf{v}_{i}, \mathbf{v}_{j} \rangle  x_{i}x_{j} - \frac{1}{2}\sum^{n}_{i=1}\langle \mathbf{v}_{i}, \mathbf{v}_{i} \rangle x_{i}x_{i} \\<br>=&amp;\frac{1}{2}\left(\sum^{n}_{i=1}\sum^{n}_{j=1}\sum^{k}_{f=1}v_{if}v_{fj}x_{i}x_{j} - \sum^{n}_{i=1}\sum^{k}_{f=1}v_{if}^{2}x_{i}^{2}\right) \\<br>=&amp; \frac{1}{2}\sum^{k}_{f=1}\left(\left(\sum^{n}_{i=1}v_{if}x_{i}\right)\left(\sum^{n}_{j=1}v_{jf}x_{j}\right) - \sum^{n}_{i=1}v_{if}^{2}x_{i}^{2}\right) \\<br>=&amp;\frac{1}{2}\sum^{k}_{f=1}\left(\left(\sum^{n}_{i=1}v_{if}x_{i}\right)^{2} - \sum^{n}_{i=1}v_{if}^{2}x_{i}^{2}\right).<br>\end{aligned}<br>\]</p>
+<p>And the gradient of FM is:</p>
+<p>\[<br>\frac{\partial \hat{y}(\mathbf{x})}{\partial \theta} =<br>\left\{<br>\begin{aligned}<br>&amp;1,&amp;\text{if }\theta\text{ is }w_{0} \\<br>&amp; x_{i},&amp;\text{if }\theta\text{ is }w_{i} \\<br>&amp; x_{i}\sum^{n}_{j=1}v_{jf}x_{j} - v_{if}x_{i}^{2}, &amp;\text{if }\theta\text{ is }v_{if}<br>\end{aligned}\right.~.<br>\]</p>
+<h3 id="3-Compared-with-SVM"><a href="#3-Compared-with-SVM" class="headerlink" title="3. Compared with SVM"></a>3. Compared with SVM</h3><p>The explicit form of SVM is as follows:</p>
+<p>\[<br>\hat{y}(\mathbf{x}) = \langle \phi(\mathbf{x}), \mathbf{w} \rangle,<br>\]</p>
+<p>where \(\phi(\cdot)\) is a mapping from raw feature space \(R^{n}\) into a more complex space \(\mathcal{F}\), it is related to the kernel with</p>
+<p>\[<br>K: R^{n}\times R^{n}\rightarrow R, ~K(\mathbf{x}, \mathbf{z}) = \langle\phi(\mathbf{x}),\phi(\mathbf{z}) \rangle.<br>\]</p>
+<p>When using linear kernel: \(K(\mathbf{x}, \mathbf{z}) = 1 + \langle \mathbf{x}, \mathbf{z} \rangle\), and SVM is rewritten as:</p>
+<p>\[<br>\hat{y}(\mathbf{x}) = w_{0} + \sum^{n}_{i=1}w_{i}x_{i},<br>\]</p>
+<p>and it’s obvious that a linear SVM is equivalent to a FM with \(d=1\).</p>
+<p>When using polynomial kernel: \(K(\mathbf{x}, \mathbf{z}) = (1 + \langle \mathbf{x}, \mathbf{z} \rangle)^{d}\), suppose \(d=2\), SVM is rewritten as:</p>
+<p>\[<br>\hat{y}(\mathbf{x}) = w_{0} + \sqrt{2}\sum^{n}_{i=1}w_{i}x_{i} + \sum^{n}_{i=1}w_{ii}^{(2)}x_{ii}^{2} + \sqrt{2}\sum^{n}_{i=1}\sum^{n}_{j=i+1}w_{ij}^{(2)}x_{i}x_{j}.<br>\]</p>
+<p>The main difference between SVM and FM is the parametrization: all interaction parameters \(w_{ij}\) of SVM are completely independent; in contrast, FM factorizes interaction parameters, thus \(\langle\mathbf{v}_{i},\mathbf{v}_{j} \rangle\) and \(\langle\mathbf{v}_{i}, \mathbf{v}_{l} \rangle\) depend on each other as they overlap and share parameters (\(\mathbf{v}_{i}\)).</p>
+<p>In summary:</p>
+<ul>
+<li>The dense parametrization of SVM requires direction observations for the interactions, which is often missing in sparse setting like recommender systems; parameters of FM can be estimated well even under huge sparsity;</li>
+<li>FM can be directly learned in the primal; non-linear kernel SVM are usually learned in the dual;</li>
+<li>Model form of FM is independent of training data; predictions with SVM depends on data (support vectors);</li>
+<li>FM is linear.</li>
+</ul>
+<h3 id="4-Compared-with-other-Factorization-Models"><a href="#4-Compared-with-other-Factorization-Models" class="headerlink" title="4. Compared with other Factorization Models"></a>4. Compared with other Factorization Models</h3><h4 id="4-1-Matrix-Factorization"><a href="#4-1-Matrix-Factorization" class="headerlink" title="4.1 Matrix Factorization"></a>4.1 Matrix Factorization</h4><p>Matrix Factorization (MF) factorizes a relationship between two categorical features (e.g. users and items). The standard input feature \(\mathbf{x}\)  is usually binary indicators for each category. A FM using this input is identical to the matrix factorization because \(x_{j}\) is only non-zero for \(u\) and \(i\),</p>
+<p>\[<br>\hat{y}(\mathbf{x}) = w_{0} + w_{u} + w_{i} + \langle \mathbf{v}_{u}, \mathbf{v}_{i} \rangle.<br>\]</p>
+<p>This is the form of matrix factorization model with bias of user and item added.</p>
+<h4 id="4-2-SVD"><a href="#4-2-SVD" class="headerlink" title="4.2 SVD++"></a>4.2 SVD++</h4><p>Koren et al improve the matrix factorization model to SVD++ model for rating prediction in recommender systems. A FM can mimic this by using following input:<br>\[<br>x_{j} = \left\{<br>\begin{aligned}<br>&amp; 1,&amp;\text{if } (j = i) \text{ and } (j = u) \\<br>&amp; 1 / \sqrt{|N(u)|},&amp;\text{if }j\in N(u) \\<br>&amp; 0,&amp;\text{else}<br>\end{aligned}\right.<br>\]<br>where \(N(u)\) is the set of other movies the user has rated. A FM with \(d=2\) could behave as:<br>\[<br>\begin{aligned}<br>\hat{y}(\mathbf{x}) =~&amp; w_{0} + w_{u} + w_{i} + \langle\mathbf{v}_{u},\mathbf{v}_{i} \rangle + \frac{1}{\sqrt{|N(u)|}}\sum_{l\in N(u)}\langle\mathbf{v}_{i},\mathbf{v}_{l} \rangle \\<br>+~&amp;\frac{1}{\sqrt{|N(u)|}}\sum_{l\in N(u)}\left(w_{l} + \langle\mathbf{v}_{u},\mathbf{v}_{l} \rangle + \frac{1}{|N(u)|}\sum_{l’\in N(u), l’&gt;l}\langle\mathbf{v}_{l},\mathbf{v}_{l’} \rangle\right)<br>\end{aligned}<br>\]</p>
+<p>here the first line of the equation is the SVD++ model, but FM also contains some additional interactions between users and items in \(N(u)\).</p>
+<p>In summary:</p>
+<ul>
+<li>Standard factorization models are not general prediction model likf FM, instead they require that the feature vector is partitioned in parts and in each part exactly one element is 1 or 0;</li>
+<li>FM can mimic many factorization models just by feature extractions which makes FM easily applicable in practice.</li>
+</ul>
+
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+      
+
+    <span class="post-categories">
+      <i class="icon-categories"></i>
+        <a href="/categories/Machine-Learning/">Machine Learning</a>
+    </span>
+    
+
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/Machine-Learning/">Machine Learning</a><a href="/tags/Recommender-Sys/">Recommender Sys</a><a href="/tags/Factorization-Models/">Factorization Models</a>
+    </span>
+    
+
+    </div>
+
+    
+  </div>
+</article>
+
+  
+<section id="comment">
+  
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+  
+</section>
+
+
+
+    </main>
+
+    <footer class="site-footer">
+  <p class="site-info">
+    Proudly powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and
+    Theme by <a href="https://github.com/CodeDaraW/Hacker" target="_blank">Hacker</a>
+    </br>
+    
+    &copy; 2019 Bangda
+    
+	
+	
+	
+  </p>
+  
+  <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+  <span id="busuanzi_container_site_pv">
+    Total viewer <span id="busuanzi_value_site_pv"></span>; 
+  </span>
+  
+  <span id="busuanzi_container_site_uv">
+    Total visitor <span id="busuanzi_value_site_uv"></span>
+  </span>
+	
+	
+  <div id="disqus_thread"></div>
+  <script>
+
+  /**
+   *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+   *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+   */
+   
+  var disqus_config = function () {
+	this.page.url = 'https://bangdasun.github.io{{ page.url }}';  // Replace PAGE_URL with your page's canonical URL variable
+	this.page.identifier = '{{ page.id }}'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+  };
+  
+  (function() { // DON'T EDIT BELOW THIS LINE
+  var d = document, s = d.createElement('script');
+  s.src = 'https://bangdasun-github-io.disqus.com/embed.js';
+  s.setAttribute('data-timestamp', +new Date());
+  (d.head || d.body).appendChild(s);
+  })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  
+  <script id="dsq-count-scr" src="//bangdasun-github-io.disqus.com/count.js" async></script>
+</footer>
+
+
+    
+  </div>
+</div>
+</body>
+</html>

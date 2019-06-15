@@ -1,0 +1,251 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Stanford NLP (coursera) Notes (9) - Information Extraction and NER | Bangda Sun | Practice makes perfect</title>
+
+  
+  <meta name="author" content="Bangda">
+  
+
+  
+  <meta name="description" content="Play with data">
+  
+
+  
+  
+  <meta name="keywords" content="Machine Learning,NLP,Algorithm">
+  
+
+  <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <meta property="og:title" content="Stanford NLP (coursera) Notes (9) - Information Extraction and NER"/>
+
+  <meta property="og:site_name" content="Bangda Sun"/>
+
+  
+  <meta property="og:image" content="/favicon.ico"/>
+  
+
+  <link href="/favicon.ico" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Bangda Sun" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    jax: ["input/TeX","output/HTML-CSS"],
+    extensions: ["tex2jax.js","Safe.js"]
+  });
+  </script>
+<script type="text/javascript" async="async"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_CHTML,Safe">
+</script>
+</script>
+</head>
+
+
+<body>
+<div class="blog">
+  <div class="content">
+
+    <header>
+  <div class="site-branding">
+    <h1 class="site-title">
+      <a href="/">Bangda Sun</a>
+    </h1>
+    <p class="site-description">Practice makes perfect</p>
+  </div>
+  <nav class="site-navigation">
+    <ul>
+      
+        <li><a href="/">主页</a></li>
+      
+        <li><a href="/tags">标签</a></li>
+      
+    </ul>
+  </nav>
+</header>
+
+    <main class="site-main posts-loop">
+    <article>
+
+  
+    
+    <h3 class="article-title"><span>Stanford NLP (coursera) Notes (9) - Information Extraction and NER</span></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2018/07/12/23-stanford-nlp-notes-9/" rel="bookmark">
+        <time class="entry-date published" datetime="2018-07-13T00:25:31.000Z">
+          2018-07-12
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <p>Information Extraction and Named Entity Recognition</p>
+<a id="more"></a>
+<h3 id="1-Information-Extraction"><a href="#1-Information-Extraction" class="headerlink" title="1. Information Extraction"></a>1. Information Extraction</h3><p>Information extraction (IE) systems is also a widely used NLP application in real life, it can</p>
+<ul>
+<li>find and understanding limited relevant parts of texts</li>
+<li>gather information from many pieces of text</li>
+<li>produce a structure representation of relevant information</li>
+<li>goal to organize information so that it useful to people; put information in a semantically precise form that allows further inferences to be made by computer algorithms.</li>
+</ul>
+<p>Roughly you can just think it can extract “who did what to whom when” from texts, for example: gathering earnings, profits, board members from company reports, I know this type of task is used by many financial companies nowadays.</p>
+<p>To be more specific and professional, one of the tasks in IE is <strong>Name Entity Recognition (NER)</strong>, which need to find person/date/location/organization etc in text.</p>
+<p>The usage includes:</p>
+<ul>
+<li>named entities can be indexed, linked off, etc;</li>
+<li>sentiment can be attributed to companies or products;</li>
+<li>a lot of IE relations are associations between named entities;</li>
+<li>answers from QA system are often named entities.</li>
+</ul>
+<h3 id="2-NER-Task"><a href="#2-NER-Task" class="headerlink" title="2. NER Task"></a>2. NER Task</h3><p>From machine learning perspective, NER is a classification task: whether these pieces of the text (word or phrase) is a named entity? Then the general pipeline will be:</p>
+<h4 id="2-1-Training-classifier"><a href="#2-1-Training-classifier" class="headerlink" title="2.1 Training classifier"></a>2.1 Training classifier</h4><ul>
+<li>collect a set of representative training documents;</li>
+<li>label each token or its entity or OTHER;</li>
+<li>feature engineering (current word, prev/next word, POS, previous label, etc);</li>
+<li>train classifiers.</li>
+</ul>
+<h4 id="2-2-Testing"><a href="#2-2-Testing" class="headerlink" title="2.2 Testing"></a>2.2 Testing</h4><ul>
+<li>receive new documents</li>
+<li>apply the model for each token</li>
+<li>output the extracted entities</li>
+</ul>
+<p>Finally for model evaluation, we can use Recall/Precision/F-score, which are already introduced in my previous posts ;)</p>
+<ul>
+<li><a href="https://bangdasun.github.io/2017/07/24/common-metrics-supervised-learning/" target="_blank" rel="external">Common Metrics in Binary Classification Problems</a></li>
+<li><a href="https://bangdasun.github.io/2017/07/26/practical-application-of-metrics/" target="_blank" rel="external">Practical Application of Metrics in Binary Classifications</a></li>
+</ul>
+<p>Besides classic machine learning classifiers when discussed before (Naive Bayes, Logistic Regression/Maximum Entropy/SVM), the task we face here can also be viewed as <strong>sequence problems</strong>, and there are some other statistical models (such as Conditional Markov Model, a.k.a. Maximum Entropy Markov Model) that use conditional evidence from observations and previous decisions. One of the example is POS (Part-of-speech) Tagging.</p>
+<p>In sequence problems, we make inferences sequentially.</p>
+<ul>
+<li>Greedy inference</li>
+</ul>
+<p>We just start at the beginning and use classifier at each position to assign a labe. The classifier can depend on previous labeled decisions as well as observations.</p>
+<p><strong>Advantages</strong>: Fast, save space; easy to implement.</p>
+<p><strong>Disadvantages</strong>: Greedy, may make commit errors that cannot recover from.</p>
+<ul>
+<li>Beam inference</li>
+</ul>
+<p>At each position, keep the top \(K\) complete sequences, extend each sequence in each local way. The extensions compete for the \(K\) slots at the next position.</p>
+<p><strong>Advantages</strong>: Fast, beam size of 3-5 are almost as good as exact inference; easy to implement.</p>
+<p><strong>Disadvantages</strong>: Inexact, the globally best sequence can fall off the beam.</p>
+<ul>
+<li>Viterbi inference</li>
+</ul>
+<p>Dynamic progamming / memoization, requires small window of state influence.</p>
+<p><strong>Advantages</strong>: Exact, the global best sequence is returned.</p>
+<p><strong>Disadvantages</strong>: Harder to implement long-distance state-state interactions.</p>
+
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+      
+
+    <span class="post-categories">
+      <i class="icon-categories"></i>
+        <a href="/categories/NLP/">NLP</a>
+    </span>
+    
+
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/Machine-Learning/">Machine Learning</a><a href="/tags/NLP/">NLP</a><a href="/tags/Algorithm/">Algorithm</a>
+    </span>
+    
+
+    </div>
+
+    
+  </div>
+</article>
+
+  
+<section id="comment">
+  
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+  
+</section>
+
+
+
+    </main>
+
+    <footer class="site-footer">
+  <p class="site-info">
+    Proudly powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and
+    Theme by <a href="https://github.com/CodeDaraW/Hacker" target="_blank">Hacker</a>
+    </br>
+    
+    &copy; 2019 Bangda
+    
+	
+	
+	
+  </p>
+  
+  <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+  <span id="busuanzi_container_site_pv">
+    Total viewer <span id="busuanzi_value_site_pv"></span>; 
+  </span>
+  
+  <span id="busuanzi_container_site_uv">
+    Total visitor <span id="busuanzi_value_site_uv"></span>
+  </span>
+	
+	
+  <div id="disqus_thread"></div>
+  <script>
+
+  /**
+   *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+   *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+   */
+   
+  var disqus_config = function () {
+	this.page.url = 'https://bangdasun.github.io{{ page.url }}';  // Replace PAGE_URL with your page's canonical URL variable
+	this.page.identifier = '{{ page.id }}'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+  };
+  
+  (function() { // DON'T EDIT BELOW THIS LINE
+  var d = document, s = d.createElement('script');
+  s.src = 'https://bangdasun-github-io.disqus.com/embed.js';
+  s.setAttribute('data-timestamp', +new Date());
+  (d.head || d.body).appendChild(s);
+  })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  
+  <script id="dsq-count-scr" src="//bangdasun-github-io.disqus.com/count.js" async></script>
+</footer>
+
+
+    
+  </div>
+</div>
+</body>
+</html>

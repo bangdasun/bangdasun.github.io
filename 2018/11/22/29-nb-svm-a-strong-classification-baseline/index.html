@@ -1,0 +1,236 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>NBSVM - A Strong Classification Baseline | Bangda Sun | Practice makes perfect</title>
+
+  
+  <meta name="author" content="Bangda">
+  
+
+  
+  <meta name="description" content="Play with data">
+  
+
+  
+  
+  <meta name="keywords" content="Classification,SVM,Machine Learning,NLP,Naive Bayes">
+  
+
+  <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <meta property="og:title" content="NBSVM - A Strong Classification Baseline"/>
+
+  <meta property="og:site_name" content="Bangda Sun"/>
+
+  
+  <meta property="og:image" content="/favicon.ico"/>
+  
+
+  <link href="/favicon.ico" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Bangda Sun" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    jax: ["input/TeX","output/HTML-CSS"],
+    extensions: ["tex2jax.js","Safe.js"]
+  });
+  </script>
+<script type="text/javascript" async="async"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_CHTML,Safe">
+</script>
+</script>
+</head>
+
+
+<body>
+<div class="blog">
+  <div class="content">
+
+    <header>
+  <div class="site-branding">
+    <h1 class="site-title">
+      <a href="/">Bangda Sun</a>
+    </h1>
+    <p class="site-description">Practice makes perfect</p>
+  </div>
+  <nav class="site-navigation">
+    <ul>
+      
+        <li><a href="/">主页</a></li>
+      
+        <li><a href="/tags">标签</a></li>
+      
+    </ul>
+  </nav>
+</header>
+
+    <main class="site-main posts-loop">
+    <article>
+
+  
+    
+    <h3 class="article-title"><span>NBSVM - A Strong Classification Baseline</span></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2018/11/22/29-nb-svm-a-strong-classification-baseline/" rel="bookmark">
+        <time class="entry-date published" datetime="2018-11-23T04:29:09.000Z">
+          2018-11-22
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <p>[Paper reading] Baseline and Bigrams: Simple, Good Sentiment and Topic Classification</p>
+<a id="more"></a>
+<h3 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1. Introduction"></a>1. Introduction</h3><p>When I participated in Toxic Comment Classification Challenge on kaggle this March, I saw a <a href="https://www.kaggle.com/jhoward/nb-svm-strong-linear-baseline" target="_blank" rel="external">kernel</a> that implemented NBLR as a baseline, which outperformed LR (Logistic Regression). This is a variation of NBSVM in paper <a href="https://nlp.stanford.edu/pubs/sidaw12_simple_sentiment.pdf" target="_blank" rel="external">Baseline and Bigrams: Simple, Good Sentiment and Topic Classification</a> by Sida Wang and Christopher Manning. At that time I just folk the kernel and didn’t look into the details. Recently I started a new NLP related competition on kaggle, I think it’s a good chance to review some NLP concepts and learn something new. And I decide to start from the baseline.</p>
+<h3 id="2-Highlights"><a href="#2-Highlights" class="headerlink" title="2. Highlights"></a>2. Highlights</h3><p>Here are the key concepts and conclusions in the paper.</p>
+<h4 id="2-1-Introduction"><a href="#2-1-Introduction" class="headerlink" title="2.1 Introduction"></a>2.1 Introduction</h4><ul>
+<li>Bigram features are still strong performers on snippet sentiment classifications</li>
+<li><p>NB perform better than SVM on short snippet sentiment tasks, while SVM perform better on longer documents</p>
+</li>
+<li><p>Combine generative and discriminant models together by adding NB log-count ratio features to SVM (NBSVM), it is a strong and robust baseline</p>
+</li>
+<li>Confirm that MNB (Multinomial NB) is normally better and more stable than  Multivariate Bernoulli NB</li>
+</ul>
+<h4 id="2-2-Methods"><a href="#2-2-Methods" class="headerlink" title="2.2 Methods"></a>2.2 Methods</h4><p>A base classifier:</p>
+<p>\[<br>y = \text{sign}\left(\mathbf{w}^\top \mathbf{x} + b\right),<br>\]</p>
+<p>where \(y\in\{+1, -1\}\). \(V\) is the feature set, and \(\mathbf{f}\) is the feature count vector, \(\mathbf{f}\in \mathbb{R}^{|V|}\), where \(f^{(i)}_{j}\) represents the number of occurence of feature \(V_{j}\) of \(i\)th sample.</p>
+<p>Define the count vector</p>
+<p>\[<br>\mathbf{p} = \alpha + \sum_{i: y^{(i)} = 1}\mathbf{f}^{(i)}, ~\mathbf{q} = \alpha + \sum_{i: y^{(i)} = -1}\mathbf{f}^{(i)},<br>\]</p>
+<p>as you can see that the count vector is just the sum of feature vectors for training data with different labels, and \(\alpha\) is the smoothing parameter.</p>
+<p>The log-count ratio is defined as </p>
+<p>\[<br>\mathbf{r} = \log\left(\frac{\mathbf{p} / ||\mathbf{p}||_{1}}{\mathbf{q} / ||\mathbf{q}||_{1}}\right)<br>\]</p>
+<h5 id="2-2-1-SVM"><a href="#2-2-1-SVM" class="headerlink" title="2.2.1 SVM"></a>2.2.1 SVM</h5><p>For text classification, \(\mathbf{x}^{(i)} = \mathbf{f}^{(i)}\), \(\mathbf{w}\) and \(b\) is from</p>
+<p>\[<br>\arg\min_{\mathbf{w}, b} C \sum^{n}_{i=1} \max\left(0, 1 - y^{(i)}(\mathbf{w}^\top \mathbf{f}^{(i)} + b)\right)^2 + ||\mathbf{w}||_{2} ,<br>\]</p>
+<p>this form (L2 regularization and L2 loss) work the best (L1 loss to be less stable).</p>
+<h5 id="2-2-2-NBSVM"><a href="#2-2-2-NBSVM" class="headerlink" title="2.2.2 NBSVM"></a>2.2.2 NBSVM</h5><p>Now \(\mathbf{x}^{(i)} = \mathbf{f}^{(i)}\circ\mathbf{r}\), where \(\circ\) is the element wise product. This does very well for long documents. And an interpolation between MNB and SVM performs excellently for all documents, the model is </p>
+<p>\[<br>\mathbf{w}’ = (1 - \beta)\frac{||\mathbf{w}||_{1}}{|V|} + \beta\mathbf{w},<br>\]</p>
+<p>where \(\beta\in [0, 1]\) is the interpolation parameter. This interpolation can be seen as a form of regularization: trust NB unless SVM is very confident. </p>
+<h4 id="2-3-Conclusions"><a href="#2-3-Conclusions" class="headerlink" title="2.3 Conclusions"></a>2.3 Conclusions</h4><ul>
+<li><p>MNB is better at snippets, SVM is better at full-length reviews</p>
+</li>
+<li><p>Benefits of bigrams depends on task: word bigram features are not commonly used in text classification tasks, probably due to their having mixed and overall limited utility in topical text classification tasks. Sentiment classification gains much more from bigrams, because they can capture modified verbs and nouns</p>
+</li>
+<li><p>NBSVM is a robust performer (snippets and longer documents). One disadvantage is having the interpolation parameter \(\beta\), the performance on longer documents is virtually identical for \(\beta\in [1/4, 1]\), while \(\beta = 1/4\) is on average 0.5% better for snippets than \(\beta=1\). Using \(\beta\in[1/4, 1/2]\) makes the NBSVM more robust than more extreme values</p>
+</li>
+<li><p>Multivariate Bernoulli NB usually performs worse than MNB. The only place where it’s comparable to MNB is for snippet tasks using only unigrams</p>
+</li>
+<li><p>For MNB and NBSVM, using the binarized MNB is slightly better than using raw count. The difference is negligible for snippets</p>
+</li>
+<li><p>Use Logistic Regression in place of SVM gives similar results</p>
+</li>
+</ul>
+
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+      
+
+    <span class="post-categories">
+      <i class="icon-categories"></i>
+        <a href="/categories/Machine-Learning/">Machine Learning</a>, <a href="/categories/Machine-Learning/NLP/">NLP</a>
+    </span>
+    
+
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/Classification/">Classification</a><a href="/tags/SVM/">SVM</a><a href="/tags/Machine-Learning/">Machine Learning</a><a href="/tags/NLP/">NLP</a><a href="/tags/Naive-Bayes/">Naive Bayes</a>
+    </span>
+    
+
+    </div>
+
+    
+  </div>
+</article>
+
+  
+<section id="comment">
+  
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+  
+</section>
+
+
+
+    </main>
+
+    <footer class="site-footer">
+  <p class="site-info">
+    Proudly powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and
+    Theme by <a href="https://github.com/CodeDaraW/Hacker" target="_blank">Hacker</a>
+    </br>
+    
+    &copy; 2019 Bangda
+    
+	
+	
+	
+  </p>
+  
+  <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+  <span id="busuanzi_container_site_pv">
+    Total viewer <span id="busuanzi_value_site_pv"></span>; 
+  </span>
+  
+  <span id="busuanzi_container_site_uv">
+    Total visitor <span id="busuanzi_value_site_uv"></span>
+  </span>
+	
+	
+  <div id="disqus_thread"></div>
+  <script>
+
+  /**
+   *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+   *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+   */
+   
+  var disqus_config = function () {
+	this.page.url = 'https://bangdasun.github.io{{ page.url }}';  // Replace PAGE_URL with your page's canonical URL variable
+	this.page.identifier = '{{ page.id }}'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+  };
+  
+  (function() { // DON'T EDIT BELOW THIS LINE
+  var d = document, s = d.createElement('script');
+  s.src = 'https://bangdasun-github-io.disqus.com/embed.js';
+  s.setAttribute('data-timestamp', +new Date());
+  (d.head || d.body).appendChild(s);
+  })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  
+  <script id="dsq-count-scr" src="//bangdasun-github-io.disqus.com/count.js" async></script>
+</footer>
+
+
+    
+  </div>
+</div>
+</body>
+</html>

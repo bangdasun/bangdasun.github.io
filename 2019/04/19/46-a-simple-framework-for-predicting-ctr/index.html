@@ -1,0 +1,250 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>A Simple Framework for Predicting CTR in Display Advertising | Bangda Sun | Practice makes perfect</title>
+
+  
+  <meta name="author" content="Bangda">
+  
+
+  
+  <meta name="description" content="Play with data">
+  
+
+  
+  
+  <meta name="keywords" content="Machine Learning,Computational Advertising,CTR">
+  
+
+  <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <meta property="og:title" content="A Simple Framework for Predicting CTR in Display Advertising"/>
+
+  <meta property="og:site_name" content="Bangda Sun"/>
+
+  
+  <meta property="og:image" content="/favicon.ico"/>
+  
+
+  <link href="/favicon.ico" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Bangda Sun" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    jax: ["input/TeX","output/HTML-CSS"],
+    extensions: ["tex2jax.js","Safe.js"]
+  });
+  </script>
+<script type="text/javascript" async="async"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_CHTML,Safe">
+</script>
+</script>
+</head>
+
+
+<body>
+<div class="blog">
+  <div class="content">
+
+    <header>
+  <div class="site-branding">
+    <h1 class="site-title">
+      <a href="/">Bangda Sun</a>
+    </h1>
+    <p class="site-description">Practice makes perfect</p>
+  </div>
+  <nav class="site-navigation">
+    <ul>
+      
+        <li><a href="/">主页</a></li>
+      
+        <li><a href="/tags">标签</a></li>
+      
+    </ul>
+  </nav>
+</header>
+
+    <main class="site-main posts-loop">
+    <article>
+
+  
+    
+    <h3 class="article-title"><span>A Simple Framework for Predicting CTR in Display Advertising</span></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2019/04/19/46-a-simple-framework-for-predicting-ctr/" rel="bookmark">
+        <time class="entry-date published" datetime="2019-04-20T02:12:12.000Z">
+          2019-04-19
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <p>[Paper reading]: Simple and Scalable Response Prediction for Display Advertising</p>
+<a id="more"></a>
+<p>This <a href="http://people.csail.mit.edu/romer/papers/TISTRespPredAds.pdf" target="_blank" rel="external">paper</a> gives a general introduction about two core tasks in <strong>display advertising</strong>: <strong>CTR (click-through rate)</strong> and <strong>CVR (conversion rate)</strong> prediction. I had participated several CTR competitions on kaggle and Tianchi, while at that time I just treat them as binary classification problem, but had little knowledge about the background, and I think this is a good paper for me to enter this area.</p>
+<h3 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1. Introduction"></a>1. Introduction</h3><p><strong>Display advertising</strong> is a form of online advertising where <strong>advertisers pay publishers for placing ads on publishers’ web pages</strong>. Spot markets offer advertisers a wide range of payments options. If the goal of an advertising campaign is <strong>getting their message to the target audience</strong> then <strong>paying per impression (CPM)</strong> is normally the choice for advertiser. While, many advertisers would prefer NOT to pay for an ad impression unless that impression leads the user to their websites. Therefore there are other choices, such as <strong>cost-per-click (CPC)</strong> and <strong>cost-per-conversion (CPA)</strong>. An auction that supports these conditional payment options needs to convert advertiser bids to <strong>expected price per impression (ECPM)</strong>. For CPM ads, ECPM is identical to bid; <strong>for CPC or CPA, the ECPM will depend on the CTR and CVR</strong>.</p>
+<p>The challenges in display advertising are different from <strong>context of search</strong> and <strong>search advertising</strong>. In display advertising, the auctioneer doesn’t really have access to the content of ads, ads might not even hosted by the auctioneers. Furthermore, the content of ads might be generated dynamically depending on the properties of the user. </p>
+<p>While there have been some attempts to capture the content of the ad or landing pages, this requires non-trivial effort and is not always possible. Content related, web graph and anchor text information are therefore absent in display advertising, leaving the auctioneer mostly with unique identifiers for representation.</p>
+<p>Therefore in this paper, a simple ML framework is proposed to address the issues above, which is able to scale to billions of samples and hundreds of millions of parameters</p>
+<h3 id="2-Related-Works"><a href="#2-Related-Works" class="headerlink" title="2. Related Works"></a>2. Related Works</h3><p>Factors that can have an impact on users’ response for ads are included explicitly as features:</p>
+<ul>
+<li>context features: query in sponsored search, publisher page in content match, etc;</li>
+<li>content features: text of ads, etc;</li>
+<li>user features: demographical features, etc;</li>
+<li>feedback features: historical aggregated log data, etc.</li>
+</ul>
+<p>Logistic regression and tree models are widely used in computational advertising area. For tree models, one of the challenges is having <strong>categorical features with very high cardinality</strong>, there are different ways to handle this, such as <strong>feature hashing</strong>, <strong>use gain ratio as splitting criterion with thresholds</strong>, etc. For logistic regression, the advantages are obvious: it can be parallelized easily to handle large scale data, because the data is usually very sparse for advertising business; it is very flexible, can incorporate different kinds of regularizations. Bayesian logistic regression is also one choice.</p>
+<p>There are more advanced techniques listed as references in the paper.</p>
+<h3 id="3-Data-and-Features"><a href="#3-Data-and-Features" class="headerlink" title="3. Data and Features"></a>3. Data and Features</h3><p>The data used in this paper is from traffic logs of Yahoo!’s Right Media Exchange. Publishers label their web pages with site ID, they can also tag different parts of the same page with different sections ID.</p>
+<h4 id="3-1-Target"><a href="#3-1-Target" class="headerlink" title="3.1 Target"></a>3.1 Target</h4><p>The target is <strong>click</strong> and <strong>post-click conversion (PCC)</strong>. Click refers to the event that occurs when a user interacts with an ad by means of a mouse click . Post-click conversion is an action that the user takes after visiting the landing page of conversion actions, such as <strong>subscribing to an email list</strong>, <strong>making a reservation</strong> or <strong>purchasing a product</strong>.  The quantities to measure these two events are basically <strong>CTR</strong> and <strong>CVR</strong> as mentioned before.</p>
+<p>In general several conversion events could be associated with the same click as advertisers may show a sequence of conversion generating pages to the user after a click. Conversions could have <strong>delays</strong>, it can happen minutes, hours or even days after the click. In the example dataset, 86.7% of the conversion are triggered within 10 minutes of the click events, 39.2% of these conversion occur within 1 minute of the click. Use 1 hour delay could cover 95.5% conversion events. These observations are important to build train / test datasets.</p>
+<h4 id="3-2-Features"><a href="#3-2-Features" class="headerlink" title="3.2 Features"></a>3.2 Features</h4><p>The features are grouped into four sets:</p>
+<ul>
+<li>advertiser: advertiser ID, advertiser network, ad campaign, ad creative, conversion ID, ad group, ad size, ad creative type, offer type ID (ad category);</li>
+<li>publisher: publisher ID, publisher network, site, section, URL, page referrer;</li>
+<li>user: gender, age, region, network speed, accept cookies, geo;</li>
+<li>time: serve time, click time.</li>
+</ul>
+<h3 id="4-Modeling"><a href="#4-Modeling" class="headerlink" title="4. Modeling"></a>4. Modeling</h3><h4 id="4-1-Logistic-Regression"><a href="#4-1-Logistic-Regression" class="headerlink" title="4.1 Logistic Regression"></a>4.1 Logistic Regression</h4><p>Logistic regression (a.k.a Maximum entropy model) is widely used. Given a training set \((\mathbf{x}_{i}, y_{i})\) with \(\mathbf{x}_{i}\in \{0, 1\}^{d}\) a sparse binary feature vector in a \(d\) dimensional space, and \(y\in\{-1, +1\}\) a binary target, the goal is to find a weight vector \(\mathbf{w}\in R^{d}\). The predicted probability for a sample to be positive is</p>
+<p>\[<br>P(y=1|\mathbf{x}) = \frac{1}{1 + \exp\left(-\mathbf{w}^{\top}\mathbf{x}\right)}.<br>\]</p>
+<p>Logistic regression is a linear model of the <strong>log odds ratio</strong>,</p>
+<p>\[<br>\log\frac{P(y=1|\mathbf{x})}{P(y=-1|\mathbf{x})} = \mathbf{w}^{\top}\mathbf{x},<br>\]</p>
+<p>with L2 regularization, the weight vector is learned by minimizing logistic loss function</p>
+<p>\[<br>\sum^{n}_{i=1}\log\left(1 + \exp\left(-y_{i}\mathbf{w}^{\top}\mathbf{x}_{i}\right)\right) + \frac{\lambda}{2}||\mathbf{w}||^{2}_{2}.<br>\]</p>
+<h4 id="4-2-Hashing-Trick"><a href="#4-2-Hashing-Trick" class="headerlink" title="4.2 Hashing Trick"></a>4.2 Hashing Trick</h4><p>The idea is to use a <strong>hash function</strong> to reduce the number of values a feature can take, a.k.a. <strong>value reduction</strong>. </p>
+<p>Compared with manually reduce infrequent values, hashing requires less data processing and the use of dictionary, it is very straightforward. The main problem for hashing is collision, but it would not be a major concern.</p>
+<p>Consider the case when the first value has been observed \(n_{1}\) times (all on negative samples), the second value has been observed \(n_{2}\) times (all on positive samples), and there is only one feature. If there were no collision, the weight for the value would be \(-\infty\) for first value and \(+\infty\) for second value, this lead to a log likelihood to be 0 on all samples. However if there is a collision, the negative log likelihood is </p>
+<p>\[<br>-n_{1}\log\frac{n_{1}}{n_{1} + n_{2}} - n_{2}\log\frac{n_{2}}{n_{1} + n_{2}},<br>\]</p>
+<p>this is indeed the log likelihood achieved by the solution where all the weights are at 0 except the one where there is a collision and which has a value \(\log(n_{2} / n_{1})\). This log likelihood is large only when \(n_{1}\) and \(n_{2}\) are large. And indeed this scenario can be considered a worse case because these two values are extremely predictive and there was no redundancy in features.</p>
+<h3 id="5-Experiments"><a href="#5-Experiments" class="headerlink" title="5. Experiments"></a>5. Experiments</h3><p><strong>Hashing trick</strong>. The results show that for the same model size, the hashing based model is slightly superior. There are two other advantages: </p>
+<ul>
+<li><strong>convenience</strong>: no need to find the most important values and keep them in a dictionary; </li>
+<li><strong>real-time efficiency</strong>: hashing is faster than a dictionary lookup.</li>
+</ul>
+<p><strong>Subsampling</strong>. Sometimes similar test errors can be achieved with smaller training sets and there is no need for large scale learning in these cases. There are two ways: </p>
+<ul>
+<li><strong>subsampling on negative samples</strong>: empirical results show that a subsample rate of 1% was a good trade-off between model training time and preditive accuracy;</li>
+<li><strong>subsampling on all samples</strong>: the results show that there is a drop in accuracy after subsampling.</li>
+</ul>
+<h3 id="6-Feature-Selection"><a href="#6-Feature-Selection" class="headerlink" title="6. Feature Selection"></a>6. Feature Selection</h3><p>This section discussed about feature selection using <strong>conditional mutual information</strong> and <strong>reference distribution</strong>. I’ll back here someday to give more detailed summaries.</p>
+<h3 id="7-Non-Stationary"><a href="#7-Non-Stationary" class="headerlink" title="7. Non-Stationary"></a>7. Non-Stationary</h3><p>Display advertising is a non stationary process as the set of active advertisers, campaigns, publishers and users is constantly changing. </p>
+<p>There are two perspectives to quantify the changes:</p>
+<ul>
+<li><strong>Ad creation rate</strong>: with three levels - conversion, creative and compaign identifiers. Analysis shows that advertisers tend to use the same <strong>identifiers to track conversions</strong> even after they create new ad creatives and campaigns.</li>
+<li><strong>Ad life-time</strong>: also with three levels; analysis shows that <strong>conversion ID</strong> lives much longer than the creative ID and campaign ID, which is consistent with the conclusion of ad creation rate analysis.</li>
+</ul>
+
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+      
+
+    <span class="post-categories">
+      <i class="icon-categories"></i>
+        <a href="/categories/Machine-Learning/">Machine Learning</a>, <a href="/categories/Machine-Learning/Computational-Advertising/">Computational Advertising</a>
+    </span>
+    
+
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/Machine-Learning/">Machine Learning</a><a href="/tags/Computational-Advertising/">Computational Advertising</a><a href="/tags/CTR/">CTR</a>
+    </span>
+    
+
+    </div>
+
+    
+  </div>
+</article>
+
+  
+<section id="comment">
+  
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+  
+</section>
+
+
+
+    </main>
+
+    <footer class="site-footer">
+  <p class="site-info">
+    Proudly powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and
+    Theme by <a href="https://github.com/CodeDaraW/Hacker" target="_blank">Hacker</a>
+    </br>
+    
+    &copy; 2019 Bangda
+    
+	
+	
+	
+  </p>
+  
+  <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+  <span id="busuanzi_container_site_pv">
+    Total viewer <span id="busuanzi_value_site_pv"></span>; 
+  </span>
+  
+  <span id="busuanzi_container_site_uv">
+    Total visitor <span id="busuanzi_value_site_uv"></span>
+  </span>
+	
+	
+  <div id="disqus_thread"></div>
+  <script>
+
+  /**
+   *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+   *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+   */
+   
+  var disqus_config = function () {
+	this.page.url = 'https://bangdasun.github.io{{ page.url }}';  // Replace PAGE_URL with your page's canonical URL variable
+	this.page.identifier = '{{ page.id }}'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+  };
+  
+  (function() { // DON'T EDIT BELOW THIS LINE
+  var d = document, s = d.createElement('script');
+  s.src = 'https://bangdasun-github-io.disqus.com/embed.js';
+  s.setAttribute('data-timestamp', +new Date());
+  (d.head || d.body).appendChild(s);
+  })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  
+  <script id="dsq-count-scr" src="//bangdasun-github-io.disqus.com/count.js" async></script>
+</footer>
+
+
+    
+  </div>
+</div>
+</body>
+</html>

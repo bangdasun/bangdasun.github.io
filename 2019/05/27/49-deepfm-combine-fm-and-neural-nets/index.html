@@ -1,0 +1,240 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>DeepFM - Combining FM and Neural Nets | Bangda Sun | Practice makes perfect</title>
+
+  
+  <meta name="author" content="Bangda">
+  
+
+  
+  <meta name="description" content="Play with data">
+  
+
+  
+  
+  <meta name="keywords" content="Machine Learning,Deep Learning,Factorization Models,CTR">
+  
+
+  <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <meta property="og:title" content="DeepFM - Combining FM and Neural Nets"/>
+
+  <meta property="og:site_name" content="Bangda Sun"/>
+
+  
+  <meta property="og:image" content="/favicon.ico"/>
+  
+
+  <link href="/favicon.ico" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Bangda Sun" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    jax: ["input/TeX","output/HTML-CSS"],
+    extensions: ["tex2jax.js","Safe.js"]
+  });
+  </script>
+<script type="text/javascript" async="async"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_CHTML,Safe">
+</script>
+</script>
+</head>
+
+
+<body>
+<div class="blog">
+  <div class="content">
+
+    <header>
+  <div class="site-branding">
+    <h1 class="site-title">
+      <a href="/">Bangda Sun</a>
+    </h1>
+    <p class="site-description">Practice makes perfect</p>
+  </div>
+  <nav class="site-navigation">
+    <ul>
+      
+        <li><a href="/">主页</a></li>
+      
+        <li><a href="/tags">标签</a></li>
+      
+    </ul>
+  </nav>
+</header>
+
+    <main class="site-main posts-loop">
+    <article>
+
+  
+    
+    <h3 class="article-title"><span>DeepFM - Combining FM and Neural Nets</span></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2019/05/27/49-deepfm-combine-fm-and-neural-nets/" rel="bookmark">
+        <time class="entry-date published" datetime="2019-05-27T18:21:37.000Z">
+          2019-05-27
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <p>[Paper reading]: DeepFM: A Factorization - Machine based Neural Network for CTR Prediction</p>
+<a id="more"></a>
+<p>Compared with Google “Wide &amp; Deep Learning” framework which is a combination of logistic regression and deep neural network, <a href="https://arxiv.org/pdf/1703.04247.pdf" target="_blank" rel="external">DeepFM</a> is a combination of factorization machine and deep neural network, but these two parts <strong>share the same inputs</strong>, rather than raw features for deep neural network and engineered features for logistics regression in Wide &amp; Deep Learning framework from Google.</p>
+<h3 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1. Introduction"></a>1. Introduction</h3><p>Learning complicated feature interactions behind user behaviors is critical in predicting CTR in recommender systems. For example: people often download apps for food delivery at meal-time, suggesting that <strong>2-way interaction between app category and time in one day</strong>; male teenagers like shooting games and RPG games, suggesting that <strong>3-way interaction among app category, user gender and user age</strong>. However, there are more feature interactions that are not very intuitive and difficult to identify <strong>a priori</strong> (class association). Even for easy understandable feature interactions, it would be pretty time consuming for experts to model them exhaustively.</p>
+<p>The purpose of DeepFM is to combine the power of FM and deep neural nets, this paper has these main contributions:</p>
+<ul>
+<li><p>DeepFM is a a integration of FM and deep neural network, can be trained end-to-end without any feature engineering.</p>
+</li>
+<li><p>DeepFM can be trained effectively because its wide part and deep part share the same input and also the embedding vector, with benefits of learning low and high order feature interactions from raw feature and no need for expertise feature engineering.</p>
+</li>
+</ul>
+<h3 id="2-DeepFM"><a href="#2-DeepFM" class="headerlink" title="2. DeepFM"></a>2. DeepFM</h3><p>Given the training data \((\mathbf{x}_{i}, y_{i})\), \(i = 1, 2, \cdots, n\), where \(\mathbf{x} = [x_{\text{field 1}}, x_{\text{field 2}}, \cdots, x_{\text{field }m}]\) is an \(m\)-fields &amp; \(d\)-dimension data represents user and item features and \(y\in {0, 1}\) indicates whether user click the item or not. Categorical features are encoded as one-hot vectors.</p>
+<p>For feature \(i\), a scaler \(w_{i}\) is used to weigh its order-1 importance, a latent vector \(V_{i}\) is used to weigh its impact of interactions with other features, \(V_{i}\) is fed in FM components to model order-2 feature interactions, and fed in deep component to model high-order feature interactions. All parameters in FM (\(w_{i}\), \(V_{i}\)) and deep neural nets (\(W^{(l)}, b^{(l)}\)) are trained jointly for the model:</p>
+<p>\[<br>\hat{y} = \sigma\left(y_{FM} + y_{DNN}\right),<br>\]</p>
+<p>where \(\hat{y}\) is the final predictions, \(y_{FM}\) and \(y_{DNN}\) are the outputs for FM component and deep component.</p>
+<center><br>  <img src="/images/deepfm.PNG" style="width: 560px; height: 280px"> <br></center>
+
+<h4 id="2-1-FM-Component"><a href="#2-1-FM-Component" class="headerlink" title="2.1 FM Component"></a>2.1 FM Component</h4><p>The FM component is Factorization Machine, which could effectively learn 2-way feature interactions via latent vectors, </p>
+<center><br>  <img src="/images/fm-components.PNG" style="width: 560px; height: 280px"> <br></center>
+
+<p>As the figure shows, in the FM layer, there is one <strong>Addition</strong> unit which the dot product of order-1 features and weights vector, and there are a bunch of <strong>Inner Product</strong> units which takes two latent vectors (embedding vectors). The output of FM is the summation of an <strong>Addition</strong> unit and a number of <strong>Inner Product</strong> units:</p>
+<p>\[<br>y_{FM} = \langle \mathbf{w}, \mathbf{x} \rangle + \sum^{d}_{j_{1}=1}\sum^{d}_{j_{2}=j_{1}+1} \langle V_{i}, V_{j} \rangle x_{j_{1}}x_{j_{2}},<br>\]</p>
+<p>where \(\mathbf{w}\in R^{d}\) and \(V_{i} \in R^{k}\), \(k\) is the length of embedding vectors.</p>
+<h4 id="2-2-Deep-Component"><a href="#2-2-Deep-Component" class="headerlink" title="2.2 Deep Component"></a>2.2 Deep Component</h4><p>The deep component is a feed-forward neural network which is used to learn high-order feature interactions.</p>
+<center><br>  <img src="/images/deep-components.PNG" style="width: 560px; height: 280px"> <br></center>
+
+<p>As the figure shows, an embedding layer is required to compress the input vector (which is sparse) to a low-dimensional dense real-value vector before further feeding into the hidden layers. Latent vectors in FM component is now served as network weights which could be learned.</p>
+<h3 id="3-Relationship-with-other-Neural-Nets"><a href="#3-Relationship-with-other-Neural-Nets" class="headerlink" title="3. Relationship with other Neural Nets"></a>3. Relationship with other Neural Nets</h3><p>Existing methods seems to have strong bias towards low or high order interactions, or require expertise feature engineerings. </p>
+<h4 id="3-1-Factorization-machine-supported-Neural-Network-FNN"><a href="#3-1-Factorization-machine-supported-Neural-Network-FNN" class="headerlink" title="3.1 Factorization-machine supported Neural Network (FNN)"></a>3.1 Factorization-machine supported Neural Network (FNN)</h4><p>FNN is a FM-initialized feed forward neural network, the FM pretraining strategy results in two limitations:</p>
+<ul>
+<li>the embedding parameters might be over affected by FM</li>
+<li>the efficiency is reduced by the overhead introduced by the pre-training stage</li>
+</ul>
+<p>In addition, FNN captures only high-order feature interactions.</p>
+<h4 id="3-2-Product-based-Neural-Network-PNN"><a href="#3-2-Product-based-Neural-Network-PNN" class="headerlink" title="3.2 Product-based Neural Network (PNN)"></a>3.2 Product-based Neural Network (PNN)</h4><p>PNN has a product layer between embedding layer and first hidden layer to capture high-order feature interactions and fail to capture low-order feature interactions. The output of the product layer is connected to all hidden units of the first hidden layer, where in DeepFM the output of the product layer is only connects to the final output layer. </p>
+<h4 id="3-3-Wide-and-Deep-Learning-Framework"><a href="#3-3-Wide-and-Deep-Learning-Framework" class="headerlink" title="3.3 Wide and Deep Learning Framework"></a>3.3 Wide and Deep Learning Framework</h4><p>There is a need for expertise feature engineering for wide component. A straightforward extension to this model is replace logistic regression by factorization machine. This extension is similar to DeepFM, but DeepFM shares the feature embeddings between FM and deep components.</p>
+<center><br>  <img src="/images/fnn-pnn-wide-and-deep.PNG" style="width: 850px; height: 220px"> <br></center>
+
+<p>Therefore, DeepFM is the only model that:</p>
+<ul>
+<li>requires no pretraining</li>
+<li>requires no feature engineering</li>
+<li>captures both low and high order feature interactions</li>
+</ul>
+
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+      
+
+    <span class="post-categories">
+      <i class="icon-categories"></i>
+        <a href="/categories/Machine-Learning/">Machine Learning</a>
+    </span>
+    
+
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/Machine-Learning/">Machine Learning</a><a href="/tags/Deep-Learning/">Deep Learning</a><a href="/tags/Factorization-Models/">Factorization Models</a><a href="/tags/CTR/">CTR</a>
+    </span>
+    
+
+    </div>
+
+    
+  </div>
+</article>
+
+  
+<section id="comment">
+  
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+  
+</section>
+
+
+
+    </main>
+
+    <footer class="site-footer">
+  <p class="site-info">
+    Proudly powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and
+    Theme by <a href="https://github.com/CodeDaraW/Hacker" target="_blank">Hacker</a>
+    </br>
+    
+    &copy; 2019 Bangda
+    
+	
+	
+	
+  </p>
+  
+  <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+  <span id="busuanzi_container_site_pv">
+    Total viewer <span id="busuanzi_value_site_pv"></span>; 
+  </span>
+  
+  <span id="busuanzi_container_site_uv">
+    Total visitor <span id="busuanzi_value_site_uv"></span>
+  </span>
+	
+	
+  <div id="disqus_thread"></div>
+  <script>
+
+  /**
+   *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+   *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+   */
+   
+  var disqus_config = function () {
+	this.page.url = 'https://bangdasun.github.io{{ page.url }}';  // Replace PAGE_URL with your page's canonical URL variable
+	this.page.identifier = '{{ page.id }}'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+  };
+  
+  (function() { // DON'T EDIT BELOW THIS LINE
+  var d = document, s = d.createElement('script');
+  s.src = 'https://bangdasun-github-io.disqus.com/embed.js';
+  s.setAttribute('data-timestamp', +new Date());
+  (d.head || d.body).appendChild(s);
+  })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  
+  <script id="dsq-count-scr" src="//bangdasun-github-io.disqus.com/count.js" async></script>
+</footer>
+
+
+    
+  </div>
+</div>
+</body>
+</html>

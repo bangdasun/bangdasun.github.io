@@ -1,0 +1,224 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Time Series Models Overview (2) - State Space Model and Kalman Filter | Bangda Sun | Practice makes perfect</title>
+
+  
+  <meta name="author" content="Bangda">
+  
+
+  
+  <meta name="description" content="Play with data">
+  
+
+  
+  
+  <meta name="keywords" content="Linear Models,Time Series">
+  
+
+  <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <meta property="og:title" content="Time Series Models Overview (2) - State Space Model and Kalman Filter"/>
+
+  <meta property="og:site_name" content="Bangda Sun"/>
+
+  
+  <meta property="og:image" content="/favicon.ico"/>
+  
+
+  <link href="/favicon.ico" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Bangda Sun" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    jax: ["input/TeX","output/HTML-CSS"],
+    extensions: ["tex2jax.js","Safe.js"]
+  });
+  </script>
+<script type="text/javascript" async="async"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_CHTML,Safe">
+</script>
+</script>
+</head>
+
+
+<body>
+<div class="blog">
+  <div class="content">
+
+    <header>
+  <div class="site-branding">
+    <h1 class="site-title">
+      <a href="/">Bangda Sun</a>
+    </h1>
+    <p class="site-description">Practice makes perfect</p>
+  </div>
+  <nav class="site-navigation">
+    <ul>
+      
+        <li><a href="/">主页</a></li>
+      
+        <li><a href="/tags">标签</a></li>
+      
+    </ul>
+  </nav>
+</header>
+
+    <main class="site-main posts-loop">
+    <article>
+
+  
+    
+    <h3 class="article-title"><span>Time Series Models Overview (2) - State Space Model and Kalman Filter</span></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2018/09/28/27-time-series-models-overview-2/" rel="bookmark">
+        <time class="entry-date published" datetime="2018-09-29T04:18:09.000Z">
+          2018-09-28
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <p>State Space Models</p>
+<a id="more"></a>
+<h3 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1. Introduction"></a>1. Introduction</h3><p>In <a href="https://bangdasun.github.io/2018/08/28/time-series-models-overview-1/" target="_blank" rel="external">Time Series Models Overview (1)</a>, I briefly go through the ARIMA Family and I use its general case SARIMAX in the work. In practice, I use <code>SAIRMAX()</code> in <code>statsmodels</code> to build the model. When I tried the simplest model - just include one lag term, and then compare the results with <code>LinearRegression()</code> in <code>sklearn</code>, the results are pretty different, which makes me very confused. Therefore recently I dig in and try to reproduce the results without using <code>statsmodels</code>. And I find SARIMAX model is implemented as <strong>State space model</strong> and the parameters are estimated by MLE via <strong>Kalman filter</strong>. So in this post I gonna simply go through it from statistical perspective.</p>
+<h3 id="2-State-Space-Model"><a href="#2-State-Space-Model" class="headerlink" title="2. State Space Model"></a>2. State Space Model</h3><p>State space model introduce a “latent” variable, a.k.a. “state” into the model. Here I just list the model form which I use - linear Gaussian state space model (more general form could be found from many resources). Take the simplest example, the state space model version of \(AR(1)\) is</p>
+<p>\[<br>\begin{aligned}<br>Z_{t} &amp;= \psi Z_{t-1} + \epsilon_{t}, \\<br>Y_{t} &amp;= Z_{t} + \eta_{t},<br>\end{aligned}<br>\]</p>
+<p>the first equation is called system equation, which indicates the transition of the states; the second equation is called observation equation, which indicates how the observations are observed. Where \(Z_{t}\) is the state variable, you can clear see the transition of the state is a \(AR(1)\) model, \(\epsilon_{t}\) is the noise term, a.k.a. system noise; \(Y_{t}\) is the observed variable, since state variable is assumed to be latent and unobservable, \(\eta_{t}\) is the observation noise. Assume \(\epsilon_{t}\sim N(0, \sigma_{\epsilon}^{2})\) and \(\eta_{t}\sim N(0, \sigma_{\eta}^{2})\).</p>
+<p>The advantage of using state space model form is it is very flexible, it could represent both linear and non-linear model form, could easy to extend to multiple inputs/outputs.</p>
+<h3 id="3-Kalman-Filter"><a href="#3-Kalman-Filter" class="headerlink" title="3. Kalman Filter"></a>3. Kalman Filter</h3><p>To estimate the state space model, we need Kalman filter, which will recursively computes the estimates of \(Z_{t}\) conditional on the observation series \(Y_{1},Y_{2},\cdots, Y_{t}\). Kalman filter could give the optimal estimate of the unobservable state variable under the assumption that the state space model is linear Gaussian model.</p>
+<p>Some notations:</p>
+<p>\[<br>\begin{aligned}<br>Z_{t|t-1} &amp;= E\left(Z_{t}|Y_{1},\cdots, Y_{t-1}\right), \\<br>\sigma_{Z, t|t-1}^{2} &amp;= Var\left(Z_{t}|Y_{1},\cdots, Y_{t-1}\right), \\<br>Z_{t|t} &amp;= E\left(Z_{t}|Y_{1},\cdots, Y_{t-1}, Y_{t}\right), \\<br>Y_{t|t-1} &amp;= E\left(Y_{t}|Y_{1},\cdots, Y_{t-1}\right),<br>\end{aligned}<br>\]</p>
+<p>with initial value denoted as \(Z_{0|0}\) and \(\sigma_{Z, 0|0}^{2}\). And based on the state space model we have</p>
+<p>\[<br>\begin{aligned}<br>Z_{t|t-1} &amp;= \psi Z_{t-1|t-1}, \\<br>\sigma_{Z, t|t-1}^{2} &amp;= \psi^2 \sigma_{Z, t-1|t-1}^{2} + \sigma_{\epsilon}^{2}, \\<br>Y_{t|t-1} &amp;= Z_{t|t-1}.<br>\end{aligned}<br>\]</p>
+<p>Then the key step is to update the state estimate after we get new observation \(Y_{t}\) at time \(t\), from Bayesian perspective, we have a prediction at first (prior), then get the updated prediction (posterior) after observe new data, this is what Kalman filter do:</p>
+<p>\[<br>\begin{aligned}<br>Z_{t|t} &amp;= Z_{t|t-1} + K_{t}\left(Y_{t} - Y_{t|t-1}\right), \\<br>\sigma_{Z, t|t}^{2} &amp;= \sigma_{Z, t|t-1}^{2} - K_{t}^{2}\left(\psi^{2}\sigma_{Z,t|t-1}^{2} + \sigma_{\eta}^2\right).<br>\end{aligned}<br>\]</p>
+<p>Here \(K_{t}\) is called Kalman gain, in this case it is</p>
+<p>\[<br>K_{t} = \frac{\sigma_{Z,t|t-1}^{2}}{\sigma_{Z,t|t-1}^{2} + \sigma_{\eta}^{2}}.<br>\]</p>
+<p>So actually you can see, the updated state estimate is the <strong>weighted average</strong> of prior - which is the <strong>conditional expectation of current state given by all historical information</strong>, and observation error - which is the <strong>difference of conditional expectation of next observation and actual observation</strong>, and <strong>Kalman gain</strong> is the weight.</p>
+<h3 id="4-Maximum-Likelihood-Estimation"><a href="#4-Maximum-Likelihood-Estimation" class="headerlink" title="4. Maximum Likelihood Estimation"></a>4. Maximum Likelihood Estimation</h3><p>To estimate the parameter of the model (\(\psi\)), we need MLE. The likelihood function of \(Y_{1},\cdots, Y_{T}\) is </p>
+<p>\[<br>L(y_{1},\cdots,y_{T}) = f(y_{1})\prod^{T}_{t=1}f(y_{t}|y_{1},\cdots,y_{t-1}).<br>\]</p>
+<p>And \(Y_{t}|Y_{1},\cdots,Y_{t-1}\) is a normal distribution with mean \(Y_{t|t-1}\) and variance \(\sigma^{2}_{Z,t|t-1} + \sigma^{2}_{\eta}\). In practice we usually take logarithm, then the log likelihood function is </p>
+<p>\[<br>\ell(y_{1},\cdots, y_{T}) \propto -\frac{T}{2}\log 2\pi - \frac{1}{2}\sum^{T}_{t=1}\log\left(\sigma^{2}_{Z,t|t-1} + \sigma^{2}_{\eta}\right) - \frac{1}{2}\sum^{T}_{t=1}\frac{\left(y_{t} - z_{t|t-1}\right)^2}{\sigma^{2}_{Z,t|t-1} + \sigma^{2}_{\eta}}.<br>\]</p>
+<p>To get the estimate:</p>
+<ul>
+<li>initialize \(Z_{0|0}\), \(\sigma_{Z, 0|0}^{2}\)</li>
+<li>evaluate the likelihood function use Kalman filter</li>
+<li>find the parameter that minimize the likelihood function</li>
+</ul>
+<p>The advantage of using Kalman filter here is since it gives optimal estimates of the state variable, and it could also deal with missing data by change the update rule. More theoretical proof could be found in many Kalman filter and state space model resources.</p>
+
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+      
+
+    <span class="post-categories">
+      <i class="icon-categories"></i>
+        <a href="/categories/Statistics/">Statistics</a>
+    </span>
+    
+
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/Linear-Models/">Linear Models</a><a href="/tags/Time-Series/">Time Series</a>
+    </span>
+    
+
+    </div>
+
+    
+  </div>
+</article>
+
+  
+<section id="comment">
+  
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+  
+</section>
+
+
+
+    </main>
+
+    <footer class="site-footer">
+  <p class="site-info">
+    Proudly powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and
+    Theme by <a href="https://github.com/CodeDaraW/Hacker" target="_blank">Hacker</a>
+    </br>
+    
+    &copy; 2019 Bangda
+    
+	
+	
+	
+  </p>
+  
+  <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+  <span id="busuanzi_container_site_pv">
+    Total viewer <span id="busuanzi_value_site_pv"></span>; 
+  </span>
+  
+  <span id="busuanzi_container_site_uv">
+    Total visitor <span id="busuanzi_value_site_uv"></span>
+  </span>
+	
+	
+  <div id="disqus_thread"></div>
+  <script>
+
+  /**
+   *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+   *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+   */
+   
+  var disqus_config = function () {
+	this.page.url = 'https://bangdasun.github.io{{ page.url }}';  // Replace PAGE_URL with your page's canonical URL variable
+	this.page.identifier = '{{ page.id }}'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+  };
+  
+  (function() { // DON'T EDIT BELOW THIS LINE
+  var d = document, s = d.createElement('script');
+  s.src = 'https://bangdasun-github-io.disqus.com/embed.js';
+  s.setAttribute('data-timestamp', +new Date());
+  (d.head || d.body).appendChild(s);
+  })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  
+  <script id="dsq-count-scr" src="//bangdasun-github-io.disqus.com/count.js" async></script>
+</footer>
+
+
+    
+  </div>
+</div>
+</body>
+</html>

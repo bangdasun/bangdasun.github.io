@@ -1,0 +1,269 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Practical Experiences for Ad Click Prediction | Bangda Sun | Practice makes perfect</title>
+
+  
+  <meta name="author" content="Bangda">
+  
+
+  
+  <meta name="description" content="Play with data">
+  
+
+  
+  
+  <meta name="keywords" content="Machine Learning,Computational Advertising,CTR">
+  
+
+  <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <meta property="og:title" content="Practical Experiences for Ad Click Prediction"/>
+
+  <meta property="og:site_name" content="Bangda Sun"/>
+
+  
+  <meta property="og:image" content="/favicon.ico"/>
+  
+
+  <link href="/favicon.ico" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Bangda Sun" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    jax: ["input/TeX","output/HTML-CSS"],
+    extensions: ["tex2jax.js","Safe.js"]
+  });
+  </script>
+<script type="text/javascript" async="async"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_CHTML,Safe">
+</script>
+</script>
+</head>
+
+
+<body>
+<div class="blog">
+  <div class="content">
+
+    <header>
+  <div class="site-branding">
+    <h1 class="site-title">
+      <a href="/">Bangda Sun</a>
+    </h1>
+    <p class="site-description">Practice makes perfect</p>
+  </div>
+  <nav class="site-navigation">
+    <ul>
+      
+        <li><a href="/">主页</a></li>
+      
+        <li><a href="/tags">标签</a></li>
+      
+    </ul>
+  </nav>
+</header>
+
+    <main class="site-main posts-loop">
+    <article>
+
+  
+    
+    <h3 class="article-title"><span>Practical Experiences for Ad Click Prediction</span></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2019/04/27/47-practical-experiences-for-ad-click-prediction/" rel="bookmark">
+        <time class="entry-date published" datetime="2019-04-27T17:23:10.000Z">
+          2019-04-27
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <p>[Paper reading]: Ad Click Prediction: a View from the Trenches</p>
+<a id="more"></a>
+<p>Online advertising not only provides multi-billion dollars revenues to companies, but also serves as one of the great success stories for machine learning. This <a href="https://static.googleusercontent.com/media/research.google.com/en//pubs/archive/41159.pdf" target="_blank" rel="external">paper</a> from Google provides a overview of ad click prediction with many practical and industrial experiences.</p>
+<h3 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1. Introduction"></a>1. Introduction</h3><p>The central problem for this multi-billion dollars industry is predicting CTR, <strong>sponsored search advertising</strong>, <strong>contextual advertising</strong>, <strong>display advertising</strong> and <strong>real-time bidding auctions</strong>, <a href="https://en.wikipedia.org/wiki/Search_advertising" target="_blank" rel="external">etc</a>, all heavily rely on it. In this paper, the authors present a selection of case studies and topics drawn from recent experiments in the setting of a deployed CTR prediction system as well as some of the challenges that arise in a real-world system, includes</p>
+<ul>
+<li>improvements in the context of traditional supervised learning based on an FTRL-Proximal online learning algorithm and the user of per-coordinate learning rates</li>
+<li>useful tricks for memory saving</li>
+<li>methods for assessing and visualizing performance</li>
+<li>practical methods for providing confidence estimates for predicted probabilities</li>
+<li>calibration methods</li>
+<li>automated feature management methods</li>
+</ul>
+<h3 id="2-System-Overview"><a href="#2-System-Overview" class="headerlink" title="2. System Overview"></a>2. System Overview</h3><p>When a user does a <strong>search</strong> with query \(q\), an initial set of candidate ads is matched to the query based on advertiser-chosen keywords. An auction mechanism then determines (1) whether these ads are shown to the user; (2) what order they are shown in; (3) what prices the advertisers pay if their ad is clicked. In addition to advertiser bids, an important input to the auction is for each ad \(a\), the estimated probability of the ad will be clicked if it is shown: \(P(\text{click}|q, a)\).</p>
+<p>The features used in the system include:</p>
+<ul>
+<li>query</li>
+<li>text of the ad creative</li>
+<li>ad-related meta data</li>
+</ul>
+<p>High-level system overview is like this:</p>
+<center><br>  <img src="/images/ad-system-overview.PNG" style="width: 600px; height: 250px"> <br></center>
+
+
+<h3 id="3-Online-Learning-and-Sparsity"><a href="#3-Online-Learning-and-Sparsity" class="headerlink" title="3. Online Learning and Sparsity"></a>3. Online Learning and Sparsity</h3><p>For learning at massive scale, online learning algorithms for GLM (e.g. logistic regression) have many advantages. It enables efficient training on large datasets by streaming examples from disk or over network, each training example only needs to be consider once.</p>
+<p>Denote vector \(\mathbf{g}_{t}\in R^{d}\), where \(t\) is the index of current training example, the \(i\)th entry of \(\mathbf{g}_{t}\) is \(g_{t,i}\), and \(\mathbf{g}_{1:t} = \sum^{t}_{s=1}\mathbf{g}_{s}\).</p>
+<p>For logistic regression under online framework, on round \(t\) we need to predict samples described by feature vector \(\mathbf{x}_{t}\in R^{d}\), given model parameter \(\mathbf{w}_{t}\), the prediction is \(p_{t}=\sigma(\mathbf{w}_{t}\cdot \mathbf{x}_{t})\), where \(\sigma(\cdot)\) is the sigmoid function; then given the label \(y_{t}\in\{0,1\}\) and logistic loss function (negative log-likelihood)</p>
+<p>\[<br>\ell_{t}(\mathbf{w}_{t}) = -y_{t}\log p_{t} - (1-y_{t})\log (1-p_{t}),<br>\]</p>
+<p>then the gradient is</p>
+<p>\[<br>\nabla \ell_{t}(\mathbf{w}) = (\sigma(\mathbf{w}\cdot \mathbf{x}_{t}) - y_{t})\mathbf{x}_{t}<br>\].</p>
+<p>In practice, the key consideration is the <strong>size of the final model</strong>, the number of non-zero coefficients in \(\mathbf{w}\) is the determining factor of the memory usage.</p>
+<p>OGD (Online Gradient Descent) is not very efficient for producing sparse models. More sophisticated approaches like FOBOS and truncated gradient do succeed in introducing sparsity. The RDA (Regularized Dual Averaging) produces better accuracy and sparsity trade-off than FOBOS. Then the question is <strong>can we get both the sparsity provided by RDA and improved accuracy of OGD</strong>? The answer is yes, using FTRL (Follow The Regularized Leader), or FTRL-Proximal. Without regularization, this algorithm is identical to standard oneline gradient descent, but since it uses an alternative lazy representation of the model coefficients, L1 regularization can be implemented much more effectively.</p>
+<p>Given a sequence of gradients \(\mathbf{g}_{t} \in R^{d}\), OGD performs the update:</p>
+<p>\[<br>\mathbf{w}_{t+1} = \mathbf{w}_{t} - \eta_{t}\mathbf{g}_{t},<br>\]</p>
+<p>where \(\eta_{t}\) is a non-increasing learning rate schedule, e.g. \(\eta_{t} = 1/\sqrt{t}\). The FTRL-Proximal algorithm instead uses the update</p>
+<p>\[<br>\mathbf{w}_{t+1} = \arg\min_{\mathbf{w}} \left(\mathbf{g}_{1:t}\cdot\mathbf{w} + \frac{1}{2}\sum^{t}_{s=1}\sigma_{s}||\mathbf{w} - \mathbf{w}_{s}||^{2}_{2} + \lambda_{1}||\mathbf{w}||_{1}\right),<br>\]</p>
+<p>where \(\sigma_{s}\) is defined in terms of learning rate schedule such that \(\sigma_{1:t}=1/\eta_{t}\). When \(\lambda_{1} = 0\), it produces identical sequence of coefficient vectors. However, the FTRL-Proximal update with \(\lambda_{1}&gt;0\) does excellent job of inducing sparsity. </p>
+<p>Experiments shows that FTRL-Proximal with L1 regularization significantly outperformed both RDA and FOBOS in terms of the size-versus-accuracy trade-offs produced. Overall, FTRL-Proximal gives significantly improved sparsity with the same or better prediction accuracy.</p>
+<h3 id="4-Saving-Memory-at-Massive-Scale"><a href="#4-Saving-Memory-at-Massive-Scale" class="headerlink" title="4. Saving Memory at Massive Scale"></a>4. Saving Memory at Massive Scale</h3><h4 id="4-1-Probabilistic-Feature-Inclusion"><a href="#4-1-Probabilistic-Feature-Inclusion" class="headerlink" title="4.1 Probabilistic Feature Inclusion"></a>4.1 Probabilistic Feature Inclusion</h4><p>Huge sparsity is one of the problems in CTR prediction, the vast majority of features are extremely rare (in some of the model, half the unique features occur only once in the training set in the entrie training set of billions of examples).</p>
+<p>It’s very expensive to track statistics for rare feature, and we don’t know in advance which features will be rare. Hashing also didn’t give useful benefits in experiments. </p>
+<p>Therefore a new method is proposed called probabilistic feature inclusion, which means new features are included in the model probabilistically as they first occur. This can be implemented in an online setting. There are two methods:</p>
+<ul>
+<li><strong>Poisson Inclusion</strong>: for a new feature that is not already in the model, it will be add it to the model with probability \(p\). Once a feature has been added, in subsequent observations we update its coefficient values and related statistics by OGD as per usual. The number of times a feature needs to be seen before it is added to the model follows a geometric distrbution with expectation value \(1/p\).</li>
+<li><strong>Bloom Filter Inclusion</strong>: a rolling set of counting Bloom filters is used to detect the first \(n\) times a feature is encountered in training. Once a feature has occurred more than \(n\) times, it is added to the model and use it for training.</li>
+</ul>
+<p>Experiments sho that the effect of these methods give good trade-off for RAM savings against loss in predictive quality.</p>
+<h4 id="4-2-Subsampling-Training-Data"><a href="#4-2-Subsampling-Training-Data" class="headerlink" title="4.2 Subsampling Training Data"></a>4.2 Subsampling Training Data</h4><p>Typical CTRs are much lower than 50% therefore clicks are relatively more valuable in learning CTR estimattes. We can reduce the training data size with minimal impact on accuracy. A subsampled training data at <strong>query level</strong> is created with:</p>
+<ul>
+<li>Any query for which at least one of the ads was clicked;</li>
+<li>A fraction \(r\) of the queries where none of the ads were clicked.</li>
+</ul>
+<p>Which means the subsampling is done on negative samples.</p>
+<p>Experiments show that even fairly aggressive subsampling of unclicked queries has a very mild impact on accuracy, and that predictive performance is not especially impacted.</p>
+<p>Other topics related to saving memory include:</p>
+<ul>
+<li>Encoding Values with Fewer Bits</li>
+<li>Training Many Similar Models</li>
+<li>Single Value Structure</li>
+<li>Computing Learning Rates with Counts</li>
+</ul>
+<h3 id="5-Evaluating-Model-Performance"><a href="#5-Evaluating-Model-Performance" class="headerlink" title="5. Evaluating Model Performance"></a>5. Evaluating Model Performance</h3><h4 id="5-1-Progressive-Validation"><a href="#5-1-Progressive-Validation" class="headerlink" title="5.1 Progressive Validation"></a>5.1 Progressive Validation</h4><p>Instead of cross validation or validation on held out dataset, progressive validation is used. Because computing a gradient for learning requires computing a prediction anyway, we can cheaply stream those predictions out for subsequent analysis, aggregated hourly.</p>
+<p>The online loss is a good proxy for accuracy in serving queries, because it measures the performance only on the most recent data before training on it - exactly analogous to what happens when the model serves queries. </p>
+<p><strong>Absolute metric values are often misleading</strong>. The metrics vary depending on the difficulty of the problem. Therefore <strong>relative changes</strong> is more important, usually expressed as a percent change in the metric relative to a baseline model. Experiements show that <strong>relative changes are much more stable over time</strong>, and it is calculated on same time period.</p>
+<h3 id="6-Confidence-Estimates"><a href="#6-Confidence-Estimates" class="headerlink" title="6. Confidence Estimates"></a>6. Confidence Estimates</h3><p>Quantifying the expected accuracy of the prediction is important for many CTR applications, such estimates can be used to measure and control explore / exploit trade-offs.</p>
+<p><strong>Uncertainty score</strong> is proposed heuristically. The essential observation is that the learning algorithm itself maintains a notion of uncertainty in the per-feature counters \(n_{t,i}\) used for learning rate control, features for which \(n_{i}\) is large get a smaller learning rate (we believe current coefficient values are more likely to be accurate). The gradient of logistic loss respect to log odds ratio is \(p_{t} - y_{t}\), its absolute value is bounded by 1. Therefore we can <strong>bound the change in log odds ratio prediction due to observing a single training example</strong>.</p>
+<h3 id="7-Calibrating-Predictions"><a href="#7-Calibrating-Predictions" class="headerlink" title="7. Calibrating Predictions"></a>7. Calibrating Predictions</h3><p>The difference between the average predicted and observed CTR on some slice of data is the <strong>system bias</strong>. A calibration layer is added to match predicted CTRs to observed CTRs.</p>
+<p>The predictions are calibrated on a slice of data \(d\) if on average when we predict \(p\), we can improve the prediction by applying correction function \(\tau_{d}(p)\). A simple way is fit a function \(\tau(p) = \gamma p^{\kappa}\) to the data, \(\gamma\) and \(\kappa\) can be learned by using Poisson regression.</p>
+<h3 id="8-Unsuccessful-Experiments"><a href="#8-Unsuccessful-Experiments" class="headerlink" title="8. Unsuccessful Experiments"></a>8. Unsuccessful Experiments</h3><p>Several failed experiments are also listed:</p>
+<ul>
+<li>Aggressive Feature Hashing</li>
+<li>Dropout</li>
+<li>Feature Bagging</li>
+<li>Feature Vector Normalization</li>
+</ul>
+
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+      
+
+    <span class="post-categories">
+      <i class="icon-categories"></i>
+        <a href="/categories/Machine-Learning/">Machine Learning</a>, <a href="/categories/Machine-Learning/Computational-Advertising/">Computational Advertising</a>
+    </span>
+    
+
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/Machine-Learning/">Machine Learning</a><a href="/tags/Computational-Advertising/">Computational Advertising</a><a href="/tags/CTR/">CTR</a>
+    </span>
+    
+
+    </div>
+
+    
+  </div>
+</article>
+
+  
+<section id="comment">
+  
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+  
+</section>
+
+
+
+    </main>
+
+    <footer class="site-footer">
+  <p class="site-info">
+    Proudly powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and
+    Theme by <a href="https://github.com/CodeDaraW/Hacker" target="_blank">Hacker</a>
+    </br>
+    
+    &copy; 2019 Bangda
+    
+	
+	
+	
+  </p>
+  
+  <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+  <span id="busuanzi_container_site_pv">
+    Total viewer <span id="busuanzi_value_site_pv"></span>; 
+  </span>
+  
+  <span id="busuanzi_container_site_uv">
+    Total visitor <span id="busuanzi_value_site_uv"></span>
+  </span>
+	
+	
+  <div id="disqus_thread"></div>
+  <script>
+
+  /**
+   *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+   *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+   */
+   
+  var disqus_config = function () {
+	this.page.url = 'https://bangdasun.github.io{{ page.url }}';  // Replace PAGE_URL with your page's canonical URL variable
+	this.page.identifier = '{{ page.id }}'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+  };
+  
+  (function() { // DON'T EDIT BELOW THIS LINE
+  var d = document, s = d.createElement('script');
+  s.src = 'https://bangdasun-github-io.disqus.com/embed.js';
+  s.setAttribute('data-timestamp', +new Date());
+  (d.head || d.body).appendChild(s);
+  })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  
+  <script id="dsq-count-scr" src="//bangdasun-github-io.disqus.com/count.js" async></script>
+</footer>
+
+
+    
+  </div>
+</div>
+</body>
+</html>
