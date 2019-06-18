@@ -124,7 +124,7 @@
 <p>\[<br>L = \frac{1}{T} \sum_{t}\log f(w_{t},w_{t-1}\cdots,w_{t-n+1}; \theta).<br>\]</p>
 <p>And output layer is a softmax layer,</p>
 <p>\[<br>\hat{P}(w_{t}|w_{1},\cdots,w_{t-1}) = \frac{e^{y_{w_{t}}}}{\sum_{i}e^{y_{i}}}.<br>\]</p>
-<h4 id="2-4-Conclusions"><a href="#2-4-Conclusions" class="headerlink" title="2.4 Conclusions"></a>2.4 Conclusions</h4><p>Experiments on two corpora (1) more than one million samples (2) a larger one with above 15 million words. Could yield much better perplexity. Since it take advantage of learned distributed representation to fight curse of dimensionarlity, each training sentence informs the model about a combinational number of other sentences.</p>
+<h4 id="2-4-Conclusions"><a href="#2-4-Conclusions" class="headerlink" title="2.4 Conclusions"></a>2.4 Conclusions</h4><p>Experiments on two corpora (1) more than one million samples (2) a larger one with above 15 million words. <strong>Could yield much better perplexity (a metric to evaluate language models)</strong>. Since it take advantage of learned distributed representation to fight curse of dimensionarlity, each training sentence informs the model about a combinational number of other sentences.</p>
 
       
     </div>

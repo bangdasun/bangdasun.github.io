@@ -103,7 +103,7 @@
 <h3 id="2-ARIMA-Family"><a href="#2-ARIMA-Family" class="headerlink" title="2. ARIMA Family"></a>2. ARIMA Family</h3><ul>
 <li>AR - Autoregressive Model</li>
 </ul>
-<p>Autoregressive model is simply a regression model plus a sequence model, where the output depends linearly on its own previous values. We denote a autoregressive model of order \(p\) as \(AP(p)\),</p>
+<p>Autoregressive model is simply a regression model plus a sequence model, where <strong>the output depends linearly on its own previous values</strong>. We denote a autoregressive model of order \(p\) as \(AP(p)\),</p>
 <p>\[<br>Y_{t} = \psi_{0} + \sum^{p}_{i=1}\psi_{i}Y_{t-i} + \epsilon_{t},<br>\]</p>
 <p>where \(\psi_{i}\) are the parameters of the model, \(\epsilon_{t}\) is noise. If we denote a <strong>backshift operator</strong> \(B\) (or say <strong>lag operator</strong>), the model is equivalent with</p>
 <p>\[<br>Y_{t} = \psi_{0} + \sum^{p}_{i=1}\psi_{i}B^{i}Y_{t} + \epsilon_{t}.<br>\]</p>
@@ -112,7 +112,7 @@
 <ul>
 <li>MA - Moving-average Model</li>
 </ul>
-<p>For moving-average model, the output depends linearly on the current and previous value of a imperfectly predictable stochastic term. A Moving-average model with order \(q\) is denoted as \(MA(q)\),</p>
+<p>For moving-average model, <strong>the output depends linearly on the current and previous value of a imperfectly predictable stochastic term</strong>. A Moving-average model with order \(q\) is denoted as \(MA(q)\),</p>
 <p>\[<br>Y_{t} = \theta_{0} + \sum^{q}_{i=1}\theta_{i}\epsilon_{t-i} + \epsilon_{t},<br>\]</p>
 <p>by applying backshift operator \(B\) we have</p>
 <p>\[<br>Y_{t} = \theta_{0} + \sum^{q}_{i=1}\theta_{i}B^{i}\epsilon_{t} + \epsilon_{t} = \theta_{0} + \left(1 + \sum^{q}_{i=1}\theta_{i}B^{i}\right)\epsilon_{t}.<br>\]</p>

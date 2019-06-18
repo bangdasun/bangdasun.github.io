@@ -130,13 +130,13 @@
 <p>where \(\mu\) is the overall average rating, \(b_{u}\) and \(b_{i}\) denote for the item and user observed deviations from average. The adjusted predicted rating is<br>\[<br>\hat{r}_{ui} = b_{ui} + q_{i}^{\top}p_{u} = \mu + b_{u} + b_{i} + q_{i}^{\top}p_{u}.<br>\]</p>
 <p>and learning problem is adjusted as </p>
 <p>\[<br>\min_{q, p, b} \sum_{(u,i)\in k} \left(r_{ui} -\mu - b_{u} - b_{i} - q_{i}^{\top}p_{u} \right)^2 + \lambda\left(||q_{i}||_{2}^{2} + ||p_{u}||_{2}^{2} + b_{u}^{2} + b_{i}^{2}\right).<br>\]</p>
-<h4 id="4-2-Additional-Input-Sources"><a href="#4-2-Additional-Input-Sources" class="headerlink" title="4.2 Additional Input Sources"></a>4.2 Additional Input Sources</h4><p>Add implicit data is one way to tackle cold start problem. Consider for binary representations, \(N(u)\) denotes the set of items (a neighbor of items) for user \(u\) expressed an implicit preference (such as viewed, cliked), item are assocated with \(x_{i}\in R^{f}\). Accordingly, a user who showed a preference for items in \(N(u)\) is characterized by </p>
+<h4 id="4-2-Additional-Input-Sources"><a href="#4-2-Additional-Input-Sources" class="headerlink" title="4.2 Additional Input Sources"></a>4.2 Additional Input Sources</h4><p><strong>Add implicit data is one way to tackle cold start problem</strong>. Considering binary representations, \(N(u)\) denotes the set of items (a neighbor of items) for user \(u\) expressed an implicit preference (such as viewed, cliked), item are assocated with \(x_{i}\in R^{f}\). Accordingly, a user who showed a preference for items in \(N(u)\) is characterized by </p>
 <p>\[<br>\sum_{i\in N(u)} x_{i}, \text{ or } |N(u)|^{1/2}\sum_{i\in N(u)}x_{i}^{9/2} \text{ (normalized)}<br>\]</p>
 <p>Another implicit source is from users, each user attribute (such as demographic info: gender, age) is denoted by \(A(u)\), and sum of factor vector \(y_{a}\in R^{f}\) corresponds to attributes to describe a user:</p>
 <p>\[<br>\sum_{a\in A(u)} y_{a}.<br>\]</p>
 <p>Then the predited rating is adjusted as </p>
 <p>\[<br>\hat{r}_{ui} = \mu + b_{u} + b_{i} + q_{i}^{\top}\left(p_{u} + |N(u)|^{1/2}\sum_{i\in N(u)}x_{i}^{9/2} + \sum_{a\in A(u)} y_{a}\right).<br>\]</p>
-<h4 id="4-3-Temporal-Dynamics"><a href="#4-3-Temporal-Dynamics" class="headerlink" title="4.3 Temporal Dynamics"></a>4.3 Temporal Dynamics</h4><p>Matrix factorization models also lends itself well to modeling temporal effects which could significantly improve the accuracy. Factorizing ratings into distinct terms allows the system to treat different temporal aspects separately. The biases terms vary over time, the could be re-parameterized with time factor: item biases - \(b_{i}(t)\); user biases - \(b_{u}(t)\); user preference - \(p_{u}(t)\). These changes incorporate the facts that:</p>
+<h4 id="4-3-Temporal-Dynamics"><a href="#4-3-Temporal-Dynamics" class="headerlink" title="4.3 Temporal Dynamics"></a>4.3 Temporal Dynamics</h4><p>Matrix factorization models also lends itself well to modeling <strong>temporal effects which could significantly improve the accuracy</strong>. Factorizing ratings into distinct terms allows the system to treat different temporal aspects separately. The biases terms vary over time, the could be re-parameterized with time factor: item biases - \(b_{i}(t)\); user biases - \(b_{u}(t)\); user preference - \(p_{u}(t)\). These changes incorporate the facts that:</p>
 <ul>
 <li>item popularity could change over time</li>
 <li>users’ baseline rating could change over time</li>
@@ -151,7 +151,7 @@
 
 
 
-<p>As you can see the temporal components significantly reduce the RMSE</p>
+<p>As you can see the temporal components significantly reduce the RMSE.</p>
 
       
     </div>

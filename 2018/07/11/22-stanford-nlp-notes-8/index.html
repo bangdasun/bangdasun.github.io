@@ -128,7 +128,7 @@
 <ul>
 <li>choose the class \(y\) which maximizes the vote</li>
 </ul>
-<p>There are many ways to choose weights, depends on the way we modeling and the way we train the model. Here we use <strong>Maximum Entropy Model</strong> (it is essentially multiclass logistic regression, in NLP it usually called Maximum Entropy Model), it model the conditional probability as follows:</p>
+<p>There are many ways to choose weights, depends on the way we modeling and the way we train the model. Here we use <strong>Maximum Entropy Model</strong> (<strong>it is essentially multiclass logistic regression</strong>, in NLP it usually called Maximum Entropy Model), it model the conditional probability as follows:</p>
 <p>\[<br>P(y|x) = \frac{\exp\left(\sum_i \lambda_i f_i(x,y)\right)}{\sum_y \exp\left(\sum_i \lambda_i f_i(x,y)\right)}.<br>\]</p>
 <p>Here exponential function will make everything positive, and the denominator could be view as normalized votes. We can see the weights are the parameters of this model, combine via the <strong>softmax function</strong>.</p>
 <p>The way we estimate the parameters is through maximizing the likelihood (MLE). Here it is, (we take a log)</p>

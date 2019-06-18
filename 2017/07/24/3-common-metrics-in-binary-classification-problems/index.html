@@ -109,7 +109,12 @@
 <p>Next we can use <strong>true positive rate (TPR)</strong> and <strong>false positive rate (FPR)</strong>, they are defined as:</p>
 <p>\[<br>\text{TPR} = \frac{\text{true positive}}{\text{positive}} = \frac{\text{true positive}}{\text{true positive} + \text{false negative}} = \frac{43}{43+3} = 93.48\%,<br>\]</p>
 <p>\[<br>\text{FPR} = \frac{\text{false positive}}{\text{negative}} = \frac{\text{false positive}}{\text{false positive} + \text{true negative}} = \frac{4}{4+55} = 6.78\%,<br>\]</p>
-<p>where TPR can be viewed as gauge of “Type I error” (reject true) and FPR corresponds to “Type II error” (failure to reject false). TPR has another name called <strong>Recall</strong>, also known as <strong>Sensitivity</strong>, and 1 - FPR is known as <strong>Specificity</strong>,</p>
+<p>where <strong>TPR can be viewed as gauge of “Type I error” (reject true)</strong> and <strong>FPR corresponds to “Type II error” (failure to reject false)</strong>. TPR has another name called <strong>Recall</strong>, also known as <strong>Sensitivity</strong>, and <strong>1 - FPR</strong> is known as <strong>Specificity</strong>.</p>
+<p>Personally speaking, the trick to remember the calculation of these metrics are:</p>
+<ul>
+<li>when it is about <strong>True</strong> XX Rate, the denominator is XX, which is Positive - Positive and Negative - Negative;</li>
+<li>when it is about <strong>False</strong> XX Rate, the denominator is opposite, which is Positive - Negative and Negative - Positive. </li>
+</ul>
 <p>From the perspective of confusion matrix, we can see the denominator of FPR is the summation of <strong>first row</strong> of confusion matrix; the denominator of TPR is the summation of <strong>second row</strong> of confusion matrix.</p>
 <p>Based on TPR and FPR, we can draw a plot named <strong>ROC</strong> (receiver operating characteristic), where the x-axis is FPR and y-axis is TPR. ROC is plotted at various threshold settings, the ideal point is at (0, 1), means for nice performance, FPR should be as small as possible and TPR should be as large as possible. Also we have <strong>AUC</strong> (area under curve) which is the area under ROC curve. ROC and AUC are widely used in industries.</p>
 <p>Next, we can define <strong>Precision</strong>, which is the proportion of all true positive. Sometimes two classes are not “equally weighted” in our problem, which means we care more about one type of class. </p>

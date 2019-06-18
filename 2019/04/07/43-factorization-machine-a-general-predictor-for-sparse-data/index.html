@@ -95,7 +95,7 @@
       
         <p>[Paper reading]: Factorization Machines</p>
 <a id="more"></a>
-<h3 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1. Introduction"></a>1. Introduction</h3><p>In this <a href="https://www.csie.ntu.edu.tw/~b97053/paper/Rendle2010FM.pdf" target="_blank" rel="external">paper</a>, a new model class Factorization Machine is proposed with several advantages:</p>
+<h3 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1. Introduction"></a>1. Introduction</h3><p>In this <a href="https://www.csie.ntu.edu.tw/~b97053/paper/Rendle2010FM.pdf" target="_blank" rel="external">paper</a>, a new model class: Factorization Machine is proposed with several advantages - </p>
 <ul>
 <li>Allow parameter estimation (for feature interaction) under huge sparse data (like recommender systems), where SVMs fail to learn reliable hyperplane;</li>
 <li>Can be optimized in primal form (rather than SVM to be solved in dual form) in linear time;</li>
@@ -122,26 +122,26 @@
 <li>factor vector of <em>Star Trek</em> are likely to be similar to be one of <em>Star Wars</em> because <em>Bob</em> has similar interactions for both movies.</li>
 </ul>
 <p>In total, the dot product of factor vector \(\mathbf{v}_{A}\) and \(\mathbf{v}_{ST}\) will be similar to one of <em>Alice</em> and <em>Star Wars</em></p>
-<h4 id="2-3-Computation-and-Learning"><a href="#2-3-Computation-and-Learning" class="headerlink" title="2.3 Computation and Learning"></a>2.3 Computation and Learning</h4><p>The time complexity to directly compute FM is \(O\left(kn^{2}\right)\), by reformulating this it could be reduced to linear (\(O(kn)\)), only look at the interaction part:</p>
+<h4 id="2-3-Computation-and-Learning"><a href="#2-3-Computation-and-Learning" class="headerlink" title="2.3 Computation and Learning"></a>2.3 Computation and Learning</h4><p>The time complexity to directly compute FM is \(O\left(kn^{2}\right)\), by reformulating this it could be reduced to <strong>linear</strong> (\(O(kn)\)), only look at the interaction part:</p>
 <p>\[<br>\begin{aligned}<br> &amp;\sum^{n}_{i=1}\sum^{n}_{j=i+1} \langle \mathbf{v}_{i}, \mathbf{v}_{j} \rangle x_{i}x_{j} \\<br>=&amp;\frac{1}{2}\sum^{n}_{i=1}\sum^{n}_{j=1} \langle \mathbf{v}_{i}, \mathbf{v}_{j} \rangle  x_{i}x_{j} - \frac{1}{2}\sum^{n}_{i=1}\langle \mathbf{v}_{i}, \mathbf{v}_{i} \rangle x_{i}x_{i} \\<br>=&amp;\frac{1}{2}\left(\sum^{n}_{i=1}\sum^{n}_{j=1}\sum^{k}_{f=1}v_{if}v_{fj}x_{i}x_{j} - \sum^{n}_{i=1}\sum^{k}_{f=1}v_{if}^{2}x_{i}^{2}\right) \\<br>=&amp; \frac{1}{2}\sum^{k}_{f=1}\left(\left(\sum^{n}_{i=1}v_{if}x_{i}\right)\left(\sum^{n}_{j=1}v_{jf}x_{j}\right) - \sum^{n}_{i=1}v_{if}^{2}x_{i}^{2}\right) \\<br>=&amp;\frac{1}{2}\sum^{k}_{f=1}\left(\left(\sum^{n}_{i=1}v_{if}x_{i}\right)^{2} - \sum^{n}_{i=1}v_{if}^{2}x_{i}^{2}\right).<br>\end{aligned}<br>\]</p>
 <p>And the gradient of FM is:</p>
 <p>\[<br>\frac{\partial \hat{y}(\mathbf{x})}{\partial \theta} =<br>\left\{<br>\begin{aligned}<br>&amp;1,&amp;\text{if }\theta\text{ is }w_{0} \\<br>&amp; x_{i},&amp;\text{if }\theta\text{ is }w_{i} \\<br>&amp; x_{i}\sum^{n}_{j=1}v_{jf}x_{j} - v_{if}x_{i}^{2}, &amp;\text{if }\theta\text{ is }v_{if}<br>\end{aligned}\right.~.<br>\]</p>
 <h3 id="3-Compared-with-SVM"><a href="#3-Compared-with-SVM" class="headerlink" title="3. Compared with SVM"></a>3. Compared with SVM</h3><p>The explicit form of SVM is as follows:</p>
 <p>\[<br>\hat{y}(\mathbf{x}) = \langle \phi(\mathbf{x}), \mathbf{w} \rangle,<br>\]</p>
-<p>where \(\phi(\cdot)\) is a mapping from raw feature space \(R^{n}\) into a more complex space \(\mathcal{F}\), it is related to the kernel with</p>
+<p>where \(\phi(\cdot)\) is a mapping from raw feature space \(R^{n}\) into a more complex space \(\mathcal{F}\), it is related to the <strong>kernel</strong> with</p>
 <p>\[<br>K: R^{n}\times R^{n}\rightarrow R, ~K(\mathbf{x}, \mathbf{z}) = \langle\phi(\mathbf{x}),\phi(\mathbf{z}) \rangle.<br>\]</p>
 <p>When using linear kernel: \(K(\mathbf{x}, \mathbf{z}) = 1 + \langle \mathbf{x}, \mathbf{z} \rangle\), and SVM is rewritten as:</p>
 <p>\[<br>\hat{y}(\mathbf{x}) = w_{0} + \sum^{n}_{i=1}w_{i}x_{i},<br>\]</p>
 <p>and it’s obvious that a linear SVM is equivalent to a FM with \(d=1\).</p>
 <p>When using polynomial kernel: \(K(\mathbf{x}, \mathbf{z}) = (1 + \langle \mathbf{x}, \mathbf{z} \rangle)^{d}\), suppose \(d=2\), SVM is rewritten as:</p>
 <p>\[<br>\hat{y}(\mathbf{x}) = w_{0} + \sqrt{2}\sum^{n}_{i=1}w_{i}x_{i} + \sum^{n}_{i=1}w_{ii}^{(2)}x_{ii}^{2} + \sqrt{2}\sum^{n}_{i=1}\sum^{n}_{j=i+1}w_{ij}^{(2)}x_{i}x_{j}.<br>\]</p>
-<p>The main difference between SVM and FM is the parametrization: all interaction parameters \(w_{ij}\) of SVM are completely independent; in contrast, FM factorizes interaction parameters, thus \(\langle\mathbf{v}_{i},\mathbf{v}_{j} \rangle\) and \(\langle\mathbf{v}_{i}, \mathbf{v}_{l} \rangle\) depend on each other as they overlap and share parameters (\(\mathbf{v}_{i}\)).</p>
+<p><strong>The main difference between SVM and FM is the parametrization</strong>: all interaction parameters \(w_{ij}\) of SVM are completely <strong>independent</strong>; in contrast, FM factorizes interaction parameters, thus \(\langle\mathbf{v}_{i},\mathbf{v}_{j} \rangle\) and \(\langle\mathbf{v}_{i}, \mathbf{v}_{l} \rangle\) depend on each other as they <strong>overlap and share parameters</strong> (\(\mathbf{v}_{i}\)).</p>
 <p>In summary:</p>
 <ul>
 <li>The dense parametrization of SVM requires direction observations for the interactions, which is often missing in sparse setting like recommender systems; parameters of FM can be estimated well even under huge sparsity;</li>
 <li>FM can be directly learned in the primal; non-linear kernel SVM are usually learned in the dual;</li>
 <li>Model form of FM is independent of training data; predictions with SVM depends on data (support vectors);</li>
-<li>FM is linear.</li>
+<li>FM is still linear model, while SVM may not.</li>
 </ul>
 <h3 id="4-Compared-with-other-Factorization-Models"><a href="#4-Compared-with-other-Factorization-Models" class="headerlink" title="4. Compared with other Factorization Models"></a>4. Compared with other Factorization Models</h3><h4 id="4-1-Matrix-Factorization"><a href="#4-1-Matrix-Factorization" class="headerlink" title="4.1 Matrix Factorization"></a>4.1 Matrix Factorization</h4><p>Matrix Factorization (MF) factorizes a relationship between two categorical features (e.g. users and items). The standard input feature \(\mathbf{x}\)  is usually binary indicators for each category. A FM using this input is identical to the matrix factorization because \(x_{j}\) is only non-zero for \(u\) and \(i\),</p>
 <p>\[<br>\hat{y}(\mathbf{x}) = w_{0} + w_{u} + w_{i} + \langle \mathbf{v}_{u}, \mathbf{v}_{i} \rangle.<br>\]</p>
@@ -150,7 +150,7 @@
 <p>here the first line of the equation is the SVD++ model, but FM also contains some additional interactions between users and items in \(N(u)\).</p>
 <p>In summary:</p>
 <ul>
-<li>Standard factorization models are not general prediction model likf FM, instead they require that the feature vector is partitioned in parts and in each part exactly one element is 1 or 0;</li>
+<li>Standard factorization models are not general prediction model like FM, instead they require that the feature vector is partitioned in parts and in each part exactly one element is 1 or 0;</li>
 <li>FM can mimic many factorization models just by feature extractions which makes FM easily applicable in practice.</li>
 </ul>
 

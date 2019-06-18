@@ -15,7 +15,7 @@
 
   
   
-  <meta name="keywords" content="Machine Learning,Ensemble Algorithms,Decision Tree">
+  <meta name="keywords" content="Ensemble Algorithms,Decision Tree,Machine Learning">
   
 
   <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
@@ -106,7 +106,7 @@
 <h4 id="2-2-Gradient-Tree-Boosting"><a href="#2-2-Gradient-Tree-Boosting" class="headerlink" title="2.2 Gradient Tree Boosting"></a>2.2 Gradient Tree Boosting</h4><ul>
 <li>Setup loss function</li>
 </ul>
-<p>Training GBM is sequentially, let \(\hat{y}_{i}^{(t)}\) be the prediction of input \(X_{i}\) at \(t\) th iteration, a decision tree is trained and add to the output model of \((t-1)\) th iteration, the objective function is:<br>\[<br>\mathcal{L}^{(t)} = \sum^{n}_{i=1}l\left(y_{i}, \hat{y}_{i}^{(t-1)} + f_{t}\left(X_{i}\right)\right) + \Omega\left(f_{t}\right) = \sum^{n}_{i=1}l\left(y_{i}, \hat{y}_{i}^{(t)} \right) + \Omega\left(f_{t}\right).<br>\]</p>
+<p><strong>Training GBM is sequentially</strong>. Let \(\hat{y}_{i}^{(t)}\) be the prediction of input \(X_{i}\) at \(t\) th iteration, a decision tree is trained and add to the output model of \((t-1)\) th iteration, the objective function is:<br>\[<br>\mathcal{L}^{(t)} = \sum^{n}_{i=1}l\left(y_{i}, \hat{y}_{i}^{(t-1)} + f_{t}\left(X_{i}\right)\right) + \Omega\left(f_{t}\right) = \sum^{n}_{i=1}l\left(y_{i}, \hat{y}_{i}^{(t)} \right) + \Omega\left(f_{t}\right).<br>\]</p>
 <p>When the loss function \(l\) is squared loss or exponential loss, the calculation is easy, take <strong>squared loss</strong> as an example:<br>\[<br>l\left(y_{i}, \hat{y}_{i}^{(t-1)} + f_{t}\left(X_{i}\right)\right) = \left(y_{i} -\hat{y}_{i}^{(t-1)} -f_{t}\left(X_{i}\right) \right)^{2} = \left(r_{i}^{(t-1)} -f_{t}\left(X_{i}\right) \right)^{2},<br>\]</p>
 <p>where \(r_{i}^{(t-1)}\) is the training residual at iteration \((t-1)\), and you can observe that the goal at iteration \(t\) is to <strong>fit a decision tree to the residual</strong> from last iteration. Also it is easy to see</p>
 <p>\[<br>-\frac{\partial l\left(y_{i}, \hat{y}_{i}^{(t-1)} \right)}{\partial \hat{y}_{i}^{(t-1)}} = y_{i} - \hat{y}_{i}^{(t)}  = r_{i}^{(t-1)},<br>\]</p>
@@ -138,7 +138,7 @@
 <li>frequent 0 entries in statistics</li>
 <li>artifacts of feature engineering such as one-hot encoding</li>
 </ul>
-<p>XGBoost add a <strong>default direction</strong> for each tree node. When a feature value is missing, the sample is classified into the default direction. There are two choice for default direction, the optimal is learnt from data: choose the direction to minimize loss. The key improvement is to only visit the non-missing entries. The presented algorithm treats the non-presence as missing value and learns the best direction to handle missing values.</p>
+<p>XGBoost add a <strong>default direction</strong> for each tree node. <strong>When a feature value is missing, the sample is classified into the default direction</strong>. There are two choice for default direction, the optimal is learnt from data: choose the direction to minimize loss. The key improvement is to only visit the non-missing entries. The presented algorithm treats the non-presence as missing value and learns the best direction to handle missing values.</p>
 <h3 id="4-System-Design"><a href="#4-System-Design" class="headerlink" title="4. System Design"></a>4. System Design</h3><p>This part is skipped here since I don’t have too much experience in system design :) But this part is very important for XGBoost.</p>
 <h3 id="5-Experiments-and-Conclusions"><a href="#5-Experiments-and-Conclusions" class="headerlink" title="5. Experiments and Conclusions"></a>5. Experiments and Conclusions</h3><p>In the paper, for classification task on single machine, XGBoost is evaluated on Higgs-1M data. Both XGBoost and <code>sklearn</code> give bettern performance than <code>R</code>‘s GBM, while XGBoost runs more than 10x faster than <code>sklearn</code>.</p>
 <p>In summary, the paper proposed XGBoost - a scalable tree boosting system. Highlights include:</p>
@@ -170,7 +170,7 @@
 
     <span class="post-tags">
       <i class="icon-tags"></i>
-        <a href="/tags/Machine-Learning/">Machine Learning</a><a href="/tags/Ensemble-Algorithms/">Ensemble Algorithms</a><a href="/tags/Decision-Tree/">Decision Tree</a>
+        <a href="/tags/Ensemble-Algorithms/">Ensemble Algorithms</a><a href="/tags/Decision-Tree/">Decision Tree</a><a href="/tags/Machine-Learning/">Machine Learning</a>
     </span>
     
 
