@@ -119,7 +119,7 @@
 <p>therefore the <strong>update function</strong> for \(\beta\) is</p>
 <p>\[<br>\beta_{t+1}  = \beta_{t} - \alpha\nabla_{\beta} L(\beta) = \beta_{t} - \alpha\left(-2\mathbf{X}^\top\mathbf{y} + 2\mathbf{X}^\top\mathbf{X}\beta_{t}\right).<br>\]</p>
 <p>where \(\alpha\) is the learning rate.</p>
-<h3 id="3-Practical-Issues"><a href="#3-Practical-Issues" class="headerlink" title="3. Practical Issues"></a>3. Practical Issues</h3><p>Given linear regression is a simple parametric model, its assumptions are usually hard to satisfied.</p>
+<h3 id="3-Practical-Issues"><a href="#3-Practical-Issues" class="headerlink" title="3. Practical Issues"></a>3. Practical Issues</h3><p>Given linear regression is a simple parametric model, its assumptions are usually hard to be satisfied.</p>
 <h4 id="3-1-How-good-the-model-it-is"><a href="#3-1-How-good-the-model-it-is" class="headerlink" title="3.1 How good the model it is?"></a>3.1 How good the model it is?</h4><p>There are multiple statistical tests can be used to give probabilistic statements about the estimated parameters:</p>
 <ul>
 <li>t-test: whether single coefficients \(\beta_{i}\) is statistical significant? In other words, is \(x_{i}\) (feature \(i\)) useful in predicting \(y\)?</li>
@@ -129,10 +129,10 @@
 <h4 id="3-2-Dependences-in-Noise"><a href="#3-2-Dependences-in-Noise" class="headerlink" title="3.2 Dependences in Noise"></a>3.2 Dependences in Noise</h4><p>\(\epsilon\) are still from the same distribution but not independent, this will invalidate the results of t-test and F-test since they require the sample to be i.i.d. The cause for this could be:</p>
 <ul>
 <li>time series data</li>
-<li>duplicate data (double the data by accident)</li>
+<li>duplicate data (e.g. double the data by accident)</li>
 </ul>
 <h4 id="3-3-Multi-Collinearity"><a href="#3-3-Multi-Collinearity" class="headerlink" title="3.3 Multi-Collinearity"></a>3.3 Multi-Collinearity</h4><p>This means some features are highly correlated. Consider the extreme case that there are two identical features, this will make \(\mathbf{X}^\top\mathbf{X}\) not a full rank matrix, therefore the solutions \(\beta\) <strong>unstable</strong>, which is possible to give counter-intuitive results in interpreting model.</p>
-<h4 id="3-4-Outliers"><a href="#3-4-Outliers" class="headerlink" title="3.4 Outliers"></a>3.4 Outliers</h4><p>Given the loss function of linear regression is squared loss by “default”, it will be more sensitive to extreme large values. Removing outliers or log transformation could make the model more robust.</p>
+<h4 id="3-4-Outliers"><a href="#3-4-Outliers" class="headerlink" title="3.4 Outliers"></a>3.4 Outliers</h4><p>Given the loss function of linear regression is squared loss by “default”, it will be more sensitive to extreme large values. Removing outliers or log transformation could make the model more <strong>robust</strong>.</p>
 <h3 id="4-Implementation"><a href="#4-Implementation" class="headerlink" title="4. Implementation"></a>4. Implementation</h3><p>We can estimate the coefficients both explicitly and numerically. For numerical computing, we will use gradient descent again to find the minima of the loss function, <a href="https://github.com/bangdasun/Statistical-machine-learning/blob/master/algorithms/regression/linear-regression/self-defined-ols-gd.R" target="_blank" rel="external">here</a> is implementation I did.</p>
 <p>And in <code>R</code> we have <code>lm()</code> and in <code>sklearn.linear_model</code> we have <code>LinearRegression()</code>.</p>
 
