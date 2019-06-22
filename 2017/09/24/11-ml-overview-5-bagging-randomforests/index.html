@@ -60,9 +60,9 @@
   <nav class="site-navigation">
     <ul>
       
-        <li><a href="/">主页</a></li>
+        <li><a href="/">Home</a></li>
       
-        <li><a href="/tags">标签</a></li>
+        <li><a href="/tags">Tags</a></li>
       
     </ul>
   </nav>
@@ -124,10 +124,21 @@
 <p>The key word is “Random”, which means at <strong>each step</strong> of growing tree (<strong>find a split</strong>), we only use a subset of features rather than all of them, other steps is same as Bagging.</p>
 <p>In practice, the sample size for features is denoted as <code>max_features</code> (in <code>sklearn</code> or <code>randomForest (R)</code>), this is one of the hyper-parameters of random forests algorithms. Usually we may started with \(m=\sqrt{p}\).</p>
 <h3 id="3-Connection-between-Bagging-and-Random-Forests"><a href="#3-Connection-between-Bagging-and-Random-Forests" class="headerlink" title="3. Connection between Bagging and Random Forests"></a>3. Connection between Bagging and Random Forests</h3><p>If we set the sample size of features equal to the total number of features, random forests is same as bagging.</p>
-<p>We can see the difference between bagging and random forests is the number of features. Random forests can <strong>de-correlates</strong> the decision trees using sampling. Since it is possible that there is an important feature and it will dominant all decision trees if we just include all features, the prediction would be unreliable in this way,  and take a subset will prevent this happen.</p>
-<h3 id="4-Implementation"><a href="#4-Implementation" class="headerlink" title="4. Implementation"></a>4. Implementation</h3><p>The implementations of bagging and random forests are based on decision tree, I invoke <code>DecisionTreeClassifier</code> in <code>sklearn</code> and here is the <a href="https://github.com/bangdasun/Algorithms/blob/master/machine-learning/classification/ensemble-bagging-randomforests/bagging_random-forest.ipynb" target="_blank" rel="external">implementation</a>.</p>
-<h3 id="5-References"><a href="#5-References" class="headerlink" title="5. References"></a>5. References</h3><ul>
+<p>We can see the difference between bagging and random forests is the number of features. Random forests can <strong>de-correlates</strong> the decision trees using sampling. Since it is possible that there is an important feature and it will dominant all decision trees if we just include all features, the decision trees are less diversity.</p>
+<h3 id="4-Summary"><a href="#4-Summary" class="headerlink" title="4. Summary"></a>4. Summary</h3><h4 id="4-1-Pros-and-Cons"><a href="#4-1-Pros-and-Cons" class="headerlink" title="4.1 Pros and Cons"></a>4.1 Pros and Cons</h4><p>The good things about bagging and random forest:</p>
+<ul>
+<li>Good accuracy because of ensemble mechanism;</li>
+<li>Reduce variance because of bootstrap on samples and features;</li>
+</ul>
+<p>But:</p>
+<ul>
+<li>Loss of interpretations because of ensemble machanism </li>
+</ul>
+<h4 id="4-2-Feature-Importance"><a href="#4-2-Feature-Importance" class="headerlink" title="4.2 Feature Importance"></a>4.2 Feature Importance</h4><p>Decision tree training is done by splitting, and splitting is done by selecting the combination of feature and value that reduce the most error (impurity). This quantity could be recorded along with each feature across all decision tree, the higher this quantity is the more important the feature it is. This method is by default used in <code>sklearn</code> and other tree ensemble algorithms such as XGBoost and LightGBM.</p>
+<h3 id="5-Implementation"><a href="#5-Implementation" class="headerlink" title="5. Implementation"></a>5. Implementation</h3><p>The implementations of bagging and random forests are based on decision tree, I invoke <code>DecisionTreeClassifier</code> in <code>sklearn</code> and here is the <a href="https://github.com/bangdasun/Algorithms/blob/master/machine-learning/classification/ensemble-bagging-randomforests/bagging_random-forest.ipynb" target="_blank" rel="external">implementation</a>.</p>
+<h3 id="6-References"><a href="#6-References" class="headerlink" title="6. References"></a>6. References</h3><ul>
 <li>Gareth James, Daniela Witten, Trevor Hastie, Robert Tishirani, Introduction to Statistical Learning.</li>
+<li>Random Forest, <a href="https://en.wikipedia.org/wiki/Random_forest" target="_blank" rel="external">https://en.wikipedia.org/wiki/Random_forest</a></li>
 </ul>
 
       
