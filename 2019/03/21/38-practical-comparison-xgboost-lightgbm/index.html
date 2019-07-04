@@ -15,7 +15,7 @@
 
   
   
-  <meta name="keywords" content="Ensemble Algorithms,Decision Tree,Machine Learning">
+  <meta name="keywords" content="Machine Learning,Ensemble Algorithms,Decision Tree">
   
 
   <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
@@ -60,9 +60,9 @@
   <nav class="site-navigation">
     <ul>
       
-        <li><a href="/">Home</a></li>
+        <li><a href="/">主页</a></li>
       
-        <li><a href="/tags">Tags</a></li>
+        <li><a href="/tags">标签</a></li>
       
     </ul>
   </nav>
@@ -134,7 +134,7 @@
 <li><code>auto</code>: (default) use heuristic to choose the fastest method.</li>
 <li><code>exact</code>: exact greedy algorithm.</li>
 <li><code>approx</code>: approximate greedy algorithm using quantile sketch and gradient histogram.</li>
-<li><code>hist</code>: fast histogram optimized approximate greedy algorithm</li>
+<li><code>hist</code>: fast histogram optimized approximate greedy algorithm, with this option enabled, <code>max_bin</code> (default 256) could be tuned</li>
 </ul>
 <h4 id="2-3-Missing-Values-Handling"><a href="#2-3-Missing-Values-Handling" class="headerlink" title="2.3 Missing Values Handling"></a>2.3 Missing Values Handling</h4><p>Both XGBoost and LightGBM could handle missing values in input data. </p>
 <p>XGBoost supports missing values by default. As mentioned in the paper, the missing values will be hold at first, then the optimal directions are learning during training to get best performance. On the other hand, XGBoost accepts sparse feature format where only non-zero values are stored, this way the data non-presented  are treated as missing.</p>
@@ -143,7 +143,7 @@
 <li><code>use_missing</code>: default to be <code>true</code>.</li>
 <li><code>zero_as_missing</code>: default to be <code>false</code>, which means only <code>np.nan</code>  is considered as missing.</li>
 </ul>
-<h3 id="3-Different-Tricks"><a href="#3-Different-Tricks" class="headerlink" title="3. Different Tricks"></a>3. Different Tricks</h3><h4 id="3-1-Categorical-Feature-Handling"><a href="#3-1-Categorical-Feature-Handling" class="headerlink" title="3.1 Categorical Feature Handling"></a>3.1 Categorical Feature Handling</h4><p>XGBoost currently only supports numerical inputs, which means if the categorical features are encoded as integers, they are treated as ranked numerical features, this could introduce bias. Therefore one-hot encoding needs to be applied before feed into XGBoost.</p>
+<h3 id="3-Different-Tricks"><a href="#3-Different-Tricks" class="headerlink" title="3. Different Tricks"></a>3. Different Tricks</h3><h4 id="3-1-Categorical-Feature-Handling"><a href="#3-1-Categorical-Feature-Handling" class="headerlink" title="3.1 Categorical Feature Handling"></a>3.1 Categorical Feature Handling</h4><p><strong>XGBoost currently only supports numerical inputs</strong>, which means if the categorical features are encoded as integers, they are treated as ranked numerical features, this could introduce bias. Therefore <strong>one-hot encoding</strong> needs to be applied before feed into XGBoost.</p>
 <p>LightGBM supports categorical input type, use <code>categorical_feature</code>, notice:</p>
 <ul>
 <li>only supports integer type, e.g. outputs from <code>sklearn.LabelEncoder</code>.</li>
@@ -154,7 +154,33 @@
 <p>In LightGBM, how to find best split for categorical features is briefly described: the optimal solution is to split on categorical feature by partitioning its categories into 2 subsets, if the feature has <code>k</code> categories, there are <code>2^(k-1)-1</code> possible partitions, the basic idea is to sort the categories according to training objective at each split; more specifically, it sorts the histogram according to its accumulated values (<code>sum_gradient / sum_hessian</code>) and then finds the best split on the sorted histogram.</p>
 <p>And there are also some parameters to handle categorical features regularization.</p>
 <h4 id="3-2-Boosters"><a href="#3-2-Boosters" class="headerlink" title="3.2 Boosters"></a>3.2 Boosters</h4><p>As mentioned in LightGBM paper, a novel technique called <strong>gradient based one-side sampling</strong> is used, it could be set by <code>boosting=goss</code> with <code>top_rate</code> (between 0 and 1, the retain ratio of large gradient data) and <code>other_rate</code> (between 0 and 1, the retain ratio of small gradient data) specified.</p>
-<h3 id="4-Summary"><a href="#4-Summary" class="headerlink" title="4. Summary"></a>4. Summary</h3><p>There are still other topics worth discussing for XGBoost and LightGBM, e.g. they also both support <a href="https://arxiv.org/abs/1505.01866" target="_blank" rel="external">DART</a> boosting, which could have better performance but the parameter tuning is tricky; e.g. they could not only used on regression and classification tasks, but also <strong>learning to rank</strong> task. Anyway I’ll update here if there are other interesting comparisons could be done.</p>
+<p>In XGBoost, there are also multiple options :<code>gbtree</code>, <code>gblinear</code>, <code>dart</code> for boosters (<code>booster</code>), with default to be <code>gbtree</code>.</p>
+<h3 id="4-Other-Things-to-Notice"><a href="#4-Other-Things-to-Notice" class="headerlink" title="4. Other Things to Notice"></a>4. Other Things to Notice</h3><h4 id="4-1-Feature-Importance"><a href="#4-1-Feature-Importance" class="headerlink" title="4.1 Feature Importance"></a>4.1 Feature Importance</h4><p>Feature importance is a good to validate and explain the results.  </p>
+<p>LightGBM returns feature importance by calling<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">lgb_model.feature_importance(importance_type, iteration=None)</div></pre></td></tr></table></figure></p>
+<p>the choice of <code>importance_type</code> means different measures of feature importance</p>
+<ul>
+<li><code>&quot;split&quot;</code>: the number of times the feature is used to split data across all trees</li>
+<li><code>&quot;gain&quot;</code>: the total gain of the feature when it is used across all trees</li>
+</ul>
+<p>XGBoost returns feature importance by calling<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">xgb_model.get_score(fmap, importance_type)</div></pre></td></tr></table></figure></p>
+<p>the choice of <code>importance_type</code> includes:</p>
+<ul>
+<li><code>&quot;weight&quot;</code>: the number of times the feature is used to split data across all trees</li>
+<li><code>&quot;gain&quot;</code>: the average gain of the feature when it is used across all trees</li>
+<li><code>&quot;cover&quot;</code>: the average coverage across all splits the feature is used (relative number of observations related to this feature)</li>
+<li><code>&quot;total_gain&quot;</code></li>
+<li><code>&quot;total_cover&quot;</code></li>
+</ul>
+<h3 id="5-Summary"><a href="#5-Summary" class="headerlink" title="5. Summary"></a>5. Summary</h3><p>There are still other topics worth discussing for XGBoost and LightGBM, e.g. they also both support <a href="https://arxiv.org/abs/1505.01866" target="_blank" rel="external">DART</a> boosting, which could have better performance but the parameter tuning is tricky; e.g. they could not only used on regression and classification tasks, but also <strong>learning to rank</strong> task. Anyway I’ll update here if there are other interesting comparisons could be done.</p>
+<p>Here I also attach two examples of parameters usage for LightGBM and XGBoost.</p>
+<ul>
+<li>LightGBM</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">lgb_params = &#123;</div><div class="line">    &apos;objective&apos;         : &apos;regression&apos;,</div><div class="line">    &apos;boosting_type&apos;     : &apos;gbdt&apos;,</div><div class="line">    &apos;metric&apos;            : &apos;rmse&apos;,</div><div class="line">    &apos;learning_rate&apos;     : 0.01,</div><div class="line">    &apos;max_depth&apos;         : 8,</div><div class="line">    &apos;num_leaves&apos;        : 120,</div><div class="line">    &apos;min_data_in_leaf&apos;  : 90,</div><div class="line">    &apos;feature_fraction&apos;  : 0.185,</div><div class="line">    &apos;bagging_fraction&apos;  : 1,</div><div class="line">    &apos;data_random_seed&apos;  : 42,</div><div class="line">    &apos;lambda_l1&apos;         : 0.4,</div><div class="line">    &apos;lambda_l2&apos;         : 0.4,</div><div class="line">    &apos;cat_l2&apos;            : 15,</div><div class="line">    &apos;min_gain_to_split&apos; : 0.00,</div><div class="line">    &apos;min_data_per_group&apos;: 100,</div><div class="line">    &apos;max_bin&apos;           : 255,</div><div class="line">    &apos;nthread&apos;           : 4</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>XGBoost</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">xgb_params = &#123;</div><div class="line">    &apos;objective&apos;       : &apos;binary:logistic&apos;,</div><div class="line">    &apos;eval_metric&apos;     : &apos;auc&apos;,</div><div class="line">    &apos;eta&apos;             : 0.01,</div><div class="line">    &apos;max_depth&apos;       : 6,</div><div class="line">    &apos;min_child_weight&apos;: 3,</div><div class="line">    &apos;colsample_bytree&apos;: 0.151,</div><div class="line">    &apos;subsample&apos;       : 0.9,</div><div class="line">    &apos;gamma&apos;           : 0.00, # min_split_loss</div><div class="line">    &apos;max_delta_step&apos;  : 0.00,</div><div class="line">    &apos;lambda&apos;          : 1,    # L2 regularization</div><div class="line">    &apos;alpha&apos;           : 0,    # L1 regularization</div><div class="line">    &apos;scale_pos_weight&apos;: 1,    # control the balance of positive samples weights</div><div class="line">    &apos;seed&apos;            : 42</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 
       
     </div>
@@ -178,7 +204,7 @@
 
     <span class="post-tags">
       <i class="icon-tags"></i>
-        <a href="/tags/Ensemble-Algorithms/">Ensemble Algorithms</a><a href="/tags/Decision-Tree/">Decision Tree</a><a href="/tags/Machine-Learning/">Machine Learning</a>
+        <a href="/tags/Machine-Learning/">Machine Learning</a><a href="/tags/Ensemble-Algorithms/">Ensemble Algorithms</a><a href="/tags/Decision-Tree/">Decision Tree</a>
     </span>
     
 

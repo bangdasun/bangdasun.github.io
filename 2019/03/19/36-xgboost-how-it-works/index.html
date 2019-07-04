@@ -15,7 +15,7 @@
 
   
   
-  <meta name="keywords" content="Ensemble Algorithms,Decision Tree,Machine Learning">
+  <meta name="keywords" content="Machine Learning,Ensemble Algorithms,Decision Tree">
   
 
   <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
@@ -60,9 +60,9 @@
   <nav class="site-navigation">
     <ul>
       
-        <li><a href="/">Home</a></li>
+        <li><a href="/">主页</a></li>
       
-        <li><a href="/tags">Tags</a></li>
+        <li><a href="/tags">标签</a></li>
       
     </ul>
   </nav>
@@ -110,18 +110,21 @@
 <p>When the loss function \(l\) is squared loss or exponential loss, the calculation is easy, take <strong>squared loss</strong> as an example:<br>\[<br>l\left(y_{i}, \hat{y}_{i}^{(t-1)} + f_{t}\left(X_{i}\right)\right) = \left(y_{i} -\hat{y}_{i}^{(t-1)} -f_{t}\left(X_{i}\right) \right)^{2} = \left(r_{i}^{(t-1)} -f_{t}\left(X_{i}\right) \right)^{2},<br>\]</p>
 <p>where \(r_{i}^{(t-1)}\) is the training residual at iteration \((t-1)\), and you can observe that the goal at iteration \(t\) is to <strong>fit a decision tree to the residual</strong> from last iteration. Also it is easy to see</p>
 <p>\[<br>-\frac{\partial l\left(y_{i}, \hat{y}_{i}^{(t-1)} \right)}{\partial \hat{y}_{i}^{(t-1)}} = y_{i} - \hat{y}_{i}^{(t)}  = r_{i}^{(t-1)},<br>\]</p>
-<p>this means the residual is also the gradient of the loss function which is calculated during training (if use gradient descent based algorithms).<br>However, sometimes the loss functions are complicated, therefore residual is not equivalent to gradient. And GBM uses <strong>gradient (negative) to approximate residual</strong>.<br>While in XGBoost framework, they use <strong>second-order approximation</strong> for objective function:<br>\[<br>\mathcal{L}^{(t)} \approx \sum^{n}_{i=1} \left[ l\left(y_{i}, \hat{y}_{i}^{(t-1)}\right) + g_{i}f_{t}\left(X_{i}\right) + \frac{1}{2}h_{i}f^{2}_{t}\left(X_{i}\right) \right] + \Omega\left(f_{t}\right),<br>\]<br>where<br>\[<br>g_{i} = \frac{\partial l\left(y_{i}, \hat{y}_{i}^{(t-1)} \right)}{\partial \hat{y}_{i}^{(t-1)}}, ~h_{i} = \frac{\partial^{2} l\left(y_{i}, \hat{y}_{i}^{(t-1)} \right)}{\partial \left(\hat{y}_{i}^{(t-1)}\right)^{2}}<br>\]<br>are the 1st and 2nd order gradient statistics on the loss function. Removing the constant term,<br>\[<br>\mathcal{L}^{(t)} \approx \sum^{n}_{i=1} \left[ g_{i}f_{t}\left(X_{i}\right) + \frac{1}{2}h_{i}f^{2}_{t}\left(X_{i}\right) \right] + \Omega\left(f_{t}\right).<br>\]</p>
+<p>this means the residual is also the gradient of the loss function which is calculated during training (if use gradient descent based algorithms).<br>However, sometimes the loss functions are complicated, therefore residual is not equivalent to gradient. And GBM uses <strong>gradient (negative) to approximate residual</strong>.<br>While in XGBoost framework, they use <strong>second-order approximation</strong> for objective function:<br>\[<br>\begin{aligned}<br>\mathcal{L}^{(t)} =&amp;  \sum^{n}_{i=1} \left[ l\left(y_{i}, \hat{y}_{i}^{(t-1)} + f_{t}(X_{i})\right)\right] + \Omega\left(f_{t}\right) \\<br>\approx&amp; \sum^{n}_{i=1} \left[ l\left(y_{i}, \hat{y}_{i}^{(t-1)}\right) + g_{i}f_{t}\left(X_{i}\right) + \frac{1}{2}h_{i}f^{2}_{t}\left(X_{i}\right) \right] + \Omega\left(f_{t}\right),\\<br>\end{aligned}<br>\]<br>where<br>\[<br>g_{i} = \frac{\partial l\left(y_{i}, \hat{y}_{i}^{(t-1)} \right)}{\partial \hat{y}_{i}^{(t-1)}}, ~h_{i} = \frac{\partial^{2} l\left(y_{i}, \hat{y}_{i}^{(t-1)} \right)}{\partial \left(\hat{y}_{i}^{(t-1)}\right)^{2}}<br>\]<br>are the 1st and 2nd order gradient statistics on the loss function. Removing the constant term,<br>\[<br>\mathcal{L}^{(t)} \approx \sum^{n}_{i=1} \left[ g_{i}f_{t}\left(X_{i}\right) + \frac{1}{2}h_{i}f^{2}_{t}\left(X_{i}\right) \right] + \Omega\left(f_{t}\right).<br>\]</p>
 <p>Define \(I_{j} = \left\{i | q(x_{i}) = j\right\}\) as samples of leaf \(j\), then the objective function is </p>
 <p>\[<br>\begin{aligned}<br>\mathcal{L}^{(t)} &amp;\approx \sum^{n}_{i=1} \left[ g_{i}f_{t}\left(X_{i}\right) + \frac{1}{2}h_{i}f^{2}_{t}\left(X_{i}\right) \right] + \gamma T + \frac{1}{2}\lambda\sum^{T}_{j=1}w_{j}^{2} \\<br>&amp; = \sum^{T}_{j=1}\left[ \left(\sum_{i\in I_{j}} g_{i}\right)w_{j} + \frac{1}{2}\left(\sum_{i\in I_{j}} h_{i} + \lambda\right)w_{j}^{2} \right] + \gamma T.<br>\end{aligned}<br>\]</p>
-<p>This step shows that <strong>train</strong> \(f_{t}(X_{i})\) <strong>by minimizing loss over all samples</strong> is equivalent to <strong>heuristically find the best</strong> (f_{t}(X_{i})\) <strong>at each step</strong> \(t\).</p>
+<p>This step shows that <strong>train</strong> \(f_{t}(X_{i})\) <strong>by minimizing loss over all samples</strong> is equivalent to <strong>heuristically find the best</strong> \(f_{t}(X_{i})\) <strong>at each step</strong> \(t\) - it shows single decision tree learning is part of the sequential learning in XGBoost (it should be true for general gradient boosting algorithms learning).</p>
 <ul>
 <li>Minimizing loss &amp; training decision tree</li>
 </ul>
 <p>For a fixed structure decision tree \(q(x)\), the optimal weight of leaf \(j\) is<br>\[<br>w_{j} = -\frac{\sum_{i\in I_{j}} g_{i}}{\sum_{i\in I_{j}} h_{i} + \lambda}<br>\]<br>with corresponding optimal value<br>\[<br>\mathcal{L}^{(t)}(q) = -\frac{1}{2}\sum^{T}_{j=1} \frac{\left(\sum_{i\in I_{j}} g_{i}\right)^{2}}{\sum_{i\in I_{j}} h_{i} + \lambda} + \gamma T.<br>\]<br>This equation can be used as a scoring function to measure the quality of a tree structure, like impurity score.<br>Then the node are splited into left and right branches, suppose \(I_{L}\) and \(I_{R}\) are the samples of left and right child nodes, let \(I = I_{L}\cup I_{R}\), the loss reduction after split is<br>\[<br>\mathcal{L}_{\text{split}} = \frac{1}{2}\left[  \frac{\left(\sum_{i\in I_{L}} g_{i}\right)^{2}}{\sum_{i\in I_{L}} h_{i} + \lambda} +   \frac{\left(\sum_{i\in I_{R}} g_{i}\right)^{2}}{\sum_{i\in I_{R}} h_{i} + \lambda}  -   \frac{\left(\sum_{i\in I} g_{i}\right)^{2}}{\sum_{i\in I} h_{i} + \lambda} \right] - \gamma<br>\]</p>
 <h4 id="2-3-Shrinkage-and-Subsampling"><a href="#2-3-Shrinkage-and-Subsampling" class="headerlink" title="2.3 Shrinkage and Subsampling"></a>2.3 Shrinkage and Subsampling</h4><p>Besides the approximation and regularized objective function, compared with regular GBM, XGBoost also apply two tricks to prevent overfitting:</p>
 <ul>
-<li>Shrinkage: multiply a weight (between 0 and 1) to each new added tree to reduce the influence of individual tree for further trees to improve the model, this weight is usually also interpreted as learning rate.</li>
-<li>Subsampling: this is same with Random Forest, with both samples and features get sampled when fitting a new decision tree.</li>
+<li>Shrinkage: <strong>multiply a weight (between 0 and 1) to each new added tree</strong> to reduce the influence of individual tree for further trees to improve the model, this weight is usually also interpreted as <strong>learning rate</strong>. Notice that this weight is added in the loss function rather than model form, the model is still </li>
+</ul>
+<p>\[<br>\hat{y}_{i} = \sum^{K}_{k=1}f_{k}\left(X_{i}\right),<br>\]</p>
+<ul>
+<li>Subsampling: this is same with Random Forest (<strong>bootstrap</strong>), with both samples and features get sampled when fitting a new decision tree.</li>
 </ul>
 <h3 id="3-Split-Finding-Algorithm"><a href="#3-Split-Finding-Algorithm" class="headerlink" title="3. Split Finding Algorithm"></a>3. Split Finding Algorithm</h3><p>The most important part in fitting a decision tree is to find a split: which feature to split and what value as split threshold.</p>
 <h4 id="3-1-Basic-Extra-Greedy-Algorithm"><a href="#3-1-Basic-Extra-Greedy-Algorithm" class="headerlink" title="3.1 Basic Extra Greedy Algorithm"></a>3.1 Basic Extra Greedy Algorithm</h4><p>The dumpiest way to find the split is brute-force: enumerate over all the possible splits on all features. This is what <code>sklearn</code>, <code>R</code> do. Single machine version of XGBoost also support this algorithm.</p>
@@ -170,7 +173,7 @@
 
     <span class="post-tags">
       <i class="icon-tags"></i>
-        <a href="/tags/Ensemble-Algorithms/">Ensemble Algorithms</a><a href="/tags/Decision-Tree/">Decision Tree</a><a href="/tags/Machine-Learning/">Machine Learning</a>
+        <a href="/tags/Machine-Learning/">Machine Learning</a><a href="/tags/Ensemble-Algorithms/">Ensemble Algorithms</a><a href="/tags/Decision-Tree/">Decision Tree</a>
     </span>
     
 

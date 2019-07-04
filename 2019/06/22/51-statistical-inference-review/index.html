@@ -1,0 +1,333 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Statistical Inference Review | Bangda Sun | Practice makes perfect</title>
+
+  
+  <meta name="author" content="Bangda">
+  
+
+  
+  <meta name="description" content="Play with data">
+  
+
+  
+  
+  <meta name="keywords" content="Mathematics,Statistics">
+  
+
+  <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <meta property="og:title" content="Statistical Inference Review"/>
+
+  <meta property="og:site_name" content="Bangda Sun"/>
+
+  
+  <meta property="og:image" content="/favicon.ico"/>
+  
+
+  <link href="/favicon.ico" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Bangda Sun" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    jax: ["input/TeX","output/HTML-CSS"],
+    extensions: ["tex2jax.js","Safe.js"]
+  });
+  </script>
+<script type="text/javascript" async="async"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_CHTML,Safe">
+</script>
+</script>
+</head>
+
+
+<body>
+<div class="blog">
+  <div class="content">
+
+    <header>
+  <div class="site-branding">
+    <h1 class="site-title">
+      <a href="/">Bangda Sun</a>
+    </h1>
+    <p class="site-description">Practice makes perfect</p>
+  </div>
+  <nav class="site-navigation">
+    <ul>
+      
+        <li><a href="/">主页</a></li>
+      
+        <li><a href="/tags">标签</a></li>
+      
+    </ul>
+  </nav>
+</header>
+
+    <main class="site-main posts-loop">
+    <article>
+
+  
+    
+    <h3 class="article-title"><span>Statistical Inference Review</span></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2019/06/22/51-statistical-inference-review/" rel="bookmark">
+        <time class="entry-date published" datetime="2019-06-22T19:33:27.000Z">
+          2019-06-22
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <p>Statistical Inference Quick Review &amp; Cheatsheet</p>
+<a id="more"></a>
+<p>Statistical inference is a procedure that produce a <strong>probabilistic statement</strong> about some or all parts of a <strong>statistical model</strong>.</p>
+<h3 id="1-Preliminary"><a href="#1-Preliminary" class="headerlink" title="1. Preliminary"></a>1. Preliminary</h3><ul>
+<li>Law of Large Number</li>
+</ul>
+<p>Let \(X_{1}, X_{2}, \cdots, X_{n}\) to be i.i.d. with mean \(\mu\) and variance \(\sigma^{2}\), LLN states that <strong>as sample size increase, sample mean will converge to population mean with probability 1</strong>, i.e.</p>
+<p>\[<br>P\left( \Bigg| \mu - \frac{1}{n}\sum^{n}_{i=1} X_{i} \Bigg| &lt; \epsilon \right)\rightarrow 0, \text{ for any }\epsilon &gt;0 \text{ as } n\rightarrow\infty<br>\]</p>
+<ul>
+<li>Central Limit Theorem</li>
+</ul>
+<p>Let \(X_{1}, X_{2}, \cdots, X_{n}\) to be i.i.d. with mean \(\mu\) and variance \(\sigma^{2}\), CLT states that <strong>as sample size increase, the distribution of normalized sample mean will approximate to standard normal distribution</strong>, i.e.</p>
+<p>\[<br>\lim_{n\rightarrow\infty}P\left( \frac{\bar{X}_{n} - \mu}{\sigma/\sqrt{n}} \leq x \right) = \Phi(x)<br>\]</p>
+<p>where \(\Phi(x)\) is the <strong>CDF</strong> of standard normal distribution.</p>
+<ul>
+<li>Random Variables</li>
+</ul>
+<p>A random variable is a function that map from sample space \(S\), i.e. possible event outcomes to real numbers, \(X: S\rightarrow R\).</p>
+<ul>
+<li>Statistic of Observed Data</li>
+</ul>
+<p>Let \(X_{1}, X_{2}, \cdots, X_{n}\) to be a random sample from population, \(r\) is an arbitrary real-valued function, then random variable \(T=r(X_{1},X_{2},\cdots,X_{n})\) is called a statistic.</p>
+<ul>
+<li>Unbiased Statistic</li>
+</ul>
+<p>Statistic with mean equals true value of parameter is an unbiased statistic (or estimator), i.e.</p>
+<p>\[<br>E\left[ r(X_{1}, X_{2}, \cdots, X_{n}) \right] = \theta,<br>\]</p>
+<p>here \(r(X_{1}, X_{2}, \cdots, X_{n})\) is used to estimate \(\theta\).</p>
+<ul>
+<li>Consitent Statistic</li>
+</ul>
+<p>Statistic converges to true value of parameter with probability 1 as sample size increase is a consitent statistic, i.e.</p>
+<p>\[<br>\hat{\theta} = r(X_{1}, X_{2}, \cdots, X_{n}) \rightarrow \theta \text{ as }n\rightarrow \infty.<br>\]</p>
+<ul>
+<li>Sufficient Statistic</li>
+</ul>
+<p>Let \(X_{1}, X_{2}, \cdots, X_{n}\) to be a random sample from \(f(x;\theta)\), let \(Y=r(X_{1}, X_{2}, \cdots, X_{n})\) with density \(g(y;\theta)\), then \(Y\) is a sufficient statistic for \(\theta\) if and only if</p>
+<p>\[<br>\frac{f(x_{1};\theta) f(x_{2};\theta) \cdots f(x_{n};\theta)}{g(r(x_{1}, x_{2}, \cdots, x_{n}); \theta)} = H(x_{1}, x_{2}, \cdots, x_{n}),<br>\]</p>
+<p>Where \(H(x_{1}, x_{2}, \cdots, x_{n})\) doesn’t contain \(\theta\).</p>
+<p>Intuitively, sufficient statistic could reduce the data but keep all information about the parameters for the data distribution.</p>
+<h3 id="2-Parameter-Estimation"><a href="#2-Parameter-Estimation" class="headerlink" title="2. Parameter Estimation"></a>2. Parameter Estimation</h3><p>Estimating data distribution parameters by observed data.</p>
+<h4 id="2-1-Point-Estimation"><a href="#2-1-Point-Estimation" class="headerlink" title="2.1 Point Estimation"></a>2.1 Point Estimation</h4><ul>
+<li>Maximum Likelihood Estimation</li>
+</ul>
+<p>Estimate the parameters by maximizing likelihood function, likelihood function is function measure the “likelihood” of parameter given observed data,</p>
+<p>\[<br>\hat{\theta} = \arg\max_{\theta} L(\theta; x).<br>\]</p>
+<p>MLE has <strong>invariance principle</strong>.</p>
+<ul>
+<li>Moments Estimation</li>
+</ul>
+<p>Equate sample moments to theoretical moments, solve the unknown parameters to get the estimates,</p>
+<p>\[<br>\frac{1}{n}\sum^{n}_{i=1}\left( X_{i} - \bar{X}_{n} \right)^{k} = E(X-\mu)^{k}.<br>\]</p>
+<h4 id="2-2-Interval-Estimation"><a href="#2-2-Interval-Estimation" class="headerlink" title="2.2 Interval Estimation"></a>2.2 Interval Estimation</h4><ul>
+<li>Sampling distributions</li>
+</ul>
+<p>Distribution of statistics. Three important sampling distributions: </p>
+<p><strong>Chi-square distribution</strong>. \(Z\sim N(0,1)\) is a standard normal distribution, then \(Z^{2}\sim \chi^{2}(1)\), it is chi-square distribution with degree of freedom equals 1; Sum of <strong>independent</strong> chi-square distributions is still chi-square distribution.</p>
+<p><strong>t distribution</strong>. \(Z\sim N(0,1)\) is a standard normal distribution, \(V\sim\chi^{2}(n)\) is a chi-square distribution with df equals \(n\), given \(Z\) and \(V\) are <strong>independent</strong>, then</p>
+<p>\[<br>T = \frac{Z}{\sqrt{V/n}}<br>\]</p>
+<p>is a t distribution with df equals \(n\).</p>
+<p><strong>F distribution</strong>. Given two <strong>independent</strong> chi-square distributions, \(V\sim\chi^{2}(n_{1})\) and \(U\sim\chi^{2}(n_{2})\) , then</p>
+<p>\[<br>F = \frac{V/n_{1}}{U/n_{2}}<br>\]</p>
+<p>is a F distribution with df1 equals \(n_{1}\) and df2 equals \(n_{2}\).</p>
+<p><strong>Summary of sampling distribution</strong>:</p>
+<p>Let \(X_{1}, X_{2}, \cdots, X_{n}\) to be a random sample from \(N(\mu, \sigma^{2})\), the sample mean and sample variance (unbiased) are:</p>
+<p>\[<br>\bar{X}_{n} = \frac{1}{n}\sum^{n}_{i=1}X_{i}, s_{n}^{2} = \frac{1}{n-1}\sum^{n}_{i=1}\left(X_{i} - \bar{X}_{n} \right)^{2}.<br>\]</p>
+<p>(1) <strong>Sample mean also has normal distribution</strong>.<br>\[<br>\bar{X}_{n}\sim N\left( \mu, \frac{\sigma^{2}}{n} \right).<br>\]</p>
+<p>(2) \(\bar{X}\) <strong>and</strong> \(s_{n}^{2}\) <strong>are independent</strong>.</p>
+<p>(3)  \(s_{n}^{2}\) <strong>relates to chi-square distribution</strong>.<br>\[<br>\frac{(n-1)s_{n}^{2}}{\sigma^{2}}\sim \chi^{2}(n-1).<br>\]</p>
+<p>(4) <strong>normalizing sample mean by sample std will get t distribution</strong>.<br>\[<br>\frac{\bar{X}_{n} - \mu}{s_{n}/\sqrt{n}} \sim t(n-1).<br>\]</p>
+<ul>
+<li>Confidence Interval</li>
+</ul>
+<p>CI is the interval estimates for parameters, it is a interval that might contain the true value of parameters, a \(100(1-\alpha)\%\) confidence interval \([f_{1}(x), f_{2}(x)]\) for \(\theta\) means</p>
+<p>\[<br>P\left( f_{1}(x) &lt; \theta &lt; f_{2}(x) \right) = 1 - \alpha,<br>\]</p>
+<p>intuitively, we keep getting samples and calculate this CI, \(100(1-\alpha)\%\) of these CI’s will contain the true value of parameter.</p>
+<p>The general procedure to get the \(100(1-\alpha)\%\) confidence interval is:<br>(1) find a statistic \(r(x)\) (a function of data) such that its distribution doesn’t depend on \(\theta\), such as standard normal distribution, t distribution;<br>(2) look for \(a\) and \(b\)  (quantiles of the distribution), such that \(P(a &lt; r(x) &lt; b) = 1-\alpha\) and derive the CI.</p>
+<p>Those 4 items in sampling distribution summary and central limit theorem are the theoretical basis in deriving confidence intervals.</p>
+<h3 id="3-Hypothesis-Test"><a href="#3-Hypothesis-Test" class="headerlink" title="3. Hypothesis Test"></a>3. Hypothesis Test</h3><p>Hypothesis test is a procedure to prove or disprove assertions about data distributions.</p>
+<h4 id="3-1-Basic-Elements"><a href="#3-1-Basic-Elements" class="headerlink" title="3.1 Basic Elements"></a>3.1 Basic Elements</h4><ul>
+<li>Null Hypothesis \(H_{0}\) and Alternative Hypothesis \(H_{A}\)</li>
+</ul>
+<p>(1) Null hypothesis is the default statement, which is tend to be believed.<br>(2) Alternative hypothesis is the by default not believed unless there is evidence in its flavor.</p>
+<ul>
+<li>Type I Error and Type II Error</li>
+</ul>
+<p>(1) Type I error: reject \(H_{0}\) when \(H_{0}\) is true, the probability of type I error is therefore \(P(\text{reject }H_{0} | H_{0}\text{ is true})\).<br>(2) Type II error: fail to reject \(H_{0}\) when \(H_{A}\) is true, the probability of type II error is therefore \(P(\text{fail to reject }H_{0} | H_{A}\text{ is true})\).</p>
+<ul>
+<li>Rejection Region</li>
+</ul>
+<p>A subset of the space of outcomes that leads to reject \(H_{0}\).</p>
+<ul>
+<li>Power of Test</li>
+</ul>
+<p>Power is the probability that reject \(H_{0}\) when \(H_{A}\) is true, i.e.</p>
+<p>\[<br>\text{power} = P(\text{reject }H_{0} | H_{A}\text{ is true}) = 1 - \text{type II error},<br>\]</p>
+<p>therefore when <strong>the power of statistics increase, type II error will reduce</strong>.</p>
+<ul>
+<li>Size of Test</li>
+</ul>
+<p>Note here it is not referring to the sample size needed for the test, it is the probability to reject \(H_{0}\) when \(H_{0}\) is true, i.e. type I error.</p>
+<ul>
+<li>Significance level</li>
+</ul>
+<p>Usually specified in the test, as the <strong>maximum allowable type I error</strong>.</p>
+<ul>
+<li>p-value</li>
+</ul>
+<p>Under \(H_{0}\) is true, the area of the smallest rejection region that contains the observed value - if this area is smaller than the significance level, it means the observed value must be in the rejection region.</p>
+<ul>
+<li>Procedure of Hypothesis Test</li>
+</ul>
+<p>(1) state the null hypothesis and alternative hypothesis;<br>(2) specify the significance level \(\alpha\);<br>(3) construct a test;<br>(4) perform the test;<br>(5) draw conclusions.</p>
+<p>Constructing the test could be either<br>(1) constructing rejection region with specified \(\alpha\) and checking if observation is in it;<br>(2) finding smallest rejection region such that it contains observations, then compare the p-value with \(\alpha\).</p>
+<ul>
+<li>Simple and Composite Test</li>
+</ul>
+<p>(1) Simple test completely specifies the distribution, such as \(\mu=3\);<br>(2) Composite test doesn’t, such as \(\mu &gt; 3\).</p>
+<h4 id="3-2-Constructing-Hypothesis-Test"><a href="#3-2-Constructing-Hypothesis-Test" class="headerlink" title="3.2 Constructing Hypothesis Test"></a>3.2 Constructing Hypothesis Test</h4><ul>
+<li>Best Rejection Region of size \(\alpha\)</li>
+</ul>
+<p>\(C\) is the best rejection region of size \(\alpha\) for testing a simple \(H_{0}: \theta = \theta’\) against a simple \(H_{A}: \theta = \theta’’\) if</p>
+<p>\[<br>P(X\in C|H_{0}\text{ is true}) = \alpha,<br>\]</p>
+<p>which means <strong>the type I error is fixed</strong>; and for every subset \(A\) such that</p>
+<p>\[<br>P(X\in A|H_{0}\text{ is true}) = \alpha<br>\]</p>
+<p>it has</p>
+<p>\[<br>P(X\in C|H_{A}\text{ is true}) \geq P(X\in A|H_{A}\text{ is true}),<br>\]</p>
+<p>which means</p>
+<p>\[<br>P(X\in C^{c}|H_{A}\text{ is true}) &lt; P(X\in A^{c}|H_{A}\text{ is true}),<br>\]</p>
+<p>the left hand side is <strong>type II error</strong>, this means <strong>best rejection region minimizes type II error with fixed type I error</strong>.</p>
+<ul>
+<li>Neyman-Pearson Lemma</li>
+</ul>
+<p>Let \(X_{1}, X_{2}, \cdots, X_{n}\) to be i.i.d. with \(f(x;\theta)\), fot testing a <strong>simple</strong> \(H_{0}: \theta = \theta’\) against a <strong>simple</strong> \(H_{A}: \theta = \theta’’\), let \(C\) be the rejection region such that</p>
+<p>\[<br>\begin{aligned}<br>\frac{L(\theta’)}{L(\theta’’)} &amp;\leq k \text{ for all } x\in C \\<br>\frac{L(\theta’)}{L(\theta’’)} &amp;\geq k \text{ for all } x\in C^{c} \\<br>\end{aligned}<br>\]</p>
+<p>where \(L\) is the likelihood function. Then \(C\) is the best rejection region. So Intuitively, <strong>N-P Lemma is to find the best rejection region for simple vs simple test</strong>.</p>
+<p>For other tests:<br>(1) <strong>Uniform Most Powerful (UMP) Test</strong> is to find the best rejection region for <strong>simple vs composite</strong> test;<br>(2) <strong>Likelihood Ratio Test</strong> is to find the best rejection region for <strong>composite vs composite</strong> test.</p>
+
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+      
+
+    <span class="post-categories">
+      <i class="icon-categories"></i>
+        <a href="/categories/Mathematics/">Mathematics</a>, <a href="/categories/Mathematics/Statistics/">Statistics</a>
+    </span>
+    
+
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/Mathematics/">Mathematics</a><a href="/tags/Statistics/">Statistics</a>
+    </span>
+    
+
+    </div>
+
+    
+  </div>
+</article>
+
+  
+<section id="comment">
+  
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+  
+</section>
+
+
+
+    </main>
+
+    <footer class="site-footer">
+  <p class="site-info">
+    Proudly powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and
+    Theme by <a href="https://github.com/CodeDaraW/Hacker" target="_blank">Hacker</a>
+    </br>
+    
+    &copy; 2019 Bangda
+    
+	
+	
+	
+  </p>
+  
+  <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+  <span id="busuanzi_container_site_pv">
+    Total viewer <span id="busuanzi_value_site_pv"></span>; 
+  </span>
+  
+  <span id="busuanzi_container_site_uv">
+    Total visitor <span id="busuanzi_value_site_uv"></span>
+  </span>
+	
+	
+  <div id="disqus_thread"></div>
+  <script>
+
+  /**
+   *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+   *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+   */
+   
+  var disqus_config = function () {
+	this.page.url = 'https://bangdasun.github.io{{ page.url }}';  // Replace PAGE_URL with your page's canonical URL variable
+	this.page.identifier = '{{ page.id }}'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+  };
+  
+  (function() { // DON'T EDIT BELOW THIS LINE
+  var d = document, s = d.createElement('script');
+  s.src = 'https://bangdasun-github-io.disqus.com/embed.js';
+  s.setAttribute('data-timestamp', +new Date());
+  (d.head || d.body).appendChild(s);
+  })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  
+  <script id="dsq-count-scr" src="//bangdasun-github-io.disqus.com/count.js" async></script>
+</footer>
+
+
+    
+  </div>
+</div>
+</body>
+</html>
