@@ -60,9 +60,9 @@
   <nav class="site-navigation">
     <ul>
       
-        <li><a href="/">主页</a></li>
+        <li><a href="/">Home</a></li>
       
-        <li><a href="/tags">标签</a></li>
+        <li><a href="/tags">Tags</a></li>
       
     </ul>
   </nav>
@@ -115,8 +115,8 @@
 <p>The prediction of bagging is given by<br>\[<br>\hat{y}_{\text{bag}} = \frac{1}{B}\sum^{B}_{b=1}\hat{y}^{b}<br>\]</p>
 <p>for regression problem, and<br>\[<br>\hat{y}_{\text{bag}} = \arg\max_{k}\hat{p}_{k}<br>\]</p>
 <p>for classification problem, where \(\hat{p}_{k}\) is the proportion of \(k\) th category (<strong>Majority Vote</strong>).</p>
-<p>Then we check if there is any problems in this process. Since we use bootstrap, is that possible that some data is not sampled? Yes it is. Consider we have \(n\) data points, the probability that point \(i\) is not selected in one draw is<br>\[<br>Pr(i\text{ not selected in one draw}) = 1 - \frac{1}{n}.<br>\]</p>
-<p>then the probability that this point is not sampled in bootstrap sample is<br>\[<br>Pr(i\text{ not sampled in one bootstrap sample}) = \left(1 - \frac{1}{n}\right)^{n}.<br>\]</p>
+<p>Then we check if there is any problems in this process. Since we use bootstrap, is that possible that some data is not sampled? Yes it is. Consider we have \(n\) data points, the probability that point \(i\) is not selected in one draw is<br>\[<br>P(i\text{ not selected in one draw}) = 1 - \frac{1}{n}.<br>\]</p>
+<p>then the probability that this point is not sampled in bootstrap sample is<br>\[<br>P(i\text{ not sampled in one bootstrap sample}) = \left(1 - \frac{1}{n}\right)^{n}.<br>\]</p>
 <p>do you see something familiar? </p>
 <p>\[<br>\lim_{n\rightarrow\infty}\left(1-\frac{1}{n}\right)^{n} = \frac{1}{e} \approx 0.367.<br>\]</p>
 <p>This implies that approximately 63% of data is used in Bagging (just approximation!). The rest of data that we are not used is called <strong>out-of-bag (OOB)</strong> data. It’s important to know how well does bagging perform on the out-of-bag, we need to estimate <strong>out-of-bag-error</strong>. It can be shown that with B sufficiently large, OOB error is virtually equivalent to leave-one-out cross-validation error\(^{[1]}\).</p>

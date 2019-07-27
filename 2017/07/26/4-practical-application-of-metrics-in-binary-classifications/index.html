@@ -60,9 +60,9 @@
   <nav class="site-navigation">
     <ul>
       
-        <li><a href="/">主页</a></li>
+        <li><a href="/">Home</a></li>
       
-        <li><a href="/tags">标签</a></li>
+        <li><a href="/tags">Tags</a></li>
       
     </ul>
   </nav>
@@ -98,18 +98,18 @@
 <h3 id="1-Different-Types-of-Error"><a href="#1-Different-Types-of-Error" class="headerlink" title="1. Different Types of Error"></a>1. Different Types of Error</h3><p>This time we will discuss more details about the application of metrics: <strong>TPR</strong> (<strong>Recall</strong>), <strong>FPR</strong>, <strong>Precision</strong>, <strong>PRC</strong>, <strong>ROC</strong>/<strong>AUC</strong> and <strong>F1-score</strong>.</p>
 <p>We will have different requirements when we facing different problems. Actually it depends on our tolerance of different types of error. Therefore we have two scenarios:</p>
 <ul>
-<li>We hope less TPR </li>
+<li>We care less TPR </li>
 </ul>
 <blockquote>
 <p>From the definition of TPR, we see that this is the proportion of “correctly classified as positive” and total actual positive. Since total actual positive is a constant, this means we don’t care much about “correctly classified as positive”. </p>
-<p>For instance, in spam classification we want predict whether it’s a spam. Define “spam” as positive and “email” as negative. Although we want filter out the spam, we won’t want the email to be filtered out. We can tolerate more spam to be classified as email (<strong>false negative</strong>), but if emails are classified as spam (false positive), we might miss important events. This case we hope high precision. </p>
+<p>For instance, in spam classification we want predict whether it’s a spam. Define “spam” as positive and “email” as negative. Although we want filter out the spam, we won’t want the email to be filtered out. We can tolerate more spam to be classified as email (<strong>false negative</strong>), but if emails are classified as spam (false positive), we might miss important events. <strong>This case we hope high precision</strong>. </p>
 </blockquote>
 <ul>
-<li>We hope high TPR</li>
+<li>We need high TPR</li>
 </ul>
 <blockquote>
 <p>We hope high Recall in this case and don’t care too much about the precision.</p>
-<p>For instance, in flood prediction we will make alarm if we expect there will be a flood. Define “flood” as positive. We hope that all of the flood can be detected therefore we have high tolerance of <strong>false positive</strong>. Since typically the losses made by flood is always higher than cost of extra precaution. </p>
+<p>For instance, in flood prediction we will make alarm if we expect there will be a flood. Define “flood” as positive. We hope that all of the flood can be detected therefore we have high tolerance of <strong>false positive</strong>. Since typically the losses made by flood is always higher than cost of extra precaution. In general, if missing positive (<strong>false negative</strong>) would cost a lot, we hope high recall.</p>
 </blockquote>
 <p>As a result, we can see that <strong>Accuracy</strong> is not always the goal we want to achieve, sometimes we may focus on reducing certain types of error rather than total error. </p>
 <h3 id="2-ROC-and-PRC"><a href="#2-ROC-and-PRC" class="headerlink" title="2. ROC and PRC"></a>2. ROC and PRC</h3><p>Unfortunately I cannot summarize how to select algorithms from ROC and PRC (at least for now). We need discuss that with certain examples. One thing is clear that ROC is draw from a set of pairs of FPR and TPR with different threshold (we can always get the probability of data to be one of the classes).</p>

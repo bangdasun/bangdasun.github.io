@@ -1,0 +1,372 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Probability Review (1) | Bangda Sun | Practice makes perfect</title>
+
+  
+  <meta name="author" content="Bangda">
+  
+
+  
+  <meta name="description" content="Play with data">
+  
+
+  
+  
+  <meta name="keywords" content="Mathematics,Probability">
+  
+
+  <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <meta property="og:title" content="Probability Review (1)"/>
+
+  <meta property="og:site_name" content="Bangda Sun"/>
+
+  
+  <meta property="og:image" content="/favicon.ico"/>
+  
+
+  <link href="/favicon.ico" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Bangda Sun" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    jax: ["input/TeX","output/HTML-CSS"],
+    extensions: ["tex2jax.js","Safe.js"]
+  });
+  </script>
+<script type="text/javascript" async="async"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_CHTML,Safe">
+</script>
+</script>
+</head>
+
+
+<body>
+<div class="blog">
+  <div class="content">
+
+    <header>
+  <div class="site-branding">
+    <h1 class="site-title">
+      <a href="/">Bangda Sun</a>
+    </h1>
+    <p class="site-description">Practice makes perfect</p>
+  </div>
+  <nav class="site-navigation">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/tags">Tags</a></li>
+      
+    </ul>
+  </nav>
+</header>
+
+    <main class="site-main posts-loop">
+    <article>
+
+  
+    
+    <h3 class="article-title"><span>Probability Review (1)</span></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2019/07/20/52-probability-review-1/" rel="bookmark">
+        <time class="entry-date published" datetime="2019-07-20T19:12:17.000Z">
+          2019-07-20
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <p>Probability Quick Review &amp; Cheatsheet</p>
+<a id="more"></a>
+<p>Only the most fundamental probability theories, no measure theories.</p>
+<h3 id="1-Preliminary"><a href="#1-Preliminary" class="headerlink" title="1. Preliminary"></a>1. Preliminary</h3><ul>
+<li><p>Basic Units:</p>
+<ul>
+<li>Experiment: Any real or hypothetical process, in which the possible outcome can be identified ahead of time.</li>
+<li>Sample Space: set \(S\), all possible outcomes of an experiment.</li>
+<li>Event: A well-defined set of possible outcomes of an experiment, i.e. any subset of \(S\), usually denoted by capital letters such as \(A, B, E, F\)</li>
+</ul>
+</li>
+<li><p>Set Theory:</p>
+<ul>
+<li>Union / Intersection / Complementation.</li>
+<li>Mutually exclusive (disjoint) sets: intersection of two sets are empty set, \(AB = \varnothing\)</li>
+<li>Basic Laws:<ul>
+<li>Communicative laws: \(E\cup F = F\cup E\), \(EF=F E\).</li>
+<li>Associative laws: \((E\cup F)\cup G = E\cup (F\cup G)\), \((E F)G = E(F G)\).</li>
+<li>Distributive laws: \((E\cup F) G = (E G)\cup(FG)\), \((E F)\cup G = (E\cup G)(F\cup G)\).</li>
+<li>De Morgan’s laws: \((E\cup F)^{c}=E^{c}F^{c}\), \((EF)^{c} = E^{c}\cup F^{c}\).</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Probability Definition</p>
+<ul>
+<li><p>Classical: \(n\) equally likely outcomes of which \(m\) outcomes are wanted, the probability of wanted events happen is \(m/n\).</p>
+</li>
+<li><p>Relative Frequency: repeat trials a large number of times with same condition, the probability of certain event is approximately the ratio of the event count and total trial count.</p>
+</li>
+<li><p>Axiom: consider an experiment where sample space is \(S\), for each event \(E\) in the sample space, the probability of event \(P(E)\) is defined and satisfies:</p>
+<p>(1) \(0 \leq P(E) \leq 1\).</p>
+<p>(2) \(P(S) = 1\).</p>
+<p>(3) for mutually exclusive events \(E_{1}, E_{2}, \cdots, \),</p>
+<p>\[<br>P\left(\bigcup^{\infty}_{i=1}E_{i}\right) = \sum^{\infty}_{i=1}P(E_{i}).<br>\]  </p>
+</li>
+</ul>
+</li>
+<li><p>Propositions of Probability</p>
+<ul>
+<li><p>For empty set / event, \(P(\varnothing) = 0\).</p>
+</li>
+<li><p>For finite sequence of mutually exclusive events \(E_{1}, E_{2}, \cdots, E_{n}\),</p>
+<p>\[<br>P\left(\bigcup^{n}_{i=1}E_{i}\right) = \sum^{n}_{i=1}P(E_{i}).<br>\]</p>
+</li>
+<li><p>If \(E\subset F\), then \(P(E)\leq P(F)\).</p>
+</li>
+<li>\(P(E\cup F) = P(E) + P(F) - P(EF)\).</li>
+</ul>
+</li>
+<li><p>Sum of Geometric Series</p>
+</li>
+</ul>
+<p>Suppose there is a geometric series \(a, ar, ar^{2}, \cdots, ar^{n-1}\), where \(r\neq 1\), the sum of first \(n\) terms is</p>
+<p>\[<br>a + ar + ar^{2} + \cdots + ar^{n-1} = \sum^{n-1}_{k=0}ar^{k} = a\left(\frac{1-r^{n}}{1-r}\right).<br>\]</p>
+<h3 id="2-Counting-Methods"><a href="#2-Counting-Methods" class="headerlink" title="2. Counting Methods"></a>2. Counting Methods</h3><p>Counting methods are useful to calculate probabilities of equally likely events, like coin, dice, poker, some games.</p>
+<ul>
+<li>Sum Rule</li>
+</ul>
+<p>Tasks cannot be done at same time, i.e. sequential tasks, can be applied with sum rule.</p>
+<ul>
+<li>Product Rule</li>
+</ul>
+<p>Successive tasks with different options at different stages.</p>
+<ul>
+<li>Permutations</li>
+</ul>
+<p>Ordered arrangement of object in a set. The number of different permutations of \(n\) distinct object is \(n\) factorial, \(n!\). If there are\(m\) indistinguishable objects, they need to be compensated by dividing \(m!\).<br>The circular permutation of n distinct objects is \((n-1)!\).</p>
+<ul>
+<li>Combinations</li>
+</ul>
+<p>Unordered arrangement of \(r\) objects from a set of \(n\) distinct objects, denoted by<br>\[<br>{n \choose r } = \frac{n!}{(n-r)!}.<br>\]</p>
+<ul>
+<li>Binomial Theorem</li>
+</ul>
+<p>\[<br>(x + y)^{n} = \sum^{n}_{k=0}{n \choose k}x^{k}y^{n-k}.<br>\]</p>
+<p>Two applications:<br>(1) arrange \(a\) similar red balls and \(b\) similar black balls, number of distinguishable ways to order in a row is<br>\[<br>{a + b \choose a} = {a + b \choose b}.<br>\]<br>(2) arrange \(n\) indistinguishable objects into \(k\) distinguishable sets (\(n\) balls and \(k-1\) separators) is<br>\[<br>{n+k-1 \choose n} = {n+k-1 \choose k-1}.<br>\]</p>
+<p>Two famous problems:</p>
+<p>(1) Birthday Problem<br>(2) Matching Problem</p>
+<h3 id="3-Conditional-Probabilities"><a href="#3-Conditional-Probabilities" class="headerlink" title="3. Conditional Probabilities"></a>3. Conditional Probabilities</h3><p>Sample space is reduced for conditional probabilities by given additional information. The conditional probability of \(E\) given \(F\) is denoted by \(P(E|F)\), if \(P(F) &gt; 0\), then    </p>
+<p>\[<br>P(E|F)  = \frac{P(EF)}{P(F)}.<br>\]</p>
+<p>Three rules for conditional probabilities:</p>
+<p>(1) Multiplication Rule (Chain Rule): </p>
+<p>\[<br>P(E_{1}E_{2}\cdots E_{n}) = P(E_{n}|E_{1}E_{2}\cdots E_{n-1})\cdots P(E_{2}|E_{1})P(E_{1}).<br>\]</p>
+<p>(2) Law of Total Probability</p>
+<p>If \(F_{1}, F_{2}, \cdots, F_{n}\) are mutually exclusive events such that \(\cup^{n}_{i=1}F_{i} = S\), then<br>\[<br>P(E) = \sum^{n}_{i=1}P(EF_{i}) = \sum^{n}_{i=1}P(E|F_{i})P(F_{i}).<br>\]</p>
+<p>(3) Bayes Formula</p>
+<p>If \(F_{1}, F_{2}, \cdots, F_{n}\) are mutually exclusive events such that \(\cup^{n}_{i=1}F_{i} = S\), then</p>
+<p>\[<br>P(F_{i}|E) = \frac{P(E|F_{i})P(F_{i})}{\sum^{n}_{j=1} P(E|F_{j}) P(F_{j})}.<br>\]</p>
+<ul>
+<li>Independent Events</li>
+</ul>
+<p>Two events \(E\) and \(F\) are <strong>statistically independent</strong> if \(P(EF) = P(E)P(F)\).</p>
+<p>Two theorems of independent events:</p>
+<p>(1) If \(E\) and \(F\) are independent, then \((E, F^{c}), (E^{c}, F), (E^{c}, F^{c})\) are also independent. It could be extended to more general case:  if \(E_{1}, E_{2}, \cdots, E_{n}\) are independent if for every subset with size \(2\leq r\leq n\) of these events, \(P(E_{i_{1}}E_{i_{2}}\cdots E_{i_{r}}) = P(E_{i_{1}})\cdots P(E_{i_{r}})\).</p>
+<p>(2) If events \(E_{1}, E_{2}, \cdots, E_{n}\) are independent and \(P(E_{i}) = p_{i}\), the probability of <strong>at least one of the events occur</strong> is \(1 - (1 - p_{1})(1 - p_{2})\cdots (1 - p_{n})\).</p>
+<h3 id="4-Random-Variables"><a href="#4-Random-Variables" class="headerlink" title="4. Random Variables"></a>4. Random Variables</h3><p>A random variable \(X\) is a <strong>function that map from sample space</strong> \(S\) <strong>to real numbers</strong>, \(X: S\rightarrow R\). The distribution of random variable \(X\) is the collection of probabilities of form \(P(X\in C)\) for all sets \(C\) of real numbers such that \({X\in C}\) is an event.</p>
+<ul>
+<li>Probability Mass Function / Probability Density Function</li>
+</ul>
+<p>For discrete random variables, PMF gives the probability that a random variables takes on value \(x\); for continous random variables, PDF is the derivative of CDF, the probability of taking single point is 0, probabilities is great 0 for intervals:<br>\[<br>P(a\leq X\leq b) = P(X\leq b) - P(X\leq a).<br>\]</p>
+<ul>
+<li>Cumulative Distribution Function</li>
+</ul>
+<p>CDF gives the probability that a random variable is less than or equal to \(x\), \(F(x) = P(X\leq x)\). It is <strong>right continuous</strong> and <strong>non-decreasing</strong> function, which means it take intervals like “[, )”, i.e.</p>
+<p>\[<br>\lim_{x\rightarrow a^{+}} F(x) = F(a).<br>\]</p>
+<p>Some properties of CDF (for continuous random variables):</p>
+<p>\[<br>P(a &lt; X \leq b) = F(b) - F(a), ~P(X &lt; b) = F(b^{-}).<br>\]</p>
+<ul>
+<li>Quantile Function</li>
+</ul>
+<p>Quantile function is the inverse of CDF. For \(p\in [0, 1]\), \(F^{-1}(p) = \inf{x; F(x)\geq p}\), i.e. quantile function returns minimum \(x\) such that \(F(x)\geq p\).</p>
+<ul>
+<li>Joint Distributed Random Variables</li>
+</ul>
+<p>The CDF is defined as \(F_{XY}(a, b) = P(X\leq a, Y\leq b)\) for \(a, b\in R\),<br>\[<br>\begin{aligned}<br>F_{XY}(-\infty, b) =&amp; \lim_{a\rightarrow -\infty}P(X\leq a, Y\leq b) = 0 \\<br>F_{XY}(a, -\infty)  =&amp; \lim_{b\rightarrow -\infty}P(X\leq a, Y\leq b) = 0 \\<br>F_{XY}(a, \infty) =&amp; \lim_{b\rightarrow \infty} P(X\leq a, Y\leq b) = P(X\leq a) = F_{X}(a) \\<br>F_{XY}(\infty, \infty) =&amp; \lim_{a\rightarrow \infty,\ b\rightarrow \infty} P(X\leq a, Y\leq b) = 1,<br>\end{aligned}<br>\]</p>
+<p>also,</p>
+<p>\[<br>P(a_{1}&lt;X\leq a_{2}, b_{1}&lt; Y\leq b_{2}) = F(a_{2}, b_{2}) - F(a_{2}, b_{1}) - F(a_{1}, b_{2}) + F(a_{1}, b_{1}),<br>\]</p>
+<p>The PMF and PDF is defined as</p>
+<p>\[<br>\begin{aligned}<br>p_{XY}(x, y) =&amp; P(X=x, Y=y) \\<br>f_{XY}(x, y) =&amp; \frac{\partial^{2}}{\partial x\partial y} F_{XY}(x, y).<br>\end{aligned}<br>\]</p>
+<p>The conditional CDF and PDF(PMF)  is defined as<br>\[<br>\begin{aligned}<br>f_{X|Y}(x|y) =&amp; \frac{f_{XY}(x, y)}{f_{Y}(y)} \\<br>F_{X|Y}(x|y) =&amp; P(X\leq x|Y=y).<br>\end{aligned}<br>\]</p>
+<ul>
+<li>Independent Random Variables</li>
+</ul>
+<p>\(X\) and \(Y\) are independent if and only if for any set of real number \(A\) and \(B\),<br>\[<br>P(X\in A, Y\in B) = P(X\in A)P(Y\in B).<br>\]</p>
+<ul>
+<li>Sum of independent random variables</li>
+</ul>
+<p>If \(X\) and \(Y\) are independent, then the PDF of \(Z = X+Y\) is</p>
+<p>\[<br>f_{Z}(z) = \int^{\infty}_{-\infty} f_{X}(z-y)f_{Y}(y) dy.<br>\]</p>
+<ul>
+<li>Distribution of Function of Random Variable</li>
+</ul>
+<p>Discrete case is very simple.</p>
+<p>For continuous case, suppose \(g(X)\) is a strict monotone and differentiable function of \(X\), then the PDF of \(Y = g(X)\) is given by</p>
+<p>\[<br>f_{Y}(y) = f_{X}\left( g^{-1}(y)\right)\left|\frac{d}{dy}g^{-1}(y) \right|.<br>\]</p>
+<p>Example: \(Y=X^{2}\),</p>
+<p>\[<br>\begin{aligned}<br>F_{Y}(y) =&amp; P(Y\leq y) = P(X^{2}\leq y) = P(-\sqrt{y}\leq X\leq \sqrt{y}) \\<br>       =&amp; F_{X}(\sqrt{y}) - F_{X}(-\sqrt{y}),<br>\end{aligned}<br>\]<br>\[<br>f_{Y}(y) = \frac{1}{2\sqrt{y}}f_{X}(\sqrt{y}) + \frac{1}{2\sqrt{y}}f_{X}(-\sqrt{y}).<br>\]</p>
+<ul>
+<li>Joint Distribution of Function of Random Variables</li>
+</ul>
+<p>The derivatives are denoted by Jacobian matrix.</p>
+<ul>
+<li>Distribution Function of Maximum and Minimum of Random Sample</li>
+</ul>
+<p>The distribution of \(Y_{n} = \max(X_{1},\cdots, X_{n})\) and \(Y_{1} = \min(X_{1},\cdots, X_{n})\):</p>
+<p>\[<br>\begin{aligned}<br>G_{n}(y) =&amp; P(Y_{n}\leq y) = P(X_{1}\leq y,\cdots, X_{n}\leq y) = F_{X}^{n}(y) \\<br>G_{1}(y) =&amp; P(Y_{1}\leq y) = 1 - P(Y_{1}&gt;y) = 1 - P(X_{1}&gt; y, \cdots, X_{n}&gt;y) = 1 - (1 - F_{X}(y))^{n}.<br>\end{aligned}<br>\]</p>
+<h3 id="5-Characteristics-of-Random-Variables"><a href="#5-Characteristics-of-Random-Variables" class="headerlink" title="5. Characteristics of Random Variables"></a>5. Characteristics of Random Variables</h3><ul>
+<li>Expected Values / Expectations</li>
+</ul>
+<p>Expectation measure the <strong>center of the probability distribution</strong>. Expectation can be <strong>infinity</strong>, which is regarded as does not exist.</p>
+<p>\[<br>E(X) = \sum_{k}x_{k}p(x_{k}) \text{  or  } E(X) = \int^{\infty}_{-\infty}xf(x)dx.<br>\]</p>
+<p>The expectation of function of random variable:</p>
+<p>\[<br>E(g(X)) = \sum_{k}g(x_{k})p(x_{k}) \text{  or  } E(g(X)) = \int^{\infty}_{-\infty}g(x)f(x)dx.<br>\]</p>
+<p>Properties of expectation:</p>
+<p>(1) If \(a\) and \(b\) are constants, then \(E(aX + b) = aE(X) + b\).<br>(2) If there exists a constant \(a\) such that \(P(X\geq a) = 1\), then \(E(X)\geq a\).</p>
+<p>Some theorems of expectation:</p>
+<p>(1) If \(X\) is a random variable that take non-negative integers, then<br>\[<br>E(X) = \sum^{\infty}_{i=1}P(X\geq i).<br>\]<br>(2) If \(X\) is a non-negative random variable with CDF \(F(x)\), then<br>\[<br>E(X) = \int^{\infty}_{0}(1 - F(x))dx.<br>\]<br>(3) If \(X_{1},X_{2},\cdots,X_{n}\) are \(n\) random variables such that \(E(X_{i})\) is finite, then<br>\[<br>E(X_{1}+X_{2}+\cdots+X_{n}) = E(X_{1}) + E(X_{2}) + \cdots + E(X_{n}).<br>\]<br>(4) If \(X\) and \(Y\) are independent, then for function \(h\) and \(g\), then<br>\[<br>E[h(X)g(Y)] = E[h(X)]E[g(Y)].<br>\]</p>
+<ul>
+<li>Variance</li>
+</ul>
+<p>Variance is a <strong>measure of spread of probability distribution</strong>.</p>
+<p>\[<br>Var(X) = E\left(X - E(X)\right)^{2} = E\left(X^{2}\right) - E(X)^{2}.<br>\]</p>
+<p>If \(a\) and \(b\) are constant, then \(Var(aX + b) = a^{2}Var(X)\).</p>
+<ul>
+<li>Covariance and Correlation</li>
+</ul>
+<p>Covariance is a <strong>measure of the strength of relationship between two random variables</strong>. Correlation is the standardized version of covariance.</p>
+<p>\[<br>Cov(X, Y) = E[(X - E(X))(Y - E(Y))] = E(XY) - E(X)E(Y).<br>\]</p>
+<ul>
+<li>Condition Expectation and Variance</li>
+</ul>
+<p>The conditional expectation of \(X\) given \(Y=y\) is </p>
+<p>\[<br>E(X|Y=y) = \sum_{x}xP(X=x|Y=y) = \sum_{x}xp_{X|Y}(x|y) \text{  or  } E(X|Y=y) = \int^{\infty}_{-\infty}xf_{X|Y}(x|y)dx.<br>\]</p>
+<p>Notice that \(E(X|Y=y)\) is a function of \(y\). And</p>
+<p>\[<br>E(X) = E(E(X|Y)), Var(X) = E(Var(X|Y)) + Var(E(X|Y)).<br>\]</p>
+
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+      
+
+    <span class="post-categories">
+      <i class="icon-categories"></i>
+        <a href="/categories/Mathematics/">Mathematics</a>
+    </span>
+    
+
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/Mathematics/">Mathematics</a><a href="/tags/Probability/">Probability</a>
+    </span>
+    
+
+    </div>
+
+    
+  </div>
+</article>
+
+  
+<section id="comment">
+  
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+  
+</section>
+
+
+
+    </main>
+
+    <footer class="site-footer">
+  <p class="site-info">
+    Proudly powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and
+    Theme by <a href="https://github.com/CodeDaraW/Hacker" target="_blank">Hacker</a>
+    </br>
+    
+    &copy; 2019 Bangda
+    
+	
+	
+	
+  </p>
+  
+  <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+  <span id="busuanzi_container_site_pv">
+    Total viewer <span id="busuanzi_value_site_pv"></span>; 
+  </span>
+  
+  <span id="busuanzi_container_site_uv">
+    Total visitor <span id="busuanzi_value_site_uv"></span>
+  </span>
+	
+	
+  <div id="disqus_thread"></div>
+  <script>
+
+  /**
+   *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+   *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+   */
+   
+  var disqus_config = function () {
+	this.page.url = 'https://bangdasun.github.io{{ page.url }}';  // Replace PAGE_URL with your page's canonical URL variable
+	this.page.identifier = '{{ page.id }}'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+  };
+  
+  (function() { // DON'T EDIT BELOW THIS LINE
+  var d = document, s = d.createElement('script');
+  s.src = 'https://bangdasun-github-io.disqus.com/embed.js';
+  s.setAttribute('data-timestamp', +new Date());
+  (d.head || d.body).appendChild(s);
+  })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  
+  <script id="dsq-count-scr" src="//bangdasun-github-io.disqus.com/count.js" async></script>
+</footer>
+
+
+    
+  </div>
+</div>
+</body>
+</html>

@@ -60,9 +60,9 @@
   <nav class="site-navigation">
     <ul>
       
-        <li><a href="/">主页</a></li>
+        <li><a href="/">Home</a></li>
       
-        <li><a href="/tags">标签</a></li>
+        <li><a href="/tags">Tags</a></li>
       
     </ul>
   </nav>
@@ -98,22 +98,20 @@
 <h3 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1. Introduction"></a>1. Introduction</h3><p>When we start analyzing various of data sets, the first step is always the exploratory data analysis (EDA). Generally we will try to find some <strong>characteristics of the data</strong>, and data visualization is an important way to do that. </p>
 <p>Here I list five basic types of plot that will be useful in EDA:</p>
 <ol>
-<li><p>scatter plot</p>
-<p> Scatter plot is useful to show the relationship between two variables (both numerical and categorical variable). For example, we can use the scatter plot to display the relationship between people’s weight and height, people’s years of education and their average salaries.</p>
+<li><p>Scatter plot</p>
+<p>Scatter plot is useful to show the relationship between two variables (both numerical and categorical variable). For example, we can use the scatter plot to display the relationship between people’s weight and height, people’s years of education and their average salaries.</p>
 </li>
-</ol>
-<ol>
-<li><p>line plot</p>
-<p> Line plot is also a way to illustrate the relationship between two variables, specifically, it’s useful to visualize time series data, where the data is time indexed. For example, we can visualize the daily stock price of Apple in the past two years using line plot.</p>
+<li><p>Line plot</p>
+<p>Line plot is also a way to illustrate the relationship between two variables, specifically, it’s useful to visualize time series data, where the data is time indexed. For example, we can visualize the daily stock price of Apple in the past two years using line plot.</p>
 </li>
-<li><p>histogram</p>
-<p> Histogram is a way to show the distribution of numerical (continuous) variables, such as the height of people. Personally speaking, the ‘limit’ version of histogram will be the plot of probability density function of the variable. In practice, we can also add a layer of density plot upon the histogram layer.</p>
+<li><p>Histogram</p>
+<p>Histogram is a way to show the distribution of numerical (continuous) variables, such as the height of people. Personally speaking, the ‘limit’ version of histogram will be the plot of probability density function of the variable. In practice, we can also add a layer of density plot upon the histogram layer.</p>
 </li>
-<li><p>box plot</p>
-<p> Like histogram, box plot is also one way to show the distribution of numerical variables. In addition, it has more characteristics of the data: it will attach with the quantiles of the data - minimum, 25% quantile, median, 75% quantile and maximum. It will be useful to let the outliers stand out.</p>
+<li><p>Box plot</p>
+<p>Like histogram, box plot is also one way to show the distribution of numerical variables. In addition, it has more characteristics of the data: it will attach with the quantiles of the data - minimum, 25% quantile, median, 75% quantile and maximum. It will be useful to let the outliers stand out.</p>
 </li>
-<li><p>bar plot </p>
-<p> Bar plot is useful when we dealing with the distribution of categorical variables. For example, we want to know the usage of top 10 machine learning algorithms in FLAG.</p>
+<li><p>Bar plot</p>
+<p>Bar plot is useful when we dealing with the distribution of categorical variables. For example, we want to know the usage of top 10 machine learning algorithms in FLAG.</p>
 </li>
 </ol>
 <p>In summary, scatter plot and line plot must applied on two variables; histogram, box plot and bar plot are the results of aggregation on data set, and usually applied on single variable. There is a helpful <a href="https://www.rstudio.com/wp-content/uploads/2016/11/ggplot2-cheatsheet-2.1.pdf" target="_blank" rel="external">cheat sheet</a> of data visualization available on the website of Rstudio.</p>

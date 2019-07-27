@@ -60,9 +60,9 @@
   <nav class="site-navigation">
     <ul>
       
-        <li><a href="/">主页</a></li>
+        <li><a href="/">Home</a></li>
       
-        <li><a href="/tags">标签</a></li>
+        <li><a href="/tags">Tags</a></li>
       
     </ul>
   </nav>
@@ -113,7 +113,7 @@
 <p>\[<br>(j, s) = \arg\min_{(j,s)}\sum_{i:x_{i}\in B_{1}}\left(y_{i}-\bar{y}_{B_{1}}\right)^{2} + \sum_{j:x_{j}\in B_{2}}\left(y_{j}-\bar{y}_{B_{2}}\right)^{2}.<br>\]</p>
 <p>Then we repeat this process on data in \(B_{1}\) and \(B_{2}\) and go to the next level of the tree, it is a <strong>depth wise growth</strong>, kind of similar to <strong>BFS (Breadth First Search)</strong>. </p>
 <p>The stop condition for growing tree could be set by specifying the maximum depth <code>max_depth</code> (the longest step length from root to the leaves) and minimum number of observations needed to make a split <code>min_split_sample</code>, or say the number of observations need in a leaf.</p>
-<h3 id="3-Tree-Pruning"><a href="#3-Tree-Pruning" class="headerlink" title="3. Tree Pruning"></a>3. Tree Pruning</h3><p>It’s easy to make a complex tree that might has poor performance on test data - the extreme case could be . Based on bias-variance trade-off principal, we would like to <strong>sacrifice some bias to reduce variance</strong>. One of strategies is <strong>pruning</strong> the tree - grow a large tree first then prune it back to a smaller subtree. </p>
+<h3 id="3-Tree-Pruning"><a href="#3-Tree-Pruning" class="headerlink" title="3. Tree Pruning"></a>3. Tree Pruning</h3><p>It’s easy to make a complex tree that might has poor performance on test data - the extreme case could be each leaf only has one sample in the end. Based on bias-variance trade-off principal, we would like to <strong>sacrifice some bias to reduce variance</strong>. One of strategies is <strong>pruning</strong> the tree - grow a large tree first then prune it back to a smaller subtree. </p>
 <p>One of the methods is <strong>Cost Complexity Pruning</strong>. This is <strong>down to top</strong> process. During the tree growing, a series of trees are generated \(T_{0}, T_{1}, \cdots, T_{m}\), where \(T_{m}\) is the root. At step \(i\), the tree is created by removing a subtree from tree \(i-1\) and replacing it with a leaf node.</p>
 <p>In addition we can control <code>max_depth</code> and <code>min_split_sample</code>, or add tree size  \(|T|\) as a <strong>regularization</strong> term in the loss function.</p>
 <h3 id="4-Implementation"><a href="#4-Implementation" class="headerlink" title="4. Implementation"></a>4. Implementation</h3><p>The implementation of decision tree could be tricky, since you don’t know how many splits needed exactly, also it’s dynamic process since every time a new split will be applied on a new block. </p>
