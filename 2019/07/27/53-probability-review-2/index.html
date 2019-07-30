@@ -1,0 +1,242 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Probability Review (2) | Bangda Sun | Practice makes perfect</title>
+
+  
+  <meta name="author" content="Bangda">
+  
+
+  
+  <meta name="description" content="Play with data">
+  
+
+  
+  
+  <meta name="keywords" content="Mathematics,Probability">
+  
+
+  <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <meta property="og:title" content="Probability Review (2)"/>
+
+  <meta property="og:site_name" content="Bangda Sun"/>
+
+  
+  <meta property="og:image" content="/favicon.ico"/>
+  
+
+  <link href="/favicon.ico" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Bangda Sun" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    jax: ["input/TeX","output/HTML-CSS"],
+    extensions: ["tex2jax.js","Safe.js"]
+  });
+  </script>
+<script type="text/javascript" async="async"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_CHTML,Safe">
+</script>
+</script>
+</head>
+
+
+<body>
+<div class="blog">
+  <div class="content">
+
+    <header>
+  <div class="site-branding">
+    <h1 class="site-title">
+      <a href="/">Bangda Sun</a>
+    </h1>
+    <p class="site-description">Practice makes perfect</p>
+  </div>
+  <nav class="site-navigation">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/tags">Tags</a></li>
+      
+    </ul>
+  </nav>
+</header>
+
+    <main class="site-main posts-loop">
+    <article>
+
+  
+    
+    <h3 class="article-title"><span>Probability Review (2)</span></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2019/07/27/53-probability-review-2/" rel="bookmark">
+        <time class="entry-date published" datetime="2019-07-27T22:19:45.000Z">
+          2019-07-27
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <p>Probability Distributions Review &amp; Cheatsheet</p>
+<a id="more"></a>
+<h3 id="1-Discrete-Distributions"><a href="#1-Discrete-Distributions" class="headerlink" title="1. Discrete Distributions"></a>1. Discrete Distributions</h3><h4 id="1-1-Bernoulli-Distribution"><a href="#1-1-Bernoulli-Distribution" class="headerlink" title="1.1 Bernoulli Distribution"></a>1.1 Bernoulli Distribution</h4><p>Suppose \(X\) has Bernoulli distribution, \(X\sim Bernoulli(p)\), it is about a trial performed with probability of \(p\) to be “success”, and \(X\) takes 1 if it is success and 0 if it is failure.</p>
+<p>\[<br>P(X=k) = p^{k}(1-p)^{1-k}, k\in\{0, 1\}.<br>\]</p>
+<p>The expectation and variance of \(Bernoulli(p)\) is \(p\) and \(p(1-p)\).</p>
+<h4 id="1-2-Binomial-Distribution"><a href="#1-2-Binomial-Distribution" class="headerlink" title="1.2 Binomial Distribution"></a>1.2 Binomial Distribution</h4><p>Suppose \(X\) has Binomial distribution, \(X\sim Binomial(n, p)\), it models \(n\) <strong>independent</strong> trials with probability of \(p\) to be “success”. Therefore it could be regarded as the sum of \(n\) <strong>i.i.d.</strong> \(Bernoulli(p)\) random variables.</p>
+<p>\[<br>P(X=k) = {n \choose k}p^{k}(1-p)^{n-k}, k = 0,1,2,\cdots, n.<br>\]</p>
+<p>The sum of \(n\) independent binomial distributions with parameter \(n_{i}\) and \(p\) is an another binomial distribution with parameter \(\sum^{n}_{i=1}n_{i}\) and \(p\).</p>
+<p>The expectation and variance of \(Binomial(n, p)\) is \(np\) and \(np(1-p)\).</p>
+<h4 id="1-3-Poisson-Distribution"><a href="#1-3-Poisson-Distribution" class="headerlink" title="1.3 Poisson Distribution"></a>1.3 Poisson Distribution</h4><p>Suppose \(X\) has Poisson distribution, \(X\sim Poisson(\lambda)\). It models the number of times that rare event occurs with an average rate \(\lambda\) (per unit time). </p>
+<p>\[<br>P(X=k) = \frac{\lambda^{k}}{k!}e^{-\lambda}, k=0,1,2,\cdots,.<br>\]</p>
+<p>Poisson distribution is an approximation to Binomial distribution with large \(n\) and very small \(p\). The sum of \(n\) independent Poisson distribution with parameter \(\lambda_{i}\) is another Poisson distribution with parameter \(\sum^{n}_{i=1}\lambda_{i}\).</p>
+<p>The expectation and variance of \(Poisson(\lambda)\) are both \(\lambda\).</p>
+<h4 id="1-4-Geometric-Distribution"><a href="#1-4-Geometric-Distribution" class="headerlink" title="1.4 Geometric Distribution"></a>1.4 Geometric Distribution</h4><p>Suppose \(X\) has Geometric distribution, \(X\sim Geometric(p)\), it models the number of trials related to <strong>first success</strong>. There are two scenarios: (1) \(X\) is the number of trials before first success, i.e. total number of failures before first success; (2) \(X\) is the total number of trials until first success. The distribution of second scenario is actually a “shifted” version of first scenario. The PMF of first scenario is<br>\[<br>P(X=k) = (1-p)^{k}p, k=0,1,2,\cdots.<br>\]</p>
+<p>The expectation and variance of Geometric distribution with parameter \(p\) is</p>
+<p>\[<br>E(X) = \frac{1-p}{p},~~ Var(X) = \frac{1-p}{p^{2}}.<br>\]</p>
+<p>If the Geometric distribution is for the total number of trials (second scenario), since it is a “shifted” of first scenario, therefore the expectation will increase by one unit, i.e.<br>\[<br>E(X) = \frac{1}{p},<br>\]</p>
+<p>and variance remains same.</p>
+<h4 id="1-5-Negative-Binomial-Distribution"><a href="#1-5-Negative-Binomial-Distribution" class="headerlink" title="1.5 Negative Binomial Distribution"></a>1.5 Negative Binomial Distribution</h4><p>Suppose \(X\) has Negative Binomial distribution, \(X\sim NegBin(r, p)\). It models number of failures before \(r\)-th success.</p>
+<p>\[<br>P(X=k) = {r+k-1\choose k}(1-p)^{k}p^{r}, k=0,1,2,\cdots.<br>\]</p>
+<p>As i.i.d. Bernoulli distribution sum up to Binomial distribution, here i.i.d. Geometric distribution sum up to Geometric distribution.</p>
+<p>The expectation and variance of \(NegBin(r, p)\) is</p>
+<p>\[<br>E(X) = \frac{r(1-p)}{p},~~Var(X) = \frac{r(1-p)}{p^{2}}.<br>\]</p>
+<h3 id="2-Continuous-Distributions"><a href="#2-Continuous-Distributions" class="headerlink" title="2. Continuous Distributions"></a>2. Continuous Distributions</h3><h4 id="2-1-Uniform-Distribution"><a href="#2-1-Uniform-Distribution" class="headerlink" title="2.1 Uniform Distribution"></a>2.1 Uniform Distribution</h4><p>Suppose \(X\) has Uniform distribution, \(X\sim Unif(\alpha, \beta)\), with PDF</p>
+<p>\[<br>f(x) = \left\{<br>\begin{aligned}<br>&amp;\frac{1}{\beta-\alpha}, &amp; \text{for }\alpha&lt;x&lt;\beta<br>&amp;0,                                     &amp; \text{otherwise}<br>\end{aligned}\right..<br>\]</p>
+<p>The expectation and variance of \(Uniform(\alpha, \beta)\) is </p>
+<p>\[<br>E(X)=\frac{1}{\beta-\alpha},~~ Var(X) = \frac{(\beta - \alpha)^{2}}{12}.<br>\]</p>
+<h4 id="2-2-Exponential-Distribution"><a href="#2-2-Exponential-Distribution" class="headerlink" title="2.2 Exponential Distribution"></a>2.2 Exponential Distribution</h4><p>Suppose \(X\) has Exponential distribution, \(X\sim Exp(\lambda)\), with PDF</p>
+<p>\[<br>f(x) = \left\{<br>\begin{aligned}<br>&amp;\lambda e^{-\lambda x}, &amp; \text{for }x &gt; 0 \\<br>&amp;0,                                     &amp; \text{otherwise}<br>\end{aligned}\right..<br>\]</p>
+<p>The shape of PDF is strict decreasing with decay rate \(\lambda\). The CDF is given by </p>
+<p>\[<br>F(x) = \int^{x}_{0} \lambda e^{\lambda t} dt = 1 - e^{-\lambda x}.<br>\]</p>
+<p>Exponential distribuion could be used to model <strong>lifetimes</strong> and <strong>time between events</strong>. The expectation and variance is </p>
+<p>\[<br>E(X) = \frac{1}{\lambda}, ~~ Var(X) = \frac{1}{\lambda^{2}}.<br>\]</p>
+<p>Exponential distribution has <strong>memoryless</strong> property, i.e. \(P(X &gt; s + t | X &gt; s) = P(X &gt; t)\).</p>
+<h4 id="2-3-Gamma-Distribution"><a href="#2-3-Gamma-Distribution" class="headerlink" title="2.3 Gamma Distribution"></a>2.3 Gamma Distribution</h4><p>Suppose \(X\) has Gamma distribution, \(X\sim Gamma(\alpha, \lambda)\), with PDF</p>
+<p>\[<br>f(x) = \left\{<br>\begin{aligned}<br>&amp;\frac{\lambda^{\alpha}}{\Gamma(\alpha)}e^{-\lambda x}x^{\alpha-1}, &amp; \text{for }x &gt; 0 \\<br>&amp;0,                                     &amp; \text{otherwise}<br>\end{aligned}\right..<br>\]</p>
+<p>It is easy to see that when \(\alpha=1\) it is an Exponential distribution \(Exp(\lambda)\). Here Gamma function is defined as </p>
+<p>\[<br>\Gamma(\alpha) = \int^{\infty}_{0}x^{\alpha-1}e^{-x} dx,<br>\]</p>
+<p>where \(\Gamma(\alpha) = (\alpha - 1)!\), \(\Gamma(\alpha) = (\alpha-1)\Gamma(\alpha-1)\).</p>
+<p>Also, \(\Gamma(n/2, 1/2)\) is actually \(\chi^{2}(n)\) distribution.</p>
+<h4 id="2-4-Beta-Distribution"><a href="#2-4-Beta-Distribution" class="headerlink" title="2.4 Beta Distribution"></a>2.4 Beta Distribution</h4><p>Suppose \(X\) has Beta distribution, \(X\sim Beta(\alpha, \beta)\), with PDF</p>
+<p>\[<br>f(x) = \left\{<br>\begin{aligned}<br>&amp;\frac{1}{B(\alpha, \beta)}x^{\alpha-1}(1-x)^{\beta -1}, &amp; \text{for }x \in [0, 1] \\<br>&amp;0,                                     &amp; \text{otherwise}<br>\end{aligned}\right..<br>\]</p>
+<p>where </p>
+<p>\[<br>B(\alpha, \beta) = \frac{\Gamma(\alpha)\Gamma(\beta)}{\Gamma(\alpha + \beta)}.<br>\]</p>
+<h4 id="2-5-Normal-Distribution"><a href="#2-5-Normal-Distribution" class="headerlink" title="2.5 Normal Distribution"></a>2.5 Normal Distribution</h4><p>Suppose \(X\) has Normal distribution, \(X\sim N(\mu, \sigma^{2})\), with PDF</p>
+<p>\[<br>f(x) = \frac{1}{\sqrt{2\pi}\sigma}e^{-\frac{(x - \mu)^{2}}{2\sigma^{2}}}, x\in R.<br>\]</p>
+
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+      
+
+    <span class="post-categories">
+      <i class="icon-categories"></i>
+        <a href="/categories/Mathematics/">Mathematics</a>
+    </span>
+    
+
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/Mathematics/">Mathematics</a><a href="/tags/Probability/">Probability</a>
+    </span>
+    
+
+    </div>
+
+    
+  </div>
+</article>
+
+  
+<section id="comment">
+  
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+  
+</section>
+
+
+
+    </main>
+
+    <footer class="site-footer">
+  <p class="site-info">
+    Proudly powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and
+    Theme by <a href="https://github.com/CodeDaraW/Hacker" target="_blank">Hacker</a>
+    </br>
+    
+    &copy; 2019 Bangda
+    
+	
+	
+	
+  </p>
+  
+  <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+  <span id="busuanzi_container_site_pv">
+    Total viewer <span id="busuanzi_value_site_pv"></span>; 
+  </span>
+  
+  <span id="busuanzi_container_site_uv">
+    Total visitor <span id="busuanzi_value_site_uv"></span>
+  </span>
+	
+	
+  <div id="disqus_thread"></div>
+  <script>
+
+  /**
+   *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+   *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+   */
+   
+  var disqus_config = function () {
+	this.page.url = 'https://bangdasun.github.io{{ page.url }}';  // Replace PAGE_URL with your page's canonical URL variable
+	this.page.identifier = '{{ page.id }}'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+  };
+  
+  (function() { // DON'T EDIT BELOW THIS LINE
+  var d = document, s = d.createElement('script');
+  s.src = 'https://bangdasun-github-io.disqus.com/embed.js';
+  s.setAttribute('data-timestamp', +new Date());
+  (d.head || d.body).appendChild(s);
+  })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  
+  <script id="dsq-count-scr" src="//bangdasun-github-io.disqus.com/count.js" async></script>
+</footer>
+
+
+    
+  </div>
+</div>
+</body>
+</html>
