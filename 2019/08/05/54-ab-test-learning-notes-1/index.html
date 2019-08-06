@@ -1,0 +1,256 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>AB Testing (Udacity) Learning Notes (1) | Bangda Sun | Practice makes perfect</title>
+
+  
+  <meta name="author" content="Bangda">
+  
+
+  
+  <meta name="description" content="Play with data">
+  
+
+  
+  
+  <meta name="keywords" content="Data Science,Analytics">
+  
+
+  <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <meta property="og:title" content="AB Testing (Udacity) Learning Notes (1)"/>
+
+  <meta property="og:site_name" content="Bangda Sun"/>
+
+  
+  <meta property="og:image" content="/favicon.ico"/>
+  
+
+  <link href="/favicon.ico" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Bangda Sun" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    jax: ["input/TeX","output/HTML-CSS"],
+    extensions: ["tex2jax.js","Safe.js"]
+  });
+  </script>
+<script type="text/javascript" async="async"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_CHTML,Safe">
+</script>
+</script>
+</head>
+
+
+<body>
+<div class="blog">
+  <div class="content">
+
+    <header>
+  <div class="site-branding">
+    <h1 class="site-title">
+      <a href="/">Bangda Sun</a>
+    </h1>
+    <p class="site-description">Practice makes perfect</p>
+  </div>
+  <nav class="site-navigation">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/tags">Tags</a></li>
+      
+    </ul>
+  </nav>
+</header>
+
+    <main class="site-main posts-loop">
+    <article>
+
+  
+    
+    <h3 class="article-title"><span>AB Testing (Udacity) Learning Notes (1)</span></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2019/08/05/54-ab-test-learning-notes-1/" rel="bookmark">
+        <time class="entry-date published" datetime="2019-08-06T03:27:04.000Z">
+          2019-08-05
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <p>Introduction to AB Testing</p>
+<a id="more"></a>
+<h3 id="1-Concepts"><a href="#1-Concepts" class="headerlink" title="1. Concepts"></a>1. Concepts</h3><h4 id="1-1-What-is-AB-Testing"><a href="#1-1-What-is-AB-Testing" class="headerlink" title="1.1 What is AB Testing"></a>1.1 What is AB Testing</h4><p>AB testing is a general methodology used <strong>online</strong> when need to test out <strong>new products or new features</strong>. Basically it takes two sets of users, show the <strong>control set with existing product / feature</strong>, and <strong>experiment set with new version</strong>. And observe how do these users respond differently, finally <strong>determine which version is better</strong>.</p>
+<h4 id="1-2-What-to-test"><a href="#1-2-What-to-test" class="headerlink" title="1.2 What to test"></a>1.2 What to test</h4><p>There are variety of things to test:</p>
+<ul>
+<li>visible changes: new features, new additions to UI, ranking list, different look of the website;</li>
+<li>invisible changes: page load time, new recommendation algorithms.</li>
+</ul>
+<p>However there are also things that AB testing is not able to test. AB testing isn’t useful in testing out <strong>new experience</strong>:</p>
+<ul>
+<li>user who don’t like change too much would prefer old version;</li>
+<li>user will feel excited and test out everything (<strong>novelty effect</strong>).</li>
+</ul>
+<p>The issues of using AB testing in these cases include:</p>
+<ul>
+<li>AB testing needs baseline - here it is hard to define</li>
+<li>AB testing cannot run forever - here it is hard to know when to stop</li>
+</ul>
+<h4 id="1-3-What-are-Complimentary-for-AB-Testing"><a href="#1-3-What-are-Complimentary-for-AB-Testing" class="headerlink" title="1.3 What are Complimentary for AB Testing"></a>1.3 What are Complimentary for AB Testing</h4><ul>
+<li>Retrospective Analysis</li>
+<li>User Experience Research</li>
+<li>Focus Group</li>
+<li>Surverys</li>
+</ul>
+<h3 id="2-One-Example"><a href="#2-One-Example" class="headerlink" title="2. One Example"></a>2. One Example</h3><h4 id="2-1-Background"><a href="#2-1-Background" class="headerlink" title="2.1 Background"></a>2.1 Background</h4><p>Audacity is a company provides online finance courses. The user flow of Audacity, i.e. user behaviors on Audacity website, could includes these:</p>
+<ul>
+<li>Homepage visit</li>
+<li>Explore site (click pages and view more details)</li>
+<li>Create user account</li>
+<li>Complete courses</li>
+</ul>
+<p>The number of events is decreasing from top to the bottom, which is also know as <strong>customer funnel</strong>.</p>
+<p>Experiment (test the hypothesis): there is a new feature - whether changing the “Start Now” button color from orange to pink will increase more users explore the website.</p>
+<h4 id="2-2-Metrics"><a href="#2-2-Metrics" class="headerlink" title="2.2 Metrics"></a>2.2 Metrics</h4><p>There are multiple selections to measure the level of user engagement on website:</p>
+<ul>
+<li>total number of courses complete</li>
+<li>total number of clicks</li>
+<li>click-through rate (total number of clicks / total number of pageviews)</li>
+<li>click-through probability (unique user who clicks / unique user who visits page)</li>
+</ul>
+<p>Here click-through probability is selected. And the hypothesis could be more specific: whether changing the “Start Now” button color from orange to pink will increase the click-through probability.</p>
+<p>In general, use a <strong>rate</strong> metric when you want to measure the usability of the website; use <strong>probability</strong> metric when you want to measure the total impact of the change.</p>
+<h4 id="2-3-Hypothesis-Test"><a href="#2-3-Hypothesis-Test" class="headerlink" title="2.3 Hypothesis Test"></a>2.3 Hypothesis Test</h4><p>Here the statistical hypothesis test part (distribution of metrics, confidence intervals, statistical significance, null / alternative hypothesis, standard error) is skipped.</p>
+<p>In real world, statistical hypothesis test is just the first step. After this, more people will involved to determine what is the <strong>practically significance</strong>.</p>
+<h4 id="2-4-Size-and-Power-Trade-Off"><a href="#2-4-Size-and-Power-Trade-Off" class="headerlink" title="2.4 Size and Power (Trade-Off)"></a>2.4 Size and Power (Trade-Off)</h4><p>Before running test, we need to decide when to stop the test, i.e. how many pageviews required in order to get statistical significant (<strong>statistical power</strong>). Here is the trade-off: the <strong>smaller change</strong> we want to detect, the <strong>larger samples</strong> we need to get, hence increase the time to collect data.</p>
+<h4 id="2-5-Confidence-Interval-Analysis"><a href="#2-5-Confidence-Interval-Analysis" class="headerlink" title="2.5 Confidence Interval Analysis"></a>2.5 Confidence Interval Analysis</h4><p>Here is the list of possible confidence interval versus the significance level (solid line is 0),</p>
+<center><br>  <img src="/images/confidence-interval-analysis.PNG" style="width: 500px; height: 280px"> <br></center>
+
+
+
+<p>Recommendations for conclusions:</p>
+<ol>
+<li>the change is significant, it is helpful to add the new change</li>
+<li>the change is not significant, since it overlaps with 0</li>
+<li>the change is helpful but not significant enough</li>
+<li>better to run new test</li>
+<li>better to run new test</li>
+<li>better to run new test</li>
+</ol>
+<p>How to make decisions if no time to run new test? Usually ask the decision maker, be aware to take the risk because the data is uncertain; or use other factors besides the data.</p>
+
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+      
+
+    <span class="post-categories">
+      <i class="icon-categories"></i>
+        <a href="/categories/Data-Science/">Data Science</a>
+    </span>
+    
+
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/Data-Science/">Data Science</a><a href="/tags/Analytics/">Analytics</a>
+    </span>
+    
+
+    </div>
+
+    
+  </div>
+</article>
+
+  
+<section id="comment">
+  
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+  
+</section>
+
+
+
+    </main>
+
+    <footer class="site-footer">
+  <p class="site-info">
+    Proudly powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and
+    Theme by <a href="https://github.com/CodeDaraW/Hacker" target="_blank">Hacker</a>
+    </br>
+    
+    &copy; 2019 Bangda
+    
+	
+	
+	
+  </p>
+  
+  <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+  <span id="busuanzi_container_site_pv">
+    Total viewer <span id="busuanzi_value_site_pv"></span>; 
+  </span>
+  
+  <span id="busuanzi_container_site_uv">
+    Total visitor <span id="busuanzi_value_site_uv"></span>
+  </span>
+	
+	
+  <div id="disqus_thread"></div>
+  <script>
+
+  /**
+   *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+   *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+   */
+   
+  var disqus_config = function () {
+	this.page.url = 'https://bangdasun.github.io{{ page.url }}';  // Replace PAGE_URL with your page's canonical URL variable
+	this.page.identifier = '{{ page.id }}'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+  };
+  
+  (function() { // DON'T EDIT BELOW THIS LINE
+  var d = document, s = d.createElement('script');
+  s.src = 'https://bangdasun-github-io.disqus.com/embed.js';
+  s.setAttribute('data-timestamp', +new Date());
+  (d.head || d.body).appendChild(s);
+  })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  
+  <script id="dsq-count-scr" src="//bangdasun-github-io.disqus.com/count.js" async></script>
+</footer>
+
+
+    
+  </div>
+</div>
+</body>
+</html>
