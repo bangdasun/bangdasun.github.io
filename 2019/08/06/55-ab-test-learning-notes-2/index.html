@@ -1,0 +1,240 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>AB Testing (Udacity) Learning Notes (2) | Bangda Sun | Practice makes perfect</title>
+
+  
+  <meta name="author" content="Bangda">
+  
+
+  
+  <meta name="description" content="Play with data">
+  
+
+  
+  
+  <meta name="keywords" content="Data Science,Analytics">
+  
+
+  <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <meta property="og:title" content="AB Testing (Udacity) Learning Notes (2)"/>
+
+  <meta property="og:site_name" content="Bangda Sun"/>
+
+  
+  <meta property="og:image" content="/favicon.ico"/>
+  
+
+  <link href="/favicon.ico" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Bangda Sun" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    jax: ["input/TeX","output/HTML-CSS"],
+    extensions: ["tex2jax.js","Safe.js"]
+  });
+  </script>
+<script type="text/javascript" async="async"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_CHTML,Safe">
+</script>
+</script>
+</head>
+
+
+<body>
+<div class="blog">
+  <div class="content">
+
+    <header>
+  <div class="site-branding">
+    <h1 class="site-title">
+      <a href="/">Bangda Sun</a>
+    </h1>
+    <p class="site-description">Practice makes perfect</p>
+  </div>
+  <nav class="site-navigation">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/tags">Tags</a></li>
+      
+    </ul>
+  </nav>
+</header>
+
+    <main class="site-main posts-loop">
+    <article>
+
+  
+    
+    <h3 class="article-title"><span>AB Testing (Udacity) Learning Notes (2)</span></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2019/08/06/55-ab-test-learning-notes-2/" rel="bookmark">
+        <time class="entry-date published" datetime="2019-08-07T03:45:35.000Z">
+          2019-08-06
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <p>Choosing and Characterizing Metrics</p>
+<a id="more"></a>
+<h3 id="1-Metrics-Basis"><a href="#1-Metrics-Basis" class="headerlink" title="1. Metrics Basis"></a>1. Metrics Basis</h3><h4 id="1-1-Definition"><a href="#1-1-Definition" class="headerlink" title="1.1 Definition"></a>1.1 Definition</h4><p>First think what you are going to do with the metrics, how you are going to use the metrics - before you are going to define them. If you think about how you are going to use the metric, there are two use cases:</p>
+<ol>
+<li><strong>invariant check (sanity check)</strong>: these are the metrics that should not change across the experiment and control groups. They are used to make sure the experiment is running properly.</li>
+<li><strong>evaluation</strong>.</li>
+</ol>
+<p>For evaluation, the first thing to think of is from high level business metric: how much revenue make, what is the market share, how many active users, etc.</p>
+<p>The overall definition could be just one sentence: metrics are summary of the data. But many details need to be clarified before calculation. </p>
+<p>Single metric or multiple metrics?</p>
+<ul>
+<li>single metric: could be over-optimized, which means over-looked one single metric and don’t look other things moving</li>
+<li>multiple metrics: hard to analyze and draw conclusions.</li>
+</ul>
+<h4 id="1-2-Examples"><a href="#1-2-Examples" class="headerlink" title="1.2 Examples"></a>1.2 Examples</h4><p>For Audacity example, each step in the customer funnel can derive plenty of metrics:</p>
+<ol>
+<li>Exploring site<ul>
+<li>number of users who view course list</li>
+<li>number of users who view course details</li>
+</ul>
+</li>
+<li>Create account<ul>
+<li>number of users who enroll a course</li>
+<li>number of users who finish lesson 1, 2, etc</li>
+<li>number of users who sign up for coaching</li>
+</ul>
+</li>
+<li>Complete course<ul>
+<li>number of users who enroll in 2nd course</li>
+<li>number of users who get jobs after completing courses</li>
+</ul>
+</li>
+</ol>
+<h3 id="2-Collecting-Data"><a href="#2-Collecting-Data" class="headerlink" title="2. Collecting Data"></a>2. Collecting Data</h3><p>Next steps are determine what data to look at to calculate the metrics, more specifically, what events to count? what filters should be applied on data? what are the time frame used on data (1 day or 1 week); how to summarize the data, this should be intuitive.</p>
+<h4 id="2-1-Filtering-and-Segmentation"><a href="#2-1-Filtering-and-Segmentation" class="headerlink" title="2.1 Filtering and Segmentation"></a>2.1 Filtering and Segmentation</h4><p>Filtering includes: user demographic (age, gender, etc), country / region, language, platform, app, etc. The goal of filtering is de-bias the data (abuse, fraud in data), increase the sensitivity and power of AB testing.</p>
+<p>Before determining whether to apply filters or not, we can calculate the metrics on slices of the data, and compare the results; we can also check day by day or week by week to spot something that looks unusual.</p>
+<h4 id="3-Summary-of-Metrics"><a href="#3-Summary-of-Metrics" class="headerlink" title="3. Summary of Metrics"></a>3. Summary of Metrics</h4><p>The selection of metrics need to consider both <strong>sensitivity</strong> and <strong>robustness</strong>. Sensitivity means the metrics should be able to catch the changes. Robustness means the metrics should not change too much from unrelated changes.</p>
+<h4 id="3-1-Categories-of-Metrics"><a href="#3-1-Categories-of-Metrics" class="headerlink" title="3.1 Categories of Metrics"></a>3.1 Categories of Metrics</h4><p>There are 4 types of metrics listed:</p>
+<ol>
+<li>sum and counts</li>
+<li>distributional metrics (mean, median, percentiles)</li>
+<li>probabilities and rates</li>
+<li>ratio</li>
+</ol>
+
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+      
+
+    <span class="post-categories">
+      <i class="icon-categories"></i>
+        <a href="/categories/Data-Science/">Data Science</a>
+    </span>
+    
+
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/Data-Science/">Data Science</a><a href="/tags/Analytics/">Analytics</a>
+    </span>
+    
+
+    </div>
+
+    
+  </div>
+</article>
+
+  
+<section id="comment">
+  
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+  
+</section>
+
+
+
+    </main>
+
+    <footer class="site-footer">
+  <p class="site-info">
+    Proudly powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and
+    Theme by <a href="https://github.com/CodeDaraW/Hacker" target="_blank">Hacker</a>
+    </br>
+    
+    &copy; 2019 Bangda
+    
+	
+	
+	
+  </p>
+  
+  <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+  <span id="busuanzi_container_site_pv">
+    Total viewer <span id="busuanzi_value_site_pv"></span>; 
+  </span>
+  
+  <span id="busuanzi_container_site_uv">
+    Total visitor <span id="busuanzi_value_site_uv"></span>
+  </span>
+	
+	
+  <div id="disqus_thread"></div>
+  <script>
+
+  /**
+   *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+   *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+   */
+   
+  var disqus_config = function () {
+	this.page.url = 'https://bangdasun.github.io{{ page.url }}';  // Replace PAGE_URL with your page's canonical URL variable
+	this.page.identifier = '{{ page.id }}'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+  };
+  
+  (function() { // DON'T EDIT BELOW THIS LINE
+  var d = document, s = d.createElement('script');
+  s.src = 'https://bangdasun-github-io.disqus.com/embed.js';
+  s.setAttribute('data-timestamp', +new Date());
+  (d.head || d.body).appendChild(s);
+  })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  
+  <script id="dsq-count-scr" src="//bangdasun-github-io.disqus.com/count.js" async></script>
+</footer>
+
+
+    
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,211 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>AB Testing (Udacity) Learning Notes (3) | Bangda Sun | Practice makes perfect</title>
+
+  
+  <meta name="author" content="Bangda">
+  
+
+  
+  <meta name="description" content="Play with data">
+  
+
+  
+  
+  <meta name="keywords" content="Data Science,Analytics">
+  
+
+  <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <meta property="og:title" content="AB Testing (Udacity) Learning Notes (3)"/>
+
+  <meta property="og:site_name" content="Bangda Sun"/>
+
+  
+  <meta property="og:image" content="/favicon.ico"/>
+  
+
+  <link href="/favicon.ico" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Bangda Sun" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    jax: ["input/TeX","output/HTML-CSS"],
+    extensions: ["tex2jax.js","Safe.js"]
+  });
+  </script>
+<script type="text/javascript" async="async"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_CHTML,Safe">
+</script>
+</script>
+</head>
+
+
+<body>
+<div class="blog">
+  <div class="content">
+
+    <header>
+  <div class="site-branding">
+    <h1 class="site-title">
+      <a href="/">Bangda Sun</a>
+    </h1>
+    <p class="site-description">Practice makes perfect</p>
+  </div>
+  <nav class="site-navigation">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/tags">Tags</a></li>
+      
+    </ul>
+  </nav>
+</header>
+
+    <main class="site-main posts-loop">
+    <article>
+
+  
+    
+    <h3 class="article-title"><span>AB Testing (Udacity) Learning Notes (3)</span></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2019/08/08/56-ab-test-learning-notes-3/" rel="bookmark">
+        <time class="entry-date published" datetime="2019-08-08T08:11:47.000Z">
+          2019-08-08
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <p>Designing Experiments</p>
+<a id="more"></a>
+<h3 id="1-Basic-Components"><a href="#1-Basic-Components" class="headerlink" title="1. Basic Components"></a>1. Basic Components</h3><h4 id="1-1-Unit-of-Diversion"><a href="#1-1-Unit-of-Diversion" class="headerlink" title="1.1 Unit of Diversion"></a>1.1 Unit of Diversion</h4><p> Unit of diversion is the subject to test, this is like “sample” in statistical analysis. We need to decide how to assign events to either the control or experiment group. The assignment will be based on unit of diversion, it needs to be <strong>user consistency</strong>, e.g. user, cookie (identified as same person), etc.</p>
+<h4 id="1-2-Unit-of-Analysis"><a href="#1-2-Unit-of-Analysis" class="headerlink" title="1.2 Unit of Analysis"></a>1.2 Unit of Analysis</h4><p>Unit of analysis is usually the “denominator” of the metric. When empirical variability is higher than analytical variability for the metric, the it could be the unit of analysis is different from the unit of diversion.</p>
+<h4 id="1-3-Population"><a href="#1-3-Population" class="headerlink" title="1.3 Population"></a>1.3 Population</h4><p>This is determined from multiple perspectives.</p>
+<h4 id="1-4-Sizing"><a href="#1-4-Sizing" class="headerlink" title="1.4 Sizing"></a>1.4 Sizing</h4><p>The size depends on both significance level (both statistical and practical) and sensitivity. The choice of metrics and unit of diversion are also needed to take into account since they will affect the variability of the metrics.</p>
+<h4 id="1-5-Duration-and-Exposure"><a href="#1-5-Duration-and-Exposure" class="headerlink" title="1.5 Duration and Exposure"></a>1.5 Duration and Exposure</h4><p>Duration relates to the proportion of the traffic. The reason why not run the test on all traffic:</p>
+<ul>
+<li>safety, if something goes wrong</li>
+<li>effect of holiday / week variation (get data too fast might not be good)</li>
+<li>need traffic for other test</li>
+</ul>
+<h4 id="1-6-Cohort"><a href="#1-6-Cohort" class="headerlink" title="1.6 Cohort"></a>1.6 Cohort</h4><p>People who enter the experiment at same time will be the test subject. Cohorts are harder to analyze since they need more data. Typically you only want to use them when you are <strong>looking for user stability</strong>. For example, you have a learning effect or you want to measure something like increasing usage of the site or device, these are the case you want to see if changes will have a real effect on their behavior relative to their history.</p>
+<h4 id="1-7-Summary"><a href="#1-7-Summary" class="headerlink" title="1.7 Summary"></a>1.7 Summary</h4><p>In previous examples, all unit of diversions are really looking at <strong>proxies for users</strong>, the real users are hard to identified, for user login, one user can login multiple accounts; for cookie, one user can change to another device. Incorrect settings can end up with the mix of the same people on both control and experiment side, which makes the testing unreliable. </p>
+<p>AB testing is <strong>inter-user experiment</strong>, which means same people cannot be in both control and experiment sides. There are other methods called <strong>intra-user experiment</strong>.</p>
+
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+      
+
+    <span class="post-categories">
+      <i class="icon-categories"></i>
+        <a href="/categories/Data-Science/">Data Science</a>
+    </span>
+    
+
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/Data-Science/">Data Science</a><a href="/tags/Analytics/">Analytics</a>
+    </span>
+    
+
+    </div>
+
+    
+  </div>
+</article>
+
+  
+<section id="comment">
+  
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+  
+</section>
+
+
+
+    </main>
+
+    <footer class="site-footer">
+  <p class="site-info">
+    Proudly powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and
+    Theme by <a href="https://github.com/CodeDaraW/Hacker" target="_blank">Hacker</a>
+    </br>
+    
+    &copy; 2019 Bangda
+    
+	
+	
+	
+  </p>
+  
+  <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+  <span id="busuanzi_container_site_pv">
+    Total viewer <span id="busuanzi_value_site_pv"></span>; 
+  </span>
+  
+  <span id="busuanzi_container_site_uv">
+    Total visitor <span id="busuanzi_value_site_uv"></span>
+  </span>
+	
+	
+  <div id="disqus_thread"></div>
+  <script>
+
+  /**
+   *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+   *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+   */
+   
+  var disqus_config = function () {
+	this.page.url = 'https://bangdasun.github.io{{ page.url }}';  // Replace PAGE_URL with your page's canonical URL variable
+	this.page.identifier = '{{ page.id }}'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+  };
+  
+  (function() { // DON'T EDIT BELOW THIS LINE
+  var d = document, s = d.createElement('script');
+  s.src = 'https://bangdasun-github-io.disqus.com/embed.js';
+  s.setAttribute('data-timestamp', +new Date());
+  (d.head || d.body).appendChild(s);
+  })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  
+  <script id="dsq-count-scr" src="//bangdasun-github-io.disqus.com/count.js" async></script>
+</footer>
+
+
+    
+  </div>
+</div>
+</body>
+</html>
