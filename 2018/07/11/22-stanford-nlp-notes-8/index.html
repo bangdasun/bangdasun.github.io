@@ -95,7 +95,7 @@
   <div class="article-content">
     <div class="entry">
       
-        <p>Maximum Entropy Classifiers (1)</p>
+        <p>Maximum Entropy Classifiers</p>
 <a id="more"></a>
 <h3 id="1-Generative-vs-Discriminative"><a href="#1-Generative-vs-Discriminative" class="headerlink" title="1. Generative vs Discriminative"></a>1. Generative vs Discriminative</h3><p>So far we’ve looked at <strong>generative models</strong>, they are modeling <strong>joint distributions</strong>: where we have some data \((x, y)\) of paired observations and hidden classes \(y\), it place probabilities over both observed data and the hidden stuff - generate the observed data from hidden stuff, it try to maximize \(P(x, y)\). It turns out to be trivial to choose weights - just use relative frequencies. All classic statistical NLP models are generative models: N-gram models, Naive Bayes Classifier, Hidden Markov Models, Probabilistic Context-free grammars, etc.</p>
 <p>But there is now much use of conditional or <strong>discriminative models</strong>, because</p>
@@ -130,11 +130,12 @@
 <ul>
 <li>choose the class \(y\) which maximizes the vote</li>
 </ul>
-<p>There are many ways to choose weights, depends on the way we modeling and the way we train the model. Here we use <strong>Maximum Entropy Model</strong> (<strong>it is essentially multiclass logistic regression</strong>, in NLP it usually called Maximum Entropy Model), it model the conditional probability as follows:</p>
+<p>There are many ways to choose weights, depends on the way we modeling and the way we train the model. Here we use <strong>Maximum Entropy Classifier</strong> (<strong>it is essentially multiclass logistic regression</strong>, in NLP it usually called Maximum Entropy Model), it model the conditional probability as follows:</p>
 <p>\[<br>P(y|x) = \frac{\exp\left(\sum_i \lambda_i f_i(x,y)\right)}{\sum_y \exp\left(\sum_i \lambda_i f_i(x,y)\right)}.<br>\]</p>
 <p>Here exponential function will make everything positive, and the denominator could be view as normalized votes. We can see the weights are the parameters of this model, combine via the <strong>softmax function</strong>.</p>
 <p>The way we estimate the parameters is through maximizing the likelihood (MLE). Here it is, (we take a log)</p>
 <p>\[<br>\log\prod_{(x,y)}P(y|x) = \sum_{(x,y)}\log P(y|x) = \sum_{(x,y)}\log \frac{\exp\left(\sum_i \lambda_i f_i(x,y)\right)}{\sum_y \exp\left(\sum_i \lambda_i f_i(x,y)\right)}<br>\]</p>
+<h3 id="4-Maximum-Entropy-Models"><a href="#4-Maximum-Entropy-Models" class="headerlink" title="4. Maximum Entropy Models"></a>4. Maximum Entropy Models</h3><p>An equivalent approach: we want a distribution which is uniform except in specific ways we require. Uniformity means <strong>high entropy</strong>.</p>
 
       
     </div>
