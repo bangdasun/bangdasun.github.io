@@ -1,0 +1,211 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>FastText - Learning Sub-word Embeddings | Bangda Sun | Practice makes perfect</title>
+
+  
+  <meta name="author" content="Bangda">
+  
+
+  
+  <meta name="description" content="Play with data">
+  
+
+  
+  
+  <meta name="keywords" content="NLP,Deep Learning,Word Embeddings">
+  
+
+  <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <meta property="og:title" content="FastText - Learning Sub-word Embeddings"/>
+
+  <meta property="og:site_name" content="Bangda Sun"/>
+
+  
+  <meta property="og:image" content="/favicon.ico"/>
+  
+
+  <link href="/favicon.ico" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Bangda Sun" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    jax: ["input/TeX","output/HTML-CSS"],
+    extensions: ["tex2jax.js","Safe.js"]
+  });
+  </script>
+<script type="text/javascript" async="async"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_CHTML,Safe">
+</script>
+</script>
+</head>
+
+
+<body>
+<div class="blog">
+  <div class="content">
+
+    <header>
+  <div class="site-branding">
+    <h1 class="site-title">
+      <a href="/">Bangda Sun</a>
+    </h1>
+    <p class="site-description">Practice makes perfect</p>
+  </div>
+  <nav class="site-navigation">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/tags">Tags</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+    </ul>
+  </nav>
+</header>
+
+    <main class="site-main posts-loop">
+    <article>
+
+  
+    
+    <h3 class="article-title"><span>FastText - Learning Sub-word Embeddings</span></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2020/06/27/70-fasttext-learning-sub-word-embeddings/" rel="bookmark">
+        <time class="entry-date published" datetime="2020-06-28T00:55:03.000Z">
+          2020-06-27
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <p>[Paper Reading]: Enriching Word Vectors with Sub-word Information</p>
+<a id="more"></a>
+<p>The limitation of skip-gram and other model used to learn word embeddings is each word is represented as a distinct vector with <strong>morphology</strong> of the word ignored. A new model based on skip-gram model is proposed where each word is represented as a <strong>bag of character ngrams</strong>, and the word is represented as the sum of these representations. With this model, words not appear in the training data (OOV) will also get their vector representations.</p>
+<h3 id="1-Recap-of-Skip-gram-Model"><a href="#1-Recap-of-Skip-gram-Model" class="headerlink" title="1. Recap of Skip-gram Model"></a>1. Recap of Skip-gram Model</h3><p>With a word vocabulary of size \(W\), the goal is to learn a vector representation for each word \(w\). Given a sequence of large training corpus represented as a sequence of words \(w_{1}, w_{2}, \cdots, w_{T}\), the objective function of skip-gram model is minimize the negative log-likelihood:</p>
+<p>\[<br>-\sum^{T}_{t=1}\sum_{c\in\text{context}(t)}\log p(w_{c}|w_{t}) = -\sum^{T}_{t=1}\sum_{c\in\text{context}(t)}\frac{e^{s(w_{t}, w_{c})}}{\sum^{W}_{j=1}e^{s(w_{t}, j)}}.<br>\]</p>
+<p>Scoring function \(s\) can be simply parameterized using dot product of word vectors:</p>
+<p>\[<br>s(w_{t}, w_{c}) = u^{\top}_{w_{t}}v_{w_{c}}.<br>\]</p>
+<p>This is equivalent to an independent binary classification task: for word at position \(t\), consider all context words as positive examples and sample negatives from vocabulary.</p>
+<h3 id="2-Sub-word-Model"><a href="#2-Sub-word-Model" class="headerlink" title="2. Sub-word Model"></a>2. Sub-word Model</h3><p>A different scoring function is proposed to take into account of internal structure of the word. Each word is represented as a bag of character ngram. Special boundary symbols “&lt;” and “&gt;” are used at the beginning and end of words. Taking “where” and trigram as example, it will be represented as: <code>&lt;wh</code>, <code>whe</code>, <code>her</code>, <code>ere</code>, <code>re&gt;</code> and <code>&lt;where&gt;</code>.</p>
+<p>Given a dictionary of ngrams of size \(G\), denote \(\mathcal{G}_{w}\subset{1,\cdots,G}\) the set of ngrams appearing in \(w\). \(z_{g}\) is the vector representation to each ngram \(g\). The scoring function is</p>
+<p>\[<br>s(w, c) = \sum_{g\in\mathcal{G}_{w}} z_{g}^{\top}v_{c}.<br>\]</p>
+<p>The simple model allows sharing the representation across words, thus allowing to learn reliable representation for rare words.</p>
+<h3 id="3-Experiments"><a href="#3-Experiments" class="headerlink" title="3. Experiments"></a>3. Experiments</h3><p>Morphological information can significantly improves the syntactic tasks. In contrast, it doesn’t help for semantic questions and even degrades the performance for German and Italian.</p>
+
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+      
+
+    <span class="post-categories">
+      <i class="icon-categories"></i>
+        <a href="/categories/Machine-Learning/">Machine Learning</a>, <a href="/categories/Machine-Learning/Deep-Learning/">Deep Learning</a>, <a href="/categories/Machine-Learning/Deep-Learning/NLP/">NLP</a>
+    </span>
+    
+
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/NLP/">NLP</a><a href="/tags/Deep-Learning/">Deep Learning</a><a href="/tags/Word-Embeddings/">Word Embeddings</a>
+    </span>
+    
+
+    </div>
+
+    
+  </div>
+</article>
+
+  
+<section id="comment">
+  
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+  
+</section>
+
+
+
+    </main>
+
+    <footer class="site-footer">
+  <p class="site-info">
+    Proudly powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and
+    Theme by <a href="https://github.com/CodeDaraW/Hacker" target="_blank">Hacker</a>
+    </br>
+    
+    &copy; 2020 Bangda
+    
+	
+	
+	
+  </p>
+  
+  <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+  <span id="busuanzi_container_site_pv">
+    Total viewer <span id="busuanzi_value_site_pv"></span>; 
+  </span>
+  
+  <span id="busuanzi_container_site_uv">
+    Total visitor <span id="busuanzi_value_site_uv"></span>
+  </span>
+	
+	
+  <div id="disqus_thread"></div>
+  <script>
+
+  /**
+   *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+   *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+   */
+   
+  var disqus_config = function () {
+	this.page.url = 'https://bangdasun.github.io{{ page.url }}';  // Replace PAGE_URL with your page's canonical URL variable
+	this.page.identifier = '{{ page.id }}'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+  };
+  
+  (function() { // DON'T EDIT BELOW THIS LINE
+  var d = document, s = d.createElement('script');
+  s.src = 'https://bangdasun-github-io.disqus.com/embed.js';
+  s.setAttribute('data-timestamp', +new Date());
+  (d.head || d.body).appendChild(s);
+  })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  
+  <script id="dsq-count-scr" src="//bangdasun-github-io.disqus.com/count.js" async></script>
+</footer>
+
+
+    
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,243 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>GloVe - Word Embeddings Utilizing Global statistics | Bangda Sun | Practice makes perfect</title>
+
+  
+  <meta name="author" content="Bangda">
+  
+
+  
+  <meta name="description" content="Play with data">
+  
+
+  
+  
+  <meta name="keywords" content="NLP,Deep Learning,Word Embeddings">
+  
+
+  <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <meta property="og:title" content="GloVe - Word Embeddings Utilizing Global statistics"/>
+
+  <meta property="og:site_name" content="Bangda Sun"/>
+
+  
+  <meta property="og:image" content="/favicon.ico"/>
+  
+
+  <link href="/favicon.ico" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Bangda Sun" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    jax: ["input/TeX","output/HTML-CSS"],
+    extensions: ["tex2jax.js","Safe.js"]
+  });
+  </script>
+<script type="text/javascript" async="async"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_CHTML,Safe">
+</script>
+</script>
+</head>
+
+
+<body>
+<div class="blog">
+  <div class="content">
+
+    <header>
+  <div class="site-branding">
+    <h1 class="site-title">
+      <a href="/">Bangda Sun</a>
+    </h1>
+    <p class="site-description">Practice makes perfect</p>
+  </div>
+  <nav class="site-navigation">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/tags">Tags</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+    </ul>
+  </nav>
+</header>
+
+    <main class="site-main posts-loop">
+    <article>
+
+  
+    
+    <h3 class="article-title"><span>GloVe - Word Embeddings Utilizing Global statistics</span></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2020/06/27/69-glove-word-embeddings-utilizing-global-statistics/" rel="bookmark">
+        <time class="entry-date published" datetime="2020-06-27T20:43:07.000Z">
+          2020-06-27
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <p>[Paper Reading]: GloVe: Global Vectors for Word Representation</p>
+<a id="more"></a>
+<p><a href="https://nlp.stanford.edu/pubs/glove.pdf" target="_blank" rel="external">GloVe</a> is an unsupervised learning algorithm for learning word embeddings, which combines the advantages of the two major model families: <strong>global matrix factorization</strong> and <strong>local context window</strong>. It uses log-bilinear model to capture ratios of co-occurrence probabilities as linear meaning components in a word vector space.</p>
+<h3 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1. Introduction"></a>1. Introduction</h3><p>The two main model families for learning word vectors are:</p>
+<ul>
+<li>global matrix factorization: such as LSA</li>
+<li>local context window: such as skip-gram model</li>
+</ul>
+<p>Both of these two model families suffer significant drawbacks. For global matrix factorization, they perform relatively <strong>poorly on word analogy</strong> task, indicating a sub-optimal vector space structure. For local context window, they <strong>poorly utilize the statistics of the corpus</strong> since they train on separate local context window instead of global co-occurrence counts.</p>
+<p>A specific weighted least squares (log-bilinear regression) model that trains on global <strong>word-word co-occurrence</strong> (not word-document) counts. The model produces a word vector spaces with performance of 75% accuracy on word analogy dataset.</p>
+<h3 id="2-The-GloVe-Model"><a href="#2-The-GloVe-Model" class="headerlink" title="2. The GloVe Model"></a>2. The GloVe Model</h3><p>Let \(X\) be the word-word co-occurrence counts matrix, \(X_{ij}\) is the number of times word \(j\) occurs in the context window of word \(i\), \(X_{i} = \sum_{k}X_{ik}\) is the number of times any word appears in the context of word \(i\), \(P_{ij} = P(j|i) = X_{ij}/X_{i}\) is the probability that word \(j\) appear in the conext of word \(i\). </p>
+<p>The way that certain aspects of meaning can be extracted from co-occurreance matrix by <strong>probability ratio</strong> can be illustrated by the following example: consider words in the context of “ice” and “steam”,</p>
+<center><br><img src="/images/glove-word-probabilities.PNG" ,="" style="width: 500px; height: 110px"> <br></center>
+
+<p>where the probability ratio is better able to distinguish relevant words.</p>
+<p>Denote the probability ratio as </p>
+<p>\[<br>F(w_{i}, w_{j}, \tilde{w}_{k}) = \frac{P_{ik}}{P_{jk}},<br>\]</p>
+<p>where \(w\in R^{d}\) are word vectors and \(\tilde{w}\in R^{d}\) are separate context word vectors. </p>
+<p>Since vector spaces are inherently linear structures, \(F\) can be restricted to functions that depend only on the difference of the two targeted words, therefore</p>
+<p>\[<br>F(w_{i} - w_{j}, \tilde{w}_{k}) = \frac{P_{ik}}{P_{jk}},<br>\]</p>
+<p>next parameterized \(F\) by dot product:</p>
+<p>\[<br>F\left((w_{i} - w_{j})^\top \tilde{w}_{k}\right) = \frac{P_{ik}}{P_{jk}}.<br>\]</p>
+<p>Then note that for word-word co-occurence matrix, the distinction between a word and a context word is arbtrary and two roles can be exchanged. Finally,</p>
+<p>\[<br>F\left((w_{i} - w_{j})^\top \tilde{w}_{k}\right) = \frac{F\left(w_{i}^{\top}\tilde{w}_{k}\right)}{F\left(w_{j}^{\top}\tilde{w}_{k}\right)},<br>\]</p>
+<p>the solution of above equation is \(F = \exp\), or</p>
+<p>\[<br>w_{i}^{\top}\tilde{w}_{k} = \log P_{ik} = \log X_{ik} - \log X_{i}.<br>\]</p>
+<p>Absorb \(\log X_{i}\) into the bias term \(b_{i}\) and add additional bias \(\tilde{b}_{k}\) for \(\tilde{w}_{k}\) to restore the symmetry:</p>
+<p>\[<br>w_{i}^{\top}\tilde{w}_{k} + b_{i} + \tilde{b}_{k} = \log X_{ik}.<br>\]</p>
+<p>Including an additive shift in the logarithm can avoid the divergences.</p>
+<p>A main drawback of this model is that it weighs all co-occurrences equally. A new weighted least squares regression model is proposed to address this problem,</p>
+<p>\[<br>J = \sum^{V}_{i,j=1}f\left(X_{ij}\right)\left(w_{i}^{\top}\tilde{w}_{j} + b_{i} + \tilde{b}_{j} - \log X_{ij}\right)^{2}.<br>\]</p>
+<p>In the paper \(f\) is parameterized as \(f(x) = (x / x_{\max})^{\alpha}\) if \(x &lt; x_{\max}\), and \(x_{max} = 100, \alpha=3/4\).</p>
+<h3 id="3-Relationship-to-Other-Models"><a href="#3-Relationship-to-Other-Models" class="headerlink" title="3. Relationship to Other Models"></a>3. Relationship to Other Models</h3><p>The starting point for skip-gram model is a model \(Q_{ij}\) (softmax) for the probability that word \(j\) appear in the context of word \(i\):</p>
+<p>\[<br>Q_{ij} = \frac{\exp\left(w_{i}^{\top}\tilde{w}_{j}\right)}{\sum^{V}_{k=1}\exp\left(w_{i}^{\top}\tilde{w}_{k}\right)}.<br>\]</p>
+<p>Training proces is minimize the global objective function</p>
+<p>\[<br>J = -\sum_{i\in\text{corpus}}\sum_{j\in\text{context}(i)} Q_{ij} = -\sum^{V}_{i=1}\sum^{V}_{j=1}X_{ij}\log Q_{ij}.<br>\]</p>
+<p>Using the model proposed in this paper, rewrite \(J\) as </p>
+<p>\[<br>J = -\sum^{V}_{i=1}X_{i}\sum^{V}_{j=1}P_{ij}\log Q_{ij} = \sum^{V}_{i=1}X_{i}H(P_{i}, Q_{i})<br>\]</p>
+<p>Where \(H(P_{i}, Q_{i})\) is the cross entropy of the distributions \(P_{i}\) and \(Q_{i}\). One could interpret tis objective as “global skip-gram” model.</p>
+<p>As cross entropy has unfortunate property that distributions with long tails are often modeled poorly with too much weight given to the unlikely events. Normalizing factor is also computational expensive. A natural choice would be a least square objective in which normalization factors in \(Q\) and \(P\) are discarded,</p>
+<p>\[<br>J = \sum^{i,j} X_{i}\left(\hat{P}_{ij} - \hat{Q}_{ij}\right)^{2},<br>\]</p>
+<p>where \(\hat{P}_{ij} = X_{ij}\) and \(\hat{Q}_{ij} = \exp\left(w_{i}^{\top}\tilde{w}_{j}\right)\) are the unnormalized distributions. Now another problem emerges, \(X_{ij}\) often takes very large values. An effective remedy is to minimize the squared error of the logarithms of \(\hat{P}\) and \(\hat{Q}\) instead</p>
+<p>\[<br>J = \sum_{i,j}X_{i}\left(\log \hat{P}_{ij} - \log \hat{Q}_{ij}\right)^{2} = \sum_{i,j} X_{i}\left(w_{i}^{\top}\tilde{w}_{j} - \log X_{ij}\right)^{2}.<br>\]</p>
+<p>Which is equivalent to the GloVe loss function proposed in previous section.</p>
+<h3 id="4-Experiments"><a href="#4-Experiments" class="headerlink" title="4. Experiments"></a>4. Experiments</h3><p>In constructing \(X\), context window need to be specified, and whether to distinguish left context from right context. For all experiments, the model is trained using AdaGrad, stochastically sampling non-zero elements from \(X\), with initial learning rate of 0.05. Iteration is set to 50 for vectors smaller than 300 dimensions, 100 otherwise. As for certain types of neural networks, training multiple instances and combining the results can help reduce overfitting and noise and generally improve results, the final word vector is \(W + \tilde{W}\).</p>
+
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+      
+
+    <span class="post-categories">
+      <i class="icon-categories"></i>
+        <a href="/categories/Machine-Learning/">Machine Learning</a>, <a href="/categories/Machine-Learning/Deep-Learning/">Deep Learning</a>, <a href="/categories/Machine-Learning/Deep-Learning/NLP/">NLP</a>
+    </span>
+    
+
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/NLP/">NLP</a><a href="/tags/Deep-Learning/">Deep Learning</a><a href="/tags/Word-Embeddings/">Word Embeddings</a>
+    </span>
+    
+
+    </div>
+
+    
+  </div>
+</article>
+
+  
+<section id="comment">
+  
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+  
+</section>
+
+
+
+    </main>
+
+    <footer class="site-footer">
+  <p class="site-info">
+    Proudly powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and
+    Theme by <a href="https://github.com/CodeDaraW/Hacker" target="_blank">Hacker</a>
+    </br>
+    
+    &copy; 2020 Bangda
+    
+	
+	
+	
+  </p>
+  
+  <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+  <span id="busuanzi_container_site_pv">
+    Total viewer <span id="busuanzi_value_site_pv"></span>; 
+  </span>
+  
+  <span id="busuanzi_container_site_uv">
+    Total visitor <span id="busuanzi_value_site_uv"></span>
+  </span>
+	
+	
+  <div id="disqus_thread"></div>
+  <script>
+
+  /**
+   *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+   *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+   */
+   
+  var disqus_config = function () {
+	this.page.url = 'https://bangdasun.github.io{{ page.url }}';  // Replace PAGE_URL with your page's canonical URL variable
+	this.page.identifier = '{{ page.id }}'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+  };
+  
+  (function() { // DON'T EDIT BELOW THIS LINE
+  var d = document, s = d.createElement('script');
+  s.src = 'https://bangdasun-github-io.disqus.com/embed.js';
+  s.setAttribute('data-timestamp', +new Date());
+  (d.head || d.body).appendChild(s);
+  })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  
+  <script id="dsq-count-scr" src="//bangdasun-github-io.disqus.com/count.js" async></script>
+</footer>
+
+
+    
+  </div>
+</div>
+</body>
+</html>
