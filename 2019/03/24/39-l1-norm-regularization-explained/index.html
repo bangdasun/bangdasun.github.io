@@ -107,7 +107,7 @@
 <p>“The sparsity of L1 regularization is because the solution occurs at corners, then the corresponding coefficients will equal to 0. For high dimensional case there are more corners and there are more opportunities for the coefficients to be 0”</p>
 </blockquote>
 <p>But for me it’s actually not very convincing. <strong>Why L2 regularization cannot hit at the corner?</strong></p>
-<h3 id="2-Analytical-Perspective"><a href="#2-Analytical-Perspective" class="headerlink" title="2. Analytical Perspective"></a>2. Analytical Perspective</h3><p>From answer in <a href="https://stats.stackexchange.com/questions/45643/why-l1-norm-for-sparse-models" target="_blank" rel="external">https://stats.stackexchange.com/questions/45643/why-l1-norm-for-sparse-models</a>, this answer has the highest upvotes.</p>
+<h3 id="2-Analytical-Perspective"><a href="#2-Analytical-Perspective" class="headerlink" title="2. Analytical Perspective"></a>2. Analytical Perspective</h3><h4 id="2-1-Reduction-Norm-Perspective"><a href="#2-1-Reduction-Norm-Perspective" class="headerlink" title="2.1 Reduction Norm Perspective"></a>2.1 Reduction Norm Perspective</h4><p>From answer in <a href="https://stats.stackexchange.com/questions/45643/why-l1-norm-for-sparse-models" target="_blank" rel="external">https://stats.stackexchange.com/questions/45643/why-l1-norm-for-sparse-models</a>, this answer has the highest upvotes.</p>
 <p>Consider vector \(x = [1, \epsilon]\) where \(\epsilon &gt; 0\) is a small number. The L1 and L2 norm of \(x\) are given by:</p>
 <p>\[<br>||x||_{1} = 1+\epsilon, ||x||_{2} = 1+\epsilon^{2}.<br>\]</p>
 <p>Then apply a shrinkage on one component:</p>
@@ -121,7 +121,11 @@
 </ul>
 <p>The L1 and L2 norm become</p>
 <p>\[<br>||x||_{1} = 1+\epsilon-\delta, ||x||_{2} = 1+\epsilon^{2}-2\epsilon\delta+\delta^{2}.<br>\]</p>
-<p>Therefore for L1 norm, the shrinkage reduction is same for each coefficient, it move all coefficients towards 0 with same step size. And for L2 norm, regularizing large term results in a much greater reduction in norm than doing so to the smaller term.</p>
+<p>Therefore for L1 norm, the shrinkage reduction is same for each coefficient, it move all coefficients towards 0 with same step size, regardless of the quantity being penalized. And for L2 norm, regularizing small term results in a very small reduction in norm, <strong>it is highly unlikely that anything will ever be set to zero, since the reducing in L2 norm going from </strong> \(\epsilon\) <strong>to zero is almost nonexistent when </strong> \(\epsilon\) <strong>is small</strong>.</p>
+<h4 id="2-2-Gradient-Perspective"><a href="#2-2-Gradient-Perspective" class="headerlink" title="2.2 Gradient Perspective"></a>2.2 Gradient Perspective</h4><p>When minimizing loss function, the gradient from regularization term has to be cancelled out to reach the overall zero gradient (indicates minimum loss). For L1 norm, the gradient from regularization part is \(\lambda\) (when \(\beta &gt; 0\)) and \(-\lambda\) (when \(\beta &lt; 0\)). For L2 norm, the gradient from regularization part is \(2\beta\lambda\). So when \(\beta = 0\), the gradient from regularization part is also zero, but the whole gradient is not zero (<strong>unlikely?</strong>), therefore the optimization algorithm will continue, no sparse solution. But L1 norm has constant gradient, when the constant gradient (\(\pm\lambda\)) is larger than the gradient of fitting term part, it keeps \(\beta = 0\). The chart below can demostrate this:</p>
+<center><br>  <img src="/images/l1-l2-norm-grad.PNG" style="width: 550px; height: 250px"> <br></center>
+
+
 <h3 id="3-A-Simple-Example"><a href="#3-A-Simple-Example" class="headerlink" title="3. A Simple Example"></a>3. A Simple Example</h3><p>This example is from the Columbia STAT5241 ML notes.</p>
 <p>Suppose \(n=p\), where \(n\) is sample size and \(p\) is feature dimension, input feature matrix is \(X=I\). </p>
 <p>For ridge regression, the loss function is </p>
