@@ -60,11 +60,11 @@
   <nav class="site-navigation">
     <ul>
       
-        <li><a href="/">Home</a></li>
+        <li><a href="/">主页</a></li>
       
-        <li><a href="/tags">Tags</a></li>
+        <li><a href="/tags">标签</a></li>
       
-        <li><a href="/archives">Archives</a></li>
+        <li><a href="/archives">归档</a></li>
       
     </ul>
   </nav>
@@ -123,7 +123,7 @@
 <p>\[<br>||x||_{1} = 1+\epsilon-\delta, ||x||_{2} = 1+\epsilon^{2}-2\epsilon\delta+\delta^{2}.<br>\]</p>
 <p>Therefore for L1 norm, the shrinkage reduction is same for each coefficient, it move all coefficients towards 0 with same step size, regardless of the quantity being penalized. And for L2 norm, regularizing small term results in a very small reduction in norm, <strong>it is highly unlikely that anything will ever be set to zero, since the reducing in L2 norm going from </strong> \(\epsilon\) <strong>to zero is almost nonexistent when </strong> \(\epsilon\) <strong>is small</strong>.</p>
 <h4 id="2-2-Gradient-Perspective"><a href="#2-2-Gradient-Perspective" class="headerlink" title="2.2 Gradient Perspective"></a>2.2 Gradient Perspective</h4><p>When minimizing loss function, the gradient from regularization term has to be cancelled out to reach the overall zero gradient (indicates minimum loss). For L1 norm, the gradient from regularization part is \(\lambda\) (when \(\beta &gt; 0\)) and \(-\lambda\) (when \(\beta &lt; 0\)). For L2 norm, the gradient from regularization part is \(2\beta\lambda\). So when \(\beta = 0\), the gradient from regularization part is also zero, but the whole gradient is not zero (<strong>unlikely?</strong>), therefore the optimization algorithm will continue, no sparse solution. But L1 norm has constant gradient, when the constant gradient (\(\pm\lambda\)) is larger than the gradient of fitting term part, it keeps \(\beta = 0\). The chart below can demostrate this:</p>
-<center><br> <img src="/images/l1-l2-norm-grad.PNG" style="width: 550px; height: 250px"> <br></center>
+<center><br> <img src="/images/l1-l2-norm-grad.PNG" style="width: 600px; height: 275px"> <br></center>
 
 
 <h3 id="3-A-Simple-Example"><a href="#3-A-Simple-Example" class="headerlink" title="3. A Simple Example"></a>3. A Simple Example</h3><p>This example is from the Columbia STAT5241 ML notes.</p>
