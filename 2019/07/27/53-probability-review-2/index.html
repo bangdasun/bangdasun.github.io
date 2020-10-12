@@ -60,11 +60,11 @@
   <nav class="site-navigation">
     <ul>
       
-        <li><a href="/">主页</a></li>
+        <li><a href="/">Home</a></li>
       
-        <li><a href="/tags">标签</a></li>
+        <li><a href="/tags">Tags</a></li>
       
-        <li><a href="/archives">归档</a></li>
+        <li><a href="/archives">Archives</a></li>
       
     </ul>
   </nav>
@@ -141,6 +141,10 @@
 <p>\[<br>B(\alpha, \beta) = \frac{\Gamma(\alpha)\Gamma(\beta)}{\Gamma(\alpha + \beta)}.<br>\]</p>
 <h4 id="2-5-Normal-Distribution"><a href="#2-5-Normal-Distribution" class="headerlink" title="2.5 Normal Distribution"></a>2.5 Normal Distribution</h4><p>Suppose \(X\) has Normal distribution, \(X\sim N(\mu, \sigma^{2})\), with PDF</p>
 <p>\[<br>f(x) = \frac{1}{\sqrt{2\pi}\sigma}e^{-\frac{(x - \mu)^{2}}{2\sigma^{2}}}, x\in R.<br>\]</p>
+<h4 id="2-6-Exponential-Family-Distributions"><a href="#2-6-Exponential-Family-Distributions" class="headerlink" title="2.6 Exponential Family Distributions"></a>2.6 Exponential Family Distributions</h4><p>This is a family of distributions, distributions like bernoulli distribution, poisson distribution, exponential distribution, gamma distribution, beta distribution, normal distribution all belong to exponential family.</p>
+<p>\[<br>p(x|\theta) = \frac{h(x)}{Z(\theta)}e^{S(x)^{\top}\theta}.<br>\]</p>
+<p>Where \(S\) is the sufficient statistic. The data \(x\) and parameter \(\theta\) interact through the linear term in the exponent. The MLE of \(\theta\) satisfies</p>
+<p>\[<br>\frac{\partial}{\partial\theta}\log Z(\hat{\theta}) = \frac{1}{n}\sum^{n}_{i=1}S(x_{i}) = E_{p(x|\hat{\theta})}\left[S(x)\right].<br>\]</p>
 
       
     </div>
