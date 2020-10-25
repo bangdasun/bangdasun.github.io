@@ -170,9 +170,22 @@
 </ul>
 <p>CI is the interval estimates for parameters, it is a interval that might contain the true value of parameters, a \(100(1-\alpha)\%\) confidence interval \([f_{1}(x), f_{2}(x)]\) for \(\theta\) means</p>
 <p>\[<br>P\left( f_{1}(x) &lt; \theta &lt; f_{2}(x) \right) = 1 - \alpha,<br>\]</p>
-<p><strong>intuitively, we keep getting samples and calculate this CI</strong>, \(100(1-\alpha)\%\) <strong>of these CI’s will contain the true value of parameter.</strong></p>
-<p>The general procedure to get the \(100(1-\alpha)\%\) confidence interval is:<br>(1) find a statistic \(r(x)\) (a function of data) such that its distribution doesn’t depend on \(\theta\), such as standard normal distribution, t distribution;<br>(2) look for \(a\) and \(b\)  (quantiles of the distribution), such that \(P(a &lt; r(x) &lt; b) = 1-\alpha\) and derive the CI.</p>
+<p><strong>intuitively, we keep getting samples and calculate this CI</strong>, \((100-\alpha)\%\) <strong>of these CI’s will contain the true value of parameter.</strong></p>
+<p>The general procedure to get the \((100-\alpha)\%\) confidence interval is:<br>(1) find a statistic \(r(x)\) (a function of data) such that its distribution doesn’t depend on \(\theta\), such as standard normal distribution, t distribution;<br>(2) look for \(a\) and \(b\)  (quantiles of the distribution), such that \(P(a &lt; r(x) &lt; b) = 1-\alpha\) and derive the CI.</p>
 <p>Those 4 items in sampling distribution summary and central limit theorem are the theoretical basis in deriving confidence intervals.</p>
+<ul>
+<li><p>Frequently Used Confidence Interval</p>
+<ul>
+<li>Binomial Proportion</li>
+</ul>
+<p>Suppose \(X_{1},\cdots,X_{n}\) are i.i.d. \(Bernoulli(p)\), and \(Y = \sum^{n}_{i=1}X_{i}\), the estimated proportion is \(\hat{p} = Y / n\), based on CLT:</p>
+<p>\[<br>\frac{Y/n - p}{\sqrt{\frac{p(1-p)}{n}}}\rightarrow N(0,1),<br>\]<br>therefore the \((100-\alpha)\%\) CI<br>\[<br>\hat{p}\in\left[\frac{Y}{n} - Z_{\alpha/2}\sqrt{\frac{p(1-p)}{n}}, \frac{Y}{n} + Z_{\alpha/2}\sqrt{\frac{p(1-p)}{n}}\right].<br>\]</p>
+<ul>
+<li>Normal Distribution Mean (unknown population variance)</li>
+</ul>
+<p>Suppose \(X_{1},\cdots,X_{n}\) are i.i.d. \(N(\mu, \sigma)\), and<br>\[<br>\bar{X} = \frac{1}{n}\sum^{n}_{i=1}X_{i}, s^{2} = \frac{1}{n-1}\sum^{n}_{i=1}(X_{i} - \bar{X})^{2},<br>\]<br>Then apply the properties of sampling distribution,<br>\[<br>T = \frac{\frac{\bar{X} - \mu}{\sigma/\sqrt{n}}}{\sqrt{\frac{(n-1)s^{2}}{\sigma^{2}}\frac{1}{(n-1)}}} = \frac{\bar{X} - \mu}{s / \sqrt{n}}\rightarrow t(n-1)<br>\]<br>therefore \((100-\alpha)\%\) CI<br>\[<br>\hat{\mu}\in\left[\bar{X} - \frac{s}{\sqrt{n}}t_{\alpha/2}(n-1), \bar{X} + \frac{s}{\sqrt{n}}t_{\alpha/2}(n-1)\right].<br>\]</p>
+</li>
+</ul>
 <h3 id="3-Hypothesis-Test"><a href="#3-Hypothesis-Test" class="headerlink" title="3. Hypothesis Test"></a>3. Hypothesis Test</h3><p>Hypothesis test is a procedure to prove or disprove assertions about data distributions.</p>
 <h4 id="3-1-Basic-Elements"><a href="#3-1-Basic-Elements" class="headerlink" title="3.1 Basic Elements"></a>3.1 Basic Elements</h4><ul>
 <li>Null Hypothesis \(H_{0}\) and Alternative Hypothesis \(H_{A}\)</li>

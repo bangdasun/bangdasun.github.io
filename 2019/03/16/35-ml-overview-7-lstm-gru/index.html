@@ -111,7 +111,7 @@
 <h3 id="4-LSTM"><a href="#4-LSTM" class="headerlink" title="4. LSTM"></a>4. LSTM</h3><p>The LSTM is proposed to avoid the gradient vanishing problem to capture long-term dependency.</p>
 <center><br>  <img src="/images/lstm-0.PNG" style="width: 600px; height: 300px"> <br></center>
 
-<p>Compared with vanilla RNN, LSTM has an extra component called <strong>cell</strong> state \(C_{t}\), along with regular hidden states \(h_{t}\).</p>
+<p>Compared with vanilla RNN, LSTM has an extra component called <strong>cell</strong> state \(C_{t}\) (used to <strong>“memory”</strong>), along with regular hidden states \(h_{t}\).</p>
 <center><br>  <img src="/images/lstm-1.PNG" style="width: 600px; height: 250px"> <br></center>
 
 <p>Information will be either add to or remove from the cell state, it is controlled by the <strong>gates</strong>. LSTM contains three gates: <strong>forget gate</strong>, <strong>update gate</strong> and <strong>output gate</strong>.</p>
@@ -143,7 +143,14 @@
 <center><br>  <img src="/images/gru.PNG" style="width: 350px; height: 240px"> <br></center>
 
 <p>As a simplification version, GRU is supposed to perform better on less data and behave like what other simplification version models do on specific cases. <strong>TO BE CONTINUED</strong>…</p>
-<h3 id="6-Summary"><a href="#6-Summary" class="headerlink" title="6. Summary"></a>6. Summary</h3><p>There are several nice papers to show why LSTM could avoid gradient vanishing problem. I’ll read them and make some notes for sure. In short, LSTM introduces gates to control, which is different from classical DNN vanilla RNN, this is the reason why gradient vanishing is prevented.</p>
+<h3 id="6-Summary"><a href="#6-Summary" class="headerlink" title="6. Summary"></a>6. Summary</h3><ul>
+<li>Gates</li>
+</ul>
+<p>Compared with vanilla RNN, LSTM maintains a memory cell at each timestamp. The memory is updated by partially forgetting existing memory (forget gate) and adding new memory (update gate). In this way, <strong>LSTM enables capture information from sequence at early stage and carries the information over a long distance (long distance dependencies)</strong>.</p>
+<ul>
+<li>Gradient Vanishing Problem</li>
+</ul>
+<p>There are several nice papers to show why LSTM could <strong>avoid gradient vanishing problem</strong>. In short, LSTM introduces gates to control, which is different from vanilla RNN, this is the reason why gradient vanishing is prevented.</p>
 <h3 id="7-References"><a href="#7-References" class="headerlink" title="7. References"></a>7. References</h3><ul>
 <li>Colah’s blog,<ul>
 <li><a href="http://colah.github.io/posts/2015-08-Understanding-LSTMs/" target="_blank" rel="external">http://colah.github.io/posts/2015-08-Understanding-LSTMs/</a></li>

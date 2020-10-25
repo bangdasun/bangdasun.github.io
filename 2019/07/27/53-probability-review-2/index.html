@@ -145,6 +145,14 @@
 <p>\[<br>p(x|\theta) = \frac{h(x)}{Z(\theta)}e^{S(x)^{\top}\theta}.<br>\]</p>
 <p>Where \(S\) is the sufficient statistic. The data \(x\) and parameter \(\theta\) interact through the linear term in the exponent. The MLE of \(\theta\) satisfies</p>
 <p>\[<br>\frac{\partial}{\partial\theta}\log Z(\hat{\theta}) = \frac{1}{n}\sum^{n}_{i=1}S(x_{i}) = E_{p(x|\hat{\theta})}\left[S(x)\right].<br>\]</p>
+<h3 id="3-Conjugate-Prior-Bayesian-Statistics"><a href="#3-Conjugate-Prior-Bayesian-Statistics" class="headerlink" title="3. Conjugate Prior (Bayesian Statistics)"></a>3. Conjugate Prior (Bayesian Statistics)</h3><p>List of commonly used conjugate prior.</p>
+<h4 id="3-1-Model-Binomial-Data"><a href="#3-1-Model-Binomial-Data" class="headerlink" title="3.1 Model Binomial Data"></a>3.1 Model Binomial Data</h4><p>If \(\theta\sim Beta(\alpha, \beta)\) and \(y|\theta\sim Binomial(n, \theta)\), then \(\theta|y\sim Beta(\alpha + y, \beta + n - y)\).</p>
+<p>Beta prior is conjugate for Binomial likelihood, means posterior has same parameteric form as prior. Beta prior has interpretation as “prior data” of \(\alpha\) success and \(\alpha+\beta\) tries.</p>
+<p>The mean of the posterior is a weighted average of prior mean and likelihood mean.</p>
+<p>\[<br>E(\theta|y) = \frac{\alpha+\beta}{\alpha+\beta+n}\frac{\alpha}{\alpha+\beta} + \frac{n}{\alpha+\beta+n}\frac{y}{n}<br>\]</p>
+<h4 id="3-2-Model-Event-Count-Data"><a href="#3-2-Model-Event-Count-Data" class="headerlink" title="3.2 Model Event Count Data"></a>3.2 Model Event Count Data</h4><p>If \(\theta\sim Gamma(\alpha, \beta)\) and \(y_{1},\cdots,y_{n}|\theta\sim Poisson(\theta)\), then<br>\[<br>\theta|y_{1},\cdots,y_{n}\sim Gamma(\alpha+n\bar{y}, \beta + n).<br>\]</p>
+<p>The mean of the posterior is a weighted average of prior mean and likelihood mean.</p>
+<p>\[<br>E(\theta|y) = \frac{\beta}{\beta+n}\frac{\alpha}{\beta} + \frac{n}{\beta+n}\bar{y}.<br>\]</p>
 
       
     </div>
