@@ -133,7 +133,7 @@
 <p>\[<br>J = -\sum_{i\in\text{corpus}}\sum_{j\in\text{context}(i)} Q_{ij} = -\sum^{V}_{i=1}\sum^{V}_{j=1}X_{ij}\log Q_{ij}.<br>\]</p>
 <p>Using the model proposed in this paper, rewrite \(J\) as </p>
 <p>\[<br>J = -\sum^{V}_{i=1}X_{i}\sum^{V}_{j=1}P_{ij}\log Q_{ij} = \sum^{V}_{i=1}X_{i}H(P_{i}, Q_{i})<br>\]</p>
-<p>Where \(H(P_{i}, Q_{i})\) is the cross entropy of the distributions \(P_{i}\) and \(Q_{i}\). One could interpret tis objective as “global skip-gram” model.</p>
+<p>Where \(H(P_{i}, Q_{i})\) is the cross entropy of the distributions \(P_{i}\) and \(Q_{i}\). One could interpret this objective as “global skip-gram” model.</p>
 <p>As cross entropy has unfortunate property that distributions with long tails are often modeled poorly with too much weight given to the unlikely events. Normalizing factor is also computational expensive. A natural choice would be a least square objective in which normalization factors in \(Q\) and \(P\) are discarded,</p>
 <p>\[<br>J = \sum^{i,j} X_{i}\left(\hat{P}_{ij} - \hat{Q}_{ij}\right)^{2},<br>\]</p>
 <p>where \(\hat{P}_{ij} = X_{ij}\) and \(\hat{Q}_{ij} = \exp\left(w_{i}^{\top}\tilde{w}_{j}\right)\) are the unnormalized distributions. Now another problem emerges, \(X_{ij}\) often takes very large values. An effective remedy is to minimize the squared error of the logarithms of \(\hat{P}\) and \(\hat{Q}\) instead</p>

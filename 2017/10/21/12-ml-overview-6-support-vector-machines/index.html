@@ -111,7 +111,7 @@
 <p>\[<br>d = ||\mathbf{x}||_{2} \cos{\theta} = \frac{\mathbf{v}^{\top}\mathbf{x}}{||\mathbf{v}||_{2}}<br>\]</p>
 <p>Also we can observed that whether \(\theta\) is greater than \(\pi/2\) will indicate which side of the decision boundary that \(\mathbf{x}\) located in. </p>
 <h4 id="2-2-As-a-Classifier"><a href="#2-2-As-a-Classifier" class="headerlink" title="2.2 As a Classifier"></a>2.2 As a Classifier</h4><p>This motivate us that the classifier could be</p>
-<p>\[<br>f(\mathbf{x}) = \mathbb{I}\{\mathbf{v}^{\top}\mathbf{x} &gt; 0\}.<br>\]</p>
+<p>\[<br>f(\mathbf{x}) = \mathbb{I}\left(\mathbf{v}^{\top}\mathbf{x} &gt; 0\right).<br>\]</p>
 <p>Next we can enter the core part. To fit a decision boundary of SVM (binary), we need to solve the following optimization problem:</p>
 <p>\[<br>\begin{aligned}<br>&amp;\min_{\mathbf{v}, c}~||\mathbf{v}||_{2},\\<br>\text{ s.t.  }&amp; y_{i}(\mathbf{v}^{\top}\mathbf{x}_{i} -c)\geq 1, ~i = 1,2,\cdots,n<br>\end{aligned}<br>\]</p>
 <p>where \(y_{i}\) is class label that takes in \(\{-1, +1\}\) (<strong>if we use 0 as before, it will get 0 and we will not know which class that this point belongs to</strong>). Also we fixed \(\mathbf{v}^{\top}\mathbf{x}=1\), therefore we just need to minimize the denominator.</p>

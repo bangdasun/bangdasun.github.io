@@ -1,0 +1,257 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Summary on Attention | Bangda Sun | Practice makes perfect</title>
+
+  
+  <meta name="author" content="Bangda">
+  
+
+  
+  <meta name="description" content="Play with data">
+  
+
+  
+  
+  <meta name="keywords" content="NLP,Deep Learning,Attention">
+  
+
+  <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <meta property="og:title" content="Summary on Attention"/>
+
+  <meta property="og:site_name" content="Bangda Sun"/>
+
+  
+  <meta property="og:image" content="/favicon.ico"/>
+  
+
+  <link href="/favicon.ico" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Bangda Sun" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    jax: ["input/TeX","output/HTML-CSS"],
+    extensions: ["tex2jax.js","Safe.js"]
+  });
+  </script>
+<script type="text/javascript" async="async"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_CHTML,Safe">
+</script>
+</script>
+</head>
+
+
+<body>
+<div class="blog">
+  <div class="content">
+
+    <header>
+  <div class="site-branding">
+    <h1 class="site-title">
+      <a href="/">Bangda Sun</a>
+    </h1>
+    <p class="site-description">Practice makes perfect</p>
+  </div>
+  <nav class="site-navigation">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/tags">Tags</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+    </ul>
+  </nav>
+</header>
+
+    <main class="site-main posts-loop">
+    <article>
+
+  
+    
+    <h3 class="article-title"><span>Summary on Attention</span></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2020/10/25/72-summary-on-attention/" rel="bookmark">
+        <time class="entry-date published" datetime="2020-10-25T18:22:47.000Z">
+          2020-10-25
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <p>!!! Attention !!!</p>
+<a id="more"></a>
+<h3 id="1-Attention-in-Machine-Translation"><a href="#1-Attention-in-Machine-Translation" class="headerlink" title="1. Attention in Machine Translation"></a>1. Attention in Machine Translation</h3><p>Paper: <a href="https://arxiv.org/abs/1409.0473" target="_blank" rel="external">Neural Machine Translation By Jointly Learning to Align and Translate</a></p>
+<p>This paper proposed using attention mechanism in Seq2Seq model in machine translation, it allows automatically search for parts of a source sentence that are relevant to predicting a target word, without having to form these parts as a hard segment explicitly. It’s the first time I know attention mechanism.</p>
+<h4 id="1-1-Seq2Seq-Encoder-Decoder-Model"><a href="#1-1-Seq2Seq-Encoder-Decoder-Model" class="headerlink" title="1.1 Seq2Seq - Encoder Decoder Model"></a>1.1 Seq2Seq - Encoder Decoder Model</h4><p>In Encoder-Decoder framework, an encoder reads the input sequence \([x_{1}, x_{2}, \cdots, x_{T}]\), into a context vector \(c\). The most common approach is to use an RNN such that</p>
+<p>\[<br>h_{t} = f(x_{t}, h_{t-1}), c = q(\{h_{1},h_{2},\cdots, h_{T}\}),<br>\]</p>
+<p>where \(h_{t}\in R^{n}\) is a hidden state at time \(t\).</p>
+<p>The decoder generates the prediction at time \(t\) given the context vector \(c\) and all the previous predictions \([y_{1}, y_{2}, \cdots, y_{t-1}]\):</p>
+<p>\[<br>p(y_{t}|y_{1}, y_{2},\cdots,y_{t-1}, c) = g(y_{t-1}, s_{t}, c),<br>\]</p>
+<p>where \(g\) is a nonlinear function, \(s_{t}\) is the hidden state of RNN.</p>
+<center><br>  <img src="/images/seq2seq-machine-translation.PNG" style="width: 600px; height: 150px"> <br></center>
+
+<p>Here the context vector serves as initial input for decoder and input for output \(y\) in every step.</p>
+<h4 id="1-2-Attention-Mechanism"><a href="#1-2-Attention-Mechanism" class="headerlink" title="1.2 Attention Mechanism"></a>1.2 Attention Mechanism</h4><p>In the new model architecture, the prediction is generated as </p>
+<p>\[<br>p(y_{t}|y_{1}, y_{2},\cdots,y_{t-1}, c) = g(y_{t-1}, s_{t}, c_{t}),<br>\]</p>
+<p>where the hidden state at time \(t\) is calculated by</p>
+<p>\[<br>s_{t} = f(s_{t-1}, y_{t-1}, c_{t}),<br>\]</p>
+<p>the context vector \(c_{t}\) is <strong>unique</strong> for each step \(t\).</p>
+<center><br>  <img src="/images/seq2seq-machine-translation-attention.PNG" style="width: 400px; height: 300px"> <br></center>
+
+<p><strong>The context vector \(c_{t}\) depends on a sequence of annotations \(\left(h_{1}, h_{2}, \cdots, h_{T_{x}}\right)\) to which an encoder maps the input sentence. Each annotation \(h_{t}\) contains information about the whole input sequence with a strong focus on the parts surrounding the \(t-\)th word of the input sequence.</strong></p>
+<p>The context vector \(c_{t}\) is calculated as a weighted sum of the annotations:</p>
+<p>\[<br>c_{t} = \sum^{T_{x}}_{j=1}\alpha_{tj}h_{j},<br>\]</p>
+<p>the weight \(\alpha_{tj}\) of each annotation is calculated by softmax</p>
+<p>\[<br>\alpha_{tj} = \frac{\exp(e_{tj})}{\sum^{T_{x}}_{k=1}\exp(e_{tk})},<br>\]</p>
+<p>where \[<br>e_{tj} = score(s_{t-1}, h_{j}) = v_{a}^{\top}\tanh\left(W_{a}[s_{t}; h_{j}]\right)<br>\]</p>
+<p>is an <strong>alignment model which scores how well the inputs around position \(j\) and the output at position \(t\) match</strong>. The score is based the on RNN hiddent state and annotation of the input sentence. The alignment model is parameterized as a feedfoward neural network which is jointly trained with the seq2seq model.</p>
+<p>To understand this approach of taking a weighted sum of all the annotation as calculating an <strong>expected annotation</strong>, the weight \(\alpha_{tj}\) is a probability that the target word \(y_{t}\) is aligned to the source word \(x_{j}\). Intuitively, <strong>the decoder decides parts of the source sentence to pay attention to</strong>, it lets the model focus only on information relevant to the generation of the next target word.</p>
+<h3 id="2-Other-Forms-of-Attention-Mechanisms"><a href="#2-Other-Forms-of-Attention-Mechanisms" class="headerlink" title="2. Other Forms of Attention Mechanisms"></a>2. Other Forms of Attention Mechanisms</h3><p>Paper: </p>
+<ul>
+<li><a href="https://arxiv.org/abs/1409.0473" target="_blank" rel="external">Neural Machine Translation By Jointly Learning to Align and Translate</a></li>
+<li><a href="http://proceedings.mlr.press/v37/xuc15.pdf" target="_blank" rel="external">Show, Attend and Tell: Neural Image Caption Generation With Visual Attention</a></li>
+<li><a href="https://arxiv.org/pdf/1508.04025.pdf" target="_blank" rel="external">Effective Approaches to Attention-based Neural Machine Translation</a></li>
+</ul>
+<h4 id="2-1-Deterministic-“Soft”-Attention-and-Stochastic-“Hard”-Attention"><a href="#2-1-Deterministic-“Soft”-Attention-and-Stochastic-“Hard”-Attention" class="headerlink" title="2.1 Deterministic “Soft” Attention and Stochastic “Hard” Attention"></a>2.1 Deterministic “Soft” Attention and Stochastic “Hard” Attention</h4><p>In short, soft attention is parameterized, end-to-end differentiable, therefore it can be trained (all components are weighted); hard attention is not (only one component can be selected / attended each time). The attention mechanism in section 1.2 is soft attention.</p>
+<h4 id="2-2-Global-Attention-and-Local-Attention"><a href="#2-2-Global-Attention-and-Local-Attention" class="headerlink" title="2.2 Global Attention and Local Attention"></a>2.2 Global Attention and Local Attention</h4><p>In short, global attention indicates all the hidden states are used to calculate the context vector; local attention first predicts the aligned position for current target word to get the context vector. The attention mechanism in section 1.2 is global attention.</p>
+<h4 id="2-3-Self-Attention"><a href="#2-3-Self-Attention" class="headerlink" title="2.3 Self-Attention"></a>2.3 Self-Attention</h4><p>Unlike traditional attention which is based on the hidden states from source and target, self-attention is calculated within source or target, it captures the relationship of words in the source or target themselves (e.g. current word and previous words in the same sentence), it can be used to compute a representation of the sequence.</p>
+<h3 id="3-Attention-Is-All-You-Need-Transformer"><a href="#3-Attention-Is-All-You-Need-Transformer" class="headerlink" title="3. Attention Is All You Need - Transformer"></a>3. Attention Is All You Need - Transformer</h3><p>Paper: <a href="https://arxiv.org/pdf/1706.03762.pdf" target="_blank" rel="external">Attention Is All You Need</a></p>
+<p>Transformer is a new network structure (for machine translation in original paper) solely based on attention mechanisms, dispensing recurrence and convolutions entirely. <strong>Experiments show the model to be superior in quality while being more parallelizable and requiring significantly less time to train.</strong></p>
+<h4 id="3-1-Model-Architecture"><a href="#3-1-Model-Architecture" class="headerlink" title="3.1 Model Architecture"></a>3.1 Model Architecture</h4><h5 id="3-1-1-Encoder-and-Decoder-Stacks"><a href="#3-1-1-Encoder-and-Decoder-Stacks" class="headerlink" title="3.1.1 Encoder and Decoder Stacks"></a>3.1.1 Encoder and Decoder Stacks</h5><p>The transformer follows the architecture using stacked self-attention and point-wise, fully connected layers for both the encoder and decoder.</p>
+<center><br>  <img src="/images/transformer_architecture.PNG" style="width: 300px; height: 480px"> <br></center>
+
+<p>Both encoder and decoder are composed of 6 identical layers. <strong>Encoder</strong> (left side in the figure) has two sub-layers: multi-head attention (every multi-head attention unit is composed of scaled dot-product attention units) and a position-wise fully connected feedforward network, a residual connection is used around each of the two sub-layers, followed by layer normalization, dimension of the model output is 512. <strong>Decoder</strong>  has the one more sub-layer, which performs multi-head attention over the output of the encoder, the masking ensures that the predictions for position \(i\) can depend only on the known outputs at positions less than \(i\).</p>
+<h5 id="3-1-2-Attention"><a href="#3-1-2-Attention" class="headerlink" title="3.1.2 Attention"></a>3.1.2 Attention</h5><p>An attention function can be described as mapping a query and a set of key-value pairs to an output. The attention here is called “scaled dot-product attention”, the input consists of queries and keys of dimension \(d_{k}\), and values of dimension \(d_{v}\).</p>
+<center><br>  <img src="/images/transformer_attention_structure.PNG" style="width: 500px; height: 250px"> <br></center>
+
+<p>The dot products of the query is calculated across all keys, divide each by \(\sqrt{d_{k}}\) and apply a softmax function to obtain the weights on values:</p>
+<p>\[<br>\text{Attention}(Q, K, V) = \text{softmax}\left(\frac{QK^{\top}}{\sqrt{d_{k}}}\right)V.<br>\]</p>
+<p>The scaling factor \(\sqrt{d_{k}}\) can counteract the effect when \(d_{k}\) is large and the doct products grow large in magnitude (where softmax function is in regions where it has extremely small gradients).</p>
+<p>Two commly used attention functions are <strong>additive attention</strong> and <strong>dot-product attention</strong>. Additive attention computes the compatibility function using feedforward network with a single hidden layer, while dot-product attention is much faster and more space-efficient in practice, since it can be implemented using highly optimized matrix multiplication code.</p>
+<p>Multi-head attention allows the model to jointly attend to information from different representation subspaces at different positions:</p>
+<p>\[<br>\text{MultiHead}(Q, K, V) = \text{Concat}(\text{head}_{1}, \text{head}_{2}, \cdots, \text{head}_{h})W^{O},<br>\]</p>
+<p>where<br>\[<br>\text{head}_{i} = \text{Attention}\left(QW_{i}^{Q}, KW_{i}^{K}, VW_{i}^{V}\right),<br>\]<br>and \(W_{i}^{Q}\in R^{d_{\text{model}}\times d_{k}}\), \(W_{i}^{K}\in R^{d_{\text{model}}\times d_{k}}\), \(W_{i}^{V}\in R^{d_{\text{model}}\times d_{v}}\) and \(W^{O}\in R^{hd_{v}\times d_{\text{model}}}\).</p>
+<h5 id="3-1-3-Positional-Encoding"><a href="#3-1-3-Positional-Encoding" class="headerlink" title="3.1.3 Positional Encoding"></a>3.1.3 Positional Encoding</h5><p>Positional encoding is used to make use of the order of the sequence:</p>
+<p>\[<br>\begin{aligned}<br>PE_{(pos, 2i)} &amp;= \sin\left(\left(\frac{pos}{10000}\right)^{2i / d_{\text{model}}}\right), \\<br>PE_{(pos, 2i+1)} &amp;= \cos\left(\left(\frac{pos}{10000}\right)^{2i / d_{\text{model}}}\right)<br>\end{aligned}<br>\]</p>
+<p>where \(pos\) is the position and \(i\) is the dimension.</p>
+<h4 id="3-2-Summary"><a href="#3-2-Summary" class="headerlink" title="3.2 Summary"></a>3.2 Summary</h4><p>Applications of attention in the model:</p>
+<ul>
+<li>in encoder-decoder layers, the queries come from the previous decoder layer, the memory keys and values come from the output of encoder. This allows every position in the decoder to attend over all positions in the input sequence</li>
+</ul>
+<p>The reason of using self-attention:</p>
+<ul>
+<li>low computational complexity, computation can be parallelized</li>
+<li>easier to learn long-range dependencies (shorter paths between positions in the input and output sequences make it easier to learn long-range dependencies)</li>
+<li>self-attention could yield more interpretable models</li>
+</ul>
+
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/NLP/">NLP</a><a href="/tags/Deep-Learning/">Deep Learning</a><a href="/tags/Attention/">Attention</a>
+    </span>
+    
+
+    </div>
+
+    
+  </div>
+</article>
+
+  
+<section id="comment">
+  
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+  
+</section>
+
+
+
+    </main>
+
+    <footer class="site-footer">
+  <p class="site-info">
+    Proudly powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and
+    Theme by <a href="https://github.com/CodeDaraW/Hacker" target="_blank">Hacker</a>
+    </br>
+    
+    &copy; 2020 Bangda
+    
+	
+	
+	
+  </p>
+  
+  <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+  <span id="busuanzi_container_site_pv">
+    Total viewer <span id="busuanzi_value_site_pv"></span>; 
+  </span>
+  
+  <span id="busuanzi_container_site_uv">
+    Total visitor <span id="busuanzi_value_site_uv"></span>
+  </span>
+	
+	
+  <div id="disqus_thread"></div>
+  <script>
+
+  /**
+   *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+   *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+   */
+   
+  var disqus_config = function () {
+	this.page.url = 'https://bangdasun.github.io{{ page.url }}';  // Replace PAGE_URL with your page's canonical URL variable
+	this.page.identifier = '{{ page.id }}'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+  };
+  
+  (function() { // DON'T EDIT BELOW THIS LINE
+  var d = document, s = d.createElement('script');
+  s.src = 'https://bangdasun-github-io.disqus.com/embed.js';
+  s.setAttribute('data-timestamp', +new Date());
+  (d.head || d.body).appendChild(s);
+  })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  
+  <script id="dsq-count-scr" src="//bangdasun-github-io.disqus.com/count.js" async></script>
+</footer>
+
+
+    
+  </div>
+</div>
+</body>
+</html>

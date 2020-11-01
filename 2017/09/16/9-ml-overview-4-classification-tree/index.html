@@ -107,7 +107,7 @@
 <li>How to measure the performance of one split, or say which loss function to use? In regression, we use squared loss function;</li>
 </ul>
 <p>Based on our definition of region label assignment, the error is the proportion of data points in that region that don’t belong to the class that region label indicates, it is <strong>misclassification rate</strong>, the misclassification rate produced by one split is</p>
-<p>\[<br>L = \sum^{2}_{r=1}p_{r}\sum_{x_{i}\in R_{r}}\mathbb{I}\{y_{i}\neq \hat{y}_{r}\}<br>\]</p>
+<p>\[<br>L = \sum^{2}_{r=1}p_{r}\sum_{x_{i}\in R_{r}}\mathbb{I}\left(y_{i}\neq \hat{y}_{r}\right),<br>\]</p>
 <p>where \(\hat{y}_{r}\) is the mode of observation labels in region \(r\), \(p_{r}\) is the proportion of observation in the region to the total sample size. This is also know as <strong>0-1 loss</strong>.</p>
 <h4 id="2-2-Measures-of-Node-Impurity"><a href="#2-2-Measures-of-Node-Impurity" class="headerlink" title="2.2 Measures of Node Impurity"></a>2.2 Measures of Node Impurity</h4><p>However this measure for error is <strong>not sufficiently sensitive for tree-growing</strong> (mentioned in page 315, Introduction to statistical learning). In practice, two other measures are used:</p>
 <ul>
