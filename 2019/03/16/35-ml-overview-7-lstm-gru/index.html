@@ -146,7 +146,7 @@
 <h3 id="6-Summary"><a href="#6-Summary" class="headerlink" title="6. Summary"></a>6. Summary</h3><ul>
 <li>Gates</li>
 </ul>
-<p>Compared with vanilla RNN, LSTM maintains a memory cell at each timestamp. The memory is updated by partially forgetting existing memory (forget gate) and adding new memory (update gate). In this way, <strong>LSTM enables capture information from sequence at early stage and carries the information over a long distance (long distance dependencies)</strong>.</p>
+<p>Compared with vanilla RNN, LSTM maintains a memory cell at each timestamp. The memory is updated by partially forgetting existing memory (<strong>forget gate, therefore prevent gradient vanishing</strong>) and adding new memory (update gate). In this way, <strong>LSTM enables capture information from sequence at early stage and carries the information over a long distance (long distance dependencies)</strong>.</p>
 <ul>
 <li>Gradient Vanishing Problem</li>
 </ul>

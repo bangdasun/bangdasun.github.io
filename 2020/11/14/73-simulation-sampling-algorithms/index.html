@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Page 8 | Bangda Sun | Practice makes perfect</title>
+  <title>Simulation Sampling Algorithms | Bangda Sun | Practice makes perfect</title>
 
   
   <meta name="author" content="Bangda">
@@ -14,12 +14,15 @@
   
 
   
+  
+  <meta name="keywords" content="Mathematics,Statistics">
+  
 
   <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
 
-  
+  <meta property="og:title" content="Simulation Sampling Algorithms"/>
 
   <meta property="og:site_name" content="Bangda Sun"/>
 
@@ -68,20 +71,19 @@
 </header>
 
     <main class="site-main posts-loop">
-    
-  <article>
+    <article>
 
   
     
-    <h3 class="article-title"><a href="/2017/07/24/3-common-metrics-in-binary-classification-problems/"><span>Common Metrics in Binary Classification Problems</span></a></h3>
+    <h3 class="article-title"><span>Simulation Sampling Algorithms</span></h3>
     
   
 
   <div class="article-top-meta">
     <span class="posted-on">
-      <a href="/2017/07/24/3-common-metrics-in-binary-classification-problems/" rel="bookmark">
-        <time class="entry-date published" datetime="2017-07-25T02:48:17.000Z">
-          2017-07-24
+      <a href="/2020/11/14/73-simulation-sampling-algorithms/" rel="bookmark">
+        <time class="entry-date published" datetime="2020-11-15T01:56:38.000Z">
+          2020-11-14
         </time>
       </a>
     </span>
@@ -93,7 +95,20 @@
   <div class="article-content">
     <div class="entry">
       
-        <p>Recall / Precision / F1-score</p>
+        <p>Summary on sampling algorithms in simulation</p>
+<a id="more"></a>
+<h3 id="1-Inverse-Transform-Method"><a href="#1-Inverse-Transform-Method" class="headerlink" title="1. Inverse Transform Method"></a>1. Inverse Transform Method</h3><p>If \(X\) is a <strong>continuous</strong> random variable with CDF \(F\), then \(F(X)\sim Unif(0, 1)\). That means \(X\) can be simulated by drawing random samples \(U\sim Unif(0, 1)\) and feeding into \(F^{-1}\). </p>
+<p>This method works for distribution with invertible CDF, and in general works for discrete distribution too, as the CDF functions of discrete distributions are step functions.</p>
+<h3 id="2-Acceptance-Rejection-Algorithm"><a href="#2-Acceptance-Rejection-Algorithm" class="headerlink" title="2. Acceptance - Rejection Algorithm"></a>2. Acceptance - Rejection Algorithm</h3><p>Rejection sampling can be used when the CDF is not invertible. </p>
+<p>Find a distribution \(g(x)\) that we can directly sample from, then scale it with a constant such that \(Mg(x) \geq f(x)\) for all \(x\), \(Mg(x)\) is also known as an envelope. Then sample \(x\sim g\) from and \(u\sim Unif(0, 1)\), calculate \(f(x)/Mg(x)\). Finally accept \(x\) if \(u \leq f(x)/Mg(x)\), otherwise reject it.</p>
+<h3 id="3-Importance-Sampling"><a href="#3-Importance-Sampling" class="headerlink" title="3. Importance Sampling"></a>3. Importance Sampling</h3><p>This method is used to estimate the expectation of expectation of the distribution, where the distribution is not very easy for generating random samples. The goal is to estimate:</p>
+<p>\[<br>E_{p}\left[f(X)\right] = \int f(x)p(x)dx \approx \frac{1}{n}\sum^{n}_{i=1} f\left(x_{i}\right).<br>\]</p>
+<p>where \(p(x)\) is hard to simulate.</p>
+<p>Instead of generating samples from \(p(x)\), we can generating samples from an entirely different distribution \(q(x)\):</p>
+<p>\[<br>E_{p}\left[f(X)\right] = \int f(x)p(x)dx = \int f(x)\frac{p(x)}{q(x)}q(x)dx = E_{q}\left[\frac{f(x)p(x)}{q(x)}\right].<br>\]</p>
+<p>Then we can compute \(f(x)p(x)/q(x)\) and estimate \(E_{p}\left[f(X)\right]\) by</p>
+<p>\[<br>E_{p}\left[f(X)\right] \approx \frac{1}{n}\sum^{n}_{i=1}f\left(x_{i}\right)\frac{p\left(x_{i}\right)}{q\left(x_{i}\right)}.<br>\]</p>
+
       
     </div>
 
@@ -107,7 +122,7 @@
 
     <span class="post-categories">
       <i class="icon-categories"></i>
-        <a href="/categories/Machine-Learning/">Machine Learning</a>
+        <a href="/categories/Mathematics/">Mathematics</a>, <a href="/categories/Mathematics/Statistics/">Statistics</a>
     </span>
     
 
@@ -116,170 +131,27 @@
 
     <span class="post-tags">
       <i class="icon-tags"></i>
-        <a href="/tags/Machine-Learning/">Machine Learning</a><a href="/tags/Model-Evaluation/">Model Evaluation</a><a href="/tags/Metrics/">Metrics</a>
+        <a href="/tags/Mathematics/">Mathematics</a><a href="/tags/Statistics/">Statistics</a>
     </span>
     
 
     </div>
 
-    
-    <div class="article-meta pull-right">
-      <span>
-        <i class="icon-comments"></i>
-        <span>
-          <a href="/2017/07/24/3-common-metrics-in-binary-classification-problems/#comment">Comments</a>
-        </span>
-      </span>
-    </div>
     
   </div>
 </article>
 
-
-
-  <article>
-
   
-    
-    <h3 class="article-title"><a href="/2017/07/05/2-assignment-operator-in-r/"><span>Assignment operator in R</span></a></h3>
-    
+<section id="comment">
   
-
-  <div class="article-top-meta">
-    <span class="posted-on">
-      <a href="/2017/07/05/2-assignment-operator-in-r/" rel="bookmark">
-        <time class="entry-date published" datetime="2017-07-06T00:02:19.000Z">
-          2017-07-05
-        </time>
-      </a>
-    </span>
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
   </div>
-
-
   
-
-  <div class="article-content">
-    <div class="entry">
-      
-        <p>Which assignment operator flavor do you prefer in R, <code>&lt;-</code> or <code>=</code></p>
-      
-    </div>
-
-  </div>
-
-  <div class="article-footer">
-    <div class="article-meta pull-left">
-
-    
-      
-
-    <span class="post-categories">
-      <i class="icon-categories"></i>
-        <a href="/categories/R/">R</a>
-    </span>
-    
-
-    
-    
-
-    <span class="post-tags">
-      <i class="icon-tags"></i>
-        <a href="/tags/R/">R</a>
-    </span>
-    
-
-    </div>
-
-    
-    <div class="article-meta pull-right">
-      <span>
-        <i class="icon-comments"></i>
-        <span>
-          <a href="/2017/07/05/2-assignment-operator-in-r/#comment">Comments</a>
-        </span>
-      </span>
-    </div>
-    
-  </div>
-</article>
+</section>
 
 
 
-  <article>
-
-  
-    
-    <h3 class="article-title"><a href="/2017/07/04/1-data-visualization-with-ggplot2-1/"><span>Data Visualization with ggplot2 (1)</span></a></h3>
-    
-  
-
-  <div class="article-top-meta">
-    <span class="posted-on">
-      <a href="/2017/07/04/1-data-visualization-with-ggplot2-1/" rel="bookmark">
-        <time class="entry-date published" datetime="2017-07-04T16:18:24.000Z">
-          2017-07-04
-        </time>
-      </a>
-    </span>
-  </div>
-
-
-  
-
-  <div class="article-content">
-    <div class="entry">
-      
-        <p>Introduction to awesome R package ggplot2 - graphic grammar</p>
-      
-    </div>
-
-  </div>
-
-  <div class="article-footer">
-    <div class="article-meta pull-left">
-
-    
-      
-
-    <span class="post-categories">
-      <i class="icon-categories"></i>
-        <a href="/categories/R/">R</a>, <a href="/categories/R/Data-Visualization/">Data Visualization</a>
-    </span>
-    
-
-    
-    
-
-    <span class="post-tags">
-      <i class="icon-tags"></i>
-        <a href="/tags/R/">R</a><a href="/tags/Data-Visualization/">Data Visualization</a>
-    </span>
-    
-
-    </div>
-
-    
-    <div class="article-meta pull-right">
-      <span>
-        <i class="icon-comments"></i>
-        <span>
-          <a href="/2017/07/04/1-data-visualization-with-ggplot2-1/#comment">Comments</a>
-        </span>
-      </span>
-    </div>
-    
-  </div>
-</article>
-
-
-
-
-<nav class="pagination">
-  
-  <a href="/page/7/" class="pagination-prev">Prev</a>
-  
-  
-</nav>
     </main>
 
     <footer class="site-footer">
