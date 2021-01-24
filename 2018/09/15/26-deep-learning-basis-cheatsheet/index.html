@@ -60,11 +60,11 @@
   <nav class="site-navigation">
     <ul>
       
-        <li><a href="/">Home</a></li>
+        <li><a href="/">主页</a></li>
       
-        <li><a href="/tags">Tags</a></li>
+        <li><a href="/tags">标签</a></li>
       
-        <li><a href="/archives">Archives</a></li>
+        <li><a href="/archives">归档</a></li>
       
     </ul>
   </nav>
@@ -95,7 +95,7 @@
   <div class="article-content">
     <div class="entry">
       
-        <p>Deep Learning Basic Cheatsheet</p>
+        <p>Deep Learning Basic Cheatsheet: Basis (Node, Layer, Activation Function), Feed Forward, Back Propagation, Optimization (Stochastic Gradient Descent), Regulartion (Dropout), Batch Normalization, Gradient Vanishing and Exploding.</p>
 <a id="more"></a>
 <p>As we all know, deep learning - neural networks are regarded as black boxes because of the complexity. And it usually takes long time to tune the model. So here I’d like to briefly summarize some basic stuff that necessary for playing with neural networks. I think Andrew Ng’s course on coursera is a nice choice if you don’t have too much experience but want to start. Therefore some of the materials are from that course series. Here is the <a href="https://www.coursera.org/specializations/deep-learning" target="_blank" rel="external">link</a>.</p>
 <h3 id="1-Notations-and-Terminology"><a href="#1-Notations-and-Terminology" class="headerlink" title="1. Notations and Terminology"></a>1. Notations and Terminology</h3><ul>
@@ -159,11 +159,11 @@
 </ul>
 <p>Eliminate some connections between layers and layers randomly (\(W_{ij}=0\)), intuitively some connections are “dropped”. This is implemented by set a <strong>drop rate</strong> \(p\) or <strong>keep rate</strong> \((1-p)\). Usually we will update the weights by run through the whole training set multiple times (multiple epochs), each time the drop out connections are different, and the output of the layer will be updated by dividing the keep rate, this make sure the expectation of the output remains same - since some weights are dropped, the expectation of output is lower. This is also called <strong>inverted dropout</strong>. In that way, for testing data, no dropout will be applied.</p>
 <ul>
-<li>Data augmentation</li>
+<li>Data Augmentation</li>
 </ul>
 <p>This means add more training data to the model - not collect more data. For example, for image data, we can do some simple operations including flip, rotation, scaling, add noise to images, and labels are not changed; for text data, we can translate the text to other language and translate back - some form might be changed but the labels are also not changed.</p>
 <ul>
-<li>Early stopping</li>
+<li>Early Stopping</li>
 </ul>
 <p>This requires to split a develop / validation / set out of training data, only train the model on the rest of the data, and evaluate the model on the hold-out data set and monitor the performance for each iteration. The training should be stopped if the loss on the hold-out set are not decreasing for a certain number of rounds.</p>
 <ul>
@@ -247,7 +247,7 @@
     Theme by <a href="https://github.com/CodeDaraW/Hacker" target="_blank">Hacker</a>
     </br>
     
-    &copy; 2020 Bangda
+    &copy; 2021 Bangda
     
 	
 	

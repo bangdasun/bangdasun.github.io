@@ -60,11 +60,11 @@
   <nav class="site-navigation">
     <ul>
       
-        <li><a href="/">Home</a></li>
+        <li><a href="/">主页</a></li>
       
-        <li><a href="/tags">Tags</a></li>
+        <li><a href="/tags">标签</a></li>
       
-        <li><a href="/archives">Archives</a></li>
+        <li><a href="/archives">归档</a></li>
       
     </ul>
   </nav>
@@ -95,7 +95,7 @@
   <div class="article-content">
     <div class="entry">
       
-        <p>Easy to interpret but tricks are needed in implementation</p>
+        <p>Regression tree is one type of tree model, it applies to regression tasks, i.e. the regression version of CART (Classification And Regression Tree). It is trained by recursively splitting the sample and feature space, equivalent to fit the data with step functions, therefore it has no assumptions on data. It is also used as weak learner in Random Forest Regressor and GBDT (both classification and regression).</p>
 <a id="more"></a>
 <h3 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1. Introduction"></a>1. Introduction</h3><p>Decision tree is a family of algorithm which are widely used in machine learning. It is not only an algorithm by itself, but also the basic unit of ensemble algorithms like random forest and boosting.</p>
 <p>Decision tree is easy to interpret since it’s structure is similar to the decision process of human, and if you have data structures basis you’ll see that the structure is exactly <strong>binary tree</strong>. For example when the hiring manager is viewing resumes for applying data scientist position, the general procedure might be like this: If the applicants have related working experience? next, if the applicants’ skill sets match with the job description? next, if the applicants have degree in mathematics/statistics/computer science, so on so forth.</p>
@@ -110,16 +110,20 @@
 <p>The model predicts as</p>
 <p>\[<br>\hat{f}(X) = \sum^{M}_{m=1}c_{m}\mathbb{I}\left(X\in R_{m}\right).<br>\]</p>
 <p>If we’re minimizing squared loss, \(c_{m}\) is the mean of the target in region \(m\). </p>
-<h4 id="2-2-Split-Finding"><a href="#2-2-Split-Finding" class="headerlink" title="2.2. Split Finding"></a>2.2. Split Finding</h4><p>The key part of learning decision tree is <strong>split</strong>, i.e. find the value of a specific feature to divide the feature space into small blocks. Then we just go straightforward: we would like the split process (building process of the tree) could minimize error in prediction, equivalently we look for <strong>blocks</strong> sequence \(B_{1}, B_{2},\cdots, B_{n}\) that could minimize error.</p>
+<h4 id="2-2-Split-Finding"><a href="#2-2-Split-Finding" class="headerlink" title="2.2. Split Finding"></a>2.2. Split Finding</h4><p>The key part of learning decision tree is <strong>split</strong>, i.e. find the value of a specific feature to divide the feature space into small blocks. Then we just go straightforward: we would like the split process (building process of the tree) could minimize error in prediction, equivalently we look for <strong>blocks</strong> sequence \(R_{1}, R_{2},\cdots, R_{n}\) that could minimize error.</p>
 <p>Since this is a regression problem, we use the <strong>mean value of all observations in one block as the prediction</strong> of observations fall into that block, and we can choose squared loss / absolute loss, etc. Here I will use squared loss as an example. Now like many other machine learning algorithms, it is an optimization problem, i.e. reduce the <strong>MSE (squared loss)</strong> by splitting,</p>
-<p>\[<br>B_{1}, B_{2},\cdots, B_{n} = \arg\min_{B_{1}, B_{2},\cdots, B_{n}}\sum^{n}_{i=1}\sum_{j: x_{j}\in B_{i}}\left(y_{j}-\bar{y}_{B_{i}}\right)^{2}.<br>\]</p>
+<p>\[<br>R_{1}, R_{2},\cdots, R_{n} = \arg\min_{R_{1}, R_{2},\cdots, R_{n}}\sum^{n}_{i=1}\sum_{j: x_{j}\in R_{i}}\left(y_{j}-\bar{y}_{R_{i}}\right)^{2}.<br>\]</p>
 <p>Unfortunately this problem is computationally infeasible to consider every possible partition of the feature space into \(n\) blocks.</p>
-<p>But those awesome scientists found an alternative way, they came up with an idea called <strong>top-down greedy recursive binary splitting</strong>, which means it begins at the top of the tree where all observations are still in one block, then continuously split the feature space where each split will generate a left child node and right child node. Each step an optimize split is selected therefore it’s “greedy”. Therefore instead of find a global optima, we turn to find a local optima (global optima in every stage). The problem would looks like this: find a split \(\{X |X_{j} &lt; s\}\), where this split generate \(B_{1} = \{X|X_{j} &lt; s\}\) and \(B_{2} = \{X|X_{j} \geq s\}\) such that </p>
-<p>\[<br>(j, s) = \arg\min_{(j,s)}\sum_{i:x_{i}\in B_{1}}\left(y_{i}-\bar{y}_{B_{1}}\right)^{2} + \sum_{j:x_{j}\in B_{2}}\left(y_{j}-\bar{y}_{B_{2}}\right)^{2}.<br>\]</p>
-<p>Then we repeat this process on data in \(B_{1}\) and \(B_{2}\) and go to the next level of the tree, it is a <strong>depth wise growth</strong>, kind of similar to <strong>BFS (Breadth First Search)</strong>. </p>
+<p>Rut those awesome scientists found an alternative way, they came up with an idea called <strong>top-down greedy recursive binary splitting</strong>, which means it begins at the top of the tree where all observations are still in one block, then continuously split the feature space where each split will generate a left child node and right child node. Each step an optimize split is selected therefore it’s “greedy”. Therefore instead of find a global optima, we turn to find a local optima (global optima in every stage). The problem would looks like this: find a split \(\{X |X_{j} &lt; s\}\), where this split generate \(R_{1} = \{X|X_{j} &lt; s\}\) and \(R_{2} = \{X|X_{j} \geq s\}\) such that </p>
+<p>\[<br>(j, s) = \arg\min_{(j,s)}\sum_{i:x_{i}\in R_{1}}\left(y_{i}-\bar{y}_{R_{1}}\right)^{2} + \sum_{j:x_{j}\in R_{2}}\left(y_{j}-\bar{y}_{R_{2}}\right)^{2}.<br>\]</p>
+<p>Then we repeat this process on data in \(R_{1}\) and \(R_{2}\) and go to the next level of the tree, it is a <strong>depth wise growth</strong>, kind of similar to <strong>BFS (Breadth First Search)</strong>. </p>
 <p>The stop condition for growing tree could be set by specifying the maximum depth <code>max_depth</code> (the longest step length from root to the leaves) and minimum number of observations needed to make a split <code>min_split_sample</code>, or say the number of observations need in a leaf.</p>
-<h3 id="3-Tree-Pruning"><a href="#3-Tree-Pruning" class="headerlink" title="3. Tree Pruning"></a>3. Tree Pruning</h3><p>It’s easy to make a complex tree that might has poor performance on test data - the extreme case could be each leaf only has one sample in the end. Based on bias-variance trade-off principal, we would like to <strong>sacrifice some bias to reduce variance</strong>. One of strategies is <strong>pruning</strong> the tree - grow a large tree first then prune it back to a smaller subtree. </p>
-<p>One of the methods is <strong>Cost Complexity Pruning</strong>. This is <strong>down to top</strong> process. During the tree growing, a series of trees are generated \(T_{0}, T_{1}, \cdots, T_{m}\), where \(T_{m}\) is the root. At step \(i\), the tree is created by removing a subtree from tree \(i-1\) and replacing it with a leaf node.</p>
+<h3 id="3-Tree-Pruning"><a href="#3-Tree-Pruning" class="headerlink" title="3. Tree Pruning"></a>3. Tree Pruning</h3><p>It’s easy to make a complex tree that might has poor performance on test data - the extreme case could be each leaf only has one sample in the end. Rased on bias-variance trade-off principal, we would like to <strong>sacrifice some bias to reduce variance</strong>. One of strategies is <strong>pruning</strong> the tree - grow a large tree first then prune it back to a smaller subtree. </p>
+<p>Pruning can be down either before the tree is built (Pre-pruning) or after the tree is built (Post-pruning):</p>
+<ul>
+<li>Pre-pruning is done by set a positive threshold for node split: only split the node when the loss reduction is more than the threshold.</li>
+<li>Post-pruning is also known as <strong>Cost Complexity Pruning</strong>: during the tree growing, a series of trees are generated \(T_{0}, T_{1}, \cdots, T_{m}\), where \(T_{m}\) is the root. At step \(i\), the tree is created by removing a subtree from tree \(i-1\) and replacing it with a leaf node.</li>
+</ul>
 <p>In addition we can control <code>max_depth</code> and <code>min_split_sample</code>, or add tree size  \(|T|\) as a <strong>regularization</strong> term in the loss function.</p>
 <h3 id="4-Implementation"><a href="#4-Implementation" class="headerlink" title="4. Implementation"></a>4. Implementation</h3><p>The implementation of decision tree could be tricky, since you don’t know how many splits needed exactly, also it’s dynamic process since every time a new split will be applied on a new block. </p>
 <p>First I used <code>R</code> and quickly found that my R-coding is still not good enough to finish this job, I can only perform every split manually…here is my <a href="https://github.com/bangdasun/Statistical-machine-learning/blob/master/algorithms/regression/regression-decision-tree/self-defined-recursive-manually.R" target="_blank" rel="external">solutions</a> and you can totally ignore this one :-)</p>
@@ -182,7 +186,7 @@
     Theme by <a href="https://github.com/CodeDaraW/Hacker" target="_blank">Hacker</a>
     </br>
     
-    &copy; 2020 Bangda
+    &copy; 2021 Bangda
     
 	
 	

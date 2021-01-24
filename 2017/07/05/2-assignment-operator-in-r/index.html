@@ -15,7 +15,7 @@
 
   
   
-  <meta name="keywords" content="R">
+  <meta name="keywords" content="R,Programming">
   
 
   <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
@@ -60,11 +60,11 @@
   <nav class="site-navigation">
     <ul>
       
-        <li><a href="/">Home</a></li>
+        <li><a href="/">主页</a></li>
       
-        <li><a href="/tags">Tags</a></li>
+        <li><a href="/tags">标签</a></li>
       
-        <li><a href="/archives">Archives</a></li>
+        <li><a href="/archives">归档</a></li>
       
     </ul>
   </nav>
@@ -95,7 +95,7 @@
   <div class="article-content">
     <div class="entry">
       
-        <p>Which assignment operator flavor do you prefer in R, <code>&lt;-</code> or <code>=</code></p>
+        <p>Discussion about the assignment operator preferences in R: <code>&lt;-</code> and <code>=</code>.</p>
 <a id="more"></a>
 <p>There are three types of assignment operator in R: <code>&lt;-</code>, <code>=</code> and <code>&lt;&lt;-</code>. Can you figure out the differences among them? If you can, you can close this page and go get some drink right now; if not, you can spend 5 to 10 minutes to take a quick look of this post!</p>
 <h3 id="1-Motivation"><a href="#1-Motivation" class="headerlink" title="1. Motivation"></a>1. Motivation</h3><p>If you have some experiences in other programming languages before you know R, you might feel uncomfortable with the assignment operator <code>&lt;-</code> in R. You just need to type <code>=</code> for once, but now you need to use <code>shift</code> + <code>,</code> + <code>-</code> to type <code>&lt;-</code>. Although in Rstudio you can use the shortcut: <code>Alt</code> + <code>-</code>, there is still one more step.</p>
@@ -137,7 +137,7 @@
 <p>Hmm… I think I gonna abondon <code>=</code> from now…</p>
 <p>Ok, one more step, what if I want to convert my ‘bad’ R code scripts to ‘good’ scripts? Just replace <code>=</code> with <code>&lt;-</code>? Seems no good. Instead, we can use <code>formatR</code> package developed by <a href="https://github.com/yihui" target="_blank" rel="external">Yihui Xie</a>. </p>
 <figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&gt; <span class="keyword">library</span>(formatR)</div><div class="line">Warning message:</div><div class="line">package ‘formatR’ was built under R version <span class="number">3.3</span><span class="number">.3</span> </div><div class="line">&gt; tidy_source(text = <span class="string">'x = rnorm(10)'</span>, arrow = <span class="literal">TRUE</span>)</div><div class="line">x &lt;- rnorm(<span class="number">10</span>)</div></pre></td></tr></table></figure>
-<p><strong>Update at 08/04/2017</strong>: Today I found a very useful and highly related blogs from Yihui, he already discussed this five years ago! Here is the <a href="https://yihui.name/cn/2012/09/equal-and-arrow/" target="_blank" rel="external">link</a>, his blogs are really nice.</p>
+<p><strong>Update at 08/04/2017</strong>: Today I found a very useful and highly related blogs from Yihui, he already discussed this five years ago! Here is the blog: <a href="https://yihui.name/cn/2012/09/equal-and-arrow/" target="_blank" rel="external">R的若干基因及争论</a>. His blogs are really nice.</p>
 <h3 id="4-References"><a href="#4-References" class="headerlink" title="4. References"></a>4. References</h3><ul>
 <li><p>StackOverflow Question, <a href="https://stackoverflow.com/questions/1741820/assignment-operators-in-r-and" target="_blank" rel="external">https://stackoverflow.com/questions/1741820/assignment-operators-in-r-and</a></p>
 </li>
@@ -164,7 +164,7 @@
 
     <span class="post-categories">
       <i class="icon-categories"></i>
-        <a href="/categories/R/">R</a>
+        <a href="/categories/R/">R</a>, <a href="/categories/R/Programming/">Programming</a>
     </span>
     
 
@@ -173,7 +173,7 @@
 
     <span class="post-tags">
       <i class="icon-tags"></i>
-        <a href="/tags/R/">R</a>
+        <a href="/tags/R/">R</a><a href="/tags/Programming/">Programming</a>
     </span>
     
 
@@ -202,7 +202,7 @@
     Theme by <a href="https://github.com/CodeDaraW/Hacker" target="_blank">Hacker</a>
     </br>
     
-    &copy; 2020 Bangda
+    &copy; 2021 Bangda
     
 	
 	

@@ -60,11 +60,11 @@
   <nav class="site-navigation">
     <ul>
       
-        <li><a href="/">Home</a></li>
+        <li><a href="/">主页</a></li>
       
-        <li><a href="/tags">Tags</a></li>
+        <li><a href="/tags">标签</a></li>
       
-        <li><a href="/archives">Archives</a></li>
+        <li><a href="/archives">归档</a></li>
       
     </ul>
   </nav>
@@ -95,7 +95,7 @@
   <div class="article-content">
     <div class="entry">
       
-        <p>Let’s start working with ensemble algorithms</p>
+        <p>Bagging and Random Forest are one type of ensemble algorithms, they combine the weak learners (decision trees) by averaging or voting their predictions. Bagging is based on bootstrap, resamples data with replacement as new training data for individual trees. Random Forest is based on Bagging and feature subsample at each tree node split.</p>
 <a id="more"></a>
 <h3 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1. Introduction"></a>1. Introduction</h3><p>After decision tree section we can go deeper. Bagging and Random Forests can be also regarded as an implementation of <strong>Collective Intelligence</strong>. Which means rather than single model, now we get many models in our hand. The names of these two algorithms are intuitive: for “Bagging”, image that we have a “bag” of decision trees and let them work together (actually “bagging” is for “bootstrap aggregation”); for “random forests” we have similar description, we are now facing “forests” rather than single tree. </p>
 <h3 id="2-Mathematical-Basis"><a href="#2-Mathematical-Basis" class="headerlink" title="2. Mathematical Basis"></a>2. Mathematical Basis</h3><h4 id="2-1-Bootstrap-and-Bagging"><a href="#2-1-Bootstrap-and-Bagging" class="headerlink" title="2.1 Bootstrap and Bagging"></a>2.1 Bootstrap and Bagging</h4><p>First let’s introduce <strong>bootstrap</strong>, it is the base of this two algorithms. Bootstrap is a widely used method in statistics and other fields and it related to “Resampling”. One of the example is <strong>parameter estimation</strong>. Consider we have a random sample and we would like to estimate the population mean.  We usually use sample mean as the estimation of population mean since this is the “MLE”. But what if we want to know how confidence are we to this estimation? Well we might assume that the sample mean has Normal distribution (Do you remember Central Limit Theorem?) and do some inference; or we can refer Bayesian statisticians for help, set up a prior and we observe the data and then simulate the posterior. And we can also use bootstrap. Here is the idea:</p>
@@ -130,7 +130,8 @@
 <h3 id="4-Summary"><a href="#4-Summary" class="headerlink" title="4. Summary"></a>4. Summary</h3><h4 id="4-1-Pros-and-Cons"><a href="#4-1-Pros-and-Cons" class="headerlink" title="4.1 Pros and Cons"></a>4.1 Pros and Cons</h4><p>The good things about bagging and random forest:</p>
 <ul>
 <li>Good accuracy because of ensemble mechanism;</li>
-<li>Reduce variance because of bootstrap on samples and features;</li>
+<li>Reduce variance because of bootstrap on samples and features, the variance of random variable mean is scaled by the number of observations;</li>
+<li>Can be trained in parallel;</li>
 </ul>
 <p>But:</p>
 <ul>
@@ -194,7 +195,7 @@
     Theme by <a href="https://github.com/CodeDaraW/Hacker" target="_blank">Hacker</a>
     </br>
     
-    &copy; 2020 Bangda
+    &copy; 2021 Bangda
     
 	
 	

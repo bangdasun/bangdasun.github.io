@@ -60,11 +60,11 @@
   <nav class="site-navigation">
     <ul>
       
-        <li><a href="/">Home</a></li>
+        <li><a href="/">主页</a></li>
       
-        <li><a href="/tags">Tags</a></li>
+        <li><a href="/tags">标签</a></li>
       
-        <li><a href="/archives">Archives</a></li>
+        <li><a href="/archives">归档</a></li>
       
     </ul>
   </nav>
@@ -95,12 +95,10 @@
   <div class="article-content">
     <div class="entry">
       
-        <p>Simple but important logistic regression</p>
+        <p>Logistic Regression applies to almost all classification tasks in real world, as it can consume either discrete and continuous features, it can handle millions and billions of features, it can be trained real quick and it has strong interpretations.</p>
 <a id="more"></a>
 <h3 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1. Introduction"></a>1. Introduction</h3><p>Logistic regression is one of the most widely used machine learning algorithms in industries, given its simplicity and interpretable form. </p>
-<h3 id="2-Mathematical-Basis"><a href="#2-Mathematical-Basis" class="headerlink" title="2. Mathematical Basis"></a>2. Mathematical Basis</h3><p>We know that <strong>supervised learning</strong> could be regarded as the process of learning some kinds of mapping \(f\) between input \(X\) and output \(y\),</p>
-<p>\[<br>y = f(X).<br>\]</p>
-<p>And logistic regression is a simple linear model for classification problems, which means \(f\) is linear.</p>
+<h3 id="2-Mathematical-Basis"><a href="#2-Mathematical-Basis" class="headerlink" title="2. Mathematical Basis"></a>2. Mathematical Basis</h3><p>We know that <strong>supervised learning</strong> could be regarded as the process of learning some kinds of mapping \(f\) between input \(X\) and output \(y\): \(y = f(X)\). And logistic regression is a simple linear model for classification problems, which means \(f\) is linear.</p>
 <h4 id="2-1-Probabilistic-Motivation"><a href="#2-1-Probabilistic-Motivation" class="headerlink" title="2.1 Probabilistic Motivation"></a>2.1 Probabilistic Motivation</h4><p>We start from simplest case where there are only two classes, the output \(y\) is binary: \(y\in \{0, 1\}\), if we consider it as a random variable, we will have \(Y\sim \text{Bernoulli}(p)\) with probability mass function</p>
 <p>\[<br>f(y) = p^{y}(1-p)^{1-y},~\text{where }y\in\{0,1\},~p\in[0,1],<br>\]</p>
 <p>then from the probabilistic perspective, we would like to modeling the probability of the output to be positive (actually this is the parameter of the Bernoulli distribution above), i.e.</p>
@@ -109,30 +107,30 @@
 <p>\[<br>\sigma(x) = \frac{1}{1+e^{-x}},<br>\]<br>with derivative</p>
 <p>\[<br>\sigma’(x) = \frac{e^{-x}}{(1+e^{-x})^{2}} = \frac{1}{(1+e^{-x})} \frac{e^{-x}}{(1+e^{-x})} = \sigma(x)\left( 1 - \sigma(x)\right)<br>\]</p>
 <p>It’s a “S”-shaped curve where \(\sigma(x)\) is close to 0 for \(x\) goes to \(-\infty\) and close to 1 for \(x\) goes to \(+\infty\).</p>
-<p>Therefore logistic regression is actually modeling the probability of outputs to be one of the classes,</p>
-<p>\[<br>\begin{aligned}<br>P(y = 1|x) &amp;= \frac{1}{1+\exp(-x\beta)} = \sigma(x\beta), \\<br>P(y = 0|x) &amp;= \frac{\exp(-x\beta)}{1+\exp(-x\beta)} = 1 - \sigma(x\beta) = \sigma(-x\beta),<br>\end{aligned}<br>\]</p>
-<p>here \(x\) is a row vector of predictors, \(\beta\) is a column vector consists of coefficients of logistic regression. Now assume we have a \(n\times p\) input matrix \(\mathbf{X}\), represents for \(n\) observations and \(p\) features (predictors), where \(\mathbf{x}_{i}\) is the \(i\) th row; an output vector \(\mathbf{y}\) with length \(n\). For observation \(i\) (vector \(\mathbf{x}_{i}\)), we have<br>\[<br>P(y_{i} = 1|\mathbf{x}_{i}) = \frac{1}{1+\exp(-\mathbf{x}^{\top}_{i}\beta)},<br>\]<br>then we can do some transformation,<br>\[<br>\begin{aligned}<br>\frac{P(y_{i} = 1|\mathbf{x}_{i})}{P(y_{i} = 0|\mathbf{x}_{i})} = \frac{1}{\exp(-\mathbf{x}_{i}^{\top}\beta)} = \exp(\mathbf{x}_{i}^{\top}\beta) \longrightarrow \log\left(\frac{P(y_{i} = 1|\mathbf{x}_{i})}{P(y_{i} = 0|\mathbf{x}_{i})}\right) = \log\left(\frac{p(\mathbf{x}_{i})}{1-p(\mathbf{x}_{i})}\right)<br>\end{aligned} = \mathbf{x}_{i}^{\top}\beta.<br>\]</p>
-<p>This form is similar to linear regression \(\mathbf{y} = \mathbf{X}\beta + \epsilon\), the difference is the target is the <strong>log odds ratio</strong> rather that raw target.</p>
-<h4 id="2-2-Parameters-Estimation"><a href="#2-2-Parameters-Estimation" class="headerlink" title="2.2 Parameters Estimation"></a>2.2 Parameters Estimation</h4><p>Next we will try to estimate the coefficients \(\beta\). In linear regression with probabilistic view, we use the idea of <strong>Maximum Likelihood Estimate (MLE)</strong> which means parameters (coefficients) should make the likelihood of the observed data to be maximum, i.e.,</p>
-<p>\[<br>\hat{\beta} = \arg\max_{\beta} f(\mathbf{X}, \mathbf{y}|\beta)<br>\]</p>
+<p>Therefore logistic regression is actually modeling the probability of outputs to be one of the classes (discriminative model),</p>
+<p>\[<br>\begin{aligned}<br>P(y = 1|\mathbf{x}) &amp;= \sigma(\mathbf{x}^{\top}\mathbf{w}), \\<br>P(y = 0|\mathbf{x}) &amp;= 1 - \sigma(\mathbf{x}^{\top}\mathbf{w}) = \sigma(-\mathbf{x}^{\top}\mathbf{w}),<br>\end{aligned}<br>\]</p>
+<p>here \(x\) is a row vector of predictors, \(\mathbf{w}\) is a column vector consists of coefficients of logistic regression. Now assume we have a \(n\times p\) input matrix \(\mathbf{X}\), represents for \(n\) observations and \(p\) features (predictors), where \(\mathbf{x}_{i}\) is the \(i\) th row; an output vector \(\mathbf{y}\) with length \(n\). For observation \(i\) (vector \(\mathbf{x}_{i}\)), we have<br>\[<br>P(y_{i} = 1|\mathbf{x}_{i}) = \frac{1}{1+e^{-\mathbf{x}^{\top}_{i}\mathbf{w}}},<br>\]<br>then with logarithm transformation,<br>\[<br>\begin{aligned}<br>&amp;\frac{P(y_{i} = 1|\mathbf{x}_{i})}{P(y_{i} = 0|\mathbf{x}_{i})} = \frac{1}{e^{-\mathbf{x}_{i}^{\top}\mathbf{w}}} = e^{\mathbf{x}_{i}^{\top}\mathbf{w}} \\<br>\Longrightarrow &amp;\log\left(\frac{P(y_{i} = 1|\mathbf{x}_{i})}{P(y_{i} = 0|\mathbf{x}_{i})}\right) = \log\left(\frac{\hat{y_{i}}}{1-\hat{y_{i}}}\right) = \mathbf{x}_{i}^{\top}\mathbf{w}.<br>\end{aligned}<br>\]</p>
+<p>This form is similar to linear regression \(\mathbf{y} = \mathbf{X}\mathbf{w} + \epsilon\), the difference is the target is the <strong>log odds ratio</strong> rather that raw target. As we can notice, <strong>log odds ratio (a.k.a logit function) is the inverse of </strong>sigmoid function**.</p>
+<h4 id="2-2-Parameters-Estimation"><a href="#2-2-Parameters-Estimation" class="headerlink" title="2.2 Parameters Estimation"></a>2.2 Parameters Estimation</h4><p>Next we will try to estimate the coefficients \(\mathbf{w}\). In linear regression with probabilistic view, we use the idea of <strong>Maximum Likelihood Estimate (MLE)</strong> which means parameters (coefficients) should make the likelihood of the observed data to be maximum, i.e.,</p>
+<p>\[<br>\hat{\mathbf{w}} = \arg\max_{\mathbf{w}} f(\mathbf{X}, \mathbf{y}|\mathbf{w})<br>\]</p>
 <p>here we can take condition on \(\mathbf{X}\) since that’s the information we know, therefore we get,</p>
-<p>\[<br>\hat{\beta} = \arg\max_{\beta} f(\mathbf{X}, \mathbf{y}|\beta) = \arg\max_{\beta} f(\mathbf{y}|\mathbf{X}, \beta)f_{X}(\mathbf{X}) = \arg\max_{\beta} f(\mathbf{y}|\mathbf{X}, \beta).<br>\]</p>
-<p>Hence, for logistic regression, the coefficient should be<br>\[<br>\hat{\beta} = \arg\max_{\beta}f(\mathbf{y}) = \arg\max_{\beta}\prod^{n}_{i=1}f(y_{i})<br>\]<br>since we assume the <strong>observations are independent</strong>.</p>
-<p>The likelihood function we are look for is<br>\[<br>L(\beta) = \prod^{n}_{i=1}f(y_{i}) = \prod^{n}_{i=1}\left(1-p(\mathbf{x}_{i})\right)^{1-y_{i}}p(\mathbf{x}_{i})^{y_{i}},<br>\]<br>take a logarithm, we have<br>\[<br>\begin{aligned}<br>\log L(\beta) =~&amp;\sum^{n}_{i=1}(1-y_{i})\log\left(1-p(\mathbf{x}_{i})\right) + \sum^{n}_{i=1}y_{i}\log p(\mathbf{x_{i}}) \\<br>​             =~&amp;\sum^{n}_{i=1}\log\left(1-p(\mathbf{x}_{i})\right) + \sum^{n}_{i=1}y_{i}\log\left(\frac{p(\mathbf{x}_{i})}{1-p(\mathbf{x}_{i})}\right) \\<br>​             =~&amp;\sum^{n}_{i=1}\log\left(\frac{\exp(-\mathbf{x}_{i}^{\top}\beta)}{1+\exp(-\mathbf{x}_{i}^{\top}\beta)}\right) + \mathbf{y}^\top\mathbf{X}\beta<br>\end{aligned}<br>\]</p>
+<p>\[<br>\hat{\mathbf{w}} = \arg\max_{\mathbf{w}} f(\mathbf{X}, \mathbf{y}|\mathbf{w}) = \arg\max_{\mathbf{w}} f(\mathbf{y}|\mathbf{X}, \mathbf{w})f_{X}(\mathbf{X}) = \arg\max_{\mathbf{w}} f(\mathbf{y}|\mathbf{X}, \mathbf{w}).<br>\]</p>
+<p>Hence, for logistic regression, the coefficient should be<br>\[<br>\hat{\mathbf{w}} = \arg\max_{\mathbf{w}}f(\mathbf{y}) = \arg\max_{\mathbf{w}}\prod^{n}_{i=1}f(y_{i})<br>\]<br>since we assume the <strong>observations are independent</strong>.</p>
+<p>The likelihood function we are look for is<br>\[<br>L(\mathbf{w}) = \prod^{n}_{i=1}f(y_{i}) = \prod^{n}_{i=1}\left(1-\hat{y_{i}}\right)^{1-y_{i}}\hat{y_{i}}^{y_{i}},<br>\]</p>
+<p>take the logarithm, we have</p>
+<p>\[<br>\begin{aligned}<br>\log L(\mathbf{w}) =~&amp;\sum^{n}_{i=1}(1-y_{i})\log\left(1-\hat{y_{i}}\right) + \sum^{n}_{i=1}y_{i}\log p(\mathbf{x_{i}}) \\<br>​             =~&amp;\sum^{n}_{i=1}\log\left(1-\hat{y_{i}}\right) + \sum^{n}_{i=1}y_{i}\log\left(\frac{\hat{y_{i}}}{1-\hat{y_{i}}}\right) \\<br>​             =~&amp;\sum^{n}_{i=1}\log\left(\frac{e^{-\mathbf{x}_{i}^{\top}\mathbf{w}}}{1+e^{-\mathbf{x}_{i}^{\top}\mathbf{w}}}\right) + \mathbf{y}^\top\mathbf{X}\mathbf{w}<br>\end{aligned}<br>\]</p>
 <p>and hence</p>
-<p>\[<br>\begin{aligned}<br>\hat{\beta}_{mle} = ~&amp;\arg\max_{\beta} \log L(\beta) \\<br>​         =~&amp; \arg\min_{\beta}-\log L(\beta) \\<br>​         =~&amp; \arg\min_{\beta} \left(-\sum^{n}_{i=1}\log\left(\frac{\exp(-\mathbf{x}_{i}^{\top}\beta)}{1+\exp(-\mathbf{x}_{i}^{\top}\beta)}\right) - \mathbf{y}^\top\mathbf{X}\beta\right)<br>\end{aligned}<br>\]</p>
-<h4 id="2-3-Learning-with-Loss-Function"><a href="#2-3-Learning-with-Loss-Function" class="headerlink" title="2.3 Learning with Loss Function"></a>2.3 Learning with Loss Function</h4><p>We can regard <strong>maximize likelihood</strong> as <strong>minimize loss function</strong>. Look at the log likelihood,</p>
-<p>\[<br>\log L(\beta) = \sum^{n}_{i=1}(1-y_{i})\log\left(1-p(\mathbf{x}_{i})\right) + \sum^{n}_{i=1}y_{i}\log p(\mathbf{x_{i}}),<br>\]</p>
-<p>In form of loss function it is</p>
+<p>\[<br>\hat{\mathbf{w}}_{mle} = \arg\max_{\mathbf{w}} \log L(\mathbf{w}) = \arg\min_{\mathbf{w}}-\log L(\mathbf{w}).<br>\]</p>
+<h4 id="2-3-Learning-with-Loss-Function"><a href="#2-3-Learning-with-Loss-Function" class="headerlink" title="2.3 Learning with Loss Function"></a>2.3 Learning with Loss Function</h4><p>We can regard <strong>maximize likelihood</strong> as <strong>minimize loss function</strong>. Regarding the log likelihood as loss function:</p>
 <p>\[<br>L(y, \hat{y}) = -\sum^{n}_{i=1} (1-y_{i}) \log\left(1-\hat{y_{i}}\right) - \sum^{n}_{i=1}y_{i}\log \hat{y_{i}}<br>\]</p>
 <p>This loss function is called <strong>binary cross entropy</strong> or <strong>logistic loss (logloss)</strong>. The gradient of log likelihood is easier to derive from this form,</p>
-<p>\[<br>\nabla_{\beta}\log L(\beta) = -\sum^{n}_{i=1}\left(y_{i} - p(\mathbf{x}_{i})\right)\mathbf{x}_{i},<br>\]</p>
+<p>\[<br>\nabla_{\mathbf{w}}\log L(\mathbf{w}) = -\sum^{n}_{i=1}\left(y_{i} - \hat{y_{i}}\right)\mathbf{x}_{i},<br>\]</p>
 <p>note that</p>
-<p>\[<br>\frac{\partial p(\mathbf{x}_{i})}{\partial \beta} = \mathbf{x}_{i}p(\mathbf{x}_{i})\left(1 - p(\mathbf{x}_{i})\right).<br>\]</p>
-<p>Here you can also denote \(p(\mathbf{x}_{i})\) as \(\hat{y_{i}}\), and</p>
-<p>\[<br>p(\mathbf{x}_{i}) = \hat{y_{i}} = \sigma\left(\mathbf{x}_{i}^{\top}\beta\right)<br>\]</p>
+<p>\[<br>\frac{\partial \hat{y_{i}}}{\partial \mathbf{w}} = \mathbf{x}_{i}\hat{y_{i}}\left(1 - \hat{y_{i}}\right),<br>\]</p>
+<p>and</p>
+<p>\[<br>\hat{y_{i}} = \sigma\left(\mathbf{x}_{i}^{\top}\mathbf{w}\right)<br>\]</p>
 <p>Now the machine learning problem comes to the calculus problem, to find the minima of the function, we take the derivative/gradient and set it to 0. But unfortunately there is no explicit solution to this function, therefore <strong>numerical algorithms</strong> such as gradient descent are the way to go. The update function is</p>
-<p>\[<br>\beta_{t+1}  = \beta_{t} - \alpha\nabla_{\beta}\log L(\beta),<br>\]</p>
+<p>\[<br>\mathbf{w}_{t+1}  = \mathbf{w}_{t} - \alpha\nabla_{\mathbf{w}}\log L(\mathbf{w}),<br>\]</p>
 <p>where \(\alpha\) is the learning rate.</p>
 <h3 id="3-More-Discussions"><a href="#3-More-Discussions" class="headerlink" title="3. More Discussions"></a>3. More Discussions</h3><h4 id="3-1-Practical-Issues"><a href="#3-1-Practical-Issues" class="headerlink" title="3.1 Practical Issues"></a>3.1 Practical Issues</h4><p>Similar with linear regression, as logistic regression is a <strong>parametric</strong> model, the estimated parameters are unreliable if the assumptions of the model are not satisfied:</p>
 <ul>
@@ -140,19 +138,26 @@
 <li>Classes are well separated (when observations are less than features);</li>
 </ul>
 <h4 id="3-2-Loss-Function"><a href="#3-2-Loss-Function" class="headerlink" title="3.2 Loss Function"></a>3.2 Loss Function</h4><p>Notice sometimes the loss function of logistic regression are written as</p>
-<p>\[<br>L(y, \hat{y}) = \log\left(1 + e^{-yx^{\top}\beta}\right).<br>\]</p>
+<p>\[<br>L(y, \hat{y}) = \log\left(1 + e^{-y\mathbf{x}^{\top}\mathbf{w}}\right).<br>\]</p>
 <p>this looks quite different from the cross entropy. While in this case the target is different, here \(y\in\{-1, +1\}\).</p>
 <p>Given sigmoid function has \(\sigma(x) + \sigma(-x) = 1\), when \(y\in\{-1, +1\}\), the probability distribution of target</p>
-<p>\[<br>\begin{aligned}<br>P(y = 1|x) &amp;= \frac{1}{1+\exp(-x\beta)} = \sigma(x\beta), \\<br>P(y = -1|x) &amp;= \frac{\exp(-x\beta)}{1+\exp(-x\beta)} = 1 - \sigma(x\beta) = \sigma(-x\beta)<br>\end{aligned}<br>\]</p>
-<p>could be re-formulate as \(P(y|x) = \sigma(yx\beta)\). Therefore the log likelihood function would be</p>
-<p>\[<br>\log L(\beta) = \log\prod^{n}_{i=1}f(y_{i}) = \log\prod^{n}_{i=1}\sigma(y_{i}\mathbf{x}_{i}^{\top}\beta) = \sum^{n}_{i=1}\log\left(1 + e^{-y_{i}\mathbf{x}_{i}^{\top}\beta}\right),<br>\]</p>
+<p>\[<br>\begin{aligned}<br>P(y = 1|\mathbf{x}) &amp;= \frac{1}{1+e^{-\mathbf{x}^{\top}\mathbf{w}}} = \sigma(\mathbf{x}^{\top}\mathbf{w}), \\<br>P(y = -1|\mathbf{x}) &amp;= \frac{e^{-\mathbf{x}^{\top}\mathbf{w}}}{1+e^{-\mathbf{x}^{\top}\mathbf{w}}} = 1 - \sigma(\mathbf{x}^{\top}\mathbf{w}) = \sigma(-\mathbf{x}^{\top}\mathbf{w})<br>\end{aligned}<br>\]</p>
+<p>could be re-formulate as \(P(y|\mathbf{x}) = \sigma(y\mathbf{x}^\top\mathbf{w})\). Therefore the log likelihood function would be</p>
+<p>\[<br>\log L(\mathbf{w}) = \log\prod^{n}_{i=1}f(y_{i}) = \log\prod^{n}_{i=1}\sigma(y_{i}\mathbf{x}_{i}^{\top}\mathbf{w}) = \sum^{n}_{i=1}\log\left(1 + e^{-y_{i}\mathbf{x}_{i}^{\top}\mathbf{w}}\right),<br>\]</p>
 <p>hence that form of loss function is derived.</p>
 <p>For more details about loss function, see <a href="https://en.wikipedia.org/wiki/Loss_functions_for_classification" target="_blank" rel="external">Loss functions for classification</a>.</p>
+<h4 id="3-3-The-Reason-of-Using-Sigmoid-Function"><a href="#3-3-The-Reason-of-Using-Sigmoid-Function" class="headerlink" title="3.3 The Reason of Using Sigmoid Function"></a>3.3 The Reason of Using Sigmoid Function</h4><p>Mapping the real number into probability is not the reason, there are lots of other functions can do this. A better interpretation is from GLM (Generalized Linear Model) perspective. GLM has three components:</p>
+<ul>
+<li>an exponential family distribution modeling the target</li>
+<li>a linear predictor \(\eta = \mathbf{x}^\top\mathbf{w}\), where \(\eta\) is the natural parameter in exponential family distribution</li>
+<li>a link function such that \(E(Y|\mathbf{X}) = g^{-1}(\eta)\)</li>
+</ul>
+<p>Logistic regression models the \(\text{Bernoulli}(p)\) distribution, where the natural parameter is \(\eta = \text{logit}(p)\), and the sigmoid function is therefore created by inversing the logit function.</p>
 <h3 id="4-Implementation"><a href="#4-Implementation" class="headerlink" title="4. Implementation"></a>4. Implementation</h3><p>Here are two scripts I wrote that can solve this problem, one is for <a href="https://github.com/bangdasun/Algorithms/blob/master/machine-learning/optimization/gradient-descent/gradient-descent.R" target="_blank" rel="external">gradient descent algorithm</a> and the other is <a href="https://github.com/bangdasun/Algorithms/blob/master/machine-learning/classification/logistics-regression/logistic-regression.R" target="_blank" rel="external">fit logistic regression</a>.</p>
 <p>Also <code>R</code> and <code>sklearn.linear_model (Python)</code> provide the functions. In R we have <code>glm()</code> with <code>family = binomial</code> and in <code>sklearn</code> we just need to import <code>LogisticRegression</code>. </p>
 <p>Here is one example of applying logistic regression on a binary classification problem. The two classes (blue and red) are linear separable. I draw the decision boundary generated by both built-in function in <code>R</code> (<code>glm()</code>) and the function I implemented by myself: solid line is the the built-in function and dashed line is the function I implemented. </p>
 <p><img src="/images/logistic-regression-decision-boundary.png" style="width: 800px; height: 480px"> </p>
-<p>And you can see that logistic regression is a linear classification method: the points on decision boundary is when \(P(y_{i}=1|\mathbf{x}_{i})=1/2\), where leads to \(\mathbf{x}_{i}\beta=0\), therefore it’s produce linear decision boundary.</p>
+<p>And you can see that logistic regression is a linear classification method: the points on decision boundary is when \(P(y_{i}=1|\mathbf{x}_{i})=1/2\), where leads to \(\mathbf{x}_{i}^\top\mathbf{w}=0\), therefore it’s produce linear decision boundary.</p>
 
       
     </div>
@@ -205,7 +210,7 @@
     Theme by <a href="https://github.com/CodeDaraW/Hacker" target="_blank">Hacker</a>
     </br>
     
-    &copy; 2020 Bangda
+    &copy; 2021 Bangda
     
 	
 	

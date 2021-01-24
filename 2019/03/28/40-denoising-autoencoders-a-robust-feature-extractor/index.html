@@ -60,11 +60,11 @@
   <nav class="site-navigation">
     <ul>
       
-        <li><a href="/">Home</a></li>
+        <li><a href="/">主页</a></li>
       
-        <li><a href="/tags">Tags</a></li>
+        <li><a href="/tags">标签</a></li>
       
-        <li><a href="/archives">Archives</a></li>
+        <li><a href="/archives">归档</a></li>
       
     </ul>
   </nav>
@@ -95,7 +95,7 @@
   <div class="article-content">
     <div class="entry">
       
-        <p>[Paper reading] Extracting and Composing Robust Features with Denoising Autoencoders</p>
+        <p>[Paper reading] Extracting and Composing Robust Features with Denoising Autoencoders.</p>
 <a id="more"></a>
 <p>Recently there is a kaggle competition: <a href="https://www.kaggle.com/c/santander-customer-transaction-prediction" target="_blank" rel="external">Santander Customer Transaction Prediction</a>, the data is totally anonymized. I prefer meaningful features therefore I’m not in this one, but it reminds me of another similar competition: <a href="https://www.kaggle.com/c/porto-seguro-safe-driver-prediction" target="_blank" rel="external">Porto Seguro’s Safe Driver Prediction</a>, where the 1st place solution is pretty cool by using <strong><a href="http://www.cs.toronto.edu/~larocheh/publications/icml-2008-denoising-autoencoders.pdf" target="_blank" rel="external">Denoising Autoencoders</a></strong> as a <strong>feature extractor</strong> to train models. Also I tried apply it in previous work projects, my impression was: it does not need a “bottleneck” structure like basic Autoencoders.</p>
 <h3 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1. Introduction"></a>1. Introduction</h3><p>In previous research, learning deep generative / discriminative models can be difficult, and this could be overcome by an initial unsupervised learning step that maps input features to a latent features. This success appears to be using a layer-by-layer initialization: each layer is first trained to produce a higher level representation of the observed patterns based on the representation it receives as input from the layer below. This technique has been shown empirically to avoid getting stuck in the kind of poor solutions one typically reaches with random initializations.</p>
@@ -199,7 +199,7 @@
     Theme by <a href="https://github.com/CodeDaraW/Hacker" target="_blank">Hacker</a>
     </br>
     
-    &copy; 2020 Bangda
+    &copy; 2021 Bangda
     
 	
 	

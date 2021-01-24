@@ -60,11 +60,11 @@
   <nav class="site-navigation">
     <ul>
       
-        <li><a href="/">Home</a></li>
+        <li><a href="/">主页</a></li>
       
-        <li><a href="/tags">Tags</a></li>
+        <li><a href="/tags">标签</a></li>
       
-        <li><a href="/archives">Archives</a></li>
+        <li><a href="/archives">归档</a></li>
       
     </ul>
   </nav>
@@ -95,7 +95,7 @@
   <div class="article-content">
     <div class="entry">
       
-        <p>K-means: how to select K?</p>
+        <p>K-means: a simple clustering algorithm based on distance. It is GMM (Gaussia Mixture Model) in probability perspective. </p>
 <a id="more"></a>
 <h3 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1. Introduction"></a>1. Introduction</h3><p>K-means can be quickly implemented from scratch:</p>
 <blockquote>
@@ -127,7 +127,7 @@
 <p>The idea is to standardize the curve of \(\log W_{K}\) by comparing it with its expectation under an appropriate null reference distribution of the data. The optimal \(K\) makes \(\log W_{K}\) falls the farthest below the reference curve, therefore the Gap statistic is defined as</p>
 <p>\[<br>Gap_{n}(K) = E_{n}\left[\log W_{k}\right] - \log W_{K}.<br>\]</p>
 <h4 id="2-4-Elbow-Method"><a href="#2-4-Elbow-Method" class="headerlink" title="2.4 Elbow Method"></a>2.4 Elbow Method</h4><p>Compute the within-cluster sum of square (WSS), i.e. the square of the distances of data points to cluster center. Choose \(K\) where WSS first starts to diminish. It is ambiguous from my perspective.</p>
-<h4 id="2-5-Silhouette-Method"><a href="#2-5-Silhouette-Method" class="headerlink" title="2.5 Silhouette Method"></a>2.5 Silhouette Method</h4><p>The Silhouette value measure how similar a point is to its own cluster compared to other clusters. Silhouetter value is calculated using the mean within-cluster distance \(a\) and mean nearest-cluster distance \(b\) for each data point: \((b - a) / \max(a, b)\). \(K\) with highest Silhouette value is consider better choice.</p>
+<h4 id="2-5-Silhouette-Method"><a href="#2-5-Silhouette-Method" class="headerlink" title="2.5 Silhouette Method"></a>2.5 Silhouette Method</h4><p>The Silhouette value measure how similar a point is to its own cluster compared to other clusters. Silhouette value is calculated using the mean within-cluster distance \(a\) and mean nearest-cluster distance \(b\) for each data point: \((b - a) / \max(a, b)\). \(K\) with highest Silhouette value is consider better choice.</p>
 <h4 id="2-6-Summary"><a href="#2-6-Summary" class="headerlink" title="2.6 Summary"></a>2.6 Summary</h4><p>Penalization method is from mixture model perspective, other methods are based on distance measures, as distance is the key concept in clustering algorithms.</p>
 <h3 id="3-References"><a href="#3-References" class="headerlink" title="3. References"></a>3. References</h3><ul>
 <li>Determining The Optimal Number Of Clusters: 3 Must Know Methods<ul>
@@ -191,7 +191,7 @@
     Theme by <a href="https://github.com/CodeDaraW/Hacker" target="_blank">Hacker</a>
     </br>
     
-    &copy; 2020 Bangda
+    &copy; 2021 Bangda
     
 	
 	

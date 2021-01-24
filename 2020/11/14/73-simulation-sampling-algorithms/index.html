@@ -15,7 +15,7 @@
 
   
   
-  <meta name="keywords" content="Mathematics,Statistics">
+  <meta name="keywords" content="Statistics,Mathematics">
   
 
   <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
@@ -60,11 +60,11 @@
   <nav class="site-navigation">
     <ul>
       
-        <li><a href="/">Home</a></li>
+        <li><a href="/">主页</a></li>
       
-        <li><a href="/tags">Tags</a></li>
+        <li><a href="/tags">标签</a></li>
       
-        <li><a href="/archives">Archives</a></li>
+        <li><a href="/archives">归档</a></li>
       
     </ul>
   </nav>
@@ -95,7 +95,7 @@
   <div class="article-content">
     <div class="entry">
       
-        <p>Summary on sampling algorithms in simulation</p>
+        <p>Summary on sampling algorithms in simulation: Inverse Transformation, Acceptance - Rejection Algorithm, Importance Sampling, MCMC.</p>
 <a id="more"></a>
 <h3 id="1-Inverse-Transform-Method"><a href="#1-Inverse-Transform-Method" class="headerlink" title="1. Inverse Transform Method"></a>1. Inverse Transform Method</h3><p>If \(X\) is a <strong>continuous</strong> random variable with CDF \(F\), then \(F(X)\sim Unif(0, 1)\). That means \(X\) can be simulated by drawing random samples \(U\sim Unif(0, 1)\) and feeding into \(F^{-1}\). </p>
 <p>This method works for distribution with invertible CDF, and in general works for discrete distribution too, as the CDF functions of discrete distributions are step functions.</p>
@@ -108,7 +108,7 @@
 <p>\[<br>E_{p}\left[f(X)\right] = \int f(x)p(x)dx = \int f(x)\frac{p(x)}{q(x)}q(x)dx = E_{q}\left[\frac{f(x)p(x)}{q(x)}\right].<br>\]</p>
 <p>Then we can compute \(f(x)p(x)/q(x)\) and estimate \(E_{p}\left[f(X)\right]\) by</p>
 <p>\[<br>E_{p}\left[f(X)\right] \approx \frac{1}{n}\sum^{n}_{i=1}f\left(x_{i}\right)\frac{p\left(x_{i}\right)}{q\left(x_{i}\right)}.<br>\]</p>
-
+<h3 id="4-MCMC-Markov-Chain-Monte-Carlo"><a href="#4-MCMC-Markov-Chain-Monte-Carlo" class="headerlink" title="4. MCMC (Markov Chain Monte Carlo)"></a>4. MCMC (Markov Chain Monte Carlo)</h3>
       
     </div>
 
@@ -131,7 +131,7 @@
 
     <span class="post-tags">
       <i class="icon-tags"></i>
-        <a href="/tags/Mathematics/">Mathematics</a><a href="/tags/Statistics/">Statistics</a>
+        <a href="/tags/Statistics/">Statistics</a><a href="/tags/Mathematics/">Mathematics</a>
     </span>
     
 
@@ -160,7 +160,7 @@
     Theme by <a href="https://github.com/CodeDaraW/Hacker" target="_blank">Hacker</a>
     </br>
     
-    &copy; 2020 Bangda
+    &copy; 2021 Bangda
     
 	
 	

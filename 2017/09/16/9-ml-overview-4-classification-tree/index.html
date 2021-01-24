@@ -60,11 +60,11 @@
   <nav class="site-navigation">
     <ul>
       
-        <li><a href="/">Home</a></li>
+        <li><a href="/">主页</a></li>
       
-        <li><a href="/tags">Tags</a></li>
+        <li><a href="/tags">标签</a></li>
       
-        <li><a href="/archives">Archives</a></li>
+        <li><a href="/archives">归档</a></li>
       
     </ul>
   </nav>
@@ -95,14 +95,14 @@
   <div class="article-content">
     <div class="entry">
       
-        <p>Decision tree for classification problems</p>
+        <p>There are multiple types of decision tree models for classification problem: CART, ID3, C4.5. The differences include learning algorithm (the way of splitting) and whether it can handle continuous features. In summary, CART can be applied to more general use cases.</p>
 <a id="more"></a>
 <h3 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1. Introduction"></a>1. Introduction</h3><p>Last time we go through regression tree: using decision tree (CART) to tackle regression problem. Another part of CART is <strong>classification</strong>. To make this blog easier to read, I take binary classification tree as the example, which means we use decision tree to solve binary classification problem.</p>
 <h3 id="2-Mathematical-Basis"><a href="#2-Mathematical-Basis" class="headerlink" title="2. Mathematical Basis"></a>2. Mathematical Basis</h3><h4 id="2-1-Comparisons-with-Regression-Tree"><a href="#2-1-Comparisons-with-Regression-Tree" class="headerlink" title="2.1 Comparisons with Regression Tree"></a>2.1 Comparisons with Regression Tree</h4><p>To convert regression problem to classification problem, there are several points we need to clarify:</p>
 <ul>
 <li>How to predict the class label of a region? In regression, we use the mean of target in the region \(\bar{y}\);</li>
 </ul>
-<p>For a certain region (which may include both two classes), we define the class label of the region to be the <strong>mode</strong> of labels of data points in the region, a.k.a <strong>“Majority Vote”</strong>. </p>
+<p>For a certain region (which may include both two classes), we define the class label of the region to be the <strong>mode</strong> of labels of data points in the region, a.k.a <strong>“Majority Vote”</strong>. As it is not additive, it cannot be used in GBDT.</p>
 <ul>
 <li>How to measure the performance of one split, or say which loss function to use? In regression, we use squared loss function;</li>
 </ul>
@@ -119,7 +119,7 @@
 <li><strong>Information gain</strong></li>
 </ul>
 <p>\[<br>L = -\sum^{2}_{r=1}p_{r}\sum^{1}_{k=0}p_{rk}\log(p_{rk}).<br>\]</p>
-<p>where \(p_{rk}\) is the proportion of class \(k\) in region \(r\). <strong>Note its difference with cross entropy</strong>.</p>
+<p>where \(p_{rk}\) is the proportion of class \(k\) in region \(r\). <strong>Note it is just entropy here, not cross entropy</strong>, and the loss reduction is actually <strong>mutual information</strong>. This is the basis of ID3. C4.5 uses a slightly different measure to handle high cardinal categorical features.</p>
 <p>We can plot them together (assume there are two regions and they are equal sized).</p>
 <p><img src="/images/loss-classification-tree.png" style="width: 650px; height: 400px"> </p>
 <p>When the region is mostly one category, Gini index and cross entropy will take a <strong>smaller</strong> value (which means <strong>node impurity is higher</strong>, as shown in the plot), they are better measures of the node purity.</p>
@@ -182,7 +182,7 @@
     Theme by <a href="https://github.com/CodeDaraW/Hacker" target="_blank">Hacker</a>
     </br>
     
-    &copy; 2020 Bangda
+    &copy; 2021 Bangda
     
 	
 	

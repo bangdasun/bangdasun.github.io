@@ -60,11 +60,11 @@
   <nav class="site-navigation">
     <ul>
       
-        <li><a href="/">Home</a></li>
+        <li><a href="/">主页</a></li>
       
-        <li><a href="/tags">Tags</a></li>
+        <li><a href="/tags">标签</a></li>
       
-        <li><a href="/archives">Archives</a></li>
+        <li><a href="/archives">归档</a></li>
       
     </ul>
   </nav>
@@ -95,7 +95,7 @@
   <div class="article-content">
     <div class="entry">
       
-        <p>State Space Models</p>
+        <p>State Space Models and Kalman Filter.</p>
 <a id="more"></a>
 <h3 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1. Introduction"></a>1. Introduction</h3><p>In <a href="https://bangdasun.github.io/2018/08/28/time-series-models-overview-1/" target="_blank" rel="external">Time Series Models Overview (1)</a>, I briefly go through the ARIMA Family and I use its general case SARIMAX in the work. In practice, I use <code>SAIRMAX()</code> in <code>statsmodels</code> to build the model. When I tried the simplest model - just include one lag term, and then compare the results with <code>LinearRegression()</code> in <code>sklearn</code>, the results are pretty different, which makes me very confused. Therefore recently I dig in and try to reproduce the results without using <code>statsmodels</code>. And I find SARIMAX model is implemented as <strong>State space model</strong> and the parameters are estimated by MLE via <strong>Kalman filter</strong>. So in this post I gonna simply go through it from statistical perspective.</p>
 <h3 id="2-State-Space-Model"><a href="#2-State-Space-Model" class="headerlink" title="2. State Space Model"></a>2. State Space Model</h3><p>State space model introduce a “latent” variable, a.k.a. “state” into the model. Here I just list the model form which I use - linear Gaussian state space model (more general form could be found from many resources). Take the simplest example, the state space model version of \(AR(1)\) is</p>
@@ -175,7 +175,7 @@
     Theme by <a href="https://github.com/CodeDaraW/Hacker" target="_blank">Hacker</a>
     </br>
     
-    &copy; 2020 Bangda
+    &copy; 2021 Bangda
     
 	
 	

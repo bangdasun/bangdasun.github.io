@@ -60,11 +60,11 @@
   <nav class="site-navigation">
     <ul>
       
-        <li><a href="/">Home</a></li>
+        <li><a href="/">主页</a></li>
       
-        <li><a href="/tags">Tags</a></li>
+        <li><a href="/tags">标签</a></li>
       
-        <li><a href="/archives">Archives</a></li>
+        <li><a href="/archives">归档</a></li>
       
     </ul>
   </nav>
@@ -95,36 +95,36 @@
   <div class="article-content">
     <div class="entry">
       
-        <p>Even simpler than logistic regression, and also more important</p>
+        <p>Linear Regression (LR) in practice includes regression and classification (apply sigmoid), in statistics it is purely for regression. With strong mathematical assumptions on data, linear regression is still a powerful tool and can be applied in every regression task.</p>
 <a id="more"></a>
 <h3 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1. Introduction"></a>1. Introduction</h3><p>I believe this would be the first model that you know when you start with machine learning, and I believe the space here will not be sufficient for me to illustrate its full applications and to explain why it’s widely used.</p>
 <h3 id="2-Mathematical-Basis"><a href="#2-Mathematical-Basis" class="headerlink" title="2. Mathematical Basis"></a>2. Mathematical Basis</h3><p>Linear regression is a statistical model, more specifically, it is a <strong>parametric</strong> model - this means it has some assumptions (probability distributions) about the data it models.</p>
-<h4 id="2-1-Linear-Regression"><a href="#2-1-Linear-Regression" class="headerlink" title="2.1 Linear Regression"></a>2.1 Linear Regression</h4><p>The form of linear regression model is<br>\[<br>y = \beta_{0} + \beta_{1}x_{1} + \beta_{2}x_{2}+\cdots+\beta_{p}x_{p}+\epsilon,<br>\]<br>where we assume the relationship between predictors (features) and response (target) are linear, the \(\beta\)’s are called coefficients (parameters). If we have a dataset with \(n\) observations and \(p\) predictors, linear regression is build in this form:<br>\[<br>\begin{bmatrix}<br>y_{1}\\<br>y_{2}\\<br>\vdots\\<br>y_{n}<br>\end{bmatrix} =<br>\begin{bmatrix}<br>1&amp;x_{11}&amp;x_{12}&amp;\cdots&amp;x_{1p}\\<br>1&amp;x_{21}&amp;x_{22}&amp;\cdots&amp;x_{2p}\\<br>\vdots&amp;\vdots&amp;\vdots&amp;\ddots&amp;\vdots\\<br>1&amp;x_{n1}&amp;x_{n2}&amp;\cdots&amp;x_{np}<br>\end{bmatrix}<br>\begin{bmatrix}<br>\beta_{0}\\<br>\beta_{1}\\<br>\beta_{2}\\<br>\vdots\\<br>\beta_{p}<br>\end{bmatrix} +<br>\begin{bmatrix}<br>\epsilon_{1}\\<br>\epsilon_{2}\\<br>\vdots\\<br>\epsilon_{n}<br>\end{bmatrix}\text{,  or  } \mathbf{y} = \mathbf{X}\beta + \mathbf{\epsilon}.<br>\]</p>
+<h4 id="2-1-Linear-Regression"><a href="#2-1-Linear-Regression" class="headerlink" title="2.1 Linear Regression"></a>2.1 Linear Regression</h4><p>The form of linear regression model is<br>\[<br>y = w_{0} + w_{1}x_{1} + w_{2}x_{2} + \cdots + w_{p}x_{p} + \epsilon,<br>\]<br>where we assume the relationship between predictors (features) and response (target) are linear, the \(w\)’s are called coefficients (parameters). If we have a dataset with \(n\) observations and \(p\) predictors, linear regression is build in this form:<br>\[<br>\begin{bmatrix}<br>y_{1}\\<br>y_{2}\\<br>\vdots\\<br>y_{n}<br>\end{bmatrix} =<br>\begin{bmatrix}<br>1&amp;x_{11}&amp;x_{12}&amp;\cdots&amp;x_{1p}\\<br>1&amp;x_{21}&amp;x_{22}&amp;\cdots&amp;x_{2p}\\<br>\vdots&amp;\vdots&amp;\vdots&amp;\ddots&amp;\vdots\\<br>1&amp;x_{n1}&amp;x_{n2}&amp;\cdots&amp;x_{np}<br>\end{bmatrix}<br>\begin{bmatrix}<br>w_{0}\\<br>w_{1}\\<br>w_{2}\\<br>\vdots\\<br>w_{p}<br>\end{bmatrix} +<br>\begin{bmatrix}<br>\epsilon_{1}\\<br>\epsilon_{2}\\<br>\vdots\\<br>\epsilon_{n}<br>\end{bmatrix}\text{,  or  } \mathbf{y} = \mathbf{X}\mathbf{w} + \mathbf{\epsilon}.<br>\]</p>
 <p>where \(\epsilon\) is known as <strong>random error</strong>, or <strong>noise</strong>, which cannot be observed, it includes all of factors that cannot be explained by the predictors.</p>
 <h4 id="1-2-Model-Assumptions"><a href="#1-2-Model-Assumptions" class="headerlink" title="1.2 Model Assumptions"></a>1.2 Model Assumptions</h4><p>The basic assumptions of linear regression includes</p>
 <ul>
 <li>\(\epsilon\) is <strong>i.i.d.</strong> with zero mean fixed variance \(\sigma^{2}\) Normal distribution, \(\epsilon\sim N(0, \sigma^{2})\);</li>
 <li>\(\epsilon\) is independent with \(\mathbf{X}\);</li>
 </ul>
-<p>Based on the first assumption and the property of Normal distribution, we can derive that the target has an implicit assumption: \(\mathbf{y}\sim N(\mathbf{X}\beta, \sigma^{2})\).</p>
-<h4 id="1-3-Parameters-Estimation"><a href="#1-3-Parameters-Estimation" class="headerlink" title="1.3 Parameters Estimation"></a>1.3 Parameters Estimation</h4><h5 id="1-3-1-Ordinary-Least-Squre"><a href="#1-3-1-Ordinary-Least-Squre" class="headerlink" title="1.3.1 Ordinary Least Squre"></a>1.3.1 Ordinary Least Squre</h5><p>No differences with other supervised learning problem, to estimate the coefficients we need to minimize the loss function of model. Usually we use <strong>squared loss</strong> since it has good property (discuss later in this post), sometimes other loss functions like <strong>absolute loss</strong> is also used. If we choose squared loss, we are actually on the track of ordinary least square (<strong>OLS</strong>), i.e. reduce <strong>RSS (Residual Sum of Squares)</strong> ,</p>
-<p>\[<br>\hat{\beta} = \arg\min_{\beta} \sum^{n}_{i=1}(y_{i} - \beta_{0}-\beta_{1}x_{i1}-\cdots-\beta_{p}x_{ip})^{2} = \arg\min_{\beta} (\mathbf{y}-\mathbf{X}\beta)^\top(\mathbf{y}-\mathbf{X}\beta),<br>\]</p>
+<p>Based on the first assumption and the property of Normal distribution, we can derive that the target has an implicit assumption: \(\mathbf{y}\sim N(\mathbf{X}\mathbf{w}, \sigma^{2})\).</p>
+<h4 id="1-3-Parameters-Estimation"><a href="#1-3-Parameters-Estimation" class="headerlink" title="1.3 Parameters Estimation"></a>1.3 Parameters Estimation</h4><h5 id="1-3-1-Ordinary-Least-Squre"><a href="#1-3-1-Ordinary-Least-Squre" class="headerlink" title="1.3.1 Ordinary Least Squre"></a>1.3.1 Ordinary Least Squre</h5><p>No differences with other supervised learning problem, to estimate the coefficients we need to minimize the loss function of model. Usually we use <strong>squared loss</strong> since it has good property (discuss later in this post), sometimes other loss functions like <strong>absolute loss</strong> is also used when we hope the model is less sensitive to outliers. If we choose squared loss, we are actually on the track of ordinary least square (<strong>OLS</strong>), i.e. reduce <strong>RSS (Residual Sum of Squares)</strong> ,</p>
+<p>\[<br>\hat{\mathbf{w}} = \arg\min_{\mathbf{w}} \sum^{n}_{i=1}(y_{i} - w_{0}-w_{1}x_{i1}-\cdots-w_{p}x_{ip})^{2} = \arg\min_{\mathbf{w}} (\mathbf{y}-\mathbf{X}\mathbf{w})^\top(\mathbf{y}-\mathbf{X}\mathbf{w}),<br>\]</p>
 <p>and we can solve it explicitly,</p>
-<p>\[<br>\begin{aligned}<br>L(\beta) =~&amp; \left(\mathbf{y} - \mathbf{X}\beta\right)^\top\left(\mathbf{y} - \mathbf{X}\beta\right) \\<br>​         =~&amp; \mathbf{y}^\top\mathbf{y} - 2\mathbf{X}^\top\mathbf{y}\beta^\top + \beta^\top\mathbf{X}^\top\mathbf{X}\beta,<br>\end{aligned}<br>\]</p>
+<p>\[<br>\begin{aligned}<br>L(\mathbf{w}) =~&amp; \left(\mathbf{y} - \mathbf{X}\mathbf{w}\right)^\top\left(\mathbf{y} - \mathbf{X}\mathbf{w}\right) \\<br>​         =~&amp; \mathbf{y}^\top\mathbf{y} - 2\mathbf{X}^\top\mathbf{y}\mathbf{w}^\top + \mathbf{w}^\top\mathbf{X}^\top\mathbf{X}\mathbf{w},<br>\end{aligned}<br>\]</p>
 <p>take the gradient and set it equal to 0,</p>
-<p>\[<br>\nabla_{\beta} L(\beta) = -2\mathbf{X}^\top\mathbf{y} + 2\mathbf{X}^\top\mathbf{X}\beta = 0<br>\longrightarrow \mathbf{X}^\top\mathbf{X}\beta = \mathbf{X}^\top\mathbf{y}\longrightarrow \beta = \left(\mathbf{X}^\top\mathbf{X}\right)^{-1}\mathbf{X}^\top\mathbf{y}.<br>\]</p>
+<p>\[<br>\begin{aligned}<br>&amp;\nabla_{\mathbf{w}} L(\mathbf{w}) = -2\mathbf{X}^\top\mathbf{y} + 2\mathbf{X}^\top\mathbf{X}\mathbf{w} = 0 \\<br>\Longrightarrow~&amp; \mathbf{X}^\top\mathbf{X}\mathbf{w} = \mathbf{X}^\top\mathbf{y} \\<br>\Longrightarrow~&amp; \mathbf{w} = \left(\mathbf{X}^\top\mathbf{X}\right)^{-1}\mathbf{X}^\top\mathbf{y}.<br>\end{aligned}<br>\]</p>
 <p>And notice that, this requires \(\mathbf{X}^\top\mathbf{X}\) is <strong>invertible</strong>, \(n\geq p\).</p>
 <h5 id="1-3-2-Maximum-Likelihood-Estimates"><a href="#1-3-2-Maximum-Likelihood-Estimates" class="headerlink" title="1.3.2 Maximum Likelihood Estimates"></a>1.3.2 Maximum Likelihood Estimates</h5><p>Think about <strong>why we use squared loss?</strong> why it is different with absolute loss? Well let’s first throw away OLS, in statistics <strong>MLE (Maximum Likelihood Estimates)</strong> is always one of answers.</p>
-<p>We already assume that the error term has normal distribution, i.e. \(\epsilon\sim N(0,\sigma^2)\), and \(\mathbf{X}\) is fixed and independent with error term, hence \(y_{i}\) would also be Normal distribution, \(y_{i}\sim N(\mathbf{x}_{i}\beta, \sigma^{2})\). Also all observations are independent, therefore we get<br>\[<br>\begin{aligned}<br>\hat{\beta}_{mle} &amp;~= \arg\max_{\beta}f(\mathbf{y}, \mathbf{X}) = \arg\max_{\beta}\prod^{n}_{i=1}f(y_{i},\mathbf{x}_{i}) = \arg\max_{\beta}\prod^{n}_{i=1}f(y_{i}|\mathbf{x}_{i})f(\mathbf{x}_{i}) \\<br>​                   &amp;~= \arg\max_{\beta}\prod^{n}_{i=1}\frac{1}{\sqrt{2\pi}\sigma}\exp\left\{-\frac{(y_{i}-\mathbf{x}_{i}\beta)^{2}}{2\sigma^{2}}\right\} \\<br>​                   &amp;~= \arg\max_{\beta} -\sum^{n}_{i=1}(y_{i}-\mathbf{x}_{i}\beta)^{2} \\<br>​                   &amp;~= \arg\min_{\beta} \sum^{n}_{i=1}(y_{i}-\mathbf{x}_{i}\beta)^{2}<br>\end{aligned}<br>\]<br>see that? under this assumption, \(\hat{\beta}_{ols} = \hat{\beta}_{mle}\). That’s one of the perspective to explain why we would like use <strong>squared loss in linear regression</strong>, and keep in mind that this is based on our assumptions on \(\epsilon\).</p>
+<p>We already assume that the error term has normal distribution, i.e. \(\epsilon\sim N(0,\sigma^2)\), and \(\mathbf{X}\) is fixed and independent with error term, hence \(y_{i}\) would also be Normal distribution, \(y_{i}\sim N(\mathbf{x}_{i}^\top\mathbf{w}, \sigma^{2})\). Also all observations are independent, therefore we get<br>\[<br>\begin{aligned}<br>\hat{\mathbf{w}}_{mle} &amp;~= \arg\max_{\mathbf{w}}f(\mathbf{y}, \mathbf{X}) = \arg\max_{\mathbf{w}}\prod^{n}_{i=1}f(y_{i},\mathbf{x}_{i}) = \arg\max_{\mathbf{w}}\prod^{n}_{i=1}f(y_{i}|\mathbf{x}_{i})f(\mathbf{x}_{i}) \\<br>​                   &amp;~= \arg\max_{\mathbf{w}}\prod^{n}_{i=1}\frac{1}{\sqrt{2\pi}\sigma}\exp\left\{-\frac{(y_{i}-\mathbf{x}_{i}^\top\mathbf{w})^{2}}{2\sigma^{2}}\right\} \\<br>​                   &amp;~= \arg\max_{\mathbf{w}} -\sum^{n}_{i=1}(y_{i}-\mathbf{x}_{i}^\top\mathbf{w})^{2} \\<br>​                   &amp;~= \arg\min_{\mathbf{w}} \sum^{n}_{i=1}(y_{i}-\mathbf{x}_{i}^\top\mathbf{w})^{2}<br>\end{aligned}<br>\]<br>see that? under this assumption, \(\hat{\mathbf{w}}_{ols} = \hat{\mathbf{w}}_{mle}\). That’s one of the perspective to explain why we would like use <strong>squared loss in linear regression</strong>, and keep in mind that this is based on our assumptions on \(\epsilon\).</p>
 <h5 id="1-3-3-Numerical-Methods"><a href="#1-3-3-Numerical-Methods" class="headerlink" title="1.3.3 Numerical Methods"></a>1.3.3 Numerical Methods</h5><p>Another commonly used methods to estimate parameters is using <strong>gradient descent</strong>-ish algorithm to find the minimal of loss function, given gradient of squared loss function is</p>
-<p>\[<br>\nabla_{\beta} L(\beta) = -2\mathbf{X}^\top\mathbf{y} + 2\mathbf{X}^\top\mathbf{X}\beta<br>\]</p>
-<p>therefore the <strong>update function</strong> for \(\beta\) is</p>
-<p>\[<br>\beta_{t+1}  = \beta_{t} - \alpha\nabla_{\beta} L(\beta) = \beta_{t} - \alpha\left(-2\mathbf{X}^\top\mathbf{y} + 2\mathbf{X}^\top\mathbf{X}\beta_{t}\right).<br>\]</p>
+<p>\[<br>\nabla_{\mathbf{w}} L(\mathbf{w}) = -2\mathbf{X}^\top\mathbf{y} + 2\mathbf{X}^\top\mathbf{X}\mathbf{w}<br>\]</p>
+<p>therefore the <strong>update function</strong> for \(\mathbf{w}\) is</p>
+<p>\[<br>\mathbf{w}_{t+1}  = \mathbf{w}_{t} - \alpha\nabla_{\mathbf{w}} L(\mathbf{w}) = \mathbf{w}_{t} - \alpha\left(-2\mathbf{X}^\top\mathbf{y} + 2\mathbf{X}^\top\mathbf{X}\mathbf{w}_{t}\right).<br>\]</p>
 <p>where \(\alpha\) is the learning rate.</p>
 <h3 id="3-Practical-Issues"><a href="#3-Practical-Issues" class="headerlink" title="3. Practical Issues"></a>3. Practical Issues</h3><p>Given linear regression is a simple parametric model, its assumptions are usually hard to achieve.</p>
 <h4 id="3-1-How-good-the-model-it-is"><a href="#3-1-How-good-the-model-it-is" class="headerlink" title="3.1 How good the model it is?"></a>3.1 How good the model it is?</h4><p>There are multiple statistical tests can be used to give probabilistic statements about the estimated parameters:</p>
 <ul>
-<li>t-test: whether single coefficients \(\beta_{i}\) is statistical significant? In other words, is \(x_{i}\) (feature \(i\)) useful in predicting \(y\)?</li>
+<li>t-test: whether single coefficients \(w_{i}\) is statistical significant? In other words, is \(x_{i}\) (feature \(i\)) useful in predicting \(y\)?</li>
 <li>F-test: whether multiple coefficients are statistical significant?</li>
 </ul>
 <p>But usually people (non-statistics guys) just care about the RMSE on test data…</p>
@@ -133,7 +133,7 @@
 <li>time series data</li>
 <li>duplicate data (e.g. double the data by accident)</li>
 </ul>
-<h4 id="3-3-Multi-Collinearity"><a href="#3-3-Multi-Collinearity" class="headerlink" title="3.3 Multi-Collinearity"></a>3.3 Multi-Collinearity</h4><p>This means some features are highly correlated. Consider the extreme case that there are two identical features, this will make \(\mathbf{X}^\top\mathbf{X}\) not a full rank matrix, therefore the solutions \(\beta\) will be <strong>unstable</strong>, which is possible to give counter-intuitive results in interpreting model.</p>
+<h4 id="3-3-Multi-Collinearity"><a href="#3-3-Multi-Collinearity" class="headerlink" title="3.3 Multi-Collinearity"></a>3.3 Multi-Collinearity</h4><p>This means some features are highly correlated. Consider the extreme case that there are two identical features, this will make \(\mathbf{X}^\top\mathbf{X}\) not a full rank matrix, therefore the solutions \(\mathbf{w}\) will be <strong>unstable</strong>, which is possible to give counter-intuitive results in interpreting model.</p>
 <h4 id="3-4-Outliers"><a href="#3-4-Outliers" class="headerlink" title="3.4 Outliers"></a>3.4 Outliers</h4><p>Given the loss function of linear regression is squared loss by “default”, it will be more sensitive to extreme large values. Removing outliers or log transformation could make the model more <strong>robust</strong>.</p>
 <h3 id="4-Implementation"><a href="#4-Implementation" class="headerlink" title="4. Implementation"></a>4. Implementation</h3><p>We can estimate the coefficients both explicitly and numerically. For numerical computing, we will use gradient descent again to find the minima of the loss function, <a href="https://github.com/bangdasun/Statistical-machine-learning/blob/master/algorithms/regression/linear-regression/self-defined-ols-gd.R" target="_blank" rel="external">here</a> is implementation I did.</p>
 <p>And in <code>R</code> we have <code>lm()</code> and in <code>sklearn.linear_model</code> we have <code>LinearRegression()</code>.</p>
@@ -189,7 +189,7 @@
     Theme by <a href="https://github.com/CodeDaraW/Hacker" target="_blank">Hacker</a>
     </br>
     
-    &copy; 2020 Bangda
+    &copy; 2021 Bangda
     
 	
 	

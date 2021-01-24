@@ -60,11 +60,11 @@
   <nav class="site-navigation">
     <ul>
       
-        <li><a href="/">Home</a></li>
+        <li><a href="/">主页</a></li>
       
-        <li><a href="/tags">Tags</a></li>
+        <li><a href="/tags">标签</a></li>
       
-        <li><a href="/archives">Archives</a></li>
+        <li><a href="/archives">归档</a></li>
       
     </ul>
   </nav>
@@ -95,7 +95,7 @@
   <div class="article-content">
     <div class="entry">
       
-        <p>[Paper reading] Distributed Representations of Words and Phrases and their Compositionality</p>
+        <p>[Paper reading] Distributed Representations of Words and Phrases and their Compositionality.</p>
 <a id="more"></a>
 <h3 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1. Introduction"></a>1. Introduction</h3><p>This is the second paper I read about <strong>Word2Vec</strong>. In the last paper reading note, Mikolov et al presented two models to learn word distributed representations, a.k.a. word embeddings. However, there are several issues - <strong>hard to train the model efficiently</strong>, <strong>cannot get high quality word vectors</strong>, etc. In this paper, several tricks are introduced to improve the model training efficiency.</p>
 <h3 id="2-Highlights"><a href="#2-Highlights" class="headerlink" title="2. Highlights"></a>2. Highlights</h3><p>Some tricks and results:</p>
@@ -108,7 +108,7 @@
 <h4 id="2-1-Skip-gram-Model"><a href="#2-1-Skip-gram-Model" class="headerlink" title="2.1 Skip-gram Model"></a>2.1 Skip-gram Model</h4><center><br>  <img src="/images/skipgram.PNG" style="width: 700px; height: 300px"> <br></center>
 
 <p>As shown last time, <strong>skip-gram model is predict the context based on current word</strong> \(w_{t}\). <strong>In formal, find word representations that are useful for predicting surrounding words in a sentence or document.</strong> Given a sequence of training words \(w_{1}, w_{2},\cdots, w_{T}\), maximize</p>
-<p>\[<br>\frac{1}{T} \sum^{T}_{t=1}\sum_{-c\leq j\leq, j\neq 0}\log P\left(w_{t+j}|w_{t}\right),<br>\]</p>
+<p>\[<br>\frac{1}{T} \sum^{T}_{t=1}\sum_{-c\leq j\leq c, j\neq 0}\log P\left(w_{t+j}|w_{t}\right),<br>\]</p>
 <p>\(c\) is the size of training context, larger \(c\) results in more training examples and thus can lead to higher accuracy.</p>
 <p>The probability of context given current word is defined as </p>
 <p>\[<br>P(w_{O}|w_{I}) = \frac{\exp\left(v’^\top_{w_{O}}v_{w_{I}}\right)}{\sum^{W}_{w=1}\exp\left(v’^\top_{w_{w}}v_{w_{I}}\right)}<br>\]</p>
@@ -116,7 +116,7 @@
 <h4 id="2-2-Hierarchical-Softmax"><a href="#2-2-Hierarchical-Softmax" class="headerlink" title="2.2 Hierarchical Softmax"></a>2.2 Hierarchical Softmax</h4><p><strong>This is a computationally efficient approximation for full softmax</strong>. In full softmax, the width of the layer is \(W\), and the index of highest probability is the prediction index of word in vocabulary. Use better data structure could improve the computation. Bengio et al previous use binary tree representation. Here they use similar way, use Huffman tree to represent the output layer with \(W\) words as its leaves, for each node, explicitly represents the relative probabilities of its child nodes. So calculate the softmax output of a word is actually along a path from the root to leaf.</p>
 <p>Let \(n(w, j)\) be the \(j\)th node on path from root to \(w\), \(L(w)\) be the length of the path (equivalent to the depth of the tree which is \(O(\log W)\)), so \(n(w, 1)\) is root, \(n(w, L(w))\) is \(w\). For any inner node, let \(ch(n)\) be an arbitrary fixed child of \(n\) and let \(\mathbb{[} x\mathbb{]}\) be 1 if \(x\) is true and -1 otherwise. Then hierarchical softmax define</p>
 <p>\[<br>P(w_{O}|w_{I}) = \prod^{L(w)-1}_{j=1}\sigma\left(\mathbb{[}n(w, j+1) = ch\left(n(w, j)\right) \mathbb{]}v’^\top_{n(w,j)} v_{w_{I}}\right)<br>\]</p>
-<p>where \(sigma(x) = 1 / (1 + e^{-x})\) is the sigmoid function. It can be verified that \(\sum^{W}_{w=1}P(w|w_{I}) = 1\).</p>
+<p>where \(\sigma(x) = 1 / (1 + e^{-x})\) is the sigmoid function. It can be verified that \(\sum^{W}_{w=1}P(w|w_{I}) = 1\).</p>
 <p>The probability definition looks complex, but the intuition is simple. Use the figure from<br><a href="https://arxiv.org/pdf/1411.2738.pdf" target="_blank" rel="external">Xin Rong, word2vec Parameter Learning Explained</a> (this is the paper that strongly recommended if you have difficulities in understanding Word2Vec),</p>
 <center><br>  <img src="/images/hierarchicalsoftmax.PNG" style="width: 700px; height: 200px"> <br></center>
 
@@ -178,7 +178,7 @@
     Theme by <a href="https://github.com/CodeDaraW/Hacker" target="_blank">Hacker</a>
     </br>
     
-    &copy; 2020 Bangda
+    &copy; 2021 Bangda
     
 	
 	

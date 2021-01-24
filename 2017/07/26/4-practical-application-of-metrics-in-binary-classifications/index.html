@@ -60,11 +60,11 @@
   <nav class="site-navigation">
     <ul>
       
-        <li><a href="/">Home</a></li>
+        <li><a href="/">主页</a></li>
       
-        <li><a href="/tags">Tags</a></li>
+        <li><a href="/tags">标签</a></li>
       
-        <li><a href="/archives">Archives</a></li>
+        <li><a href="/archives">归档</a></li>
       
     </ul>
   </nav>
@@ -95,7 +95,7 @@
   <div class="article-content">
     <div class="entry">
       
-        <p>How to deal with metrics in binary classifications</p>
+        <p>Choice of evaluation metrics in classification problem.</p>
 <a id="more"></a>
 <h3 id="1-Different-Types-of-Error"><a href="#1-Different-Types-of-Error" class="headerlink" title="1. Different Types of Error"></a>1. Different Types of Error</h3><p>This time we will discuss more details about the application of metrics: <strong>TPR</strong> (<strong>Recall</strong>), <strong>FPR</strong>, <strong>Precision</strong>, <strong>PRC</strong>, <strong>ROC</strong>/<strong>AUC</strong> and <strong>F1-score</strong>.</p>
 <p>We will have different requirements when we facing different problems. Actually it depends on our tolerance of different types of error. Therefore we have two scenarios:</p>
@@ -114,9 +114,9 @@
 <p>For instance, in flood prediction we will make alarm if we expect there will be a flood. Define “flood” as positive. We hope that all of the flood can be detected therefore we have high tolerance of <strong>false positive</strong>. Since typically the losses made by flood is always higher than cost of extra precaution. In general, if missing positive (<strong>false negative</strong>) would cost a lot, we hope high recall.</p>
 </blockquote>
 <p>As a result, we can see that <strong>Accuracy</strong> is not always the goal we want to achieve, sometimes we may focus on reducing certain types of error rather than total error. </p>
-<h3 id="2-ROC-and-PRC"><a href="#2-ROC-and-PRC" class="headerlink" title="2. ROC and PRC"></a>2. ROC and PRC</h3><p>Unfortunately I cannot summarize how to select algorithms from ROC and PRC (at least for now). We need discuss that with certain examples. One thing is clear that ROC is draw from a set of pairs of FPR and TPR with different threshold (we can always get the probability of data to be one of the classes).</p>
-<p>In addition, there are numerous imbalanced classification problems, the situations are more complex. For instance, it is possible that the algorithm performs terrible on PRC but looks perfect on ROC. Therefore don’t forget to check PRC after plotting ROC, especially for imbalanced data set. More detailed research can be found <a href="http://mark.goadrich.com/articles/davisgoadrichcamera2.pdf" target="_blank" rel="external">here</a>.</p>
-<p>However AUC could provide direct support to us since it is a straightforward way to measure the performance of algorithm.</p>
+<h3 id="2-ROC-AUC-and-PR-AUC"><a href="#2-ROC-AUC-and-PR-AUC" class="headerlink" title="2. ROC AUC and PR AUC"></a>2. ROC AUC and PR AUC</h3><p>In general ROC AUC is more commonly used. The ROC curve is draw from a set of pairs of FPR (x-axis) and TPR (y-axis) with different threshold (we can always get the probability of data to be one of the classes), and PR curve is draw from pairs of Recall (i.e. TPR, x-axis) and Precision (y-axis) with different threshold.</p>
+<p>In addition, there are numerous imbalanced classification problems in real world, the situations are more complex. For instance, it is possible that the algorithm performs terrible on PR AUC but looks perfect on ROC AUC, one reason is <strong>ROC AUC is insensitive to imbalanced data</strong>. <strong>Therefore for imbalanced data set, do check both of ROC AUC and PR AUC</strong>. </p>
+<p>More detailed research can be found in this paper: <a href="http://mark.goadrich.com/articles/davisgoadrichcamera2.pdf" target="_blank" rel="external">The Relationship Between Precision-Recall and ROC Curves</a>.</p>
 <h3 id="3-Summary"><a href="#3-Summary" class="headerlink" title="3. Summary"></a>3. Summary</h3><p>There are still more issues need to be considered in real world applications since we need to incorporate more factors. Thus it’s always a good habit that don’t always rely on one metrics.</p>
 <h3 id="4-Reference"><a href="#4-Reference" class="headerlink" title="4. Reference"></a>4. Reference</h3><ul>
 <li>Jesse Davis, Mark Goadrich, The Relationship Betwen Precision-Recall and ROC Curves</li>
@@ -173,7 +173,7 @@
     Theme by <a href="https://github.com/CodeDaraW/Hacker" target="_blank">Hacker</a>
     </br>
     
-    &copy; 2020 Bangda
+    &copy; 2021 Bangda
     
 	
 	
