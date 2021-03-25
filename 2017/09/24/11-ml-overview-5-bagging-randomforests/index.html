@@ -60,13 +60,13 @@
   <nav class="site-navigation">
     <ul>
       
-        <li><a href="/">Home</a></li>
+        <li><a href="/">主页</a></li>
       
-        <li><a href="/categories">Categories</a></li>
+        <li><a href="/categories">分类</a></li>
       
-        <li><a href="/tags">Tags</a></li>
+        <li><a href="/tags">标签</a></li>
       
-        <li><a href="/archives">Archives</a></li>
+        <li><a href="/archives">归档</a></li>
       
     </ul>
   </nav>
@@ -84,7 +84,7 @@
   <div class="article-top-meta">
     <span class="posted-on">
       <a href="/2017/09/24/11-ml-overview-5-bagging-randomforests/" rel="bookmark">
-        <time class="entry-date published" datetime="2017-09-25T00:19:01.000Z">
+        <time class="entry-date published" datetime="2017-09-24T12:19:01.000Z">
           2017-09-24
         </time>
       </a>
@@ -99,8 +99,8 @@
       
         <p>Bagging and Random Forest are one type of ensemble algorithms, they combine the weak learners (decision trees) by averaging or voting their predictions. Bagging is based on bootstrap, resamples data with replacement as new training data for individual trees. Random Forest is based on Bagging and feature subsample at each tree node split.</p>
 <a id="more"></a>
-<h3 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1. Introduction"></a>1. Introduction</h3><p>After decision tree section we can go deeper. Bagging and Random Forests can be also regarded as an implementation of <strong>Collective Intelligence</strong>. Which means rather than single model, now we get many models in our hand. The names of these two algorithms are intuitive: for “Bagging”, image that we have a “bag” of decision trees and let them work together (actually “bagging” is for “bootstrap aggregation”); for “random forests” we have similar description, we are now facing “forests” rather than single tree. </p>
-<h3 id="2-Mathematical-Basis"><a href="#2-Mathematical-Basis" class="headerlink" title="2. Mathematical Basis"></a>2. Mathematical Basis</h3><h4 id="2-1-Bootstrap-and-Bagging"><a href="#2-1-Bootstrap-and-Bagging" class="headerlink" title="2.1 Bootstrap and Bagging"></a>2.1 Bootstrap and Bagging</h4><p>First let’s introduce <strong>bootstrap</strong>, it is the base of this two algorithms. Bootstrap is a widely used method in statistics and other fields and it related to “Resampling”. One of the example is <strong>parameter estimation</strong>. Consider we have a random sample and we would like to estimate the population mean.  We usually use sample mean as the estimation of population mean since this is the “MLE”. But what if we want to know how confidence are we to this estimation? Well we might assume that the sample mean has Normal distribution (Do you remember Central Limit Theorem?) and do some inference; or we can refer Bayesian statisticians for help, set up a prior and we observe the data and then simulate the posterior. And we can also use bootstrap. Here is the idea:</p>
+<h3 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1. Introduction"></a>1. Introduction</h3><p>Bagging and Random Forests are regarded as implementation of <strong>Collective Intelligence</strong>. Which means rather than single model, now we get many models in our hand. The names of these two algorithms are intuitive: for “Bagging”, image that we have a “bag” of decision trees and let them work together (actually “bagging” is for “bootstrap aggregation”); for “random forests” we have similar description, we are now facing “forests” rather than single tree. </p>
+<h3 id="2-Mathematical-Basis"><a href="#2-Mathematical-Basis" class="headerlink" title="2. Mathematical Basis"></a>2. Mathematical Basis</h3><h4 id="2-1-Bootstrap-and-Bagging"><a href="#2-1-Bootstrap-and-Bagging" class="headerlink" title="2.1 Bootstrap and Bagging"></a>2.1 Bootstrap and Bagging</h4><p>First let’s introduce <strong>bootstrap</strong>, it is the base of this two algorithms. Bootstrap is a widely used method in statistics and other fields and it related to “Resampling”. One example is <strong>parameter estimation</strong>. Consider we have a random sample and we would like to estimate the population mean. We usually use sample mean as the estimation of population mean since this is the “MLE”. But what if we want to know how confidence are we to this estimation? Well we might assume that the sample mean has Normal distribution, using Central Limit Theorem and do some inference; or we can switch to Bayesian statisticians, set up a prior and we observe the data and then simulate the posterior. And we can also use bootstrap. Here is the idea:</p>
 <blockquote>
 <ol>
 <li>We sample our data <strong>with replacement</strong> and get a new sample with same sample size, therefore it’s possible that there are duplicates in new sample;</li>
@@ -125,8 +125,8 @@
 <p>\[<br>\lim_{n\rightarrow\infty}\left(1-\frac{1}{n}\right)^{n} = \frac{1}{e} \approx 0.367.<br>\]</p>
 <p>This implies that approximately 63% of data is used in Bagging (just approximation!). The rest of data that we are not used is called <strong>out-of-bag (OOB)</strong> data. It’s important to know how well does bagging perform on the out-of-bag, we need to estimate <strong>out-of-bag-error</strong>. It can be shown that with B sufficiently large, OOB error is virtually equivalent to leave-one-out cross-validation error\(^{[1]}\).</p>
 <h4 id="2-2-Random-Forest"><a href="#2-2-Random-Forest" class="headerlink" title="2.2 Random Forest"></a>2.2 Random Forest</h4><p>Then let’s see Random Forests. </p>
-<p>The key word is “Random”, which means at <strong>each step</strong> of growing tree (<strong>find a split</strong>), we only use a subset of features rather than all of them, other steps is same as Bagging.</p>
-<p>In practice, the sample size for features is denoted as <code>max_features</code> (in <code>sklearn</code> or <code>randomForest (R)</code>), this is one of the hyper-parameters of random forests algorithms. Usually we may started with \(m=\sqrt{p}\).</p>
+<p>The key word is “Random”, which means at <strong>each step</strong> of growing tree (<strong>find a split</strong>), we only use a subset of features rather than all of them, other steps are same as Bagging, this is the only difference between Random Forest and Bagging.</p>
+<p>In practice, the sample size for features is denoted as <code>max_features</code> (in <code>sklearn</code> or <code>randomForest (R)</code>), this is one of the hyper-parameters of random forests algorithms. Usually we started with \(m=\sqrt{p}\).</p>
 <h3 id="3-Connection-between-Bagging-and-Random-Forests"><a href="#3-Connection-between-Bagging-and-Random-Forests" class="headerlink" title="3. Connection between Bagging and Random Forests"></a>3. Connection between Bagging and Random Forests</h3><p>If we set the sample size of features equal to the total number of features, random forests is same as bagging.</p>
 <p>We can see the difference between bagging and random forests is the number of features. Random forests can <strong>de-correlates</strong> the decision trees using sampling. Since it is possible that there is an important feature and it will dominant all decision trees if we just include all features, the decision trees are less diversity.</p>
 <h3 id="4-Summary"><a href="#4-Summary" class="headerlink" title="4. Summary"></a>4. Summary</h3><h4 id="4-1-Pros-and-Cons"><a href="#4-1-Pros-and-Cons" class="headerlink" title="4.1 Pros and Cons"></a>4.1 Pros and Cons</h4><p>The good things about bagging and random forest:</p>
@@ -137,9 +137,9 @@
 </ul>
 <p>But:</p>
 <ul>
-<li>Loss of interpretations because of ensemble machanism </li>
+<li>Loss of interpretations because of ensemble machanism.</li>
 </ul>
-<h4 id="4-2-Feature-Importance"><a href="#4-2-Feature-Importance" class="headerlink" title="4.2 Feature Importance"></a>4.2 Feature Importance</h4><p>Decision tree training is done by splitting, and splitting is done by selecting the combination of feature and value that reduce the most error (impurity). This quantity could be recorded along with each feature across all decision tree, the higher this quantity is the more important the feature it is. This method is by default used in <code>sklearn</code> and other tree ensemble algorithms such as XGBoost and LightGBM.</p>
+<h4 id="4-2-Feature-Importance"><a href="#4-2-Feature-Importance" class="headerlink" title="4.2 Feature Importance"></a>4.2 Feature Importance</h4><p>Decision tree training is done by recursively splitting, and splitting is done by selecting the combination of feature and value that reduce the most error (impurity). This quantity could be recorded along with each feature across all decision tree, the higher this quantity is the more important the feature it is. This method is by default used in <code>sklearn</code> and other tree ensemble algorithms such as XGBoost and LightGBM.</p>
 <h3 id="5-Implementation"><a href="#5-Implementation" class="headerlink" title="5. Implementation"></a>5. Implementation</h3><p>The implementations of bagging and random forests are based on decision tree, I invoke <code>DecisionTreeClassifier</code> in <code>sklearn</code> and here is the <a href="https://github.com/bangdasun/Algorithms/blob/master/machine-learning/classification/ensemble-bagging-randomforests/bagging_random-forest.ipynb" target="_blank" rel="external">implementation</a>.</p>
 <h3 id="6-References"><a href="#6-References" class="headerlink" title="6. References"></a>6. References</h3><ul>
 <li>Gareth James, Daniela Witten, Trevor Hastie, Robert Tishirani, Introduction to Statistical Learning.</li>

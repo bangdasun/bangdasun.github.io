@@ -60,13 +60,13 @@
   <nav class="site-navigation">
     <ul>
       
-        <li><a href="/">Home</a></li>
+        <li><a href="/">主页</a></li>
       
-        <li><a href="/categories">Categories</a></li>
+        <li><a href="/categories">分类</a></li>
       
-        <li><a href="/tags">Tags</a></li>
+        <li><a href="/tags">标签</a></li>
       
-        <li><a href="/archives">Archives</a></li>
+        <li><a href="/archives">归档</a></li>
       
     </ul>
   </nav>
@@ -84,7 +84,7 @@
   <div class="article-top-meta">
     <span class="posted-on">
       <a href="/2017/09/19/10-multivariate-transformation/" rel="bookmark">
-        <time class="entry-date published" datetime="2017-09-20T02:36:40.000Z">
+        <time class="entry-date published" datetime="2017-09-19T14:36:40.000Z">
           2017-09-19
         </time>
       </a>
@@ -97,7 +97,7 @@
   <div class="article-content">
     <div class="entry">
       
-        <p>Method used to calculate the joint distribution in multvariate case.</p>
+        <p>Method used to calculate the multivariate joint distribution.</p>
 <a id="more"></a>
 <p>Today I got a friend’s question about probability:</p>
 <blockquote>
@@ -106,9 +106,9 @@
 <p>This reminds me of multivariate transformation which is used in calculating the joint density of functions of multi-random variables. So let’s get started.</p>
 <p>Since \(X\) and \(Y\) are independent, therefore the joint density is </p>
 <p>\[<br>p(x, y) = \frac{\beta ^{\alpha_{1}}}{\Gamma(\alpha_{1})}e^{-\beta x}x^{\alpha_{1}-1} \frac{\beta ^{\alpha_{2}}}{\Gamma(\alpha_{2})}e^{-\beta y}y^{\alpha_{2}-1} = \frac{\beta ^{\alpha_{1}+\alpha_{2}}}{\Gamma(\alpha_{1})\Gamma(\alpha_{2})}e^{-\beta(x+y)}x^{\alpha_{1}-1}y^{\alpha_{2}-1}.<br>\]</p>
-<p>Same reason, we know if \(X+Y\) and \(X/Y\) are independent, their joint density could be expressed like this</p>
+<p>Applying the same rule, we know if \(X+Y\) and \(X/Y\) are independent, their joint density could be expressed like this</p>
 <p>\[<br>p(X+Y, X/Y) = g(X+Y)h(X/Y).<br>\]</p>
-<p>Therefore if we can get the joint density of \(X+Y\) and \(X/Y\) and factorize it into two functions, we are done. Here comes the <strong>Multivariate transformation</strong> theorem.</p>
+<p>Therefore if we can get the joint density of \(X+Y\) and \(X/Y\) and factorize it into two functions, we are able to solve it. Here comes the <strong>Multivariate transformation</strong> theorem.</p>
 <p>We denote \(U=f_{1}(x, y) = X+Y\) and \(V=f_{2}(x, y) = X/Y\), then we inverse the transformation:</p>
 <p>\[<br>X = g_{1}(u, v) = \frac{UV}{1+V}, Y = g_{2}(u, v) = \frac{U}{1+V}.<br>\]</p>
 <p>Then the joint density of \(U\) and \(V\) is </p>

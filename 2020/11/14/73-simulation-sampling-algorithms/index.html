@@ -60,13 +60,13 @@
   <nav class="site-navigation">
     <ul>
       
-        <li><a href="/">Home</a></li>
+        <li><a href="/">主页</a></li>
       
-        <li><a href="/categories">Categories</a></li>
+        <li><a href="/categories">分类</a></li>
       
-        <li><a href="/tags">Tags</a></li>
+        <li><a href="/tags">标签</a></li>
       
-        <li><a href="/archives">Archives</a></li>
+        <li><a href="/archives">归档</a></li>
       
     </ul>
   </nav>
@@ -84,7 +84,7 @@
   <div class="article-top-meta">
     <span class="posted-on">
       <a href="/2020/11/14/73-simulation-sampling-algorithms/" rel="bookmark">
-        <time class="entry-date published" datetime="2020-11-15T01:56:38.000Z">
+        <time class="entry-date published" datetime="2020-11-14T12:56:38.000Z">
           2020-11-14
         </time>
       </a>
@@ -110,7 +110,23 @@
 <p>\[<br>E_{p}\left[f(X)\right] = \int f(x)p(x)dx = \int f(x)\frac{p(x)}{q(x)}q(x)dx = E_{q}\left[\frac{f(x)p(x)}{q(x)}\right].<br>\]</p>
 <p>Then we can compute \(f(x)p(x)/q(x)\) and estimate \(E_{p}\left[f(X)\right]\) by</p>
 <p>\[<br>E_{p}\left[f(X)\right] \approx \frac{1}{n}\sum^{n}_{i=1}f\left(x_{i}\right)\frac{p\left(x_{i}\right)}{q\left(x_{i}\right)}.<br>\]</p>
-<h3 id="4-MCMC-Markov-Chain-Monte-Carlo"><a href="#4-MCMC-Markov-Chain-Monte-Carlo" class="headerlink" title="4. MCMC (Markov Chain Monte Carlo)"></a>4. MCMC (Markov Chain Monte Carlo)</h3>
+<h3 id="4-MCMC-Markov-Chain-Monte-Carlo"><a href="#4-MCMC-Markov-Chain-Monte-Carlo" class="headerlink" title="4. MCMC (Markov Chain Monte Carlo)"></a>4. MCMC (Markov Chain Monte Carlo)</h3><p>If the target distribution is the stationary distribution of a Markov chain, we can draw the random samples from the target distribution by running the Markov chain, this is how MCMC works.</p>
+<p>For a Markov chain with transition matrix \(P\), the stationary distribution is \(\pi\). The definition of stationary indicates that for each two states \(i, j\) there is \(\pi(i)P(i, j) = \pi(j)P(j, i)\) (denote \(P(i, j) = P(X=j|X=i)\), the probability from state \(i\) to state \(j\)), therefore \(\pi P = \pi\). Where \(\pi\) is the target distribution, and we need to find \(P\) to draw samples.</p>
+<p>It is not easy to get \(P\) directly. Assume there is another transition matrix \(Q\), where \(\pi(i)Q(i, j) \neq \pi(j)Q(j, i)\), and we introduce \(a(i, j)\) such that \(\pi(i)Q(i, j)a(i, j) = \pi(j)Q(j, i)a(j, i)\). \(a\) is known as <strong>rejection kernel*</strong> in \([0, 1]\). We can construct \(a\) by setting</p>
+<p>\[<br>a(i, j) = \pi(j)Q(j, i), ~a(j, i) = \pi(i)Q(i, j).<br>\]</p>
+<p>Finally let \(P(i, j) = Q(i, j)a(i, j)\).</p>
+<p>Therefore the general framework of MCMC is:</p>
+<ul>
+<li>set up \(Q\), \(\pi\), stationary threshold \(n_{1}\) and required sample size \(n_{2}\);</li>
+<li>initialize states \(x_{0}\) randomly;</li>
+<li>for step \(t\) from \(0\) to \(n_{1} + n_{2} - 1\): (1) sample \(x\) from \(Q(x|x_{t})\); (2) generate \(u\sim Unif(0, 1)\); (3) if \(u &lt; a(x_{t}, x) = \pi(x)Q(x, x_{t})\), accept the transition, i.e. \(x_{t+1} = x\); (3) otherwise set \(x_{t+1} = x_{t}\);</li>
+<li>output samples \(\left(x_{n_{1}}, x_{n_{1}+1}, \cdots, x_{n_{1}+n_{2}-1}\right)\).</li>
+</ul>
+<h4 id="4-1-Metropolis-Hastings-Method"><a href="#4-1-Metropolis-Hastings-Method" class="headerlink" title="4.1 Metropolis - Hastings Method"></a>4.1 Metropolis - Hastings Method</h4><p>Used to solve high rejection rate problem. Set the rejection kernel as </p>
+<p>\[<br>a(i, j) = \min\left(1, \frac{\pi(j)Q(j, i)}{\pi(i)Q(i, j)}\right).<br>\]</p>
+<h4 id="4-2-Gibbs-Sampling"><a href="#4-2-Gibbs-Sampling" class="headerlink" title="4.2 Gibbs Sampling"></a>4.2 Gibbs Sampling</h4><p>No rejection needed, the sampling is done per-coordinate: sample on one dimension and fix all other dimensions. Gibbs sampling cannot be used to sample univariate distribution.</p>
+<p>Gibbs sampling originated from the observation that the transition between two points satisfies the stationary condition when all dimensions are fixed except one (full condition).</p>
+
       
     </div>
 
